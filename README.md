@@ -26,7 +26,7 @@ Performance
 | Boost Signals        |  8060      |  1699     |  542     |  4352     |  357      |
 | * Boost Signals2     |  6355      |  1914     |  914     |  3411     |  462      |
 + -------------------------------------------------------------------------------- +
-
+```
 _* Library is designed to be thread safe._
 
 Size Metrics
