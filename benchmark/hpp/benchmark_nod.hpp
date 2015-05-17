@@ -1,8 +1,8 @@
 #ifndef BENCHMARK_NOD_HPP
 #define BENCHMARK_NOD_HPP
 
-#include "../lib/nod/include/nod/nod.hpp"
-//#include "../lib/nod/tests/test_helpers.hpp"
+#include "../lib/fr00b0/nod/include/nod/nod.hpp"
+//#include "../lib/fr00b0/nod/tests/test_helpers.hpp"
 
 #include "../../benchmark.hpp"
 
