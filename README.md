@@ -7,25 +7,25 @@ Performance
 **_Higher score is better._** _N / (sample size / count)._
 
 ```
-+ -------------------------------------------------------------------------------- +
-| Library              |  construct |  destruct |  connect |  emission |  combined |
-+ -------------------------------------------------------------------------------- +
-| jeffomatic jl_signal |  129043    |  10085    |  47138   |  41156    |  6421     |
-| Yassi                |  139720    |  2185     |  1593    |  38778    |  825      |
-| mwthinker Signal     |  120239    |  5234     |  1835    |  39795    |  1305     |
-| amc522 Signal11      |  119326    |  6033     |  3690    |  33264    |  2084     |
-| pbhogan Signals      |  104589    |  5099     |  4595    |  33036    |  2254     |
-| EvilTwin Fork        |  110521    |  3946     |  2095    |  19522    |  1255     |
-| * fr00b0 nod         |  95052     |  3741     |  2756    |  31873    |  1475     |
-| EvilTwin Observer    |  106882    |  2562     |  1223    |  21237    |  811      |
-| joanrieu signal11    |  90430     |  6061     |  4104    |  7883     |  1841     |
-| supergrover sigslot  |  10690     |  1369     |  2266    |  40484    |  751      |
-| Nano-signal-slot     |  12449     |  4060     |  3761    |  29266    |  1655     |
-| * winglot Signals    |  5476      |  2055     |  2499    |  29961    |  908      |
-| * neosigslot         |  13059     |  2502     |  2312    |  6349     |  936      |
-| Boost Signals        |  8060      |  1699     |  542     |  4352     |  357      |
-| * Boost Signals2     |  6355      |  1914     |  914     |  3411     |  462      |
-+ -------------------------------------------------------------------------------- +
++---------------------------------------------------------------------------------------------+
+| Library               |  construct |  destruct |  connect |  emission |  combined |  total  |
+|---------------------------------------------------------------------------------------------|
+| jeffomatic jl_signal  |  104011    |  17236    |  50995   |  44984    |  11545    |  228771 |
+| Yassi                 |  142993    |  8440     |  5317    |  43289    |  2864     |  202902 |
+| * Nano-signal-slot FT |  140575    |  10238    |  3256    |  34277    |  2332     |  190678 |
+| mwthinker Signal      |  114802    |  13554    |  5681    |  43549    |  3620     |  181207 |
+| amc522 Signal11       |  121417    |  8367     |  5405    |  39628    |  3097     |  177913 |
+| pbhogan Signals       |  113669    |  9260     |  5824    |  42227    |  3663     |  174643 |
+| * fr00b0 nod          |  113194    |  10027    |  6201    |  37862    |  3494     |  170779 |
+| joanrieu signal11     |  97149     |  13903    |  7062    |  37037    |  4026     |  159178 |
+| EvilTwin Fork         |  105586    |  7801     |  3611    |  30427    |  2299     |  149724 |
+| EvilTwin Observer     |  104506    |  5186     |  2085    |  29716    |  1416     |  142909 |
+| supergrover sigslot   |  13543     |  2330     |  2840    |  42501    |  1123     |  62337  |
+| * winglot Signals     |  12417     |  4254     |  4089    |  35920    |  1757     |  58438  |
+| * neosigslot          |  16614     |  4883     |  3368    |  9287     |  1530     |  35682  |
+| Boost Signals         |  10564     |  3082     |  948     |  10000    |  628      |  25223  |
+| * Boost Signals2      |  8573      |  4669     |  1696    |  7263     |  934      |  23135  |
++---------------------------------------------------------------------------------------------+
 ```
 _* Library is designed to be thread safe._
 
@@ -49,6 +49,7 @@ _Results are from Visual Studio 2015 RC using default release build settings._
 | [joanrieu signal11](https://github.com/joanrieu/signal11) | 1300 kb | X |
 | [fr00b0 nod](https://github.com/fr00b0/nod) | 1307 kb | X |
 | [Boost Signals](http://www.boost.org/doc/libs/1_56_0/doc/html/signals.html) | 1676 kb | - |
+| [Nano-signal-slot (FT)](https://github.com/NoAvailableAlias/nano-signal-slot/tree/FT) | 1975 kb | X |
 | [neosigslot](http://www.i42.co.uk/stuff/neosigslot.htm) | 2397 kb | - |
 | [Boost Signals2](http://www.boost.org/doc/libs/1_56_0/doc/html/signals2.html) | 2824 kb | ? |
 
