@@ -1,7 +1,7 @@
 #ifndef BENCHMARK_NSS_HPP
 #define BENCHMARK_NSS_HPP
 
-#include "../lib/nano-signal-slot/nano_signal_slot.hpp"
+#include "../lib/NoAvailableAlias/nano-signal-slot/nano_signal_slot.hpp"
 
 #include "../../benchmark.hpp"
 
@@ -24,7 +24,7 @@ class Nss : public Nano::Observer
     template <typename Subject>
     static void emit_method(Subject& subject, Rng& rng)
     {
-        subject(rng);
+        subject.emit(rng);
     }
 
     static void validate_assert(std::size_t);

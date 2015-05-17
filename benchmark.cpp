@@ -302,7 +302,7 @@ void outputReport(ImmediateData const& records, T& ost)
     // Output in unformatted csv
 
     ost << "\nLibrary, " << construction << ", " << destruction << ", "
-        << connection << ", " << emission << ", " << combined << "\n";
+        << connection << ", " << emission << ", " << combined << ", total\n";
 
     for(auto const& row : Range(resultOrder.rbegin(), resultOrder.rend()))
     {
@@ -318,6 +318,6 @@ void outputReport(ImmediateData const& records, T& ost)
 
             ost << ", " << setprecision(0) << fixed << val;
         }
-        ost << "\n";
+        ost << ", " << setprecision(0) << fixed << score << "\n";
     }
 }
