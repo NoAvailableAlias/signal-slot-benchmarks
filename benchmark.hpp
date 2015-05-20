@@ -26,12 +26,16 @@ class Benchmark
         for (auto i = N; i != 0; --i, count += N)
         {
             Subject subject;
-            std::vector<Foo> foo_array(N);
-
-            for (auto& foo : foo_array)
             {
-                Foo::connect_method(subject, foo);
+                std::vector<Foo> foo_array(N);
+
+                for (auto& foo : foo_array)
+                {
+                    Foo::connect_method(subject, foo);
+                }
+                Foo::emit_method(subject, rng);
             }
+            // Make sure disconnect is working correctly
             Foo::emit_method(subject, rng);
         }
         // If the PRNG state is different
