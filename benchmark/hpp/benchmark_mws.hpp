@@ -16,6 +16,9 @@ class Mws
 
     public:
 
+    Mws() = default;
+    ~Mws() { reg.disconnect(); }
+
     using Signal = mw::Signal<Rng&>;
 
     template <typename Subject, typename Foo>

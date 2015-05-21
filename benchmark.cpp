@@ -84,7 +84,7 @@ int main(int argc, char* argv[])
     Evl::validate_assert(maximum_n);
     Jls::validate_assert(maximum_n);
     Jos::validate_assert(maximum_n);
-    //Mws::validate_assert(maximum_n); // Blows assertion
+    Mws::validate_assert(maximum_n); // Blows assertion
     Nls::validate_assert(maximum_n);
     Nod::validate_assert(maximum_n);
     //Nss::validate_assert(maximum_n); // Blows assertion
