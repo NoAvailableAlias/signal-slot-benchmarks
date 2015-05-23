@@ -1,5 +1,7 @@
 #include "../hpp/benchmark_nss.hpp"
 
+const char* Nss::LibraryName = "nano-signal-slot (FT)";
+
 NOINLINE(void Nss::validate_assert(std::size_t N))
 {
     return Benchmark<Signal, Nss>::validation_assert(N);

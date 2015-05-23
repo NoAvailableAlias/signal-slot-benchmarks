@@ -1,5 +1,7 @@
 #include "../hpp/benchmark_evf.hpp"
 
+const char* Evf::LibraryName = "EvilTwin Fork";
+
 NOINLINE(void Evf::validate_assert(std::size_t N))
 {
     return Benchmark<Signal, Evf>::validation_assert(N);

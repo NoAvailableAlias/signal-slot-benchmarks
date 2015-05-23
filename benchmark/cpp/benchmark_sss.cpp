@@ -1,5 +1,7 @@
 #include "../hpp/benchmark_sss.hpp"
 
+const char* Sss::LibraryName = "supergrover sigslot";
+
 NOINLINE(void Sss::validate_assert(std::size_t N))
 {
     return Benchmark<Signal, Sss>::validation_assert(N);

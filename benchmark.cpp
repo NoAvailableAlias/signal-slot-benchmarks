@@ -25,7 +25,7 @@
 #include <chrono>
 #include <map>
 
-#include "benchmark.hpp"
+#include "benchmark_utility.hpp"
 
 const char* construction = "construct";
 const char* destruction = "destruct";
@@ -42,6 +42,195 @@ template <typename T> void outputReport(ImmediateData const&, T&);
 
 //------------------------------------------------------------------------------
 
+void run_all_validation_tests(std::size_t N)
+{
+    try
+    {
+        // Abort if any implementation isn't functioning correctly
+        Asg::validate_assert(N);
+        Bs1::validate_assert(N);
+        Bs2::validate_assert(N);
+        Evf::validate_assert(N);
+        Evl::validate_assert(N);
+        Jls::validate_assert(N);
+        Jos::validate_assert(N);
+        Mws::validate_assert(N);
+        Nls::validate_assert(N);
+        Nod::validate_assert(N);
+        Nss::validate_assert(N);
+        Psg::validate_assert(N);
+        Sss::validate_assert(N);
+        Wsg::validate_assert(N);
+        Yas::validate_assert(N);
+    }
+    catch (std::exception const& error)
+    {
+        std::cerr << "Exception encountered: " << error.what() << std::endl;
+        std::cin.get();
+    }
+}
+
+//------------------------------------------------------------------------------
+
+ImmediateData run_all_benchmarks(std::size_t begin, std::size_t end)
+{
+    ImmediateData records;
+
+    try
+    {
+        // Double the input size N for every iteration
+        for(std::size_t N = begin; N <= end; N *= 2)
+        {
+            std::cout << "[Test Size: " << N << "] BEGIN\n" << std::endl;
+
+            std::cout << "[Line: " << __LINE__ << "]" << std::endl;
+
+            auto& asg = records[Asg::LibraryName];
+            asg[construction].push_back(Asg::construction(N));
+            asg[destruction].push_back(Asg::destruction(N));
+            asg[connection].push_back(Asg::connection(N));
+            asg[emission].push_back(Asg::emission(N));
+            asg[combined].push_back(Asg::combined(N));
+
+            std::cout << "[Line: " << __LINE__ << "]" << std::endl;
+
+            auto& bs1 = records[Bs1::LibraryName];
+            bs1[construction].push_back(Bs1::construction(N));
+            bs1[destruction].push_back(Bs1::destruction(N));
+            bs1[connection].push_back(Bs1::connection(N));
+            bs1[emission].push_back(Bs1::emission(N));
+            bs1[combined].push_back(Bs1::combined(N));
+
+            std::cout << "[Line: " << __LINE__ << "]" << std::endl;
+
+            auto& bs2 = records[Bs2::LibraryName];
+            bs2[construction].push_back(Bs2::construction(N));
+            bs2[destruction].push_back(Bs2::destruction(N));
+            bs2[connection].push_back(Bs2::connection(N));
+            bs2[emission].push_back(Bs2::emission(N));
+            bs2[combined].push_back(Bs2::combined(N));
+
+            std::cout << "[Line: " << __LINE__ << "]" << std::endl;
+
+            auto& evf = records[Evf::LibraryName];
+            evf[construction].push_back(Evf::construction(N));
+            evf[destruction].push_back(Evf::destruction(N));
+            evf[connection].push_back(Evf::connection(N));
+            evf[emission].push_back(Evf::emission(N));
+            evf[combined].push_back(Evf::combined(N));
+
+            std::cout << "[Line: " << __LINE__ << "]" << std::endl;
+
+            auto& evl = records[Evl::LibraryName];
+            evl[construction].push_back(Evl::construction(N));
+            evl[destruction].push_back(Evl::destruction(N));
+            evl[connection].push_back(Evl::connection(N));
+            evl[emission].push_back(Evl::emission(N));
+            evl[combined].push_back(Evl::combined(N));
+
+            std::cout << "[Line: " << __LINE__ << "]" << std::endl;
+
+            auto& jls = records[Jls::LibraryName];
+            jls[construction].push_back(Jls::construction(N));
+            jls[destruction].push_back(Jls::destruction(N));
+            jls[connection].push_back(Jls::connection(N));
+            jls[emission].push_back(Jls::emission(N));
+            jls[combined].push_back(Jls::combined(N));
+
+            std::cout << "[Line: " << __LINE__ << "]" << std::endl;
+
+            auto& jos = records[Jos::LibraryName];
+            jos[construction].push_back(Jos::construction(N));
+            jos[destruction].push_back(Jos::destruction(N));
+            jos[connection].push_back(Jos::connection(N));
+            jos[emission].push_back(Jos::emission(N));
+            jos[combined].push_back(Jos::combined(N));
+
+            std::cout << "[Line: " << __LINE__ << "]" << std::endl;
+
+            auto& mws = records[Mws::LibraryName];
+            mws[construction].push_back(Mws::construction(N));
+            mws[destruction].push_back(Mws::destruction(N));
+            mws[connection].push_back(Mws::connection(N));
+            mws[emission].push_back(Mws::emission(N));
+            mws[combined].push_back(Mws::combined(N));
+
+            std::cout << "[Line: " << __LINE__ << "]" << std::endl;
+
+            auto& nls = records[Nls::LibraryName];
+            nls[construction].push_back(Nls::construction(N));
+            nls[destruction].push_back(Nls::destruction(N));
+            nls[connection].push_back(Nls::connection(N));
+            nls[emission].push_back(Nls::emission(N));
+            nls[combined].push_back(Nls::combined(N));
+
+            std::cout << "[Line: " << __LINE__ << "]" << std::endl;
+
+            auto& nod = records[Nod::LibraryName];
+            nod[construction].push_back(Nod::construction(N));
+            nod[destruction].push_back(Nod::destruction(N));
+            nod[connection].push_back(Nod::connection(N));
+            nod[emission].push_back(Nod::emission(N));
+            nod[combined].push_back(Nod::combined(N));
+
+            std::cout << "[Line: " << __LINE__ << "]" << std::endl;
+
+            auto& nss = records[Nss::LibraryName];
+            nss[construction].push_back(Nss::construction(N));
+            nss[destruction].push_back(Nss::destruction(N));
+            nss[connection].push_back(Nss::connection(N));
+            nss[emission].push_back(Nss::emission(N));
+            nss[combined].push_back(Nss::combined(N));
+
+            std::cout << "[Line: " << __LINE__ << "]" << std::endl;
+
+            auto& psg = records[Psg::LibraryName];
+            psg[construction].push_back(Psg::construction(N));
+            psg[destruction].push_back(Psg::destruction(N));
+            psg[connection].push_back(Psg::connection(N));
+            psg[emission].push_back(Psg::emission(N));
+            psg[combined].push_back(Psg::combined(N));
+
+            std::cout << "[Line: " << __LINE__ << "]" << std::endl;
+
+            auto& sss = records[Sss::LibraryName];
+            sss[construction].push_back(Sss::construction(N));
+            sss[destruction].push_back(Sss::destruction(N));
+            sss[connection].push_back(Sss::connection(N));
+            sss[emission].push_back(Sss::emission(N));
+            sss[combined].push_back(Sss::combined(N));
+
+            std::cout << "[Line: " << __LINE__ << "]" << std::endl;
+
+            auto& wsg = records[Wsg::LibraryName];
+            wsg[construction].push_back(Wsg::construction(N));
+            wsg[destruction].push_back(Wsg::destruction(N));
+            wsg[connection].push_back(Wsg::connection(N));
+            wsg[emission].push_back(Wsg::emission(N));
+            wsg[combined].push_back(Wsg::combined(N));
+
+            std::cout << "[Line: " << __LINE__ << "]" << std::endl;
+
+            auto& yas = records[Yas::LibraryName];
+            yas[construction].push_back(Yas::construction(N));
+            yas[destruction].push_back(Yas::destruction(N));
+            yas[connection].push_back(Yas::connection(N));
+            yas[emission].push_back(Yas::emission(N));
+            yas[combined].push_back(Yas::combined(N));
+
+            std::cout << "\n[Test Size: " << N << "] END" << std::endl;
+        }
+    }
+    catch (std::exception const& error)
+    {
+        std::cerr << "Exception encountered: " << error.what() << std::endl;
+        std::cin.get();
+    }
+    return records;
+}
+
+//------------------------------------------------------------------------------
+
 int main(int argc, char* argv[])
 {
     // Jl_signal uses a static allocator for high performance
@@ -50,11 +239,9 @@ int main(int argc, char* argv[])
     jl::SignalBase::SetCommonConnectionAllocator(&signal_con_allocator);
     jl::SignalObserver::SetCommonConnectionAllocator(&observer_con_allocator);
 
-    ImmediateData records;
-
     std::size_t limit = 0;
-    std::size_t start_n = 4;
-    std::size_t maximum_n = 64;
+    std::size_t start_test_size = 4;
+    std::size_t maximum_test_size = 64;
 
     std::cout << "Enter the time limit per sample [milliseconds]: ";
 
@@ -76,169 +263,14 @@ int main(int argc, char* argv[])
     std::cout << "Change the CPU priority now: [paused]" << std::endl;
     std::cin.get();
 
-    // Assert that all implementations are functioning correctly
-    Asg::validate_assert(maximum_n);
-    Bs1::validate_assert(maximum_n);
-    Bs2::validate_assert(maximum_n);
-    Evf::validate_assert(maximum_n);
-    Evl::validate_assert(maximum_n);
-    Jls::validate_assert(maximum_n);
-    Jos::validate_assert(maximum_n);
-    Mws::validate_assert(maximum_n); // Blows assertion
-    Nls::validate_assert(maximum_n);
-    Nod::validate_assert(maximum_n);
-    //Nss::validate_assert(maximum_n); // Blows assertion
-    Psg::validate_assert(maximum_n);
-    Sss::validate_assert(maximum_n);
-    Wsg::validate_assert(maximum_n);
-    Yas::validate_assert(maximum_n);
-
     // Time the entire duration of the benchmark
     auto start = std::chrono::system_clock::now();
     auto start_c = std::chrono::system_clock::to_time_t(start);
 
-    // Double the input size N for every iteration
-    for(std::size_t N = start_n; N <= maximum_n; N *= 2)
-    {
-        std::cout << "[Test Size: " << N << "] BEGIN\n" << std::endl;
-
-        std::cout << "[Line: " << __LINE__ << "]" << std::endl;
-
-        auto& asg = records["amc522 Signal11"];
-        asg[construction].push_back(Asg::construction(N));
-        asg[destruction].push_back(Asg::destruction(N));
-        asg[connection].push_back(Asg::connection(N));
-        asg[emission].push_back(Asg::emission(N));
-        asg[combined].push_back(Asg::combined(N));
-
-        std::cout << "[Line: " << __LINE__ << "]" << std::endl;
-
-        auto& bs1 = records["Boost Signals"];
-        bs1[construction].push_back(Bs1::construction(N));
-        bs1[destruction].push_back(Bs1::destruction(N));
-        bs1[connection].push_back(Bs1::connection(N));
-        bs1[emission].push_back(Bs1::emission(N));
-        bs1[combined].push_back(Bs1::combined(N));
-
-        std::cout << "[Line: " << __LINE__ << "]" << std::endl;
-
-        auto& bs2 = records["* Boost Signals2"];
-        bs2[construction].push_back(Bs2::construction(N));
-        bs2[destruction].push_back(Bs2::destruction(N));
-        bs2[connection].push_back(Bs2::connection(N));
-        bs2[emission].push_back(Bs2::emission(N));
-        bs2[combined].push_back(Bs2::combined(N));
-
-        std::cout << "[Line: " << __LINE__ << "]" << std::endl;
-
-        auto& evf = records["EvilTwin Fork"];
-        evf[construction].push_back(Evf::construction(N));
-        evf[destruction].push_back(Evf::destruction(N));
-        evf[connection].push_back(Evf::connection(N));
-        evf[emission].push_back(Evf::emission(N));
-        evf[combined].push_back(Evf::combined(N));
-
-        std::cout << "[Line: " << __LINE__ << "]" << std::endl;
-
-        auto& evl = records["EvilTwin Observer"];
-        evl[construction].push_back(Evl::construction(N));
-        evl[destruction].push_back(Evl::destruction(N));
-        evl[connection].push_back(Evl::connection(N));
-        evl[emission].push_back(Evl::emission(N));
-        evl[combined].push_back(Evl::combined(N));
-
-        std::cout << "[Line: " << __LINE__ << "]" << std::endl;
-
-        auto& jls = records["jeffomatic jl_signal"];
-        jls[construction].push_back(Jls::construction(N));
-        jls[destruction].push_back(Jls::destruction(N));
-        jls[connection].push_back(Jls::connection(N));
-        jls[emission].push_back(Jls::emission(N));
-        jls[combined].push_back(Jls::combined(N));
-
-        std::cout << "[Line: " << __LINE__ << "]" << std::endl;
-
-        auto& jos = records["joanrieu signal11"];
-        jos[construction].push_back(Jos::construction(N));
-        jos[destruction].push_back(Jos::destruction(N));
-        jos[connection].push_back(Jos::connection(N));
-        jos[emission].push_back(Jos::emission(N));
-        jos[combined].push_back(Jos::combined(N));
-
-        std::cout << "[Line: " << __LINE__ << "]" << std::endl;
-
-        auto& mws = records["mwthinker Signal"];
-        mws[construction].push_back(Mws::construction(N));
-        mws[destruction].push_back(Mws::destruction(N));
-        mws[connection].push_back(Mws::connection(N));
-        mws[emission].push_back(Mws::emission(N));
-        mws[combined].push_back(Mws::combined(N));
-
-        std::cout << "[Line: " << __LINE__ << "]" << std::endl;
-
-        auto& nls = records["* neosigslot"];
-        nls[construction].push_back(Nls::construction(N));
-        nls[destruction].push_back(Nls::destruction(N));
-        nls[connection].push_back(Nls::connection(N));
-        nls[emission].push_back(Nls::emission(N));
-        nls[combined].push_back(Nls::combined(N));
-
-        std::cout << "[Line: " << __LINE__ << "]" << std::endl;
-
-        auto& nod = records["* fr00b0 nod"];
-        nod[construction].push_back(Nod::construction(N));
-        nod[destruction].push_back(Nod::destruction(N));
-        nod[connection].push_back(Nod::connection(N));
-        nod[emission].push_back(Nod::emission(N));
-        nod[combined].push_back(Nod::combined(N));
-
-        std::cout << "[Line: " << __LINE__ << "]" << std::endl;
-
-        auto& nss = records["* Nano-signal-slot FT"];
-        nss[construction].push_back(Nss::construction(N));
-        nss[destruction].push_back(Nss::destruction(N));
-        nss[connection].push_back(Nss::connection(N));
-        nss[emission].push_back(Nss::emission(N));
-        nss[combined].push_back(Nss::combined(N));
-
-        std::cout << "[Line: " << __LINE__ << "]" << std::endl;
-
-        auto& psg = records["pbhogan Signals"];
-        psg[construction].push_back(Psg::construction(N));
-        psg[destruction].push_back(Psg::destruction(N));
-        psg[connection].push_back(Psg::connection(N));
-        psg[emission].push_back(Psg::emission(N));
-        psg[combined].push_back(Psg::combined(N));
-        
-        std::cout << "[Line: " << __LINE__ << "]" << std::endl;
-
-        auto& sss = records["supergrover sigslot"];
-        sss[construction].push_back(Sss::construction(N));
-        sss[destruction].push_back(Sss::destruction(N));
-        sss[connection].push_back(Sss::connection(N));
-        sss[emission].push_back(Sss::emission(N));
-        sss[combined].push_back(Sss::combined(N));
-
-        std::cout << "[Line: " << __LINE__ << "]" << std::endl;
-
-        auto& wsg = records["* winglot Signals"];
-        wsg[construction].push_back(Wsg::construction(N));
-        wsg[destruction].push_back(Wsg::destruction(N));
-        wsg[connection].push_back(Wsg::connection(N));
-        wsg[emission].push_back(Wsg::emission(N));
-        wsg[combined].push_back(Wsg::combined(N));
-
-        std::cout << "[Line: " << __LINE__ << "]" << std::endl;
-
-        auto& yas = records["Yassi"];
-        yas[construction].push_back(Yas::construction(N));
-        yas[destruction].push_back(Yas::destruction(N));
-        yas[connection].push_back(Yas::connection(N));
-        yas[emission].push_back(Yas::emission(N));
-        yas[combined].push_back(Yas::combined(N));
-
-        std::cout << "\n[Test Size: " << N << "] END" << std::endl;
-    }
+    // Assert that all implementations are functioning correctly
+    run_all_validation_tests(maximum_test_size);
+    // Run all benchmark operations on each benchmark implementation
+    auto records = run_all_benchmarks(start_test_size, maximum_test_size);
 
     //--------------------------------------------------------------------------
 

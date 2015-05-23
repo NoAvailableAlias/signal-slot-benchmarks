@@ -1,5 +1,7 @@
 #include "../hpp/benchmark_jls.hpp"
 
+const char* Jls::LibraryName = "jeffomatic jl_signal";
+
 NOINLINE(void Jls::validate_assert(std::size_t N))
 {
     return Benchmark<Signal, Jls>::validation_assert(N);

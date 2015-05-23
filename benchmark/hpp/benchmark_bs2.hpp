@@ -36,6 +36,8 @@ class Bs2 : public boost::signals2::trackable
     static double connection(std::size_t);
     static double emission(std::size_t);
     static double combined(std::size_t);
+
+    static const char* LibraryName;
 };
 
 #endif // BENCHMARK_BS2_HPP

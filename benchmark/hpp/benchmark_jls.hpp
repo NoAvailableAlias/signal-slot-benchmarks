@@ -33,6 +33,8 @@ class Jls : public jl::SignalObserver
     static double connection(std::size_t);
     static double emission(std::size_t);
     static double combined(std::size_t);
+
+    static const char* LibraryName;
 };
 
 #endif // BENCHMARK_JLS_HPP

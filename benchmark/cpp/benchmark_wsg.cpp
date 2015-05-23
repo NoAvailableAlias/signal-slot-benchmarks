@@ -1,5 +1,7 @@
 #include "../hpp/benchmark_wsg.hpp"
 
+const char* Wsg::LibraryName = "* winglot Signals";
+
 NOINLINE(void Wsg::validate_assert(std::size_t N))
 {
     return Benchmark<Signal, Wsg>::validation_assert(N);

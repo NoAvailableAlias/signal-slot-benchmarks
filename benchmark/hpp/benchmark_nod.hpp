@@ -2,15 +2,11 @@
 #define BENCHMARK_NOD_HPP
 
 #include "../lib/fr00b0/nod/include/nod/nod.hpp"
-//#include "../lib/fr00b0/nod/tests/test_helpers.hpp"
 
 #include "../../benchmark.hpp"
 
-//#include <memory>
-
 class Nod
 {
-    //std::unique_ptr<nod::scoped_connection> reg;
     nod::scoped_connection reg;
 
     NOINLINE(void handler(Rng& rng))
@@ -25,15 +21,6 @@ class Nod
     template <typename Subject, typename Foo>
     static void connect_method(Subject& subject, Foo& foo)
     {
-        /*foo.reg = test::make_unique<nod::scoped_connection>(
-            subject.connect([&foo](Rng& rng)
-            {
-                foo.handler(rng);
-            })
-        );*/
-        /*foo.reg = test::make_unique<nod::scoped_connection>(
-            subject.connect(std::bind(&Foo::handler, &foo, std::placeholders::_1))
-        );*/
         foo.reg = subject.connect(std::bind(&Foo::handler, &foo, std::placeholders::_1));
     }
     template <typename Subject>
@@ -48,6 +35,8 @@ class Nod
     static double connection(std::size_t);
     static double emission(std::size_t);
     static double combined(std::size_t);
+
+    static const char* LibraryName;
 };
 
 #endif // BENCHMARK_NOD_HPP

@@ -1,5 +1,7 @@
 #include "../hpp/benchmark_psg.hpp"
 
+const char* Psg::LibraryName = "pbhogan Signals";
+
 NOINLINE(void Psg::validate_assert(std::size_t N))
 {
     return Benchmark<Signal, Psg>::validation_assert(N);

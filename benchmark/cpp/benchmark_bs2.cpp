@@ -1,5 +1,7 @@
 #include "../hpp/benchmark_bs2.hpp"
 
+const char* Bs2::LibraryName = "* Boost Signals2";
+
 NOINLINE(void Bs2::validate_assert(std::size_t N))
 {
     return Benchmark<Signal, Bs2>::validation_assert(N);

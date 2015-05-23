@@ -1,5 +1,7 @@
 #include "../hpp/benchmark_jos.hpp"
 
+const char* Jos::LibraryName = "joanrieu signal11";
+
 NOINLINE(void Jos::validate_assert(std::size_t N))
 {
     return Benchmark<Signal, Jos>::validation_assert(N);

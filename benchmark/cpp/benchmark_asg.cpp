@@ -1,5 +1,7 @@
 #include "../hpp/benchmark_asg.hpp"
 
+const char* Asg::LibraryName = "amc522 Signal11";
+
 NOINLINE(void Asg::validate_assert(std::size_t N))
 {
     return Benchmark<Signal, Asg>::validation_assert(N);

@@ -1,5 +1,7 @@
 #include "../hpp/benchmark_yas.hpp"
 
+const char* Yas::LibraryName = "Yassi";
+
 NOINLINE(void Yas::validate_assert(std::size_t N))
 {
     return Benchmark<Signal, Yas>::validation_assert(N);

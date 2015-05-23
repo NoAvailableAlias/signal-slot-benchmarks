@@ -37,6 +37,8 @@ class Evf
     static double connection(std::size_t);
     static double emission(std::size_t);
     static double combined(std::size_t);
+
+    static const char* LibraryName;
 };
 
 #endif // BENCHMARK_EVF_HPP

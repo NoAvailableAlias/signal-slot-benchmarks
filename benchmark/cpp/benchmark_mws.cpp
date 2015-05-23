@@ -1,5 +1,7 @@
 #include "../hpp/benchmark_mws.hpp"
 
+const char* Mws::LibraryName = "mwthinker Signal";
+
 NOINLINE(void Mws::validate_assert(std::size_t N))
 {
     return Benchmark<Signal, Mws>::validation_assert(N);
