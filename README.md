@@ -25,6 +25,7 @@ Performance
 | * neosigslot          |  13764     |  4152     |  2976    |  8595     |  1459     |  30946  |
 | Boost Signals         |  8960      |  2719     |  862     |  8759     |  583      |  21884  |
 | * Boost Signals2      |  7730      |  4271     |  1565    |  6601     |  855      |  21021  |
+| signls-cpp            |  #N/A      |  #N/A     |  #N/A    |  #N/A     |  #N/A     |  #N/A   |<- ASSERT FAIL
 +---------------------------------------------------------------------------------------------+
 ```
 _* Library is designed to be thread safe._
@@ -48,7 +49,8 @@ _Results are from Visual Studio 2015 RC using default release build settings._
 | [Yassi](http://www.codeproject.com/Articles/867044/Yassi-Yet-Another-Signal-Slot-Implementation) | 1293 kb | X |
 | [joanrieu signal11](https://github.com/joanrieu/signal11) | 1300 kb | X |
 | [fr00b0 nod](https://github.com/fr00b0/nod) | 1307 kb | X |
-| [Boost Signals](http://www.boost.org/doc/libs/1_56_0/doc/html/signals.html) | 1676 kb | - |
+| [signals-cpp](https://github.com/martinkallman/signals-cpp) | 1676 kb | X |
+| [Boost Signals](http://www.boost.org/doc/libs/1_56_0/doc/html/signals.html) | 1677 kb | - |
 | [neosigslot](http://www.i42.co.uk/stuff/neosigslot.htm) | 2397 kb | - |
 | [Boost Signals2](http://www.boost.org/doc/libs/1_56_0/doc/html/signals2.html) | 2824 kb | ? |
 

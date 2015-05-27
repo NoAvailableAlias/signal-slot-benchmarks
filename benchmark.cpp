@@ -10,6 +10,7 @@
 #include "benchmark/hpp/benchmark_nod.hpp"
 #include "benchmark/hpp/benchmark_nss.hpp"
 #include "benchmark/hpp/benchmark_psg.hpp"
+//#include "benchmark/hpp/benchmark_spp.hpp"
 #include "benchmark/hpp/benchmark_sss.hpp"
 #include "benchmark/hpp/benchmark_wsg.hpp"
 #include "benchmark/hpp/benchmark_yas.hpp"
@@ -59,6 +60,7 @@ void run_all_validation_tests(std::size_t N)
         Nod::validate_assert(N);
         Nss::validate_assert(N);
         Psg::validate_assert(N);
+        //Spp::validate_assert(N);
         Sss::validate_assert(N);
         Wsg::validate_assert(N);
         Yas::validate_assert(N);
@@ -83,7 +85,7 @@ ImmediateData run_all_benchmarks(std::size_t begin, std::size_t end)
         {
             std::cout << "[Test Size: " << N << "] BEGIN\n" << std::endl;
 
-            std::cout << "[Line: " << __LINE__ << "]" << std::endl;
+            std::cout << "[BEGIN: " << Asg::LibraryName << "]" << std::endl;
 
             auto& asg = records[Asg::LibraryName];
             asg[construction].push_back(Asg::construction(N));
@@ -92,7 +94,7 @@ ImmediateData run_all_benchmarks(std::size_t begin, std::size_t end)
             asg[emission].push_back(Asg::emission(N));
             asg[combined].push_back(Asg::combined(N));
 
-            std::cout << "[Line: " << __LINE__ << "]" << std::endl;
+            std::cout << "[BEGIN: " << Bs1::LibraryName << "]" << std::endl;
 
             auto& bs1 = records[Bs1::LibraryName];
             bs1[construction].push_back(Bs1::construction(N));
@@ -101,7 +103,7 @@ ImmediateData run_all_benchmarks(std::size_t begin, std::size_t end)
             bs1[emission].push_back(Bs1::emission(N));
             bs1[combined].push_back(Bs1::combined(N));
 
-            std::cout << "[Line: " << __LINE__ << "]" << std::endl;
+            std::cout << "[BEGIN: " << Bs2::LibraryName << "]" << std::endl;
 
             auto& bs2 = records[Bs2::LibraryName];
             bs2[construction].push_back(Bs2::construction(N));
@@ -110,7 +112,7 @@ ImmediateData run_all_benchmarks(std::size_t begin, std::size_t end)
             bs2[emission].push_back(Bs2::emission(N));
             bs2[combined].push_back(Bs2::combined(N));
 
-            std::cout << "[Line: " << __LINE__ << "]" << std::endl;
+            std::cout << "[BEGIN: " << Evf::LibraryName << "]" << std::endl;
 
             auto& evf = records[Evf::LibraryName];
             evf[construction].push_back(Evf::construction(N));
@@ -119,7 +121,7 @@ ImmediateData run_all_benchmarks(std::size_t begin, std::size_t end)
             evf[emission].push_back(Evf::emission(N));
             evf[combined].push_back(Evf::combined(N));
 
-            std::cout << "[Line: " << __LINE__ << "]" << std::endl;
+            std::cout << "[BEGIN: " << Evl::LibraryName << "]" << std::endl;
 
             auto& evl = records[Evl::LibraryName];
             evl[construction].push_back(Evl::construction(N));
@@ -128,7 +130,7 @@ ImmediateData run_all_benchmarks(std::size_t begin, std::size_t end)
             evl[emission].push_back(Evl::emission(N));
             evl[combined].push_back(Evl::combined(N));
 
-            std::cout << "[Line: " << __LINE__ << "]" << std::endl;
+            std::cout << "[BEGIN: " << Jls::LibraryName << "]" << std::endl;
 
             auto& jls = records[Jls::LibraryName];
             jls[construction].push_back(Jls::construction(N));
@@ -137,7 +139,7 @@ ImmediateData run_all_benchmarks(std::size_t begin, std::size_t end)
             jls[emission].push_back(Jls::emission(N));
             jls[combined].push_back(Jls::combined(N));
 
-            std::cout << "[Line: " << __LINE__ << "]" << std::endl;
+            std::cout << "[BEGIN: " << Jos::LibraryName << "]" << std::endl;
 
             auto& jos = records[Jos::LibraryName];
             jos[construction].push_back(Jos::construction(N));
@@ -146,7 +148,7 @@ ImmediateData run_all_benchmarks(std::size_t begin, std::size_t end)
             jos[emission].push_back(Jos::emission(N));
             jos[combined].push_back(Jos::combined(N));
 
-            std::cout << "[Line: " << __LINE__ << "]" << std::endl;
+            std::cout << "[BEGIN: " << Mws::LibraryName << "]" << std::endl;
 
             auto& mws = records[Mws::LibraryName];
             mws[construction].push_back(Mws::construction(N));
@@ -155,7 +157,7 @@ ImmediateData run_all_benchmarks(std::size_t begin, std::size_t end)
             mws[emission].push_back(Mws::emission(N));
             mws[combined].push_back(Mws::combined(N));
 
-            std::cout << "[Line: " << __LINE__ << "]" << std::endl;
+            std::cout << "[BEGIN: " << Nls::LibraryName << "]" << std::endl;
 
             auto& nls = records[Nls::LibraryName];
             nls[construction].push_back(Nls::construction(N));
@@ -164,7 +166,7 @@ ImmediateData run_all_benchmarks(std::size_t begin, std::size_t end)
             nls[emission].push_back(Nls::emission(N));
             nls[combined].push_back(Nls::combined(N));
 
-            std::cout << "[Line: " << __LINE__ << "]" << std::endl;
+            std::cout << "[BEGIN: " << Nod::LibraryName << "]" << std::endl;
 
             auto& nod = records[Nod::LibraryName];
             nod[construction].push_back(Nod::construction(N));
@@ -173,7 +175,7 @@ ImmediateData run_all_benchmarks(std::size_t begin, std::size_t end)
             nod[emission].push_back(Nod::emission(N));
             nod[combined].push_back(Nod::combined(N));
 
-            std::cout << "[Line: " << __LINE__ << "]" << std::endl;
+            std::cout << "[BEGIN: " << Nss::LibraryName << "]" << std::endl;
 
             auto& nss = records[Nss::LibraryName];
             nss[construction].push_back(Nss::construction(N));
@@ -182,7 +184,7 @@ ImmediateData run_all_benchmarks(std::size_t begin, std::size_t end)
             nss[emission].push_back(Nss::emission(N));
             nss[combined].push_back(Nss::combined(N));
 
-            std::cout << "[Line: " << __LINE__ << "]" << std::endl;
+            std::cout << "[BEGIN: " << Psg::LibraryName << "]" << std::endl;
 
             auto& psg = records[Psg::LibraryName];
             psg[construction].push_back(Psg::construction(N));
@@ -191,7 +193,16 @@ ImmediateData run_all_benchmarks(std::size_t begin, std::size_t end)
             psg[emission].push_back(Psg::emission(N));
             psg[combined].push_back(Psg::combined(N));
 
-            std::cout << "[Line: " << __LINE__ << "]" << std::endl;
+            //std::cout << "[BEGIN: " << Spp::LibraryName << "]" << std::endl;
+
+            //auto& spp = records[Spp::LibraryName];
+            //spp[construction].push_back(Spp::construction(N));
+            //spp[destruction].push_back(Spp::destruction(N));
+            //spp[connection].push_back(Spp::connection(N));
+            //spp[emission].push_back(Spp::emission(N));
+            //spp[combined].push_back(Spp::combined(N));
+
+            std::cout << "[BEGIN: " << Sss::LibraryName << "]" << std::endl;
 
             auto& sss = records[Sss::LibraryName];
             sss[construction].push_back(Sss::construction(N));
@@ -200,7 +211,7 @@ ImmediateData run_all_benchmarks(std::size_t begin, std::size_t end)
             sss[emission].push_back(Sss::emission(N));
             sss[combined].push_back(Sss::combined(N));
 
-            std::cout << "[Line: " << __LINE__ << "]" << std::endl;
+            std::cout << "[BEGIN: " << Wsg::LibraryName << "]" << std::endl;
 
             auto& wsg = records[Wsg::LibraryName];
             wsg[construction].push_back(Wsg::construction(N));
@@ -209,7 +220,7 @@ ImmediateData run_all_benchmarks(std::size_t begin, std::size_t end)
             wsg[emission].push_back(Wsg::emission(N));
             wsg[combined].push_back(Wsg::combined(N));
 
-            std::cout << "[Line: " << __LINE__ << "]" << std::endl;
+            std::cout << "[BEGIN: " << Yas::LibraryName << "]" << std::endl;
 
             auto& yas = records[Yas::LibraryName];
             yas[construction].push_back(Yas::construction(N));
