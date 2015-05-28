@@ -10,21 +10,22 @@ Performance
 +---------------------------------------------------------------------------------------------+
 | Library               |  construct |  destruct |  connect |  emission |  combined |  total  |
 +---------------------------------------------------------------------------------------------+
-| jeffomatic jl_signal  |  98065     |  16566    |  47176   |  42883    |  11087    |  215777 |
-| nano-signal-slot (FT) |  146463    |  11773    |  8735    |  42603    |  4772     |  214345 |
-| Yassi                 |  138330    |  7890     |  5046    |  41760    |  2747     |  195773 |
-| amc522 Signal11       |  114413    |  7891     |  5047    |  38332    |  2897     |  168581 |
-| pbhogan Signals       |  107755    |  8652     |  5581    |  41188    |  3491     |  166666 |
-| * fr00b0 nod          |  106506    |  9292     |  5730    |  35765    |  3267     |  160559 |
-| mwthinker Signal      |  91975     |  7989     |  4848    |  38685    |  2966     |  146462 |
-| joanrieu signal11     |  79948     |  12125    |  6256    |  33634    |  3519     |  135483 |
-| EvilTwin Fork         |  90853     |  7162     |  3323    |  27778    |  2141     |  131259 |
-| EvilTwin Observer     |  93953     |  4538     |  1886    |  28133    |  1347     |  129858 |
-| supergrover sigslot   |  12817     |  2174     |  2636    |  41534    |  1039     |  60201  |
-| * winglot Signals     |  11641     |  3903     |  3784    |  34914    |  1661     |  55903  |
-| * neosigslot          |  13764     |  4152     |  2976    |  8595     |  1459     |  30946  |
-| Boost Signals         |  8960      |  2719     |  862     |  8759     |  583      |  21884  |
-| * Boost Signals2      |  7730      |  4271     |  1565    |  6601     |  855      |  21021  |
+| jeffomatic jl_signal  |  104934    |  17479    |  50983   |  45051    |  11702    |  230150 |
+| nano-signal-slot (FT) |  152362    |  12718    |  9576    |  45219    |  5235     |  225110 |
+| Wink-Signals          |  146193    |  16181    |  8835    |  45903    |  5186     |  222298 |
+| Yassi                 |  144775    |  8428     |  5295    |  44441    |  2945     |  205884 |
+| amc522 Signal11       |  120039    |  8358     |  5383    |  41713    |  3100     |  178592 |
+| mwthinker Signal      |  115446    |  9093     |  5682    |  44037    |  3338     |  177595 |
+| pbhogan Signals       |  113131    |  9275     |  5776    |  43828    |  3624     |  175634 |
+| * fr00b0 nod          |  112814    |  9919     |  6194    |  38097    |  3490     |  170514 |
+| joanrieu signal11     |  97472     |  13991    |  7014    |  39942    |  4077     |  162494 |
+| EvilTwin Fork         |  104243    |  7931     |  3575    |  31503    |  2273     |  149525 |
+| EvilTwin Observer     |  106043    |  5157     |  2101    |  31531    |  1412     |  146246 |
+| supergrover sigslot   |  13798     |  2342     |  2887    |  43736    |  1146     |  63910  |
+| * winglot Signals     |  12355     |  4321     |  4322    |  37698    |  1814     |  60509  |
+| * neosigslot          |  16288     |  4927     |  3395    |  9019     |  1517     |  35146  |
+| Boost Signals         |  10388     |  3087     |  948     |  10016    |  627      |  25067  |
+| * Boost Signals2      |  8579      |  4630     |  1695    |  7354     |  941      |  23199  |
 | signls-cpp            |  #N/A      |  #N/A     |  #N/A    |  #N/A     |  #N/A     |  #N/A   |<- ASSERT FAIL
 +---------------------------------------------------------------------------------------------+
 ```
@@ -39,6 +40,7 @@ _Results are from Visual Studio 2015 RC using default release build settings._
 | ------- | ------------------ |:-----------:|
 | [Nano-signal-slot (FT)](https://github.com/NoAvailableAlias/nano-signal-slot/tree/FT) | 1043 kb | X |
 | [jeffomatic jl_signal](https://github.com/jeffomatic/jl_signal) | 1099 kb | - |
+| [Wink-Signals](https://github.com/miguelmartin75/Wink-Signals) | 1153 kb | X |
 | [winglot Signals](https://github.com/winglot/Signals) | 1195 kb | - |
 | [pbhogan Signals](https://github.com/pbhogan/Signals) | 1209 kb | X |
 | [mwthinker Signal](https://github.com/mwthinker/Signal) | 1241 kb | - |
@@ -49,7 +51,7 @@ _Results are from Visual Studio 2015 RC using default release build settings._
 | [Yassi](http://www.codeproject.com/Articles/867044/Yassi-Yet-Another-Signal-Slot-Implementation) | 1293 kb | X |
 | [joanrieu signal11](https://github.com/joanrieu/signal11) | 1300 kb | X |
 | [fr00b0 nod](https://github.com/fr00b0/nod) | 1307 kb | X |
-| [signals-cpp](https://github.com/martinkallman/signals-cpp) | 1676 kb | X |
+| ~~[signals-cpp](https://github.com/martinkallman/signals-cpp)~~ | ~~1676 kb~~ | ~~X~~ |
 | [Boost Signals](http://www.boost.org/doc/libs/1_56_0/doc/html/signals.html) | 1677 kb | - |
 | [neosigslot](http://www.i42.co.uk/stuff/neosigslot.htm) | 2397 kb | - |
 | [Boost Signals2](http://www.boost.org/doc/libs/1_56_0/doc/html/signals2.html) | 2824 kb | ? |

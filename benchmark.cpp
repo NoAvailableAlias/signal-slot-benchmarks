@@ -12,6 +12,7 @@
 #include "benchmark/hpp/benchmark_psg.hpp"
 //#include "benchmark/hpp/benchmark_spp.hpp"
 #include "benchmark/hpp/benchmark_sss.hpp"
+#include "benchmark/hpp/benchmark_wnk.hpp"
 #include "benchmark/hpp/benchmark_wsg.hpp"
 #include "benchmark/hpp/benchmark_yas.hpp"
 
@@ -60,13 +61,15 @@ void run_all_validation_tests(std::size_t N)
         Nod::validate_assert(N);
         Nss::validate_assert(N);
         Psg::validate_assert(N);
-        //Spp::validate_assert(N);
+        //Spp::validate_assert(N);//<- ASSERT FAIL
         Sss::validate_assert(N);
+        Wnk::validate_assert(N);
         Wsg::validate_assert(N);
         Yas::validate_assert(N);
     }
     catch (std::exception const& error)
     {
+        // Catch something exceptional, (not abort)
         std::cerr << "Exception encountered: " << error.what() << std::endl;
         std::cin.get();
     }
@@ -211,6 +214,15 @@ ImmediateData run_all_benchmarks(std::size_t begin, std::size_t end)
             sss[emission].push_back(Sss::emission(N));
             sss[combined].push_back(Sss::combined(N));
 
+            std::cout << "[BEGIN: " << Wnk::LibraryName << "]" << std::endl;
+
+            auto& wnk = records[Wnk::LibraryName];
+            wnk[construction].push_back(Wnk::construction(N));
+            wnk[destruction].push_back(Wnk::destruction(N));
+            wnk[connection].push_back(Wnk::connection(N));
+            wnk[emission].push_back(Wnk::emission(N));
+            wnk[combined].push_back(Wnk::combined(N));
+
             std::cout << "[BEGIN: " << Wsg::LibraryName << "]" << std::endl;
 
             auto& wsg = records[Wsg::LibraryName];
@@ -234,6 +246,7 @@ ImmediateData run_all_benchmarks(std::size_t begin, std::size_t end)
     }
     catch (std::exception const& error)
     {
+        // Would like to know how we died before we die
         std::cerr << "Exception encountered: " << error.what() << std::endl;
         std::cin.get();
     }
