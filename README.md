@@ -19,7 +19,6 @@ Performance
 | pbhogan Signals       |  113131    |  9275     |  5776    |  43828    |  3624     |  175634 |
 | * fr00b0 nod          |  112814    |  9919     |  6194    |  38097    |  3490     |  170514 |
 | joanrieu signal11     |  97472     |  13991    |  7014    |  39942    |  4077     |  162494 |
-| EvilTwin Fork         |  104243    |  7931     |  3575    |  31503    |  2273     |  149525 |
 | EvilTwin Observer     |  106043    |  5157     |  2101    |  31531    |  1412     |  146246 |
 | supergrover sigslot   |  13798     |  2342     |  2887    |  43736    |  1146     |  63910  |
 | * winglot Signals     |  12355     |  4321     |  4322    |  37698    |  1814     |  60509  |
@@ -44,7 +43,6 @@ _Results are from Visual Studio 2015 RC using default release build settings._
 | [winglot Signals](https://github.com/winglot/Signals) | 1195 kb | - |
 | [pbhogan Signals](https://github.com/pbhogan/Signals) | 1209 kb | X |
 | [mwthinker Signal](https://github.com/mwthinker/Signal) | 1241 kb | - |
-| [EvilTwin Fork](https://github.com/NoAvailableAlias/signal-slot-benchmark/blob/master/benchmark/lib/eviltwin/observer_fork.hpp) | 1248 kb | X |
 | [supergrover sigslot](https://github.com/supergrover/sigslot) | 1250 kb | - |
 | [amc522 Signal11](https://github.com/amc522/Signal11) | 1262 kb | X |
 | [EvilTwin Observer](http://eviltwingames.com/blog/the-observer-pattern-revisited/) | 1271 kb | X |

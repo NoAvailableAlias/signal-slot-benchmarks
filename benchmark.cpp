@@ -1,7 +1,6 @@
 #include "benchmark/hpp/benchmark_asg.hpp"
 #include "benchmark/hpp/benchmark_bs1.hpp"
 #include "benchmark/hpp/benchmark_bs2.hpp"
-#include "benchmark/hpp/benchmark_evf.hpp"
 #include "benchmark/hpp/benchmark_evl.hpp"
 #include "benchmark/hpp/benchmark_jls.hpp"
 #include "benchmark/hpp/benchmark_jos.hpp"
@@ -52,7 +51,6 @@ void run_all_validation_tests(std::size_t N)
         Asg::validate_assert(N);
         Bs1::validate_assert(N);
         Bs2::validate_assert(N);
-        Evf::validate_assert(N);
         Evl::validate_assert(N);
         Jls::validate_assert(N);
         Jos::validate_assert(N);
@@ -114,15 +112,6 @@ ImmediateData run_all_benchmarks(std::size_t begin, std::size_t end)
             bs2[connection].push_back(Bs2::connection(N));
             bs2[emission].push_back(Bs2::emission(N));
             bs2[combined].push_back(Bs2::combined(N));
-
-            std::cout << "[BEGIN: " << Evf::LibraryName << "]" << std::endl;
-
-            auto& evf = records[Evf::LibraryName];
-            evf[construction].push_back(Evf::construction(N));
-            evf[destruction].push_back(Evf::destruction(N));
-            evf[connection].push_back(Evf::connection(N));
-            evf[emission].push_back(Evf::emission(N));
-            evf[combined].push_back(Evf::combined(N));
 
             std::cout << "[BEGIN: " << Evl::LibraryName << "]" << std::endl;
 
