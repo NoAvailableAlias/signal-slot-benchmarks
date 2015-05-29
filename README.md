@@ -30,29 +30,29 @@ Performance
 ```
 _* Library is designed to be thread safe._
 
-Size Metrics
-------------
+Metrics
+-------
 
 _Results are from Visual Studio 2015 RC using default release build settings._
 
-| Library | Object File Size ^ | Header Only |
-| ------- | ------------------ |:-----------:|
-| [Nano-signal-slot (FT)](https://github.com/NoAvailableAlias/nano-signal-slot/tree/FT) | 1043 kb | X |
-| [jeffomatic jl_signal](https://github.com/jeffomatic/jl_signal) | 1099 kb | - |
-| [Wink-Signals](https://github.com/miguelmartin75/Wink-Signals) | 1153 kb | X |
-| [winglot Signals](https://github.com/winglot/Signals) | 1195 kb | - |
-| [pbhogan Signals](https://github.com/pbhogan/Signals) | 1209 kb | X |
-| [mwthinker Signal](https://github.com/mwthinker/Signal) | 1241 kb | - |
-| [supergrover sigslot](https://github.com/supergrover/sigslot) | 1250 kb | - |
-| [amc522 Signal11](https://github.com/amc522/Signal11) | 1262 kb | X |
-| [EvilTwin Observer](http://eviltwingames.com/blog/the-observer-pattern-revisited/) | 1271 kb | X |
-| [Yassi](http://www.codeproject.com/Articles/867044/Yassi-Yet-Another-Signal-Slot-Implementation) | 1293 kb | X |
-| [joanrieu signal11](https://github.com/joanrieu/signal11) | 1300 kb | X |
-| [fr00b0 nod](https://github.com/fr00b0/nod) | 1307 kb | X |
-| ~~[signals-cpp](https://github.com/martinkallman/signals-cpp)~~ | ~~1676 kb~~ | ~~X~~ |
-| [Boost Signals](http://www.boost.org/doc/libs/1_56_0/doc/html/signals.html) | 1677 kb | - |
-| [neosigslot](http://www.i42.co.uk/stuff/neosigslot.htm) | 2397 kb | - |
-| [Boost Signals2](http://www.boost.org/doc/libs/1_56_0/doc/html/signals2.html) | 2824 kb | ? |
+| Library | Object File Size ^ | Header Only | Data Structure | Thread Safe |
+| ------- | ------------------ | ----------- | -------------- |:-----------:|
+| [nano-signal-slot (FT)](https://github.com/NoAvailableAlias/nano-signal-slot/tree/FT) | 1043 kb | X | singly linked list | - |
+| [jeffomatic jl_signal](https://github.com/jeffomatic/jl_signal) | 1099 kb | - | doubly linked list | - |
+| [Wink-Signals](https://github.com/miguelmartin75/Wink-Signals) | 1153 kb | X | std::vector | - |
+| [winglot Signals](https://github.com/winglot/Signals) | 1195 kb | - | std::list | X |
+| [pbhogan Signals](https://github.com/pbhogan/Signals) | 1209 kb | X | std::set | - |
+| [mwthinker Signal](https://github.com/mwthinker/Signal) | 1241 kb | - | std::list | - |
+| [supergrover sigslot](https://github.com/supergrover/sigslot) | 1250 kb | - | std::list | - |
+| [amc522 Signal11](https://github.com/amc522/Signal11) | 1262 kb | X | std::vector | - |
+| [EvilTwin Observer](http://eviltwingames.com/blog/the-observer-pattern-revisited/) | 1271 kb | X | std::vector | - |
+| [Yassi](http://www.codeproject.com/Articles/867044/Yassi-Yet-Another-Signal-Slot-Implementation) | 1293 kb | X | std::vector | - |
+| [joanrieu signal11](https://github.com/joanrieu/signal11) | 1300 kb | X | std::list | - |
+| [fr00b0 nod](https://github.com/fr00b0/nod) | 1307 kb | X | std::vector | X |
+| ~~[signals-cpp](https://github.com/martinkallman/signals-cpp)~~ | ~~1676 kb~~ | ~~X~~ | ~~std::unordered_map~~ | - |
+| [Boost Signals](http://www.boost.org/doc/libs/1_56_0/doc/html/signals.html) | 1677 kb | - | ? | - |
+| [neosigslot](http://www.i42.co.uk/stuff/neosigslot.htm) | 2397 kb | - | std::map | X |
+| [Boost Signals2](http://www.boost.org/doc/libs/1_56_0/doc/html/signals2.html) | 2824 kb | ? | ? | X |
 
 Benchmark Algorithms
 --------------------

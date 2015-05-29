@@ -31,7 +31,7 @@ typedef std::chrono::duration<double, std::milli> Delta_u;
 typedef std::shared_ptr<void> SlotScope;
 
 template <typename Deleter>
-SlotScope make_slot_scope(Deleter deleter)
+SlotScope make_slot_scope(Deleter&& deleter)
 {
     return SlotScope((void*)0xDEADC0DE, deleter);
 }
