@@ -35,12 +35,12 @@ Metrics
 
 _Results are from Visual Studio 2015 RC using default release build settings._
 
-| Library | Object File Size ^ | Header Only | Data Structure | Thread Safe |
-| ------- | ------------------ | ----------- | -------------- |:-----------:|
+| Library | Build Size | Header Only | Data Structure | Thread Safe |
+| ------- |:----------:|:-----------:|:--------------:|:-----------:|
 | [nano-signal-slot (FT)](https://github.com/NoAvailableAlias/nano-signal-slot/tree/FT) | 1043 kb | X | singly linked list | - |
 | [jeffomatic jl_signal](https://github.com/jeffomatic/jl_signal) | 1099 kb | - | doubly linked list | - |
 | [Wink-Signals](https://github.com/miguelmartin75/Wink-Signals) | 1153 kb | X | std::vector | - |
-| [winglot Signals](https://github.com/winglot/Signals) | 1195 kb | - | std::list | X |
+| [winglot Signals](https://github.com/winglot/Signals) | 1195 kb | - | *std::list | X |
 | [pbhogan Signals](https://github.com/pbhogan/Signals) | 1209 kb | X | std::set | - |
 | [mwthinker Signal](https://github.com/mwthinker/Signal) | 1241 kb | - | std::list | - |
 | [supergrover sigslot](https://github.com/supergrover/sigslot) | 1250 kb | - | std::list | - |
@@ -51,8 +51,10 @@ _Results are from Visual Studio 2015 RC using default release build settings._
 | [fr00b0 nod](https://github.com/fr00b0/nod) | 1307 kb | X | std::vector | X |
 | ~~[signals-cpp](https://github.com/martinkallman/signals-cpp)~~ | ~~1676 kb~~ | ~~X~~ | ~~std::unordered_map~~ | - |
 | [Boost Signals](http://www.boost.org/doc/libs/1_56_0/doc/html/signals.html) | 1677 kb | - | ? | - |
-| [neosigslot](http://www.i42.co.uk/stuff/neosigslot.htm) | 2397 kb | - | std::map | X |
+| [neosigslot](http://www.i42.co.uk/stuff/neosigslot.htm) | 2397 kb | - | *std::map | X |
 | [Boost Signals2](http://www.boost.org/doc/libs/1_56_0/doc/html/signals2.html) | 2824 kb | ? | ? | X |
+
+_* Uses additional data structures._
 
 Benchmark Algorithms
 --------------------
