@@ -26,8 +26,8 @@ Performance
 | * neosigslot          |  16288     |  4927     |  3395    |  9019     |  1517     |  35146  |
 | Boost Signals         |  10388     |  3087     |  948     |  10016    |  627      |  25067  |
 | * Boost Signals2      |  8579      |  4630     |  1695    |  7354     |  941      |  23199  |
-| martin signls-cpp     |  #N/A      |  #N/A     |  #N/A    |  #N/A     |  #N/A     |  #N/A   |<- ASSERT FAIL
-| * Kosta signls-cpp    |  #N/A      |  #N/A     |  #N/A    |  #N/A     |  #N/A     |  #N/A   |<- FAILS TO COMPILE
+| martin signals-cpp    |  #N/A      |  #N/A     |  #N/A    |  #N/A     |  #N/A     |  #N/A   |<- ASSERT FAIL
+| * Kosta signals-cpp   |  #N/A      |  #N/A     |  #N/A    |  #N/A     |  #N/A     |  #N/A   |<- FAILS TO COMPILE
 +---------------------------------------------------------------------------------------------+
 ```
 _* Library is designed to be thread safe._
