@@ -1,4 +1,5 @@
 # signal-slot-benchmarks
+
 Comprehensive benchmarks for a majority of GitHub c++ signal slot implementations and others.
 
 Performance
@@ -25,7 +26,8 @@ Performance
 | * neosigslot          |  16288     |  4927     |  3395    |  9019     |  1517     |  35146  |
 | Boost Signals         |  10388     |  3087     |  948     |  10016    |  627      |  25067  |
 | * Boost Signals2      |  8579      |  4630     |  1695    |  7354     |  941      |  23199  |
-| signls-cpp            |  #N/A      |  #N/A     |  #N/A    |  #N/A     |  #N/A     |  #N/A   |<- ASSERT FAIL
+| martin signls-cpp     |  #N/A      |  #N/A     |  #N/A    |  #N/A     |  #N/A     |  #N/A   |<- ASSERT FAIL
+| * Kosta signls-cpp    |  #N/A      |  #N/A     |  #N/A    |  #N/A     |  #N/A     |  #N/A   |<- FAILS TO COMPILE
 +---------------------------------------------------------------------------------------------+
 ```
 _* Library is designed to be thread safe._
@@ -49,10 +51,11 @@ _Size results are from Visual Studio 2015 RC using default release build setting
 | [Yassi](http://www.codeproject.com/Articles/867044/Yassi-Yet-Another-Signal-Slot-Implementation) | 1293 kb | X | std::vector | - |
 | [joanrieu signal11](https://github.com/joanrieu/signal11) | 1300 kb | X | std::list | - |
 | [fr00b0 nod](https://github.com/fr00b0/nod) | 1307 kb | X | std::vector | X |
-| ~~[signals-cpp](https://github.com/martinkallman/signals-cpp)~~ | ~~1676 kb~~ | ~~X~~ | ~~std::unordered_map~~ | - |
+| ~~[martinkallman signals-cpp](https://github.com/martinkallman/signals-cpp)~~ | ~~1676 kb~~ | ~~X~~ | ~~std::unordered_map~~ | - |
 | [Boost Signals](http://www.boost.org/doc/libs/1_56_0/doc/html/signals.html) | 1677 kb | - | ? | - |
 | [neosigslot](http://www.i42.co.uk/stuff/neosigslot.htm) | 2397 kb | - | *std::map | X |
 | [Boost Signals2](http://www.boost.org/doc/libs/1_58_0/doc/html/signals2.html) | 2824 kb | ? | ? | X |
+| ~~[Kosta-Github signals-cpp](https://github.com/Kosta-Github/signals-cpp)~~ | ~~?~~ | ~~X~~ | ~~std::vector~~ | ~~X~~ |
 
 _* Uses additional data structures._
 
@@ -64,7 +67,7 @@ _The individual benchmark algorithms are completely generic through templates._
 | Algorithm | Description |
 | --------- | ----------- |
 | [validation_assert](https://github.com/NoAvailableAlias/signal-slot-benchmarks/blob/master/benchmark.hpp#L21) | Assert correct implementation operation. |
-| [construction](https://github.com/NoAvailableAlias/signal-slot-benchmarks/blob/master/benchmark.hpp#L50) | Time the construction of a Signal and N number of Foo instances. |
+| [construction](https://github.com/NoAvailableAlias/signal-slot-benchmarks/blob/master/benchmark.hpp#L50) | Time the construction of a Signal to an N number of Foo instances. |
 | [destruction](https://github.com/NoAvailableAlias/signal-slot-benchmarks/blob/master/benchmark.hpp#L71) | Time the destruction of a Signal and associated Connections to N number of Foo instances. |
 | [connection](https://github.com/NoAvailableAlias/signal-slot-benchmarks/blob/master/benchmark.hpp#L101) | Time Signal connections to a randomized N number of Foo instances. |
 | [emission](https://github.com/NoAvailableAlias/signal-slot-benchmarks/blob/master/benchmark.hpp#L129) | Time the duration of an N slot emission. |
