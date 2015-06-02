@@ -23,9 +23,10 @@
 
 #pragma once
 
-#include "signal.hpp"
-
 #include <utility>
+#include <vector>
+
+#include "connection.hpp"
 
 namespace signals {
 

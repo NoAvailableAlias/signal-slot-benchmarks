@@ -23,14 +23,14 @@
 
 #pragma once
 
-#include "connection.hpp"
-
 #include <algorithm>
 #include <cassert>
 #include <functional>
 #include <memory>
 #include <mutex>
 #include <vector>
+
+#include "connections.hpp"
 
 namespace signals {
 
@@ -141,7 +141,8 @@ namespace signals {
 #if defined(SIGNALS_CPP_HAVE_VARIADIC_TEMPLATES)
 
         template<typename... ARGS>
-        inline void fire_if(bool condition, ARGS const&... args) const {
+        //inline void fire_if(bool condition, ARGS const&... args) const {
+        inline void fire_if(bool condition, ARGS... args) const {
             if(condition) {
                 if(auto t = m_targets) {
                     for(auto& i : *t) { i.conn.call([&]() { i.target(args...); }); }
@@ -149,7 +150,8 @@ namespace signals {
             }
         }
         template<typename... ARGS>
-        inline void fire(ARGS const&... args) const { fire_if(true, args...); }
+        //inline void fire(ARGS const&... args) const { fire_if(true, args...); }
+        inline void fire(ARGS... args) const { fire_if(true, args...); }
 
 #else // defined(SIGNALS_CPP_HAVE_VARIADIC_TEMPLATES)
 

@@ -23,11 +23,11 @@
 
 #pragma once
 
-#include "config.hpp"
-
 #include <atomic>
 #include <memory>
 #include <thread>
+
+#include "config.hpp"
 
 namespace signals {
 
