@@ -4,13 +4,13 @@
 #include "benchmark/hpp/benchmark_evl.hpp"
 #include "benchmark/hpp/benchmark_jls.hpp"
 #include "benchmark/hpp/benchmark_jos.hpp"
-//#include "benchmark/hpp/benchmark_ksc.hpp"//<- FAILS TO COMPILE
+#include "benchmark/hpp/benchmark_ksc.hpp"
 #include "benchmark/hpp/benchmark_mws.hpp"
 #include "benchmark/hpp/benchmark_nls.hpp"
 #include "benchmark/hpp/benchmark_nod.hpp"
 #include "benchmark/hpp/benchmark_nss.hpp"
 #include "benchmark/hpp/benchmark_psg.hpp"
-//#include "benchmark/hpp/benchmark_spp.hpp"//<- ASSERT FAIL
+#include "benchmark/hpp/benchmark_spp.hpp"
 #include "benchmark/hpp/benchmark_sss.hpp"
 #include "benchmark/hpp/benchmark_wnk.hpp"
 #include "benchmark/hpp/benchmark_wsg.hpp"
@@ -55,7 +55,7 @@ void run_all_validation_tests(std::size_t N)
         Evl::validate_assert(N);
         Jls::validate_assert(N);
         Jos::validate_assert(N);
-        //Ksc::validate_assert(N);//<- FAILS TO COMPILE
+        //Ksc::validate_assert(N);//<- ASSERT FAIL
         Mws::validate_assert(N);
         Nls::validate_assert(N);
         Nod::validate_assert(N);

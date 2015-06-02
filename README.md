@@ -27,7 +27,7 @@ Performance
 | Boost Signals         |  10388     |  3087     |  948     |  10016    |  627      |  25067  |
 | * Boost Signals2      |  8579      |  4630     |  1695    |  7354     |  941      |  23199  |
 | martin signals-cpp    |  #N/A      |  #N/A     |  #N/A    |  #N/A     |  #N/A     |  #N/A   |<- ASSERT FAIL
-| * Kosta signals-cpp   |  #N/A      |  #N/A     |  #N/A    |  #N/A     |  #N/A     |  #N/A   |<- FAILS TO COMPILE
+| * Kosta signals-cpp   |  #N/A      |  #N/A     |  #N/A    |  #N/A     |  #N/A     |  #N/A   |<- ASSSER FAIL
 +---------------------------------------------------------------------------------------------+
 ```
 _* Library is designed to be thread safe._
@@ -53,9 +53,9 @@ _Size results are from Visual Studio 2015 RC using default release build setting
 | [fr00b0 nod](https://github.com/fr00b0/nod) | 1307 kb | X | std::vector | X |
 | ~~[martinkallman signals-cpp](https://github.com/martinkallman/signals-cpp)~~ | ~~1676 kb~~ | ~~X~~ | ~~std::unordered_map~~ | - |
 | [Boost Signals](http://www.boost.org/doc/libs/1_56_0/doc/html/signals.html) | 1677 kb | - | ? | - |
+| ~~[Kosta-Github signals-cpp](https://github.com/Kosta-Github/signals-cpp)~~ | ~~2225 kb~~ | ~~X~~ | ~~std::vector~~ | ~~X~~ |
 | [neosigslot](http://www.i42.co.uk/stuff/neosigslot.htm) | 2397 kb | - | *std::map | X |
 | [Boost Signals2](http://www.boost.org/doc/libs/1_58_0/doc/html/signals2.html) | 2824 kb | ? | ? | X |
-| ~~[Kosta-Github signals-cpp](https://github.com/Kosta-Github/signals-cpp)~~ | ~~?~~ | ~~X~~ | ~~std::vector~~ | ~~X~~ |
 
 _* Uses additional data structures._
 

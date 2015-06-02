@@ -1,7 +1,7 @@
 #ifndef BENCHMARK_KSC_HPP
 #define BENCHMARK_KSC_HPP
 
-#include "../lib/Kosta-Github/signals-cpp/signals-cpp/signal.hpp"
+#include "../lib/Kosta-Github/signals-cpp/signals-cpp/signals.hpp"
 
 #include "../../benchmark.hpp"
 
