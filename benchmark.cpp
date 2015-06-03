@@ -55,7 +55,7 @@ void run_all_validation_tests(std::size_t N)
         Evl::validate_assert(N);
         Jls::validate_assert(N);
         Jos::validate_assert(N);
-        //Ksc::validate_assert(N);//<- ASSERT FAIL
+        Ksc::validate_assert(N);//<- ASSERT FAIL
         Mws::validate_assert(N);
         Nls::validate_assert(N);
         Nod::validate_assert(N);
@@ -142,14 +142,14 @@ ImmediateData run_all_benchmarks(std::size_t begin, std::size_t end)
             jos[emission].push_back(Jos::emission(N));
             jos[combined].push_back(Jos::combined(N));
 
-            //std::cout << "[BEGIN: " << Ksc::LibraryName << "]" << std::endl;
+            std::cout << "[BEGIN: " << Ksc::LibraryName << "]" << std::endl;
 
-            //auto& ksc = records[Ksc::LibraryName];
-            //ksc[construction].push_back(Ksc::construction(N));
-            //ksc[destruction].push_back(Ksc::destruction(N));
-            //ksc[connection].push_back(Ksc::connection(N));
-            //ksc[emission].push_back(Ksc::emission(N));
-            //ksc[combined].push_back(Ksc::combined(N));
+            auto& ksc = records[Ksc::LibraryName];
+            ksc[construction].push_back(Ksc::construction(N));
+            ksc[destruction].push_back(Ksc::destruction(N));
+            ksc[connection].push_back(Ksc::connection(N));
+            ksc[emission].push_back(Ksc::emission(N));
+            ksc[combined].push_back(Ksc::combined(N));
 
             std::cout << "[BEGIN: " << Mws::LibraryName << "]" << std::endl;
 

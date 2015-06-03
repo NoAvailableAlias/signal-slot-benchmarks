@@ -24,6 +24,7 @@ class Ksc
     template <typename Subject, typename Foo>
     static void connect_method(Subject& subject, Foo& foo)
     {
+        //foo.reg = subject.connect(std::bind(&Foo::handler, &foo, std::placeholders::_1));
         foo.reg = subject.connect(&foo, &Foo::handler);
     }
     template <typename Subject>

@@ -8,27 +8,27 @@ Performance
 **_Higher score is better._** _N / (sample size / count)._
 
 ```
-+---------------------------------------------------------------------------------------------+
++-----------------------+------------+-----------+----------+-----------+-----------+---------+
 | Library               |  construct |  destruct |  connect |  emission |  combined |  total  |
-+---------------------------------------------------------------------------------------------+
-| jeffomatic jl_signal  |  104934    |  17479    |  50983   |  45051    |  11702    |  230150 |
-| nano-signal-slot (FT) |  152362    |  12718    |  9576    |  45219    |  5235     |  225110 |
-| Wink-Signals          |  146193    |  16181    |  8835    |  45903    |  5186     |  222298 |
-| Yassi                 |  144775    |  8428     |  5295    |  44441    |  2945     |  205884 |
-| amc522 Signal11       |  120039    |  8358     |  5383    |  41713    |  3100     |  178592 |
-| mwthinker Signal      |  115446    |  9093     |  5682    |  44037    |  3338     |  177595 |
-| pbhogan Signals       |  113131    |  9275     |  5776    |  43828    |  3624     |  175634 |
-| * fr00b0 nod          |  112814    |  9919     |  6194    |  38097    |  3490     |  170514 |
-| joanrieu signal11     |  97472     |  13991    |  7014    |  39942    |  4077     |  162494 |
-| EvilTwin Observer     |  106043    |  5157     |  2101    |  31531    |  1412     |  146246 |
-| supergrover sigslot   |  13798     |  2342     |  2887    |  43736    |  1146     |  63910  |
-| * winglot Signals     |  12355     |  4321     |  4322    |  37698    |  1814     |  60509  |
-| * neosigslot          |  16288     |  4927     |  3395    |  9019     |  1517     |  35146  |
-| Boost Signals         |  10388     |  3087     |  948     |  10016    |  627      |  25067  |
-| * Boost Signals2      |  8579      |  4630     |  1695    |  7354     |  941      |  23199  |
+|-----------------------+------------+-----------+----------+-----------+-----------+---------|
+| jeffomatic jl_signal  |  100451    |  16579    |  48720   |  42930    |  11061    |  219740 |
+| nano-signal-slot (FT) |  148602    |  12153    |  9304    |  43610    |  5026     |  218696 |
+| Wink-Signals          |  141163    |  15649    |  8493    |  44580    |  5014     |  214898 |
+| Yassi                 |  140486    |  8136     |  5142    |  43891    |  2916     |  200571 |
+| amc522 Signal11       |  117509    |  8185     |  5207    |  40930    |  3024     |  174856 |
+| pbhogan Signals       |  110944    |  8934     |  5546    |  42738    |  3496     |  171659 |
+| mwthinker Signal      |  110457    |  8639     |  5415    |  42651    |  3221     |  170383 |
+| * fr00b0 nod          |  109834    |  9610     |  5928    |  36822    |  3370     |  165564 |
+| * Kosta signals-cpp   |  125985    |  8363     |  1194    |  20349    |  981      |  156872 |
+| joanrieu signal11     |  92931     |  13150    |  6374    |  37465    |  3816     |  153736 |
+| EvilTwin Observer     |  93885     |  5033     |  2034    |  29866    |  1360     |  132178 |
+| supergrover sigslot   |  13188     |  2248     |  2767    |  43824    |  1089     |  63116  |
+| * winglot Signals     |  11886     |  4181     |  4104    |  36554    |  1749     |  58474  |
+| * neosigslot          |  15651     |  4772     |  3301    |  8700     |  1463     |  33888  |
+| Boost Signals         |  10207     |  2984     |  912     |  9824     |  609      |  24536  |
+| * Boost Signals2      |  8307      |  4534     |  1660    |  7154     |  912      |  22566  |
 | martin signals-cpp    |  #N/A      |  #N/A     |  #N/A    |  #N/A     |  #N/A     |  #N/A   |<- ASSERT FAIL
-| * Kosta signals-cpp   |  #N/A      |  #N/A     |  #N/A    |  #N/A     |  #N/A     |  #N/A   |<- ASSSER FAIL
-+---------------------------------------------------------------------------------------------+
++-----------------------+------------+-----------+----------+-----------+-----------+---------+
 ```
 _* Library is designed to be thread safe._
 
@@ -53,7 +53,7 @@ _Size results are from Visual Studio 2015 RC using default release build setting
 | [fr00b0 nod](https://github.com/fr00b0/nod) | 1307 kb | X | std::vector | X |
 | ~~[martinkallman signals-cpp](https://github.com/martinkallman/signals-cpp)~~ | ~~1676 kb~~ | ~~X~~ | ~~std::unordered_map~~ | - |
 | [Boost Signals](http://www.boost.org/doc/libs/1_56_0/doc/html/signals.html) | 1677 kb | - | ? | - |
-| ~~[Kosta-Github signals-cpp](https://github.com/Kosta-Github/signals-cpp)~~ | ~~2225 kb~~ | ~~X~~ | ~~std::vector~~ | ~~X~~ |
+| [Kosta-Github signals-cpp](https://github.com/Kosta-Github/signals-cpp) | 2225 kb | X | std::vector | X |
 | [neosigslot](http://www.i42.co.uk/stuff/neosigslot.htm) | 2397 kb | - | *std::map | X |
 | [Boost Signals2](http://www.boost.org/doc/libs/1_58_0/doc/html/signals2.html) | 2824 kb | ? | ? | X |
 
