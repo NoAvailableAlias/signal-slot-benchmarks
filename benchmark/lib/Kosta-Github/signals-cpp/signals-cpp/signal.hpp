@@ -141,83 +141,105 @@ namespace signals {
 #if defined(SIGNALS_CPP_HAVE_VARIADIC_TEMPLATES)
 
         template<typename... ARGS>
-        //inline void fire_if(bool condition, ARGS const&... args) const {
-        inline void fire_if(bool condition, ARGS... args) const {
+        inline void fire_if(bool condition, ARGS&&... args) const {
             if(condition) {
                 if(auto t = m_targets) {
-                    for(auto& i : *t) { i.conn.call([&]() { i.target(args...); }); }
+                    for(auto& i : *t) { i.conn.call([&]() { i.target(std::forward<ARGS>(args)...); }); }
                 }
             }
         }
         template<typename... ARGS>
-        //inline void fire(ARGS const&... args) const { fire_if(true, args...); }
-        inline void fire(ARGS... args) const { fire_if(true, args...); }
+        inline void fire(ARGS&&... args) const { fire_if(true, std::forward<ARGS>(args)...); }
 
 #else // defined(SIGNALS_CPP_HAVE_VARIADIC_TEMPLATES)
 
         inline void fire_if(bool condition) const {
             if(condition) {
                 if(auto t = m_targets) {
-                    for(auto& i : *t) { i.conn.call([&]() { i.target(); }); }
+                    for(auto& i : *t) {
+                        i.conn.call([&]() { i.target(); });
+                    }
                 }
             }
         }
-        inline void fire() const { fire_if(true); }
+        inline void fire() const {
+            fire_if(true);
+        }
 
         template<typename ARG1>
-        inline void fire_if(bool condition, ARG1 const& arg1) const {
+        inline void fire_if(bool condition, ARG1&& arg1) const {
             if(condition) {
                 if(auto t = m_targets) {
-                    for(auto& i : *t) { i.conn.call([&]() { i.target(arg1); }); }
+                    for(auto& i : *t) {
+                        i.conn.call([&]() { i.target(std::forward<ARG1>(arg1)); });
+                    }
                 }
             }
         }
         template<typename ARG1>
-        inline void fire(ARG1 const& arg1) const { fire_if(true, arg1); }
+        inline void fire(ARG1&& arg1) const {
+            fire_if(true, std::forward<ARG1>(arg1));
+        }
 
         template<typename ARG1, typename ARG2>
-        inline void fire_if(bool condition, ARG1 const& arg1, ARG2 const& arg2) const {
+        inline void fire_if(bool condition, ARG1&& arg1, ARG2&& arg2) const {
             if(condition) {
                 if(auto t = m_targets) {
-                    for(auto& i : *t) { i.conn.call([&]() { i.target(arg1, arg2); }); }
+                    for(auto& i : *t) {
+                        i.conn.call([&]() { i.target(std::forward<ARG1>(arg1), std::forward<ARG2>(arg2)); });
+                    }
                 }
             }
         }
         template<typename ARG1, typename ARG2>
-        inline void fire(ARG1 const& arg1, ARG2 const& arg2) const { fire_if(true, arg1, arg2); }
+        inline void fire(ARG1& arg1, ARG2& arg2) const {
+            fire_if(true, std::forward<ARG1>(arg1), std::forward<ARG2>(arg2));
+        }
 
         template<typename ARG1, typename ARG2, typename ARG3>
-        inline void fire_if(bool condition, ARG1 const& arg1, ARG2 const& arg2, ARG3 const& arg3) const {
+        inline void fire_if(bool condition, ARG1&& arg1, ARG2&& arg2, ARG3&& arg3) const {
             if(condition) {
                 if(auto t = m_targets) {
-                    for(auto& i : *t) { i.conn.call([&]() { i.target(arg1, arg2, arg3); }); }
+                    for(auto& i : *t) {
+                        i.conn.call([&]() { i.target(std::forward<ARG1>(arg1), std::forward<ARG2>(arg2), std::forward<ARG3>(arg3)); });
+                    }
                 }
             }
         }
         template<typename ARG1, typename ARG2, typename ARG3>
-        inline void fire(ARG1 const& arg1, ARG2 const& arg2, ARG3 const& arg3) const { fire_if(true, arg1, arg2, arg3); }
+        inline void fire(ARG1&& arg1, ARG2&& arg2, ARG3&& arg3) const {
+            fire_if(true, std::forward<ARG1>(arg1), std::forward<ARG2>(arg2), std::forward<ARG3>(arg3));
+        }
 
         template<typename ARG1, typename ARG2, typename ARG3, typename ARG4>
-        inline void fire_if(bool condition, ARG1 const& arg1, ARG2 const& arg2, ARG3 const& arg3, ARG4 const& arg4) const {
+        inline void fire_if(bool condition, ARG1&& arg1, ARG2&& arg2, ARG3&& arg3, ARG4&& arg4) const {
             if(condition) {
                 if(auto t = m_targets) {
-                    for(auto& i : *t) { i.conn.call([&]() { i.target(arg1, arg2, arg3, arg4); }); }
+                    for(auto& i : *t) {
+                        i.conn.call([&]() { i.target(std::forward<ARG1>(arg1), std::forward<ARG2>(arg2), std::forward<ARG3>(arg3), std::forward<ARG4>(arg4)); });
+                    }
                 }
             }
         }
         template<typename ARG1, typename ARG2, typename ARG3, typename ARG4>
-        inline void fire(ARG1 const& arg1, ARG2 const& arg2, ARG3 const& arg3, ARG4 const& arg4) const { fire_if(true, arg1, arg2, arg3, arg4); }
+        inline void fire(ARG1&& arg1, ARG2&& arg2, ARG3&& arg3, ARG4&& arg4) const {
+            fire_if(true, std::forward<ARG1>(arg1), std::forward<ARG2>(arg2), std::forward<ARG3>(arg3), std::forward<ARG4>(arg4));
+        }
 
         template<typename ARG1, typename ARG2, typename ARG3, typename ARG4, typename ARG5>
-        inline void fire_if(bool condition, ARG1 const& arg1, ARG2 const& arg2, ARG3 const& arg3, ARG4 const& arg4, ARG5 const& arg5) const {
+        inline void fire_if(bool condition, ARG1&& arg1, ARG2&& arg2, ARG3&& arg3, ARG4&& arg4, ARG5&& arg5) const {
             if(condition) {
                 if(auto t = m_targets) {
-                    for(auto& i : *t) { i.conn.call([&]() { i.target(arg1, arg2, arg3, arg4, arg5); }); }
+                    for(auto& i : *t) {
+                        i.conn.call([&]() { i.target(std::forward<ARG1>(arg1), std::forward<ARG2>(arg2), std::forward<ARG3>(arg3), std::forward<ARG4>(arg4), std::forward<ARG5>(arg5)); });
+                    }
                 }
             }
         }
         template<typename ARG1, typename ARG2, typename ARG3, typename ARG4, typename ARG5>
-        inline void fire(ARG1 const& arg1, ARG2 const& arg2, ARG3 const& arg3, ARG4 const& arg4, ARG5 const& arg5) const { fire_if(true, arg1, arg2, arg3, arg4, arg5); }
+        inline void fire(ARG1&& arg1, ARG2&& arg2, ARG3&& arg3, ARG4&& arg4, ARG5&& arg5) const {
+            fire_if(true, std::forward<ARG1>(arg1), std::forward<ARG2>(arg2), std::forward<ARG3>(arg3), std::forward<ARG4>(arg4), std::forward<ARG5>(arg5));
+        }
 
 #endif // defined(SIGNALS_CPP_HAVE_VARIADIC_TEMPLATES)
 
