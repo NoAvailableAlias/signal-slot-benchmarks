@@ -55,7 +55,7 @@ void run_all_validation_tests(std::size_t N)
         Evl::validate_assert(N);
         Jls::validate_assert(N);
         Jos::validate_assert(N);
-        Ksc::validate_assert(N);//<- ASSERT FAIL
+        Ksc::validate_assert(N);
         Mws::validate_assert(N);
         Nls::validate_assert(N);
         Nod::validate_assert(N);
