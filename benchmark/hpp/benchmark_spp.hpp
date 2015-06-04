@@ -19,7 +19,7 @@ class Spp
     public:
     
     // Had to add namespace, always namespace
-    using SignalType = SPP::Signal<Rng>;
+    using SignalType = SPP::Signal<Rng&>;
 
     template <typename Subject, typename Foo>
     static void connect_method(Subject& subject, Foo& foo)
