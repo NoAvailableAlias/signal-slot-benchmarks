@@ -35,27 +35,27 @@ _* Library is designed to be thread safe._
 Metrics
 -------
 
-_Size results are from Visual Studio 2015 RC using default release build settings._
+_Size results are from Visual Studio 2015 Community using default release build settings._
 
 | Library | Build Size | Header Only | Data Structure | Thread Safe |
 | ------- |:----------:|:-----------:| -------------- |:-----------:|
-| [nano-signal-slot (FT)](https://github.com/NoAvailableAlias/nano-signal-slot/tree/FT) | 1043 kb | X | singly linked list | - |
-| [jeffomatic jl_signal](https://github.com/jeffomatic/jl_signal) | 1099 kb | - | doubly linked list | - |
-| [Wink-Signals](https://github.com/miguelmartin75/Wink-Signals) | 1153 kb | X | std::vector | - |
-| [winglot Signals](https://github.com/winglot/Signals) | 1195 kb | - | *std::list | X |
-| [pbhogan Signals](https://github.com/pbhogan/Signals) | 1209 kb | X | std::set | - |
-| [mwthinker Signal](https://github.com/mwthinker/Signal) | 1241 kb | - | std::list | - |
-| [supergrover sigslot](https://github.com/supergrover/sigslot) | 1250 kb | - | std::list | - |
-| [amc522 Signal11](https://github.com/amc522/Signal11) | 1262 kb | X | std::vector | - |
-| [EvilTwin Observer](http://eviltwingames.com/blog/the-observer-pattern-revisited/) | 1271 kb | X | std::vector | - |
-| [Yassi](http://www.codeproject.com/Articles/867044/Yassi-Yet-Another-Signal-Slot-Implementation) | 1293 kb | X | std::vector | - |
-| [joanrieu signal11](https://github.com/joanrieu/signal11) | 1300 kb | X | std::list | - |
-| [fr00b0 nod](https://github.com/fr00b0/nod) | 1307 kb | X | std::vector | X |
-| ~~[martinkallman signals-cpp](https://github.com/martinkallman/signals-cpp)~~ | ~~1676 kb~~ | ~~X~~ | ~~std::unordered_map~~ | - |
-| [Boost Signals](http://www.boost.org/doc/libs/1_56_0/doc/html/signals.html) | 1677 kb | - | ? | - |
-| [Kosta-Github signals-cpp](https://github.com/Kosta-Github/signals-cpp) | 2225 kb | X | std::vector | X |
-| [neosigslot](http://www.i42.co.uk/stuff/neosigslot.htm) | 2397 kb | - | *std::map | X |
-| [Boost Signals2](http://www.boost.org/doc/libs/1_58_0/doc/html/signals2.html) | 2824 kb | ? | ? | X |
+| [nano-signal-slot (FT)](https://github.com/NoAvailableAlias/nano-signal-slot/tree/FT) | 1001 kb | X | singly linked list | - |
+| [jeffomatic jl_signal](https://github.com/jeffomatic/jl_signal) | 1055 kb | - | doubly linked list | - |
+| [Wink-Signals](https://github.com/miguelmartin75/Wink-Signals) | 1108 kb | X | std::vector | - |
+| [winglot Signals](https://github.com/winglot/Signals) | 1156 kb | - | *std::list | X |
+| [pbhogan Signals](https://github.com/pbhogan/Signals) | 1164 kb | X | std::set | - |
+| [mwthinker Signal](https://github.com/mwthinker/Signal) | 1193 kb | - | std::list | - |
+| [supergrover sigslot](https://github.com/supergrover/sigslot) | 1202 kb | - | std::list | - |
+| [amc522 Signal11](https://github.com/amc522/Signal11) | 1212 kb | X | std::vector | - |
+| [EvilTwin Observer](http://eviltwingames.com/blog/the-observer-pattern-revisited/) | 1221 kb | X | std::vector | - |
+| [Yassi](http://www.codeproject.com/Articles/867044/Yassi-Yet-Another-Signal-Slot-Implementation) | 1243 kb | X | std::vector | - |
+| [joanrieu signal11](https://github.com/joanrieu/signal11) | 1250 kb | X | std::list | - |
+| [fr00b0 nod](https://github.com/fr00b0/nod) | 1262 kb | X | std::vector | X |
+| [Boost Signals](http://www.boost.org/doc/libs/1_56_0/doc/html/signals.html) | 1618 kb | - | ? | - |
+| ~~[martinkallman signals-cpp](https://github.com/martinkallman/signals-cpp)~~ | ~~1621 kb~~ | ~~X~~ | ~~std::unordered_map~~ | - |
+| [Kosta-Github signals-cpp](https://github.com/Kosta-Github/signals-cpp) | 2127 kb | X | std::vector | X |
+| [neosigslot](http://www.i42.co.uk/stuff/neosigslot.htm) | 2325 kb | - | *std::map | X |
+| [Boost Signals2](http://www.boost.org/doc/libs/1_58_0/doc/html/signals2.html) | 2766 kb | ? | ? | X |
 
 _* Uses additional data structures._
 
@@ -66,7 +66,7 @@ _The individual benchmark algorithms are completely generic through templates._
 
 | Algorithm | Description |
 | --------- | ----------- |
-| [validation_assert](https://github.com/NoAvailableAlias/signal-slot-benchmarks/blob/master/benchmark.hpp#L21) | Assert correct implementation operation. |
+| [validation_assert](https://github.com/NoAvailableAlias/signal-slot-benchmarks/blob/master/benchmark.hpp#L21) | Make sure each signal implementation is functioning correctly. |
 | [construction](https://github.com/NoAvailableAlias/signal-slot-benchmarks/blob/master/benchmark.hpp#L50) | Time the construction of a Signal to an N number of Foo instances. |
 | [destruction](https://github.com/NoAvailableAlias/signal-slot-benchmarks/blob/master/benchmark.hpp#L71) | Time the destruction of a Signal and associated Connections to N number of Foo instances. |
 | [connection](https://github.com/NoAvailableAlias/signal-slot-benchmarks/blob/master/benchmark.hpp#L101) | Time Signal connections to a randomized N number of Foo instances. |
