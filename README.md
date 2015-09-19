@@ -28,6 +28,7 @@ Performance
 | Boost Signals         |  10207     |  2984     |  912     |  9824     |  609      |  24536  |
 | * Boost Signals2      |  8307      |  4534     |  1660    |  7154     |  912      |  22566  |
 | martin signals-cpp    |  #N/A      |  #N/A     |  #N/A    |  #N/A     |  #N/A     |  #N/A   |<- ASSERT FAIL
+| cpp11nullptr lsignal  |  #N/A      |  #N/A     |  #N/A    |  #N/A     |  #N/A     |  #N/A   |<- TODO
 +-----------------------+------------+-----------+----------+-----------+-----------+---------+
 ```
 _* Library is designed to be thread safe._
@@ -51,6 +52,7 @@ _Size results are from Visual Studio 2015 Community using default release build 
 | [Yassi](http://www.codeproject.com/Articles/867044/Yassi-Yet-Another-Signal-Slot-Implementation) | 1243 kb | X | std::vector | - |
 | [joanrieu signal11](https://github.com/joanrieu/signal11) | 1250 kb | X | std::list | - |
 | [fr00b0 nod](https://github.com/fr00b0/nod) | 1262 kb | X | std::vector | X |
+| [cpp11nullptr lsignal](https://github.com/cpp11nullptr/lsignal) | 1498 kb | X | *std::list | X |
 | [Boost Signals](http://www.boost.org/doc/libs/1_56_0/doc/html/signals.html) | 1618 kb | - | ? | - |
 | ~~[martinkallman signals-cpp](https://github.com/martinkallman/signals-cpp)~~ | ~~1621 kb~~ | ~~X~~ | ~~std::unordered_map~~ | - |
 | [Kosta-Github signals-cpp](https://github.com/Kosta-Github/signals-cpp) | 2127 kb | X | std::vector | X |

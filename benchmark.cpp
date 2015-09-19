@@ -1,6 +1,7 @@
 #include "benchmark/hpp/benchmark_asg.hpp"
 #include "benchmark/hpp/benchmark_bs1.hpp"
 #include "benchmark/hpp/benchmark_bs2.hpp"
+#include "benchmark/hpp/benchmark_cls.hpp"
 #include "benchmark/hpp/benchmark_evl.hpp"
 #include "benchmark/hpp/benchmark_jls.hpp"
 #include "benchmark/hpp/benchmark_jos.hpp"
@@ -52,6 +53,7 @@ void run_all_validation_tests(std::size_t N)
         Asg::validate_assert(N);
         Bs1::validate_assert(N);
         Bs2::validate_assert(N);
+		Cls::validate_assert(N);
         Evl::validate_assert(N);
         Jls::validate_assert(N);
         Jos::validate_assert(N);
@@ -114,6 +116,15 @@ ImmediateData run_all_benchmarks(std::size_t begin, std::size_t end)
             bs2[connection].push_back(Bs2::connection(N));
             bs2[emission].push_back(Bs2::emission(N));
             bs2[combined].push_back(Bs2::combined(N));
+
+			std::cout << "[BEGIN: " << Cls::LibraryName << "]" << std::endl;
+
+			auto& cls = records[Cls::LibraryName];
+			cls[construction].push_back(Cls::construction(N));
+			cls[destruction].push_back(Cls::destruction(N));
+			cls[connection].push_back(Cls::connection(N));
+			cls[emission].push_back(Cls::emission(N));
+			cls[combined].push_back(Cls::combined(N));
 
             std::cout << "[BEGIN: " << Evl::LibraryName << "]" << std::endl;
 
