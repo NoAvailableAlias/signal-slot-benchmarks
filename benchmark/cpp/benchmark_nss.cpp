@@ -1,6 +1,6 @@
 #include "../hpp/benchmark_nss.hpp"
 
-const char* Nss::LibraryName = "nano-signal-slot (FT)";
+const char* Nss::LibraryName = "nano-signal-slot";
 
 NOINLINE(void Nss::validate_assert(std::size_t N))
 {
