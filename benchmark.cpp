@@ -11,7 +11,6 @@
 #include "benchmark/hpp/benchmark_nod.hpp"
 #include "benchmark/hpp/benchmark_nss.hpp"
 #include "benchmark/hpp/benchmark_psg.hpp"
-#include "benchmark/hpp/benchmark_spp.hpp"
 #include "benchmark/hpp/benchmark_sss.hpp"
 #include "benchmark/hpp/benchmark_wnk.hpp"
 #include "benchmark/hpp/benchmark_wsg.hpp"
@@ -41,7 +40,8 @@ using ImmediateData = std::map<const char*, ImmediateResults>;
 
 std::size_t g_limit = Timer_u(Limit_u(4000)).count();
 
-template <typename T> void outputReport(ImmediateData const&, T&);
+template <typename T> void output_report(ImmediateData const&, T&);
+template <typename T> void run_benchmark_suite(ImmediateData&, std::size_t);
 
 //------------------------------------------------------------------------------
 
@@ -63,7 +63,6 @@ void run_all_validation_tests(std::size_t N)
         Nod::validate_assert(N);
         Nss::validate_assert(N);
         Psg::validate_assert(N);
-        //Spp::validate_assert(N);//<- ASSERT FAIL
         Sss::validate_assert(N);
         Wnk::validate_assert(N);
         Wsg::validate_assert(N);
@@ -88,176 +87,32 @@ ImmediateData run_all_benchmarks(std::size_t begin, std::size_t end)
         // Double the input size N for every iteration
         for(std::size_t N = begin; N <= end; N *= 2)
         {
-            std::cout << "[Test Size: " << N << "] BEGIN\n" << std::endl;
+            std::cout << "[BEGIN: Test Size: " << N << "]\n" << std::endl;
 
-            std::cout << "[BEGIN: " << Asg::LibraryName << "]" << std::endl;
+            run_benchmark_suite<Asg>(records, N);
+            run_benchmark_suite<Bs1>(records, N);
+            run_benchmark_suite<Bs2>(records, N);
+            run_benchmark_suite<Cls>(records, N);
+            run_benchmark_suite<Evl>(records, N);
+            run_benchmark_suite<Jls>(records, N);
+            run_benchmark_suite<Jos>(records, N);
+            run_benchmark_suite<Ksc>(records, N);
+            run_benchmark_suite<Mws>(records, N);
+            run_benchmark_suite<Nls>(records, N);
+            run_benchmark_suite<Nod>(records, N);
+            run_benchmark_suite<Nss>(records, N);
+            run_benchmark_suite<Psg>(records, N);
+            run_benchmark_suite<Sss>(records, N);
+            run_benchmark_suite<Wnk>(records, N);
+            run_benchmark_suite<Wsg>(records, N);
+            run_benchmark_suite<Yas>(records, N);
 
-            auto& asg = records[Asg::LibraryName];
-            asg[construction].push_back(Asg::construction(N));
-            asg[destruction].push_back(Asg::destruction(N));
-            asg[connection].push_back(Asg::connection(N));
-            asg[emission].push_back(Asg::emission(N));
-            asg[combined].push_back(Asg::combined(N));
-
-            std::cout << "[BEGIN: " << Bs1::LibraryName << "]" << std::endl;
-
-            auto& bs1 = records[Bs1::LibraryName];
-            bs1[construction].push_back(Bs1::construction(N));
-            bs1[destruction].push_back(Bs1::destruction(N));
-            bs1[connection].push_back(Bs1::connection(N));
-            bs1[emission].push_back(Bs1::emission(N));
-            bs1[combined].push_back(Bs1::combined(N));
-
-            std::cout << "[BEGIN: " << Bs2::LibraryName << "]" << std::endl;
-
-            auto& bs2 = records[Bs2::LibraryName];
-            bs2[construction].push_back(Bs2::construction(N));
-            bs2[destruction].push_back(Bs2::destruction(N));
-            bs2[connection].push_back(Bs2::connection(N));
-            bs2[emission].push_back(Bs2::emission(N));
-            bs2[combined].push_back(Bs2::combined(N));
-
-			std::cout << "[BEGIN: " << Cls::LibraryName << "]" << std::endl;
-
-			auto& cls = records[Cls::LibraryName];
-			cls[construction].push_back(Cls::construction(N));
-			cls[destruction].push_back(Cls::destruction(N));
-			cls[connection].push_back(Cls::connection(N));
-			cls[emission].push_back(Cls::emission(N));
-			cls[combined].push_back(Cls::combined(N));
-
-            std::cout << "[BEGIN: " << Evl::LibraryName << "]" << std::endl;
-
-            auto& evl = records[Evl::LibraryName];
-            evl[construction].push_back(Evl::construction(N));
-            evl[destruction].push_back(Evl::destruction(N));
-            evl[connection].push_back(Evl::connection(N));
-            evl[emission].push_back(Evl::emission(N));
-            evl[combined].push_back(Evl::combined(N));
-
-            std::cout << "[BEGIN: " << Jls::LibraryName << "]" << std::endl;
-
-            auto& jls = records[Jls::LibraryName];
-            jls[construction].push_back(Jls::construction(N));
-            jls[destruction].push_back(Jls::destruction(N));
-            jls[connection].push_back(Jls::connection(N));
-            jls[emission].push_back(Jls::emission(N));
-            jls[combined].push_back(Jls::combined(N));
-
-            std::cout << "[BEGIN: " << Jos::LibraryName << "]" << std::endl;
-
-            auto& jos = records[Jos::LibraryName];
-            jos[construction].push_back(Jos::construction(N));
-            jos[destruction].push_back(Jos::destruction(N));
-            jos[connection].push_back(Jos::connection(N));
-            jos[emission].push_back(Jos::emission(N));
-            jos[combined].push_back(Jos::combined(N));
-
-            std::cout << "[BEGIN: " << Ksc::LibraryName << "]" << std::endl;
-
-            auto& ksc = records[Ksc::LibraryName];
-            ksc[construction].push_back(Ksc::construction(N));
-            ksc[destruction].push_back(Ksc::destruction(N));
-            ksc[connection].push_back(Ksc::connection(N));
-            ksc[emission].push_back(Ksc::emission(N));
-            ksc[combined].push_back(Ksc::combined(N));
-
-            std::cout << "[BEGIN: " << Mws::LibraryName << "]" << std::endl;
-
-            auto& mws = records[Mws::LibraryName];
-            mws[construction].push_back(Mws::construction(N));
-            mws[destruction].push_back(Mws::destruction(N));
-            mws[connection].push_back(Mws::connection(N));
-            mws[emission].push_back(Mws::emission(N));
-            mws[combined].push_back(Mws::combined(N));
-
-            std::cout << "[BEGIN: " << Nls::LibraryName << "]" << std::endl;
-
-            auto& nls = records[Nls::LibraryName];
-            nls[construction].push_back(Nls::construction(N));
-            nls[destruction].push_back(Nls::destruction(N));
-            nls[connection].push_back(Nls::connection(N));
-            nls[emission].push_back(Nls::emission(N));
-            nls[combined].push_back(Nls::combined(N));
-
-            std::cout << "[BEGIN: " << Nod::LibraryName << "]" << std::endl;
-
-            auto& nod = records[Nod::LibraryName];
-            nod[construction].push_back(Nod::construction(N));
-            nod[destruction].push_back(Nod::destruction(N));
-            nod[connection].push_back(Nod::connection(N));
-            nod[emission].push_back(Nod::emission(N));
-            nod[combined].push_back(Nod::combined(N));
-
-            std::cout << "[BEGIN: " << Nss::LibraryName << "]" << std::endl;
-
-            auto& nss = records[Nss::LibraryName];
-            nss[construction].push_back(Nss::construction(N));
-            nss[destruction].push_back(Nss::destruction(N));
-            nss[connection].push_back(Nss::connection(N));
-            nss[emission].push_back(Nss::emission(N));
-            nss[combined].push_back(Nss::combined(N));
-
-            std::cout << "[BEGIN: " << Psg::LibraryName << "]" << std::endl;
-
-            auto& psg = records[Psg::LibraryName];
-            psg[construction].push_back(Psg::construction(N));
-            psg[destruction].push_back(Psg::destruction(N));
-            psg[connection].push_back(Psg::connection(N));
-            psg[emission].push_back(Psg::emission(N));
-            psg[combined].push_back(Psg::combined(N));
-
-            //std::cout << "[BEGIN: " << Spp::LibraryName << "]" << std::endl;
-
-            //auto& spp = records[Spp::LibraryName];
-            //spp[construction].push_back(Spp::construction(N));
-            //spp[destruction].push_back(Spp::destruction(N));
-            //spp[connection].push_back(Spp::connection(N));
-            //spp[emission].push_back(Spp::emission(N));
-            //spp[combined].push_back(Spp::combined(N));
-
-            std::cout << "[BEGIN: " << Sss::LibraryName << "]" << std::endl;
-
-            auto& sss = records[Sss::LibraryName];
-            sss[construction].push_back(Sss::construction(N));
-            sss[destruction].push_back(Sss::destruction(N));
-            sss[connection].push_back(Sss::connection(N));
-            sss[emission].push_back(Sss::emission(N));
-            sss[combined].push_back(Sss::combined(N));
-
-            std::cout << "[BEGIN: " << Wnk::LibraryName << "]" << std::endl;
-
-            auto& wnk = records[Wnk::LibraryName];
-            wnk[construction].push_back(Wnk::construction(N));
-            wnk[destruction].push_back(Wnk::destruction(N));
-            wnk[connection].push_back(Wnk::connection(N));
-            wnk[emission].push_back(Wnk::emission(N));
-            wnk[combined].push_back(Wnk::combined(N));
-
-            std::cout << "[BEGIN: " << Wsg::LibraryName << "]" << std::endl;
-
-            auto& wsg = records[Wsg::LibraryName];
-            wsg[construction].push_back(Wsg::construction(N));
-            wsg[destruction].push_back(Wsg::destruction(N));
-            wsg[connection].push_back(Wsg::connection(N));
-            wsg[emission].push_back(Wsg::emission(N));
-            wsg[combined].push_back(Wsg::combined(N));
-
-            std::cout << "[BEGIN: " << Yas::LibraryName << "]" << std::endl;
-
-            auto& yas = records[Yas::LibraryName];
-            yas[construction].push_back(Yas::construction(N));
-            yas[destruction].push_back(Yas::destruction(N));
-            yas[connection].push_back(Yas::connection(N));
-            yas[emission].push_back(Yas::emission(N));
-            yas[combined].push_back(Yas::combined(N));
-
-            std::cout << "\n[Test Size: " << N << "] END" << std::endl;
+            std::cout << "\n[END: Test Size: " << N << "]" << std::endl;
         }
     }
     catch (std::exception const& error)
     {
-        // Would like to know how we died before we die
+        // Would like to know how we died before we ghost
         std::cerr << "Exception encountered: " << error.what() << std::endl;
         std::cin.get();
     }
@@ -314,7 +169,7 @@ int main(int argc, char* argv[])
         auto tee = std::tie(std::cout, ofs);
         tee << "\n" << std::put_time(std::localtime(&start_c), "%c") << "\n";
 
-        outputReport(records, tee);
+        output_report(records, tee);
 
         auto stop = std::chrono::system_clock::now();
         auto stop_c = std::chrono::system_clock::to_time_t(stop);
@@ -332,7 +187,7 @@ int main(int argc, char* argv[])
 //------------------------------------------------------------------------------
 
 template <typename T>
-void outputReport(ImmediateData const& records, T& ost)
+void output_report(ImmediateData const& records, T& ost)
 {
     using namespace std;
 
@@ -387,4 +242,31 @@ void outputReport(ImmediateData const& records, T& ost)
         }
         ost << ", " << setprecision(0) << fixed << score << "\n";
     }
+}
+
+//------------------------------------------------------------------------------
+
+template <typename T>
+void run_benchmark_suite(ImmediateData& records, std::size_t N)
+{
+    // Time this particular benchmark run (for display only)
+    auto start = std::chrono::system_clock::now();
+    auto start_c = std::chrono::system_clock::to_time_t(start);
+
+    std::cout << std::put_time(std::localtime(&start_c), "%c")
+        << " [BEGIN: " << T::LibraryName << "]" << std::endl;
+
+    auto& metrics = records[T::LibraryName];
+
+    metrics[construction].push_back(T::construction(N));
+    metrics[destruction].push_back(T::destruction(N));
+    metrics[connection].push_back(T::connection(N));
+    metrics[emission].push_back(T::emission(N));
+    metrics[combined].push_back(T::combined(N));
+
+    auto stop = std::chrono::system_clock::now();
+    auto stop_c = std::chrono::system_clock::to_time_t(stop);
+
+    std::cout << std::put_time(std::localtime(&stop_c), "%c")
+        << " [END: " << T::LibraryName << "]" << std::endl;
 }
