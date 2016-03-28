@@ -8,28 +8,27 @@ Performance
 **_Higher score is better._** _N / (sample size / count)._
 
 ```
-+----------------------+-----------+----------+---------+----------+----------+--------+
-| Library              | construct | destruct | connect | emission | combined | total  |
-|----------------------+-----------+----------+---------+----------+----------+--------|
-| nano-signal-slot     |  157574   |  12679   |  9427   |  45458   |  5143    | 230282 |
-| jeffomatic jl_signal |  103475   |  17176   |  43870  |  45252   |  11145   | 220919 |
-| Wink-Signals         |  144269   |  16570   |  8967   |  45545   |  5392    | 220742 |
-| Yassi                |  144797   |  8408    |  4856   |  45055   |  2865    | 205981 |
-| amc522 Signal11      |  122476   |  7795    |  5160   |  41120   |  2946    | 179496 |
-| mwthinker Signal     |  110855   |  9081    |  5641   |  45117   |  3342    | 174036 |
-| pbhogan Signals      |  111994   |  9204    |  5610   |  41539   |  3513    | 171861 |
-| * fr00b0 nod         |  111480   |  9851    |  5762   |  37409   |  3352    | 167854 |
-| * Kosta signals-cpp  |  131455   |  8611    |  1228   |  20815   |  977     | 163086 |
-| joanrieu signal11    |  93606    |  14324   |  6921   |  39887   |  4067    | 158805 |
-| EvilTwin Observer    |  102480   |  5205    |  2103   |  30831   |  1431    | 142050 |
-| * lsignal            |  75819    |  4912    |  2089   |  36747   |  1390    | 120958 |
-| supergrover sigslot  |  13631    |  2271    |  2795   |  45287   |  1112    | 65097  |
-| * winglot Signals    |  11720    |  3973    |  4281   |  37743   |  1698    | 59415  |
-| * neosigslot         |  15140    |  4739    |  3577   |  9006    |  1517    | 33979  |
-| Boost Signals        |  8746     |  3035    |  937    |  9726    |  613     | 23058  |
-| * Boost Signals2     |  7822     |  4705    |  1697   |  7205    |  927     | 22356  |
-| martin signals-cpp   |  #N/A     |  #N/A    |  #N/A   |  #N/A    |  #N/A    |  #N/A  |<- FAILS ASSERT
-+----------------------+-----------+----------+---------+----------+----------+--------+
++----------------------+-----------+----------+---------+----------+----------+----------+---------+
+|       Library        | construct | destruct | connect | emission | combined | threaded |  total  |
+|----------------------+-----------+----------+---------+----------+----------+----------+---------|
+| jeffomatic jl_signal |  104714   |  15898   |  49989  |  44164   |  10631   |  0       |  225397 |
+| nano-signal-slot     |  150003   |  10320   |  8416   |  44264   |  3766    |  0       |  216770 |
+| Wink-Signals         |  138683   |  14293   |  8043   |  45537   |  4810    |  0       |  211366 |
+| Yassi                |  137535   |  7234    |  4993   |  44384   |  2764    |  0       |  196910 |
+| amc522 Signal11      |  118923   |  6778    |  4750   |  41339   |  2674    |  0       |  174464 |
+| mwthinker Signal     |  109434   |  7886    |  5501   |  43759   |  3160    |  0       |  169740 |
+| pbhogan Signals      |  109651   |  7840    |  4926   |  43650   |  3083    |  0       |  169150 |
+| * fr00b0 nod         |  110131   |  9629    |  5665   |  37281   |  3301    |  2273    |  168280 |
+| * Kosta signals-cpp  |  127607   |  7935    |  1289   |  21165   |  1001    |  2 ?     |  158998 |
+| joanrieu signal11    |  92494    |  10611   |  5332   |  38241   |  3099    |  0       |  149778 |
+| EvilTwin Observer    |  105578   |  4427    |  1985   |  30969   |  1340    |  0       |  144299 |
+| * lsignal            |  73392    |  4176    |  1893   |  36781   |  1255    |  614     |  118110 |
+| supergrover sigslot  |  11385    |  2022    |  2587   |  43171   |  1010    |  0       |  60175  |
+| * winglot Signals    |  10878    |  3411    |  3410   |  37126   |  1426    |  660     |  56911  |
+| * neosigslot         |  14277    |  4054    |  2955   |  8280    |  1312    |  433     |  31310  |
+| Boost Signals        |  8667     |  2482    |  883    |  9638    |  565     |  0       |  22235  |
+| * Boost Signals2     |  6967     |  3649    |  1405   |  7057    |  798     |  337     |  20214  |
++----------------------+-----------+----------+---------+----------+----------+----------+---------+
 ```
 _* Library is designed to be thread safe._
 
@@ -76,9 +75,7 @@ _The individual benchmark algorithms are completely generic through templates._
 | [combined](https://github.com/NoAvailableAlias/signal-slot-benchmarks/blob/master/benchmark.hpp#L159) | Time construction, destruction, connection, and emission together. |
 | [threaded](https://github.com/NoAvailableAlias/signal-slot-benchmarks/blob/master/benchmark.hpp#L186) | Time the runtime of parallel slot creation, connection, emission, and destruction. |
 
-Miscellaneous
--------------
+Notes
+-----
 
-Currently working on a new benchmark algorithm method for testing thread safe implementations.
-Additionally new benchmark classes will be added for thread safe libs that also support a single thread policy.
-
+Metrics entries that are crossed out are implementations that have failed the pre-benchmark validation assert.
