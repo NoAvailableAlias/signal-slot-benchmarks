@@ -4,8 +4,10 @@
 #include <algorithm>
 #include <cassert>
 #include <chrono>
+#include <future>
 #include <memory>
 #include <random>
+#include <thread>
 #include <vector>
 #include <tuple>
 

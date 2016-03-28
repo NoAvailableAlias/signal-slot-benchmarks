@@ -10,7 +10,7 @@ class Benchmark
     static chrono_timer s_timer;
     static Rng s_rng;
 
-    static double _calculate_score(std::size_t N, std::size_t limit, std::size_t count)
+    static double calculate_score(std::size_t N, std::size_t limit, std::size_t count)
     {
         // Return the test size N divided by (the sample size / number of samples)
         return N / std::chrono::duration_cast<Delta_u>(Timer_u(limit / count)).count();
@@ -63,7 +63,7 @@ class Benchmark
 
             delete subject;
         }
-        return _calculate_score(N, g_limit, count);
+        return calculate_score(N, elapsed, count);
     }
 
     //--------------------------------------------------------------------------
@@ -93,7 +93,7 @@ class Benchmark
             }
             elapsed += s_timer.count<Timer_u>();
         }
-        return _calculate_score(N, g_limit, count);
+        return calculate_score(N, elapsed, count);
     }
 
     //--------------------------------------------------------------------------
@@ -121,7 +121,7 @@ class Benchmark
             }
             elapsed += s_timer.count<Timer_u>();
         }
-        return _calculate_score(N, g_limit, count);
+        return calculate_score(N, elapsed, count);
     }
 
     //--------------------------------------------------------------------------
@@ -151,7 +151,7 @@ class Benchmark
 
             elapsed += s_timer.count<Timer_u>();
         }
-        return _calculate_score(N, g_limit, count);
+        return calculate_score(N, elapsed, count);
     }
 
     //--------------------------------------------------------------------------
@@ -178,7 +178,42 @@ class Benchmark
             }
             Foo::emit_method(subject, s_rng);
         }
-        return _calculate_score(N, g_limit, count);
+        return calculate_score(N, elapsed, count);
+    }
+
+    //--------------------------------------------------------------------------
+
+    static double threaded(std::size_t N)
+    {
+        Subject subject;
+
+        auto context = [&]()
+        {
+            std::size_t count = 1;
+            std::size_t elapsed = 0;
+
+            for (; elapsed < g_limit; ++count, elapsed = s_timer.count<Timer_u>())
+            {
+                std::vector<Foo> foo(N);
+
+                for (auto& foo_instance : foo)
+                {
+                    Foo::connect_method(subject, foo_instance);
+                }
+                Foo::emit_method(subject, s_rng);
+            }
+            return calculate_score(N, elapsed, count);
+        };
+
+        s_timer.reset();
+
+        std::future<double> f1 = std::async(std::launch::async, context);
+        std::future<double> f2 = std::async(std::launch::async, context);
+
+        f1.wait();
+        f2.wait();
+        
+        return (f1.get() + f2.get()) / 2.0;
     }
 };
 
