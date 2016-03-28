@@ -224,8 +224,8 @@ void output_report(ImmediateData const& records, T& ost)
 
     // Output in unformatted csv
 
-    ost << "\nLibrary, " << construction << ", " << destruction << ", "
-        << connection << ", " << emission << ", " << combined << ", total\n";
+    ost << "\nLibrary, " << construction << ", " << destruction << ", " << connection
+        << ", " << emission << ", " << combined << ", " << threaded << ", total\n";
 
     for(auto const& row : Range(resultOrder.rbegin(), resultOrder.rend()))
     {
