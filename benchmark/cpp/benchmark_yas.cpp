@@ -26,3 +26,7 @@ NOINLINE(double Yas::combined(std::size_t N))
 {
     return Benchmark<Signal, Yas>::combined(N);
 }
+NOINLINE(double Yas::threaded(std::size_t N))
+{
+    return 0.0;
+}

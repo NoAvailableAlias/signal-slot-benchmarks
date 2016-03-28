@@ -26,3 +26,7 @@ NOINLINE(double Jos::combined(std::size_t N))
 {
     return Benchmark<Signal, Jos>::combined(N);
 }
+NOINLINE(double Jos::threaded(std::size_t N))
+{
+    return 0.0;
+}

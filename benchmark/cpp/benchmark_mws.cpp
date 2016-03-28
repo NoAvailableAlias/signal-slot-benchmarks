@@ -26,3 +26,7 @@ NOINLINE(double Mws::combined(std::size_t N))
 {
     return Benchmark<Signal, Mws>::combined(N);
 }
+NOINLINE(double Mws::threaded(std::size_t N))
+{
+    return 0.0;
+}

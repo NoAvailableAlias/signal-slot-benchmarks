@@ -26,3 +26,7 @@ NOINLINE(double Wnk::combined(std::size_t N))
 {
     return Benchmark<Signal, Wnk>::combined(N);
 }
+NOINLINE(double Wnk::threaded(std::size_t N))
+{
+    return 0.0;
+}

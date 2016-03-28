@@ -26,3 +26,7 @@ NOINLINE(double Asg::combined(std::size_t N))
 {
     return Benchmark<Signal, Asg>::combined(N);
 }
+NOINLINE(double Asg::threaded(std::size_t N))
+{
+    return 0.0;
+}

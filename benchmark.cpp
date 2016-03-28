@@ -34,6 +34,7 @@ const char* destruction = "destruct";
 const char* connection = "connect";
 const char* emission = "emission";
 const char* combined = "combined";
+const char* threaded = "threaded";
 
 using ImmediateResults = std::map<const char*, std::vector<double>>;
 using ImmediateData = std::map<const char*, ImmediateResults>;
@@ -41,7 +42,7 @@ using ImmediateData = std::map<const char*, ImmediateResults>;
 std::size_t g_limit = Timer_u(Limit_u(4000)).count();
 
 template <typename T> void output_report(ImmediateData const&, T&);
-template <typename T> void run_benchmark_suite(ImmediateData&, std::size_t);
+template <typename T> void run_benchmark_class(ImmediateData&, std::size_t);
 
 //------------------------------------------------------------------------------
 
@@ -53,7 +54,7 @@ void run_all_validation_tests(std::size_t N)
         Asg::validate_assert(N);
         Bs1::validate_assert(N);
         Bs2::validate_assert(N);
-		Cls::validate_assert(N);
+        Cls::validate_assert(N);
         Evl::validate_assert(N);
         Jls::validate_assert(N);
         Jos::validate_assert(N);
@@ -71,7 +72,7 @@ void run_all_validation_tests(std::size_t N)
     catch (std::exception const& error)
     {
         // Catch something exceptional we would like to know about
-        std::cerr << "Exception encountered: " << error.what() << std::endl;
+        std::cerr << "Exception: " << error.what() << std::endl;
         std::cin.get();
     }
 }
@@ -89,23 +90,23 @@ ImmediateData run_all_benchmarks(std::size_t begin, std::size_t end)
         {
             std::cout << "[BEGIN: Test Size: " << N << "]\n" << std::endl;
 
-            run_benchmark_suite<Asg>(records, N);
-            run_benchmark_suite<Bs1>(records, N);
-            run_benchmark_suite<Bs2>(records, N);
-            run_benchmark_suite<Cls>(records, N);
-            run_benchmark_suite<Evl>(records, N);
-            run_benchmark_suite<Jls>(records, N);
-            run_benchmark_suite<Jos>(records, N);
-            run_benchmark_suite<Ksc>(records, N);
-            run_benchmark_suite<Mws>(records, N);
-            run_benchmark_suite<Nls>(records, N);
-            run_benchmark_suite<Nod>(records, N);
-            run_benchmark_suite<Nss>(records, N);
-            run_benchmark_suite<Psg>(records, N);
-            run_benchmark_suite<Sss>(records, N);
-            run_benchmark_suite<Wnk>(records, N);
-            run_benchmark_suite<Wsg>(records, N);
-            run_benchmark_suite<Yas>(records, N);
+            run_benchmark_class<Asg>(records, N);
+            run_benchmark_class<Bs1>(records, N);
+            run_benchmark_class<Bs2>(records, N);
+            run_benchmark_class<Cls>(records, N);
+            run_benchmark_class<Evl>(records, N);
+            run_benchmark_class<Jls>(records, N);
+            run_benchmark_class<Jos>(records, N);
+            run_benchmark_class<Ksc>(records, N);
+            run_benchmark_class<Mws>(records, N);
+            run_benchmark_class<Nls>(records, N);
+            run_benchmark_class<Nod>(records, N);
+            run_benchmark_class<Nss>(records, N);
+            run_benchmark_class<Psg>(records, N);
+            run_benchmark_class<Sss>(records, N);
+            run_benchmark_class<Wnk>(records, N);
+            run_benchmark_class<Wsg>(records, N);
+            run_benchmark_class<Yas>(records, N);
 
             std::cout << "\n[END: Test Size: " << N << "]" << std::endl;
         }
@@ -113,7 +114,7 @@ ImmediateData run_all_benchmarks(std::size_t begin, std::size_t end)
     catch (std::exception const& error)
     {
         // Would like to know how we died before we ghost
-        std::cerr << "Exception encountered: " << error.what() << std::endl;
+        std::cerr << "Exception: " << error.what() << std::endl;
         std::cin.get();
     }
     return records;
@@ -247,7 +248,7 @@ void output_report(ImmediateData const& records, T& ost)
 //------------------------------------------------------------------------------
 
 template <typename T>
-void run_benchmark_suite(ImmediateData& records, std::size_t N)
+void run_benchmark_class(ImmediateData& records, std::size_t N)
 {
     // Time this particular benchmark run (for display only)
     auto start = std::chrono::system_clock::now();
@@ -263,6 +264,9 @@ void run_benchmark_suite(ImmediateData& records, std::size_t N)
     metrics[connection].push_back(T::connection(N));
     metrics[emission].push_back(T::emission(N));
     metrics[combined].push_back(T::combined(N));
+
+    // Benchmark class may or may not have this implemented
+    metrics[threaded].push_back(T::threaded(N));
 
     auto stop = std::chrono::system_clock::now();
     auto stop_c = std::chrono::system_clock::to_time_t(stop);

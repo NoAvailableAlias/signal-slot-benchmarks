@@ -26,3 +26,7 @@ NOINLINE(double Spp::combined(std::size_t N))
 {
     return Benchmark<SignalType, Spp>::combined(N);
 }
+NOINLINE(double Spp::threaded(std::size_t N))
+{
+    return 0.0;
+}

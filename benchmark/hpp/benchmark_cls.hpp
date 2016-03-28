@@ -40,6 +40,9 @@ class Cls
     static double emission(std::size_t);
     static double combined(std::size_t);
 
+    // This may or may not be implemented
+    static double threaded(std::size_t);
+
     static const char* LibraryName;
 };
 

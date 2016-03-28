@@ -26,3 +26,7 @@ NOINLINE(double Wsg::combined(std::size_t N))
 {
     return Benchmark<Signal, Wsg>::combined(N);
 }
+NOINLINE(double Wsg::threaded(std::size_t N))
+{
+    return Benchmark<Signal, Wsg>::threaded(N);
+}

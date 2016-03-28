@@ -26,3 +26,7 @@ NOINLINE(double Evl::combined(std::size_t N))
 {
     return Benchmark<Signal, Evl>::combined(N);
 }
+NOINLINE(double Evl::threaded(std::size_t N))
+{
+    return 0.0;
+}

@@ -26,3 +26,7 @@ NOINLINE(double Nls::combined(std::size_t N))
 {
     return Benchmark<Signal, Nls>::combined(N);
 }
+NOINLINE(double Nls::threaded(std::size_t N))
+{
+    return Benchmark<Signal, Nls>::threaded(N);
+}

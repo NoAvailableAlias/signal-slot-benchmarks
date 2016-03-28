@@ -26,3 +26,7 @@ NOINLINE(double Nod::combined(std::size_t N))
 {
     return Benchmark<Signal, Nod>::combined(N);
 }
+NOINLINE(double Nod::threaded(std::size_t N))
+{
+    return Benchmark<Signal, Nod>::threaded(N);
+}

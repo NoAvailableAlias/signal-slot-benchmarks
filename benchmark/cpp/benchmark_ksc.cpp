@@ -26,3 +26,7 @@ NOINLINE(double Ksc::combined(std::size_t N))
 {
     return Benchmark<Signal, Ksc>::combined(N);
 }
+NOINLINE(double Ksc::threaded(std::size_t N))
+{
+    return Benchmark<Signal, Ksc>::threaded(N);
+}
