@@ -7,7 +7,7 @@ template <typename Subject, typename Foo>
 class Benchmark
 {
     static std::vector<std::size_t> s_indices;
-    static chrono_timer s_timer;
+    static ChronoTimer s_timer;
     static Rng s_rng;
 
     static double calculate_score(std::size_t N, std::size_t limit, std::size_t count)
@@ -192,7 +192,10 @@ class Benchmark
             std::size_t count = 1;
             std::size_t elapsed = 0;
 
-            for (; elapsed < g_limit; ++count, elapsed = s_timer.count<Timer_u>())
+            Rng rng (s_rng);
+            ChronoTimer timer;
+
+            for (; elapsed < g_limit; ++count, elapsed = timer.count<Timer_u>())
             {
                 std::vector<Foo> foo(N);
 
@@ -200,18 +203,13 @@ class Benchmark
                 {
                     Foo::connect_method(subject, foo_instance);
                 }
-                Foo::emit_method(subject, s_rng);
+                Foo::emit_method(subject, rng);
             }
             return calculate_score(N, elapsed, count);
         };
 
-        s_timer.reset();
-
         std::future<double> f1 = std::async(std::launch::async, context);
         std::future<double> f2 = std::async(std::launch::async, context);
-
-        f1.wait();
-        f2.wait();
         
         return (f1.get() + f2.get()) / 2.0;
     }
@@ -223,7 +221,7 @@ template <typename Subject, typename Foo>
 std::vector<std::size_t> Benchmark<Subject, Foo>::s_indices;
 
 template <typename Subject, typename Foo>
-chrono_timer Benchmark<Subject, Foo>::s_timer;
+ChronoTimer Benchmark<Subject, Foo>::s_timer;
 
 template <typename Subject, typename Foo>
 Rng Benchmark<Subject, Foo>::s_rng;
