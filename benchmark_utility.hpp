@@ -94,15 +94,20 @@ static RangeHelper<Iterator> Range(Iterator lhs,
 
 //------------------------------------------------------------------------------
 
-class chrono_timer
+class ChronoTimer
 {
     std::chrono::time_point<std::chrono::high_resolution_clock> m_start;
 
     public:
 
+    ChronoTimer() : m_start(std::chrono::high_resolution_clock::now())
+    {
+    
+    }
+
     void reset()
     {
-        m_start = std::chrono::high_resolution_clock::now();
+        new (this) ChronoTimer;
     }
     template <typename T>
     std::size_t count() const
