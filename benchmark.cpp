@@ -131,17 +131,16 @@ int main(int argc, char* argv[])
     jl::SignalObserver::SetCommonConnectionAllocator(&observer_con_allocator);
 
     std::size_t limit = 0;
-    std::size_t start_test_size = 4;
+    std::size_t start_test_size = 2;
     std::size_t maximum_test_size = 64;
 
     std::cout << "Enter the time limit per sample [milliseconds]: ";
 
     if (!(std::cin >> limit))
     {
-        std::cerr << "Invalid time limit entered!" << std::endl;
         return 1;
     }
-    // Limit to a sane value (and complain about it)
+    // Limit to a 32bit friendly value (and complain about it)
     if (limit > 4000)
     {
         limit = 4000;
@@ -150,7 +149,7 @@ int main(int argc, char* argv[])
     g_limit = Timer_u(Limit_u(limit)).count();
     std::cin.ignore();
 
-    // Make sure to set process to high priority and affinity to 1 core
+    // Make sure to set process to high priority
     std::cout << "Change the CPU priority now: [paused]" << std::endl;
     std::cin.get();
 
