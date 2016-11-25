@@ -13,6 +13,7 @@ set(BENCHMARKS
     # TODO: bs1
     # TODO: bs2
     cls
+    cps
     evl
     jls
     jos

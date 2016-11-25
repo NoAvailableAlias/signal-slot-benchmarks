@@ -2,6 +2,7 @@
 // TODO: #include "benchmark/hpp/benchmark_bs1.hpp"
 // TODO: #include "benchmark/hpp/benchmark_bs2.hpp"
 #include "benchmark/hpp/benchmark_cls.hpp"
+#include "benchmark/hpp/benchmark_cps.hpp"
 #include "benchmark/hpp/benchmark_evl.hpp"
 #include "benchmark/hpp/benchmark_jls.hpp"
 #include "benchmark/hpp/benchmark_jos.hpp"
@@ -55,6 +56,7 @@ void run_all_validation_tests(std::size_t N)
         // TODO: Bs1::validate_assert(N);
         // TODO: Bs2::validate_assert(N);
         Cls::validate_assert(N);
+        Cps::validate_assert(N);
         Evl::validate_assert(N);
         Jls::validate_assert(N);
         Jos::validate_assert(N);
@@ -94,6 +96,7 @@ ImmediateData run_all_benchmarks(std::size_t begin, std::size_t end)
             // TODO: run_benchmark_class<Bs1>(records, N);
             // TODO: run_benchmark_class<Bs2>(records, N);
             run_benchmark_class<Cls>(records, N);
+            run_benchmark_class<Cps>(records, N);
             run_benchmark_class<Evl>(records, N);
             run_benchmark_class<Jls>(records, N);
             run_benchmark_class<Jos>(records, N);
