@@ -4,7 +4,7 @@
 #define BOOST_SIGNALS_NO_DEPRECATION_WARNING
 
 #include <boost/signals.hpp>
-#include <boost/bind.hpp>
+// #include <boost/bind.hpp>
 
 #include "../../benchmark.hpp"
 
@@ -22,7 +22,7 @@ class Bs1 : public boost::signals::trackable
     template <typename Subject, typename Foo>
     static void connect_method(Subject& subject, Foo& foo)
     {
-        subject.connect(boost::bind(&Foo::handler, &foo, ::_1));
+        subject.connect(std::bind(&Foo::handler, &foo, std::placeholders::_1));
     }
     template <typename Subject>
     static void emit_method(Subject& subject, Rng& rng)

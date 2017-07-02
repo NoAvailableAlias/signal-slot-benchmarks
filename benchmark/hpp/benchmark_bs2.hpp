@@ -4,7 +4,7 @@
 //#define BOOST_BIND_NO_PLACEHOLDERS
 
 #include <boost/signals2.hpp>
-#include <boost/bind.hpp>
+// #include <boost/bind.hpp>
 
 #include "../../benchmark.hpp"
 
@@ -22,7 +22,7 @@ class Bs2 : public boost::signals2::trackable
     template <typename Subject, typename Foo>
     static void connect_method(Subject& subject, Foo& foo)
     {
-        subject.connect(boost::bind(&Foo::handler, &foo, ::_1));
+        subject.connect(std::bind(&Foo::handler, &foo, std::placeholders::_1));
     }
     template <typename Subject>
     static void emit_method(Subject& subject, Rng& rng)
