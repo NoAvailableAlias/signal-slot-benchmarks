@@ -223,13 +223,20 @@ void output_report(ImmediateData const& records, T& ost)
 
     // Output in unformatted csv
 
-    ost << "\nLibrary, " << construction << ", " << destruction << ", " << connection
-        << ", " << emission << ", " << combined << ", " << threaded << ", total\n";
+    bool show_header = true;
 
     for(auto const& row : Range(resultOrder.rbegin(), resultOrder.rend()))
     {
         auto const& score = row.first;
         auto const& libName = row.second.first;
+
+        if (show_header) {
+            ost << "\nLibrary, ";
+            for(auto const& column : (*row.second.second))
+                ost  << column.first << ", ";
+            ost << "total\n";
+            show_header = false;
+        }
 
         ost << libName;
 
