@@ -11,6 +11,8 @@
 #include "benchmark/hpp/benchmark_nod.hpp"
 // #include "benchmark/hpp/benchmark_nss.hpp"
 #include "benchmark/hpp/benchmark_psg.hpp"
+#include "benchmark/hpp/benchmark_pss.hpp"
+#include "benchmark/hpp/benchmark_pss_st.hpp"
 #include "benchmark/hpp/benchmark_sss.hpp"
 #include "benchmark/hpp/benchmark_wnk.hpp"
 #include "benchmark/hpp/benchmark_wsg.hpp"
@@ -64,6 +66,8 @@ void run_all_validation_tests(std::size_t N)
         Nod::validate_assert(N);
         // Nss::validate_assert(N);
         Psg::validate_assert(N);
+        Pss::validate_assert(N);
+        Pss_st::validate_assert(N);
         Sss::validate_assert(N);
         Wnk::validate_assert(N);
         Wsg::validate_assert(N);
@@ -103,6 +107,8 @@ ImmediateData run_all_benchmarks(std::size_t begin, std::size_t end)
             run_benchmark_class<Nod>(records, N);
             // run_benchmark_class<Nss>(records, N);
             run_benchmark_class<Psg>(records, N);
+            run_benchmark_class<Pss>(records, N);
+            run_benchmark_class<Pss_st>(records, N);
             run_benchmark_class<Sss>(records, N);
             run_benchmark_class<Wnk>(records, N);
             run_benchmark_class<Wsg>(records, N);
