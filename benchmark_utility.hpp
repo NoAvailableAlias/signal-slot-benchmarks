@@ -14,7 +14,7 @@
 #ifdef _WIN32
 #define NOINLINE(s) __declspec(noinline) s
 #elif __unix__
-#define NOINLINE(s) s __attribute__ ((noinline))
+#define NOINLINE(s) __attribute__ ((noinline)) s
 #else
 #define NOINLINE(s) s
 #endif
