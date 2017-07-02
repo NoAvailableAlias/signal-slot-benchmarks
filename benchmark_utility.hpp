@@ -57,7 +57,7 @@ template <>
 struct tee_stream<0>
 {
     template <typename ...Args, typename T>
-    static std::tuple<Args...>& print(std::tuple<Args...>& t, T&& x)
+    static std::tuple<Args...>& print(std::tuple<Args...>& t, T&& )
     {
         return t;
     }
