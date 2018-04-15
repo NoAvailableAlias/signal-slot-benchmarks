@@ -15,6 +15,7 @@
 #include "benchmark/hpp/benchmark_wnk.hpp"
 #include "benchmark/hpp/benchmark_wsg.hpp"
 #include "benchmark/hpp/benchmark_yas.hpp"
+#include "benchmark/hpp/benchmark_vdk.hpp"
 
 #include "benchmark/lib/jeffomatic/jl_signal/src/Signal.h"
 #include "benchmark/lib/jeffomatic/jl_signal/src/StaticSignalConnectionAllocators.h"
@@ -68,6 +69,7 @@ void run_all_validation_tests(std::size_t N)
         Wnk::validate_assert(N);
         Wsg::validate_assert(N);
         Yas::validate_assert(N);
+        Vdk::validate_assert(N);
     }
     catch (std::exception const& error)
     {
@@ -107,7 +109,7 @@ ImmediateData run_all_benchmarks(std::size_t begin, std::size_t end)
             run_benchmark_class<Wnk>(records, N);
             run_benchmark_class<Wsg>(records, N);
             run_benchmark_class<Yas>(records, N);
-
+            run_benchmark_class<Vdk>(records, N);
             std::cout << "\n[END: Test Size: " << N << "]" << std::endl;
         }
     }
