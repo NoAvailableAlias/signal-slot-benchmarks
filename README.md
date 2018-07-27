@@ -7,56 +7,57 @@ Performance
 
 **_Higher score is better._** _N / (sample size / count)._
 
-```
-+----------------------+-----------+----------+---------+----------+----------+----------+--------+
-| Library              | construct | destruct | connect | emission | combined | threaded | total  |
-|----------------------+-----------+----------+---------+----------+----------+----------+--------|
-| jeffomatic jl_signal | 91534     | 15857    | 46827   | 42811    | 10378    | 0        | 207408 |
-| nano-signal-slot     | 129634    | 10684    | 8466    | 41656    | 3780     | 0        | 194220 |
-| Wink-Signals         | 112965    | 13856    | 8113    | 43101    | 4873     | 0        | 182908 |
-| Yassi                | 120136    | 8222     | 5199    | 42372    | 2934     | 0        | 178864 |
-| amc522 Signal11      | 105469    | 6892     | 5022    | 38340    | 2766     | 0        | 158489 |
-| pbhogan Signals      | 96434     | 7930     | 5516    | 41878    | 3187     | 0        | 154945 |
-| mwthinker Signal     | 93651     | 7715     | 5330    | 41322    | 3016     | 0        | 151036 |
-| * fr00b0 nod         | 93510     | 9096     | 5592    | 33594    | 3168     | 2004     | 146964 |
-| * Kosta signals-cpp  | 109182    | 7632     | 1494    | 19763    | 1089     | 2        | 139161 |
-| joanrieu signal11    | 80858     | 10721    | 5886    | 36803    | 3124     | 0        | 137392 |
-| EvilTwin Observer    | 90964     | 4467     | 2034    | 28567    | 1333     | 0        | 127366 |
-| * lsignal            | 64299     | 4218     | 1998    | 33401    | 1203     | 614      | 105733 |
-| supergrover sigslot  | 12332     | 2142     | 2734    | 40634    | 1032     | 0        | 58874  |
-| * winglot Signals    | 10962     | 3527     | 3822    | 34071    | 1430     | 679      | 54492  |
-| * neosigslot         | 12880     | 4132     | 3319    | 7852     | 1366     | 503      | 30051  |
-| Boost Signals        | 6963      | 2299     | 888     | 9096     | 537      | 0        | 19784  |
-| * Boost Signals2     | 6490      | 3521     | 1474    | 6732     | 762      | 337      | 19316  |
-+----------------------+-----------+----------+---------+----------+----------+----------+--------+
-```
+Tested on Linux, Gcc 6.3
+
+| Library | threaded | combined | emission | connect | destruct | construct | total |
+|---------|----------|----------|----------|---------|----------|-----------|-------|
+| jeffomatic jl_signal | - | 14402 | 83513 | 66056 | 20536 | 124488 | 308996 |
+| Pal Sigslot ST | - | 6131 | 79574 | 13636 | 12923 | 174087 | 286351 |
+| mwthinker Signal | - | 3181 | 81663 | 5471 | 8271 | 174375 | 272962 |
+| Yassi | - | 2925 | 79241 | 4812 | 8789 | 168052 | 263818 |
+| * Pal Sigslot | 1166 | 5440 | 70240 | 10716 | 12937 | 163314 | 263813 |
+| Wink-Signals | - | 7271 | 82834 | 15519 | 14730 | 141276 | 261631 |
+| * fr00b0 nod | 994 | 3847 | 73628 | 7021 | 9962 | 164957 | 260409 |
+| pbhogan Signals | - | 4803 | 52850 | 9975 | 10074 | 179176 | 256877 |
+| amc522 Signal11 | - | 3267 | 79348 | 5593 | 9152 | 158937 | 256297 |
+| joanrieu signal11 | - | 3978 | 15947 | 10148 | 12002 | 187540 | 229615 |
+| * Kosta signals-cpp | 12 | 911 | 27394 | 1279 | 7448 | 192119 | 229164 |
+| * lsignal | 883 | 1932 | 72456 | 3114 | 5665 | 142482 | 226531 |
+| supergrover sigslot | - | 1330 | 79462 | 4164 | 2092 | 138097 | 225145 |
+| EvilTwin Observer | - | 1717 | 47223 | 2741 | 5406 | 141403 | 198489 |
+| * winglot Signals | 562 | 2868 | 69693 | 6765 | 5610 | 54596 | 140094 |
+| * neosigslot | 410 | 1687 | 13345 | 3871 | 4309 | 90011 | 113634 |
+| Boost Signals | - | 1279 | 32548 | 1973 | 5992 | 37808 | 79601 |
+| * Boost Signals2 | 56 | 1572 | 17062 | 3668 | 4462 | 15082 | 41902 |
+
 _* Library is designed to be thread safe._
 
 Metrics
 -------
 
-_Size results are from Visual Studio 2015 Community using default release build settings._
+_Size results are the size of object files from release build with Gcc 6.3._
 
 | Library | Build Size | Header Only | Data Structure | Thread Safe |
 | ------- |:----------:|:-----------:| -------------- |:-----------:|
-| [nano-signal-slot](https://github.com/NoAvailableAlias/nano-signal-slot) | 3654 kb | X | singly linked list | - |
-| [jeffomatic jl_signal](https://github.com/jeffomatic/jl_signal) | 3710 kb | - | doubly linked list | - |
-| [Wink-Signals](https://github.com/miguelmartin75/Wink-Signals) | 3758 kb | X | std::vector | - |
-| [pbhogan Signals](https://github.com/pbhogan/Signals) | 3813 kb | X | std::set | - |
-| [mwthinker Signal](https://github.com/mwthinker/Signal) | 3834 kb | - | std::list | - |
-| [supergrover sigslot](https://github.com/supergrover/sigslot) | 3840 kb | - | std::list | - |
-| [amc522 Signal11](https://github.com/amc522/Signal11) | 3851 kb | X | std::vector | - |
-| [EvilTwin Observer](http://eviltwingames.com/blog/the-observer-pattern-revisited/) | 3863 kb | X | std::vector | - |
-| [Yassi](http://www.codeproject.com/Articles/867044/Yassi-Yet-Another-Signal-Slot-Implementation) | 3883 kb | X | std::vector | - |
-| [joanrieu signal11](https://github.com/joanrieu/signal11) | 3888 kb | X | std::list | - |
-| [winglot Signals](https://github.com/winglot/Signals) | 3978 kb | - | *std::list | X |
-| [fr00b0 nod](https://github.com/fr00b0/nod) | 4079 kb | X | std::vector | X |
-| [Kosta-Github signals-cpp](https://github.com/Kosta-Github/signals-cpp) | 4091 kb | X | std::vector | X |
-| ~~[martinkallman signals-cpp](https://github.com/martinkallman/signals-cpp)~~ | ~~4245 kb~~ | ~~X~~ | ~~std::unordered_map~~ | - |
-| [Boost Signals](http://www.boost.org/doc/libs/1_56_0/doc/html/signals.html) | 4252 kb | - | ? | - |
-| [cpp11nullptr lsignal](https://github.com/cpp11nullptr/lsignal) | 4306 kb | X | *std::list | X |
-| [neosigslot](http://www.i42.co.uk/stuff/neosigslot.htm) | 5167 kb | - | *std::map | X |
-| [Boost Signals2](http://www.boost.org/doc/libs/1_58_0/doc/html/signals2.html) | 5606 kb | ? | ? | X |
+| [jeffomatic jl_signal](https://github.com/jeffomatic/jl_signal) | 37 kb | - | doubly linked list | - |
+| [Wink-Signals](https://github.com/miguelmartin75/Wink-Signals) | 40 kb | X | std::vector | - |
+| [supergrover sigslot](https://github.com/supergrover/sigslot) | 42 kb | - | std::list | - |
+| [pbhogan Signals](https://github.com/pbhogan/Signals) | 43 kb | X | std::set | - |
+| [joanrieu signal11](https://github.com/joanrieu/signal11) | 48 kb | X | std::list | - |
+| [Yassi](http://www.codeproject.com/Articles/867044/Yassi-Yet-Another-Signal-Slot-Implementation) | 51 kb | X | std::vector | - |
+| [mwthinker Signal](https://github.com/mwthinker/Signal) | 54 kb | - | std::list | - |
+| [Pal Sigslot ST](https://github.com/palacaze/sigslot) | 59 kb | X | singly linked list | - |
+| [EvilTwin Observer](http://eviltwingames.com/blog/the-observer-pattern-revisited/) | 69 kb | X | std::vector | - |
+| [amc522 Signal11](https://github.com/amc522/Signal11) | 72 kb | X | std::vector | - |
+| [Boost Signals](http://www.boost.org/doc/libs/1_56_0/doc/html/signals.html) | 96 kb | - | ? | - |
+| [winglot Signals](https://github.com/winglot/Signals) | 122 kb | - | *std::list | X |
+| [Pal Sigslot](https://github.com/palacaze/sigslot) | 132 kb | X | singly linked list | X |
+| [Kosta-Github signals-cpp](https://github.com/Kosta-Github/signals-cpp) | 140 kb | X | std::vector | X |
+| [fr00b0 nod](https://github.com/fr00b0/nod) | 148 kb | X | std::vector | X |
+| [cpp11nullptr lsignal](https://github.com/cpp11nullptr/lsignal) | 155 kb | X | *std::list | X |
+| [neosigslot](http://www.i42.co.uk/stuff/neosigslot.htm) | 224 kb | - | *std::map | X |
+| [Boost Signals2](http://www.boost.org/doc/libs/1_58_0/doc/html/signals2.html) | 298 kb | ? | ? | X |
+| [nano-signal-slot](https://github.com/NoAvailableAlias/nano-signal-slot) | ??? kb | X | singly linked list | - |
 
 _* Uses additional data structures._
 

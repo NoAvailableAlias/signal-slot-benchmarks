@@ -14,7 +14,7 @@ class Sss : public SigSlotBase
 
     public:
 
-    using Signal = Signal<Rng&>;
+    using Signal = ::Signal<Rng&>;
 
     template <typename Subject, typename Foo>
     static void connect_method(Subject& subject, Foo& foo)

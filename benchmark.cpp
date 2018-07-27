@@ -9,8 +9,10 @@
 #include "benchmark/hpp/benchmark_mws.hpp"
 #include "benchmark/hpp/benchmark_nls.hpp"
 #include "benchmark/hpp/benchmark_nod.hpp"
-#include "benchmark/hpp/benchmark_nss.hpp"
+// #include "benchmark/hpp/benchmark_nss.hpp"
 #include "benchmark/hpp/benchmark_psg.hpp"
+#include "benchmark/hpp/benchmark_pss.hpp"
+#include "benchmark/hpp/benchmark_pss_st.hpp"
 #include "benchmark/hpp/benchmark_sss.hpp"
 #include "benchmark/hpp/benchmark_wnk.hpp"
 #include "benchmark/hpp/benchmark_wsg.hpp"
@@ -63,8 +65,10 @@ void run_all_validation_tests(std::size_t N)
         Mws::validate_assert(N);
         Nls::validate_assert(N);
         Nod::validate_assert(N);
-        Nss::validate_assert(N);
+        // Nss::validate_assert(N);
         Psg::validate_assert(N);
+        Pss::validate_assert(N);
+        Pss_st::validate_assert(N);
         Sss::validate_assert(N);
         Wnk::validate_assert(N);
         Wsg::validate_assert(N);
@@ -103,8 +107,10 @@ ImmediateData run_all_benchmarks(std::size_t begin, std::size_t end)
             run_benchmark_class<Mws>(records, N);
             run_benchmark_class<Nls>(records, N);
             run_benchmark_class<Nod>(records, N);
-            run_benchmark_class<Nss>(records, N);
+            // run_benchmark_class<Nss>(records, N);
             run_benchmark_class<Psg>(records, N);
+            run_benchmark_class<Pss>(records, N);
+            run_benchmark_class<Pss_st>(records, N);
             run_benchmark_class<Sss>(records, N);
             run_benchmark_class<Wnk>(records, N);
             run_benchmark_class<Wsg>(records, N);
@@ -225,13 +231,20 @@ void output_report(ImmediateData const& records, T& ost)
 
     // Output in unformatted csv
 
-    ost << "\nLibrary, " << construction << ", " << destruction << ", " << connection
-        << ", " << emission << ", " << combined << ", " << threaded << ", total\n";
+    bool show_header = true;
 
     for(auto const& row : Range(resultOrder.rbegin(), resultOrder.rend()))
     {
         auto const& score = row.first;
         auto const& libName = row.second.first;
+
+        if (show_header) {
+            ost << "\nLibrary, ";
+            for(auto const& column : (*row.second.second))
+                ost  << column.first << ", ";
+            ost << "total\n";
+            show_header = false;
+        }
 
         ost << libName;
 

@@ -1,15 +1,14 @@
-#ifndef BENCHMARK_BS2_HPP
-#define BENCHMARK_BS2_HPP
+#ifndef BENCHMARK_PSS_ST_HPP
+#define BENCHMARK_PSS_ST_HPP
 
-//#define BOOST_BIND_NO_PLACEHOLDERS
-
-#include <boost/signals2.hpp>
-// #include <boost/bind.hpp>
+#include "../lib/palacaze/sigslot/signal.hpp"
 
 #include "../../benchmark.hpp"
 
-class Bs2 : public boost::signals2::trackable
+class Pss_st
 {
+    sigslot::scoped_connection conn;
+
     NOINLINE(void handler(Rng& rng))
     {
         volatile std::size_t a = rng(); (void)a;
@@ -17,12 +16,12 @@ class Bs2 : public boost::signals2::trackable
 
     public:
 
-    using Signal = boost::signals2::signal<void(Rng&)>;
+    using Signal = sigslot::signal_st<Rng&>;
 
     template <typename Subject, typename Foo>
     static void connect_method(Subject& subject, Foo& foo)
     {
-        subject.connect(std::bind(&Foo::handler, &foo, std::placeholders::_1));
+        foo.conn = subject.connect_scoped(&Foo::handler, &foo);
     }
     template <typename Subject>
     static void emit_method(Subject& subject, Rng& rng)
@@ -43,4 +42,4 @@ class Bs2 : public boost::signals2::trackable
     static const char* LibraryName;
 };
 
-#endif // BENCHMARK_BS2_HPP
+#endif // BENCHMARK_PSS_ST_HPP

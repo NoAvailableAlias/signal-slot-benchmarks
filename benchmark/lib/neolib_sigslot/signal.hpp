@@ -51,7 +51,7 @@ namespace neolib
 {
 	namespace detail
 	{
-		using namespace std::placeholders;
+		namespace ph = std::placeholders;
 
 		template <std::size_t ParameterCount>
 		struct do_bind;
@@ -70,8 +70,7 @@ namespace neolib
 			template <typename Sink, typename SinkFunction, typename Result>
 			void operator()(Sink& aSink, SinkFunction aSinkFunction, Result& aResult)
 			{
-                using std::placeholders::_1;
-				aResult = std::bind(aSinkFunction, &aSink, _1);
+				aResult = std::bind(aSinkFunction, &aSink, ph::_1);
 			}
 		};
 		template <>
@@ -80,7 +79,7 @@ namespace neolib
 			template <typename Sink, typename SinkFunction, typename Result>
 			void operator()(Sink& aSink, SinkFunction aSinkFunction, Result& aResult)
 			{
-				aResult = std::bind(aSinkFunction, &aSink, _1, _2);
+				aResult = std::bind(aSinkFunction, &aSink, ph::_1, ph::_2);
 			}
 		};
 		template <>
@@ -89,7 +88,7 @@ namespace neolib
 			template <typename Sink, typename SinkFunction, typename Result>
 			void operator()(Sink& aSink, SinkFunction aSinkFunction, Result& aResult)
 			{
-				aResult = std::bind(aSinkFunction, &aSink, _1, _2, _3);
+				aResult = std::bind(aSinkFunction, &aSink, ph::_1, ph::_2, ph::_3);
 			}
 		};
 		template <>
@@ -98,7 +97,7 @@ namespace neolib
 			template <typename Sink, typename SinkFunction, typename Result>
 			void operator()(Sink& aSink, SinkFunction aSinkFunction, Result& aResult)
 			{
-				aResult = std::bind(aSinkFunction, &aSink, _1, _2, _3, _4);
+				aResult = std::bind(aSinkFunction, &aSink, ph::_1, ph::_2, ph::_3, ph::_4);
 			}
 		};
 		template <>
@@ -107,7 +106,7 @@ namespace neolib
 			template <typename Sink, typename SinkFunction, typename Result>
 			void operator()(Sink& aSink, SinkFunction aSinkFunction, Result& aResult)
 			{
-				aResult = std::bind(aSinkFunction, &aSink, _1, _2, _3, _4, _5);
+				aResult = std::bind(aSinkFunction, &aSink, ph::_1, ph::_2, ph::_3, ph::_4, ph::_5);
 			}
 		};
 		template <>
@@ -116,7 +115,7 @@ namespace neolib
 			template <typename Sink, typename SinkFunction, typename Result>
 			void operator()(Sink& aSink, SinkFunction aSinkFunction, Result& aResult)
 			{
-				aResult = std::bind(aSinkFunction, &aSink, _1, _2, _3, _4, _5, _6);
+				aResult = std::bind(aSinkFunction, &aSink, ph::_1, ph::_2, ph::_3, ph::_4, ph::_5, ph::_6);
 			}
 		};
 		template <>
@@ -125,7 +124,7 @@ namespace neolib
 			template <typename Sink, typename SinkFunction, typename Result>
 			void operator()(Sink& aSink, SinkFunction aSinkFunction, Result& aResult)
 			{
-				aResult = std::bind(aSinkFunction, &aSink, _1, _2, _3, _4, _5, _6, _7);
+				aResult = std::bind(aSinkFunction, &aSink, ph::_1, ph::_2, ph::_3, ph::_4, ph::_5, ph::_6, ph::_7);
 			}
 		};
 		template <>
@@ -134,7 +133,7 @@ namespace neolib
 			template <typename Sink, typename SinkFunction, typename Result>
 			void operator()(Sink& aSink, SinkFunction aSinkFunction, Result& aResult)
 			{
-				aResult = std::bind(aSinkFunction, &aSink, _1, _2, _3, _4, _5, _6, _7, _8);
+				aResult = std::bind(aSinkFunction, &aSink, ph::_1, ph::_2, ph::_3, ph::_4, ph::_5, ph::_6, ph::_7, ph::_8);
 			}
 		};
 		template <>
@@ -143,7 +142,7 @@ namespace neolib
 			template <typename Sink, typename SinkFunction, typename Result>
 			void operator()(Sink& aSink, SinkFunction aSinkFunction, Result& aResult)
 			{
-				aResult = std::bind(aSinkFunction, &aSink, _1, _2, _3, _4, _5, _6, _7, _8, _9);
+				aResult = std::bind(aSinkFunction, &aSink, ph::_1, ph::_2, ph::_3, ph::_4, ph::_5, ph::_6, ph::_7, ph::_8, ph::_9);
 			}
 		};
 		template <>
@@ -152,7 +151,7 @@ namespace neolib
 			template <typename Sink, typename SinkFunction, typename Result>
 			void operator()(Sink& aSink, SinkFunction aSinkFunction, Result& aResult)
 			{
-				aResult = std::bind(aSinkFunction, &aSink, _1, _2, _3, _4, _5, _6, _7, _8, _9, _10);
+				aResult = std::bind(aSinkFunction, &aSink, ph::_1, ph::_2, ph::_3, ph::_4, ph::_5, ph::_6, ph::_7, ph::_8, ph::_9, ph::_10);
 			}
 		};
 	}

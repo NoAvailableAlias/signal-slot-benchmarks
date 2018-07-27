@@ -31,6 +31,7 @@
 
 #include <vector>
 #include <utility>
+#include <algorithm>
 
 //#include <wink/slot.hpp>
 #include "slot.hpp"

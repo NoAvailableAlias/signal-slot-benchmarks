@@ -22,7 +22,7 @@ class Yas
     template <typename Subject, typename Foo>
     static void connect_method(Subject& subject, Foo& foo)
     {
-        subject.connect<Event>(foo, &Foo::handler);
+        subject.template connect<Event>(foo, &Foo::handler);
 
         // Automatically disconnect when the foo instance is destroyed
         // Benchmarks require connection management
@@ -31,7 +31,7 @@ class Yas
     template <typename Subject>
     static void emit_method(Subject& subject, Rng& rng)
     {
-        subject.emit<Event>(rng);
+        subject.template emit<Event>(rng);
     }
 
     static void validate_assert(std::size_t);
