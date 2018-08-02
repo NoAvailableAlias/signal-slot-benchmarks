@@ -1,3 +1,8 @@
+#include <iostream>
+#include <fstream>
+#include <iomanip>
+#include <map>
+
 #include "benchmark/hpp/benchmark_asg.hpp"
 #include "benchmark/hpp/benchmark_bs1.hpp"
 #include "benchmark/hpp/benchmark_bs2.hpp"
@@ -7,9 +12,8 @@
 #include "benchmark/hpp/benchmark_jos.hpp"
 #include "benchmark/hpp/benchmark_ksc.hpp"
 #include "benchmark/hpp/benchmark_mws.hpp"
-#include "benchmark/hpp/benchmark_nls.hpp"
 #include "benchmark/hpp/benchmark_nod.hpp"
-// #include "benchmark/hpp/benchmark_nss.hpp"
+#include "benchmark/hpp/benchmark_nss.hpp"
 #include "benchmark/hpp/benchmark_psg.hpp"
 #include "benchmark/hpp/benchmark_pss.hpp"
 #include "benchmark/hpp/benchmark_pss_st.hpp"
@@ -21,14 +25,6 @@
 
 #include "benchmark/lib/jeffomatic/jl_signal/src/Signal.h"
 #include "benchmark/lib/jeffomatic/jl_signal/src/StaticSignalConnectionAllocators.h"
-
-#include <iostream>
-#include <fstream>
-#include <iomanip>
-#include <numeric>
-#include <vector>
-#include <chrono>
-#include <map>
 
 #include "benchmark_utility.hpp"
 
@@ -42,6 +38,7 @@ const char* threaded = "threaded";
 using ImmediateResults = std::map<const char*, std::vector<double>>;
 using ImmediateData = std::map<const char*, ImmediateResults>;
 
+// This is just a default maximum sample time limit
 std::size_t g_limit = Timer_u(Limit_u(4000)).count();
 
 template <typename T> void output_report(ImmediateData const&, T&);
@@ -63,9 +60,8 @@ void run_all_validation_tests(std::size_t N)
         Jos::validate_assert(N);
         Ksc::validate_assert(N);
         Mws::validate_assert(N);
-        Nls::validate_assert(N);
         Nod::validate_assert(N);
-        // Nss::validate_assert(N);
+        Nss::validate_assert(N);
         Psg::validate_assert(N);
         Pss::validate_assert(N);
         Pss_st::validate_assert(N);
@@ -105,9 +101,8 @@ ImmediateData run_all_benchmarks(std::size_t begin, std::size_t end)
             run_benchmark_class<Jos>(records, N);
             run_benchmark_class<Ksc>(records, N);
             run_benchmark_class<Mws>(records, N);
-            run_benchmark_class<Nls>(records, N);
             run_benchmark_class<Nod>(records, N);
-            // run_benchmark_class<Nss>(records, N);
+            run_benchmark_class<Nss>(records, N);
             run_benchmark_class<Psg>(records, N);
             run_benchmark_class<Pss>(records, N);
             run_benchmark_class<Pss_st>(records, N);
@@ -148,12 +143,7 @@ int main(int argc, char* argv[])
     {
         return 1;
     }
-    // Limit to a 32bit friendly value (and complain about it)
-    if (limit > 4000)
-    {
-        limit = 4000;
-        std::cerr << "Capping sample size to 4000 milliseconds." << std::endl;
-    }
+    // Must compile as x64 or else wrapping might happen
     g_limit = Timer_u(Limit_u(limit)).count();
     std::cin.ignore();
 

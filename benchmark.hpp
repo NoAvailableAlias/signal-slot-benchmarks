@@ -208,10 +208,17 @@ class Benchmark
             return calculate_score(N, elapsed, count);
         };
 
-        std::future<double> f1 = std::async(std::launch::async, context);
-        std::future<double> f2 = std::async(std::launch::async, context);
-        
-        return (f1.get() + f2.get()) / 2.0;
+        std::vector<double> results;
+        std::vector<std::future<double>> future_results;
+        for (std::size_t i = std::thread::hardware_concurrency() / 2; i > 0; --i)
+        {
+            future_results.emplace_back(std::async(std::launch::async, context));
+        }
+        for (auto& future_result : future_results)
+        {
+            results.emplace_back(future_result.get());
+        }
+        return std::accumulate(results.begin(), results.end(), 0.0) / results.size();
     }
 };
 

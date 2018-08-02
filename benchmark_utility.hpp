@@ -3,6 +3,7 @@
 
 #include <algorithm>
 #include <cassert>
+#include <numeric>
 #include <chrono>
 #include <future>
 #include <memory>

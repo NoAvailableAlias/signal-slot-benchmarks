@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.6)
 project(signal-slot-benchmarks VERSION 0.0.1 LANGUAGES CXX)
 
 # compiler support
-set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED YES)
 
 # dependencies
@@ -23,7 +23,7 @@ add_executable(bench
     benchmark/cpp/benchmark_mws.cpp
     benchmark/cpp/benchmark_nls.cpp
     benchmark/cpp/benchmark_nod.cpp
-    # benchmark/cpp/benchmark_nss.cpp
+    benchmark/cpp/benchmark_nss.cpp
     benchmark/cpp/benchmark_psg.cpp
     benchmark/cpp/benchmark_pss.cpp
     benchmark/cpp/benchmark_pss_st.cpp

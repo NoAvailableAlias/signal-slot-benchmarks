@@ -4,7 +4,6 @@
 #define BOOST_SIGNALS_NO_DEPRECATION_WARNING
 
 #include <boost/signals.hpp>
-// #include <boost/bind.hpp>
 
 #include "../../benchmark.hpp"
 

@@ -1,10 +1,7 @@
 #ifndef BENCHMARK_BS2_HPP
 #define BENCHMARK_BS2_HPP
 
-//#define BOOST_BIND_NO_PLACEHOLDERS
-
 #include <boost/signals2.hpp>
-// #include <boost/bind.hpp>
 
 #include "../../benchmark.hpp"
 
