@@ -214,6 +214,7 @@
     <ClInclude Include="..\benchmark\hpp\benchmark_bs1.hpp" />
     <ClInclude Include="..\benchmark\hpp\benchmark_bs2.hpp" />
     <ClInclude Include="..\benchmark\hpp\benchmark_cls.hpp" />
+    <ClInclude Include="..\benchmark\hpp\benchmark_cps.hpp" />
     <ClInclude Include="..\benchmark\hpp\benchmark_evl.hpp" />
     <ClInclude Include="..\benchmark\hpp\benchmark_jls.hpp" />
     <ClInclude Include="..\benchmark\hpp\benchmark_jos.hpp" />
@@ -252,6 +253,7 @@
     <ClInclude Include="..\benchmark\lib\miguelmartin\Wink-Signals\wink\event_queue.hpp" />
     <ClInclude Include="..\benchmark\lib\miguelmartin\Wink-Signals\wink\signal.hpp" />
     <ClInclude Include="..\benchmark\lib\miguelmartin\Wink-Signals\wink\slot.hpp" />
+    <ClInclude Include="..\benchmark\lib\Montellese\cpp-signal\cpp-signal.h" />
     <ClInclude Include="..\benchmark\lib\mwthinker\Signal\src\mw\signal.h" />
     <ClInclude Include="..\benchmark\lib\mwthinker\Signal\src\mw\signals\connection.h" />
     <ClInclude Include="..\benchmark\lib\NoAvailableAlias\nano-signal-slot\nano_function.hpp" />
@@ -277,6 +279,7 @@
     <ClCompile Include="..\benchmark\cpp\benchmark_bs1.cpp" />
     <ClCompile Include="..\benchmark\cpp\benchmark_bs2.cpp" />
     <ClCompile Include="..\benchmark\cpp\benchmark_cls.cpp" />
+    <ClCompile Include="..\benchmark\cpp\benchmark_cps.cpp" />
     <ClCompile Include="..\benchmark\cpp\benchmark_evl.cpp" />
     <ClCompile Include="..\benchmark\cpp\benchmark_jls.cpp" />
     <ClCompile Include="..\benchmark\cpp\benchmark_jos.cpp" />

@@ -4,8 +4,8 @@
 #include <map>
 
 #include "benchmark/hpp/benchmark_asg.hpp"
-// TODO: #include "benchmark/hpp/benchmark_bs1.hpp"
-// TODO: #include "benchmark/hpp/benchmark_bs2.hpp"
+#include "benchmark/hpp/benchmark_bs1.hpp"
+#include "benchmark/hpp/benchmark_bs2.hpp"
 #include "benchmark/hpp/benchmark_cls.hpp"
 #include "benchmark/hpp/benchmark_cps.hpp"
 #include "benchmark/hpp/benchmark_evl.hpp"

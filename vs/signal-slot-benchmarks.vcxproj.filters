@@ -84,6 +84,9 @@
     <Filter Include="Source Files\lib\supergrover">
       <UniqueIdentifier>{a4d79bc9-33f9-4a93-87eb-3cc37f31d235}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\lib\Montellese">
+      <UniqueIdentifier>{50351168-ba4c-48c2-b6be-1b53534d6a6e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\benchmark\hpp\benchmark_asg.hpp">
@@ -269,6 +272,12 @@
     <ClInclude Include="..\benchmark\hpp\benchmark_bs2.hpp">
       <Filter>Header Files\benchmark</Filter>
     </ClInclude>
+    <ClInclude Include="..\benchmark\lib\Montellese\cpp-signal\cpp-signal.h">
+      <Filter>Header Files\lib\Montellese</Filter>
+    </ClInclude>
+    <ClInclude Include="..\benchmark\hpp\benchmark_cps.hpp">
+      <Filter>Header Files\benchmark</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\benchmark\cpp\benchmark_asg.cpp">
@@ -344,6 +353,9 @@
       <Filter>Source Files\benchmark</Filter>
     </ClCompile>
     <ClCompile Include="..\benchmark\cpp\benchmark_bs2.cpp">
+      <Filter>Source Files\benchmark</Filter>
+    </ClCompile>
+    <ClCompile Include="..\benchmark\cpp\benchmark_cps.cpp">
       <Filter>Source Files\benchmark</Filter>
     </ClCompile>
   </ItemGroup>
