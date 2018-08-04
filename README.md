@@ -7,7 +7,12 @@ Performance
 
 **_Higher score is better._** _N / (sample size / count)._
 
-Tested on Linux, Gcc 6.3
+Tested on Linux, Gcc 6.3 prior to August 2018
+Tested on Visual Studio 17 beyond August 2018
+
+#### Thread Unsafe Libraries
+
+WIP
 
 | Library | threaded | combined | emission | connect | destruct | construct | total |
 |---------|----------|----------|----------|---------|----------|-----------|-------|
@@ -30,7 +35,9 @@ Tested on Linux, Gcc 6.3
 | Boost Signals | - | 1279 | 32548 | 1973 | 5992 | 37808 | 79601 |
 | * Boost Signals2 | 56 | 1572 | 17062 | 3668 | 4462 | 15082 | 41902 |
 
-_* Library is designed to be thread safe._
+#### Thread Safe Libraries
+
+WIP
 
 Metrics
 -------
@@ -76,7 +83,3 @@ _The individual benchmark algorithms are completely generic through templates._
 | [combined](https://github.com/NoAvailableAlias/signal-slot-benchmarks/blob/master/benchmark.hpp#L159) | Time construction, destruction, connection, and emission together. |
 | [threaded](https://github.com/NoAvailableAlias/signal-slot-benchmarks/blob/master/benchmark.hpp#L186) | Time the runtime of parallel slot creation, connection, emission, and destruction. |
 
-Notes
------
-
-Metrics entries that are crossed out are implementations that have failed the pre-benchmark validation assert.

@@ -140,7 +140,7 @@ int main(int argc, char* argv[])
     std::size_t start_test_size = 2;
     std::size_t maximum_test_size = 64;
 
-    std::cout << "Enter the time limit per sample [milliseconds]: ";
+    std::cout << "Enter the milliseconds/sample (4000 takes several hours): ";
 
     if (!(std::cin >> limit))
     {
