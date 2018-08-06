@@ -1,7 +1,6 @@
 #include <iostream>
 #include <fstream>
 #include <iomanip>
-#include <map>
 
 #include "benchmark/hpp/benchmark_asg.hpp"
 #include "benchmark/hpp/benchmark_bs1.hpp"
@@ -24,61 +23,43 @@
 #include "benchmark/hpp/benchmark_yas.hpp"
 #include "benchmark/hpp/benchmark_vdk.hpp"
 
+// These are required in Main to initialize jlsignal
 #include "benchmark/lib/jeffomatic/jl_signal/src/Signal.h"
 #include "benchmark/lib/jeffomatic/jl_signal/src/StaticSignalConnectionAllocators.h"
 
 #include "benchmark_utility.hpp"
 
-const char* construction = "construct";
-const char* destruction = "destruct";
-const char* connection = "connect";
-const char* emission = "emission";
-const char* combined = "combined";
-const char* threaded = "threaded";
-
-using ImmediateResults = std::map<const char*, std::vector<double>>;
-using ImmediateData = std::map<const char*, ImmediateResults>;
-
-// This is just a default maximum sample time limit
-std::size_t g_limit = Timer_u(Limit_u(4000)).count();
-
-template <typename T> void output_report(ImmediateData const&, T&);
-template <typename T> void run_benchmark_class(ImmediateData&, std::size_t);
+// Extern defined in benchmark_utility.hpp
+std::size_t g_timer_limit = Timer_u(Limit_u(4000)).count();
 
 //------------------------------------------------------------------------------
 
-void run_all_validation_tests(std::size_t N)
+template <typename T>
+void run_benchmark_class(ImmediateData& records, std::size_t N)
 {
-    try
-    {
-        // Abort if any implementation isn't functioning correctly
-        Asg::validate_assert(N);
-        Bs1::validate_assert(N);
-        Bs2::validate_assert(N);
-        Cls::validate_assert(N);
-        Cps::validate_assert(N);
-        Evl::validate_assert(N);
-        Jls::validate_assert(N);
-        Jos::validate_assert(N);
-        Ksc::validate_assert(N);
-        Mws::validate_assert(N);
-        Nod::validate_assert(N);
-        Nss::validate_assert(N);
-        Psg::validate_assert(N);
-        Pss::validate_assert(N);
-        Pss_st::validate_assert(N);
-        Sss::validate_assert(N);
-        Wnk::validate_assert(N);
-        Wsg::validate_assert(N);
-        Yas::validate_assert(N);
-        Vdk::validate_assert(N);
-    }
-    catch (std::exception const& error)
-    {
-        // Catch something exceptional we would like to know about
-        std::cerr << "Exception: " << error.what() << std::endl;
-        std::cin.get();
-    }
+    // Time this particular benchmark run (for display only)
+    auto start = std::chrono::system_clock::now();
+    auto start_out = std::chrono::system_clock::to_time_t(start);
+
+    std::cout << std::put_time(std::localtime(&start_out), "%c")
+        << " [BEGIN: " << T::LibraryName << "]" << std::endl;
+
+    auto& metrics = records[T::LibraryName];
+
+    metrics[C_CONSTRUCTION].push_back(T::construction(N));
+    metrics[C_DESTRUCTION].push_back(T::destruction(N));
+    metrics[C_CONNECTION].push_back(T::connection(N));
+    metrics[C_EMISSION].push_back(T::emission(N));
+    metrics[C_COMBINED].push_back(T::combined(N));
+
+    // Benchmark class may or may not have this implemented
+    metrics[C_THREADED].push_back(T::threaded(N));
+
+    auto stop = std::chrono::system_clock::now();
+    auto stop_out = std::chrono::system_clock::to_time_t(stop);
+
+    std::cout << std::put_time(std::localtime(&stop_out), "%c")
+        << " [END: " << T::LibraryName << "]" << std::endl;
 }
 
 //------------------------------------------------------------------------------
@@ -114,12 +95,12 @@ ImmediateData run_all_benchmarks(std::size_t begin, std::size_t end)
             run_benchmark_class<Wsg>(records, N);
             run_benchmark_class<Yas>(records, N);
             run_benchmark_class<Vdk>(records, N);
+
             std::cout << "\n[END: Test Size: " << N << "]" << std::endl;
         }
     }
     catch (std::exception const& error)
     {
-        // Would like to know how we died before we ghost
         std::cerr << "Exception: " << error.what() << std::endl;
         std::cin.get();
     }
@@ -128,26 +109,142 @@ ImmediateData run_all_benchmarks(std::size_t begin, std::size_t end)
 
 //------------------------------------------------------------------------------
 
+void run_all_validation_tests(std::size_t N)
+{
+    try
+    {
+        // Abort if any implementation isn't functioning correctly
+        Asg::validate_assert(N);
+        Bs1::validate_assert(N);
+        Bs2::validate_assert(N);
+        Cls::validate_assert(N);
+        Cps::validate_assert(N);
+        Evl::validate_assert(N);
+        Jls::validate_assert(N);
+        Jos::validate_assert(N);
+        Ksc::validate_assert(N);
+        Mws::validate_assert(N);
+        Nod::validate_assert(N);
+        Nss::validate_assert(N);
+        Psg::validate_assert(N);
+        Pss::validate_assert(N);
+        Pss_st::validate_assert(N);
+        Sss::validate_assert(N);
+        Wnk::validate_assert(N);
+        Wsg::validate_assert(N);
+        Yas::validate_assert(N);
+        Vdk::validate_assert(N);
+    }
+    catch (std::exception const& error)
+    {
+        std::cerr << "Exception: " << error.what() << std::endl;
+        std::cin.get();
+    }
+}
+
+//------------------------------------------------------------------------------
+
+template <typename T>
+void output_report_header(RelativeResults const& first_result_row, T& ost)
+{
+    std::string header_first_row("| Library | ");
+
+    for (auto const& column : first_result_row)
+    {
+        header_first_row.append(column.first);
+        header_first_row.append(" | ");
+    }
+    header_first_row += "total |";
+
+    ost << "\n" << header_first_row << "\n";
+
+    for (auto const& ch : header_first_row)
+    {
+        ost << (ch == '|' ? '|' : '-');
+    }
+    ost << "\n";
+}
+
+//------------------------------------------------------------------------------
+
+template <typename T>
+void output_reports(ImmediateData const& records, T& ost)
+{
+    RelativeData resultAverage;
+    OrderedData resultOrder;
+
+    // Process and sort results by total score (sum of column averages)
+
+    for (auto const& row : records)
+    {
+        auto const& libName = row.first;
+
+        double score = 0.0;
+
+        for (auto const& column : row.second)
+        {
+            auto const& opName = column.first;
+            auto const& val = column.second;
+
+            double average = std::accumulate(std::begin(val),
+                std::end(val), 1.0) / (double)val.size();
+
+            resultAverage[libName][opName] = average;
+            score += average;
+        }
+        resultOrder[score] = OrderedResults { libName, &resultAverage[libName] };
+    }
+
+    // Output in markdown format
+
+    bool show_header = true;
+
+    for (auto const& row : Range(resultOrder.rbegin(), resultOrder.rend()))
+    {
+        auto const& score = row.first;
+        auto const& libName = row.second.first;
+
+        if (show_header)
+        {
+            output_report_header((*row.second.second), ost);
+            show_header = false;
+        }
+
+        ost << "| " << libName;
+
+        for (auto const& column : (*row.second.second))
+        {
+            auto const& opName = column.first;
+            auto const& val = column.second;
+
+            ost << " | " << std::setprecision(0) << std::fixed << val;
+        }
+        ost << " | " << std::setprecision(0) << std::fixed << score << " |\n";
+    }
+}
+
+//------------------------------------------------------------------------------
+
 int main(int argc, char* argv[])
 {
     // Jl_signal uses a static allocator for high performance
-    jl::StaticSignalConnectionAllocator<c_jlsignal_max> signal_con_allocator;
-    jl::StaticObserverConnectionAllocator<c_jlsignal_max> observer_con_allocator;
+    jl::StaticSignalConnectionAllocator<C_JLSIGNAL_MAX> signal_con_allocator;
+    jl::StaticObserverConnectionAllocator<C_JLSIGNAL_MAX> observer_con_allocator;
     jl::SignalBase::SetCommonConnectionAllocator(&signal_con_allocator);
     jl::SignalObserver::SetCommonConnectionAllocator(&observer_con_allocator);
 
-    std::size_t limit = 0;
+    std::size_t user_limit = 0;
     std::size_t start_test_size = 2;
     std::size_t maximum_test_size = 64;
 
-    std::cout << "Enter the milliseconds/sample (4000 takes several hours): ";
+    std::cout << "Enter the milliseconds per sample (4000 takes several hours): ";
 
-    if (!(std::cin >> limit))
+    if (!(std::cin >> user_limit))
     {
         return 1;
     }
     // Must compile as x64 or else wrapping might happen
-    g_limit = Timer_u(Limit_u(limit)).count();
+    g_timer_limit = Timer_u(Limit_u(user_limit)).count();
     std::cin.ignore();
 
     // Make sure to set process to high priority
@@ -170,7 +267,7 @@ int main(int argc, char* argv[])
         auto tee = std::tie(std::cout, ofs);
         tee << "\n" << std::put_time(std::localtime(&start_c), "%c") << "\n";
 
-        output_report(records, tee);
+        output_reports(records, tee);
 
         auto stop = std::chrono::system_clock::now();
         auto stop_c = std::chrono::system_clock::to_time_t(stop);
@@ -183,101 +280,4 @@ int main(int argc, char* argv[])
         std::cerr << "Unable to append report.txt: [error]" << std::endl;
     }
     std::cin.get();
-}
-
-//------------------------------------------------------------------------------
-
-template <typename T>
-void output_report(ImmediateData const& records, T& ost)
-{
-    using namespace std;
-
-    using RelativeResults = map<const char*, double>;
-    using RelativeData = map<const char*, RelativeResults>;
-    using OrderedResults = pair<const char*, RelativeResults*>;
-    using OrderedData = map<double, OrderedResults>;
-
-    RelativeData resultAverage;
-    OrderedData resultOrder;
-
-    // Process and sort results by total score (sum of column averages)
-
-    for(auto const& row : records)
-    {
-        auto const& libName = row.first;
-
-        double score = 0.0;
-
-        for(auto const& column : row.second)
-        {
-            auto const& opName = column.first;
-            auto const& val = column.second;
-
-            double average = accumulate(begin(val),
-                end(val), 1.0) / (double) val.size();
-
-            resultAverage[libName][opName] = average;
-            score += average;
-        }
-        resultOrder[score] = OrderedResults { libName, &resultAverage[libName] };
-    }
-
-    // Output in unformatted csv
-
-    bool show_header = true;
-
-    for(auto const& row : Range(resultOrder.rbegin(), resultOrder.rend()))
-    {
-        auto const& score = row.first;
-        auto const& libName = row.second.first;
-
-        if (show_header) {
-            ost << "\nLibrary, ";
-            for(auto const& column : (*row.second.second))
-                ost  << column.first << ", ";
-            ost << "total\n";
-            show_header = false;
-        }
-
-        ost << libName;
-
-        for(auto const& column : (*row.second.second))
-        {
-            auto const& opName = column.first;
-            auto const& val = column.second;
-
-            ost << ", " << setprecision(0) << fixed << val;
-        }
-        ost << ", " << setprecision(0) << fixed << score << "\n";
-    }
-}
-
-//------------------------------------------------------------------------------
-
-template <typename T>
-void run_benchmark_class(ImmediateData& records, std::size_t N)
-{
-    // Time this particular benchmark run (for display only)
-    auto start = std::chrono::system_clock::now();
-    auto start_c = std::chrono::system_clock::to_time_t(start);
-
-    std::cout << std::put_time(std::localtime(&start_c), "%c")
-        << " [BEGIN: " << T::LibraryName << "]" << std::endl;
-
-    auto& metrics = records[T::LibraryName];
-
-    metrics[construction].push_back(T::construction(N));
-    metrics[destruction].push_back(T::destruction(N));
-    metrics[connection].push_back(T::connection(N));
-    metrics[emission].push_back(T::emission(N));
-    metrics[combined].push_back(T::combined(N));
-
-    // Benchmark class may or may not have this implemented
-    metrics[threaded].push_back(T::threaded(N));
-
-    auto stop = std::chrono::system_clock::now();
-    auto stop_c = std::chrono::system_clock::to_time_t(stop);
-
-    std::cout << std::put_time(std::localtime(&stop_c), "%c")
-        << " [END: " << T::LibraryName << "]" << std::endl;
 }

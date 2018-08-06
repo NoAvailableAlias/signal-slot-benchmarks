@@ -52,7 +52,7 @@ class Benchmark
         std::size_t count = 1;
         std::size_t elapsed = 0;
 
-        for (; elapsed < g_limit; ++count)
+        for (; elapsed < g_timer_limit; ++count)
         {
             s_timer.reset();
 
@@ -76,7 +76,7 @@ class Benchmark
         s_indices.resize(N);
         std::generate(s_indices.begin(), s_indices.end(), IncrementFill());
 
-        for (; elapsed < g_limit; ++count)
+        for (; elapsed < g_timer_limit; ++count)
         {
             std::shuffle(s_indices.begin(), s_indices.end(), s_rng);
             {
@@ -106,7 +106,7 @@ class Benchmark
         s_indices.resize(N);
         std::generate(s_indices.begin(), s_indices.end(), IncrementFill());
 
-        for (; elapsed < g_limit; ++count)
+        for (; elapsed < g_timer_limit; ++count)
         {
             std::shuffle(s_indices.begin(), s_indices.end(), s_rng);
 
@@ -134,7 +134,7 @@ class Benchmark
         s_indices.resize(N);
         std::generate(s_indices.begin(), s_indices.end(), IncrementFill());
         
-        for (; elapsed < g_limit; ++count)
+        for (; elapsed < g_timer_limit; ++count)
         {
             std::shuffle(s_indices.begin(), s_indices.end(), s_rng);
 
@@ -167,7 +167,7 @@ class Benchmark
 
         s_timer.reset();
         
-        for (; elapsed < g_limit; ++count, elapsed = s_timer.count<Timer_u>())
+        for (; elapsed < g_timer_limit; ++count, elapsed = s_timer.count<Timer_u>())
         {
             Subject subject;
             std::vector<Foo> foo(N);
@@ -195,7 +195,7 @@ class Benchmark
             Rng rng (s_rng);
             ChronoTimer timer;
 
-            for (; elapsed < g_limit; ++count, elapsed = timer.count<Timer_u>())
+            for (; elapsed < g_timer_limit; ++count, elapsed = timer.count<Timer_u>())
             {
                 std::vector<Foo> foo(N);
 
