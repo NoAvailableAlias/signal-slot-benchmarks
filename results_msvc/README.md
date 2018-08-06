@@ -1,20 +1,25 @@
 
-# signal-slot-benchmarks
+Performance Results
+-------------------
 
-Comprehensive benchmarks for a majority of GitHub c++ signal slot implementations and others.
+**_Higher score is better._** _N / (sample size / count)._
 
-Tested Libraries
-----------------
+#### Thread Safe Libraries
 
 TODO
 
-Tested Environments
+#### Thread Unsafe Libraries
+
+TODO
+
+Implementation Info
 -------------------
-_(click to view results)_
-<br/>
-[GCC 6.3](https://github.com/NoAvailableAlias/signal-slot-benchmarks/blob/master/results_gcc/README.md)
-<br/>
-[MSVC 14](https://github.com/NoAvailableAlias/signal-slot-benchmarks/blob/master/results_msvc/README.md)
+
+_Size results are the size of object files from release build with Visual Studio 17._
+
+TODO
+
+_* Uses additional data structures._
 
 Benchmark Algorithms
 --------------------
