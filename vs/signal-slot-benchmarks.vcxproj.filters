@@ -93,6 +93,9 @@
     <Filter Include="Text Files\results_msvc">
       <UniqueIdentifier>{138d3b75-58f0-4ede-bd98-5d198606b587}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\lib\i42output">
+      <UniqueIdentifier>{69581605-a8ae-41b1-af56-78cb5fe64a6e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\benchmark\hpp\benchmark_asg.hpp">
@@ -227,15 +230,6 @@
     <ClInclude Include="..\benchmark\lib\mwthinker\Signal\src\mw\signal.h">
       <Filter>Header Files\lib\mwthinker</Filter>
     </ClInclude>
-    <ClInclude Include="..\benchmark\lib\NoAvailableAlias\nano-signal-slot\nano_function.hpp">
-      <Filter>Header Files\lib\NoAvailableAlias</Filter>
-    </ClInclude>
-    <ClInclude Include="..\benchmark\lib\NoAvailableAlias\nano-signal-slot\nano_observer.hpp">
-      <Filter>Header Files\lib\NoAvailableAlias</Filter>
-    </ClInclude>
-    <ClInclude Include="..\benchmark\lib\NoAvailableAlias\nano-signal-slot\nano_signal_slot.hpp">
-      <Filter>Header Files\lib\NoAvailableAlias</Filter>
-    </ClInclude>
     <ClInclude Include="..\benchmark\lib\palacaze\sigslot\signal.hpp">
       <Filter>Header Files\lib\palacaze</Filter>
     </ClInclude>
@@ -284,10 +278,40 @@
     <ClInclude Include="..\benchmark\hpp\benchmark_cps.hpp">
       <Filter>Header Files\benchmark</Filter>
     </ClInclude>
-    <ClInclude Include="..\benchmark\lib\NoAvailableAlias\nano-signal-slot\nano_noop_mutex.hpp">
+    <ClInclude Include="..\benchmark\lib\i42output\include\neolib\signal.hpp">
+      <Filter>Header Files\lib\i42output</Filter>
+    </ClInclude>
+    <ClInclude Include="..\benchmark\lib\i42output\include\neolib\signal_interface.hpp">
+      <Filter>Header Files\lib\i42output</Filter>
+    </ClInclude>
+    <ClInclude Include="..\benchmark\hpp\benchmark_nls.hpp">
+      <Filter>Header Files\benchmark</Filter>
+    </ClInclude>
+    <ClInclude Include="..\benchmark\lib\i42output\include\neolib\neolib.hpp">
+      <Filter>Header Files\lib\i42output</Filter>
+    </ClInclude>
+    <ClInclude Include="..\benchmark\lib\i42output\include\neolib\slot.hpp">
+      <Filter>Header Files\lib\i42output</Filter>
+    </ClInclude>
+    <ClInclude Include="..\benchmark\lib\i42output\include\neolib\slot_interface.hpp">
+      <Filter>Header Files\lib\i42output</Filter>
+    </ClInclude>
+    <ClInclude Include="..\benchmark\lib\i42output\include\neolib\locking_policy.hpp">
+      <Filter>Header Files\lib\i42output</Filter>
+    </ClInclude>
+    <ClInclude Include="..\benchmark\lib\i42output\include\neolib\mutex.hpp">
+      <Filter>Header Files\lib\i42output</Filter>
+    </ClInclude>
+    <ClInclude Include="..\benchmark\hpp\benchmark_nls_st.hpp">
+      <Filter>Header Files\benchmark</Filter>
+    </ClInclude>
+    <ClInclude Include="..\benchmark\lib\NoAvailableAlias\nano-signal-slot\nano_function.hpp">
       <Filter>Header Files\lib\NoAvailableAlias</Filter>
     </ClInclude>
-    <ClInclude Include="..\benchmark\lib\NoAvailableAlias\nano-signal-slot\nano_pool_allocator.hpp">
+    <ClInclude Include="..\benchmark\lib\NoAvailableAlias\nano-signal-slot\nano_observer.hpp">
+      <Filter>Header Files\lib\NoAvailableAlias</Filter>
+    </ClInclude>
+    <ClInclude Include="..\benchmark\lib\NoAvailableAlias\nano-signal-slot\nano_signal_slot.hpp">
       <Filter>Header Files\lib\NoAvailableAlias</Filter>
     </ClInclude>
   </ItemGroup>
@@ -368,6 +392,12 @@
       <Filter>Source Files\benchmark</Filter>
     </ClCompile>
     <ClCompile Include="..\benchmark\cpp\benchmark_cps.cpp">
+      <Filter>Source Files\benchmark</Filter>
+    </ClCompile>
+    <ClCompile Include="..\benchmark\cpp\benchmark_nls.cpp">
+      <Filter>Source Files\benchmark</Filter>
+    </ClCompile>
+    <ClCompile Include="..\benchmark\cpp\benchmark_nls_st.cpp">
       <Filter>Source Files\benchmark</Filter>
     </ClCompile>
   </ItemGroup>

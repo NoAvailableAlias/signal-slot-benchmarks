@@ -28,5 +28,7 @@ NOINLINE(double Nss::combined(std::size_t N))
 }
 NOINLINE(double Nss::threaded(std::size_t N))
 {
+    // TODO make nano-signal-slots not suck
+    //return Benchmark<Signal, Nss>::threaded(N);
     return 0.0;
 }

@@ -220,6 +220,8 @@
     <ClInclude Include="..\benchmark\hpp\benchmark_jos.hpp" />
     <ClInclude Include="..\benchmark\hpp\benchmark_ksc.hpp" />
     <ClInclude Include="..\benchmark\hpp\benchmark_mws.hpp" />
+    <ClInclude Include="..\benchmark\hpp\benchmark_nls.hpp" />
+    <ClInclude Include="..\benchmark\hpp\benchmark_nls_st.hpp" />
     <ClInclude Include="..\benchmark\hpp\benchmark_nod.hpp" />
     <ClInclude Include="..\benchmark\hpp\benchmark_nss.hpp" />
     <ClInclude Include="..\benchmark\hpp\benchmark_psg.hpp" />
@@ -234,6 +236,13 @@
     <ClInclude Include="..\benchmark\lib\cpp11nullptr\lsignal\lsignal.h" />
     <ClInclude Include="..\benchmark\lib\eviltwin\observer.hpp" />
     <ClInclude Include="..\benchmark\lib\fr00b0\nod\include\nod\nod.hpp" />
+    <ClInclude Include="..\benchmark\lib\i42output\include\neolib\locking_policy.hpp" />
+    <ClInclude Include="..\benchmark\lib\i42output\include\neolib\mutex.hpp" />
+    <ClInclude Include="..\benchmark\lib\i42output\include\neolib\neolib.hpp" />
+    <ClInclude Include="..\benchmark\lib\i42output\include\neolib\signal.hpp" />
+    <ClInclude Include="..\benchmark\lib\i42output\include\neolib\signal_interface.hpp" />
+    <ClInclude Include="..\benchmark\lib\i42output\include\neolib\slot.hpp" />
+    <ClInclude Include="..\benchmark\lib\i42output\include\neolib\slot_interface.hpp" />
     <ClInclude Include="..\benchmark\lib\jeffomatic\jl_signal\src\DoublyLinkedList.h" />
     <ClInclude Include="..\benchmark\lib\jeffomatic\jl_signal\src\FastDelegate.h" />
     <ClInclude Include="..\benchmark\lib\jeffomatic\jl_signal\src\ObjectPool.h" />
@@ -257,9 +266,7 @@
     <ClInclude Include="..\benchmark\lib\mwthinker\Signal\src\mw\signal.h" />
     <ClInclude Include="..\benchmark\lib\mwthinker\Signal\src\mw\signals\connection.h" />
     <ClInclude Include="..\benchmark\lib\NoAvailableAlias\nano-signal-slot\nano_function.hpp" />
-    <ClInclude Include="..\benchmark\lib\NoAvailableAlias\nano-signal-slot\nano_noop_mutex.hpp" />
     <ClInclude Include="..\benchmark\lib\NoAvailableAlias\nano-signal-slot\nano_observer.hpp" />
-    <ClInclude Include="..\benchmark\lib\NoAvailableAlias\nano-signal-slot\nano_pool_allocator.hpp" />
     <ClInclude Include="..\benchmark\lib\NoAvailableAlias\nano-signal-slot\nano_signal_slot.hpp" />
     <ClInclude Include="..\benchmark\lib\palacaze\sigslot\signal.hpp" />
     <ClInclude Include="..\benchmark\lib\pbhogan\Signals\Delegate.h" />
@@ -287,6 +294,8 @@
     <ClCompile Include="..\benchmark\cpp\benchmark_jos.cpp" />
     <ClCompile Include="..\benchmark\cpp\benchmark_ksc.cpp" />
     <ClCompile Include="..\benchmark\cpp\benchmark_mws.cpp" />
+    <ClCompile Include="..\benchmark\cpp\benchmark_nls.cpp" />
+    <ClCompile Include="..\benchmark\cpp\benchmark_nls_st.cpp" />
     <ClCompile Include="..\benchmark\cpp\benchmark_nod.cpp" />
     <ClCompile Include="..\benchmark\cpp\benchmark_nss.cpp" />
     <ClCompile Include="..\benchmark\cpp\benchmark_psg.cpp" />

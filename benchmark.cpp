@@ -12,6 +12,8 @@
 #include "benchmark/hpp/benchmark_jos.hpp"
 #include "benchmark/hpp/benchmark_ksc.hpp"
 #include "benchmark/hpp/benchmark_mws.hpp"
+#include "benchmark/hpp/benchmark_nls.hpp"
+#include "benchmark/hpp/benchmark_nls_st.hpp"
 #include "benchmark/hpp/benchmark_nod.hpp"
 #include "benchmark/hpp/benchmark_nss.hpp"
 #include "benchmark/hpp/benchmark_psg.hpp"
@@ -85,6 +87,8 @@ ImmediateData run_all_benchmarks(std::size_t begin, std::size_t end)
             run_benchmark_class<Jos>(records, N);
             run_benchmark_class<Ksc>(records, N);
             run_benchmark_class<Mws>(records, N);
+            run_benchmark_class<Nls>(records, N);
+            run_benchmark_class<Nls_st>(records, N);
             run_benchmark_class<Nod>(records, N);
             run_benchmark_class<Nss>(records, N);
             run_benchmark_class<Psg>(records, N);
@@ -124,6 +128,8 @@ void run_all_validation_tests(std::size_t N)
         Jos::validate_assert(N);
         Ksc::validate_assert(N);
         Mws::validate_assert(N);
+        Nls::validate_assert(N);
+        Nls_st::validate_assert(N);
         Nod::validate_assert(N);
         Nss::validate_assert(N);
         Psg::validate_assert(N);
