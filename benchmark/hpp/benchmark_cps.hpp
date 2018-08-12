@@ -1,11 +1,13 @@
-#ifndef BENCHMARK_CPS_HPP
-#define BENCHMARK_CPS_HPP
+#pragma once
 
 #include "../lib/Montellese/cpp-signal/cpp-signal.h"
 
 #include "../../benchmark.hpp"
 
-using cppsignal = cpp_signal<>;
+namespace
+{
+    using cppsignal = cpp_signal<cpp_signal_local_locking>;
+}
 
 class Cps : public cppsignal::slot_tracker
 {
@@ -35,11 +37,13 @@ class Cps : public cppsignal::slot_tracker
     static double connection(std::size_t);
     static double emission(std::size_t);
     static double combined(std::size_t);
-
-    // This may or may not be implemented
     static double threaded(std::size_t);
 
-    static const char* LibraryName;
+    // The following is used for report outputs
+    static constexpr const char* C_LIB_NAME = "* Montellese cpp-signal";
+    static constexpr const char* C_LIB_SOURCE_URL = "https://github.com/Montellese/cpp-signal";
+    static constexpr const char* C_LIB_FILE = "benchmark_cps";
+    static constexpr const char* C_LIB_IS_HEADER_ONLY = "X";
+    static constexpr const char* C_LIB_DATA_STRUCTURE = "std::forward_list";
+    static constexpr const char* C_LIB_IS_THREAD_SAFE = "X";
 };
-
-#endif // BENCHMARK_CPS_HPP

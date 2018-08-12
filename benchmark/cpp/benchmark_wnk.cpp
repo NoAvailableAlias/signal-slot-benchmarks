@@ -1,7 +1,5 @@
 #include "../hpp/benchmark_wnk.hpp"
 
-const char* Wnk::LibraryName = "Wink-Signals";
-
 NOINLINE(void Wnk::validate_assert(std::size_t N))
 {
     return Benchmark<Signal, Wnk>::validation_assert(N);
@@ -28,5 +26,6 @@ NOINLINE(double Wnk::combined(std::size_t N))
 }
 NOINLINE(double Wnk::threaded(std::size_t N))
 {
+    // NOT IMPLEMENTED FOR THIS LIB
     return 0.0;
 }

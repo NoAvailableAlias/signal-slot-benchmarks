@@ -1,7 +1,5 @@
 #include "../hpp/benchmark_pss_st.hpp"
 
-const char* Pss_st::LibraryName = "Pal Sigslot ST";
-
 NOINLINE(void Pss_st::validate_assert(std::size_t N))
 {
     return Benchmark<Signal, Pss_st>::validation_assert(N);
@@ -28,5 +26,6 @@ NOINLINE(double Pss_st::combined(std::size_t N))
 }
 NOINLINE(double Pss_st::threaded(std::size_t N))
 {
+    // NOT IMPLEMENTED FOR THIS LIB
     return 0.0;
 }

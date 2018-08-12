@@ -1,10 +1,8 @@
 
-Performance Results
--------------------
-
+<br/>
 **_Higher score is better._** _N / (sample size / count)._
 
-#### Thread Safe Libraries
+### Performance of Thread Safe Libraries
 
 | Library | construct | destruct | connect | emission | combined | threaded | total |
 |---------|-----------|----------|---------|----------|----------|----------|-------|
@@ -17,7 +15,7 @@ Performance Results
 | * Boost Signals2 | 7562 | 2940 | 2128 | 10533 | 963 | 3 | 24129 |
 | * neolib signal | 5709 | 2882 | 2679 | 9610 | 1039 | 107 | 22027 |
 
-#### Thread Unsafe Libraries
+### Performance of Thread Unsafe Libraries
 
 | Library | construct | destruct | connect | emission | combined | threaded | total |
 |---------|-----------|----------|---------|----------|----------|----------|-------|
@@ -38,10 +36,14 @@ Performance Results
 | Boost Signals | 8608 | 3266 | 1214 | 15136 | 760 | 0 | 28985 |
 | neolib signal | 6344 | 4793 | 3714 | 11988 | 1442 | 0 | 28281 |
 
-Metrics
--------
-
+___
 _Size results are the size of object files from release build with Visual Studio 17._
+
+### Metrics of Thread Safe Libraries
+
+TODO
+
+### Metrics of Thread Unsafe Libraries
 
 TODO
 
@@ -60,5 +62,5 @@ _The individual benchmark algorithms are completely generic through templates._
 | [connection](https://github.com/NoAvailableAlias/signal-slot-benchmarks/blob/master/benchmark.hpp#L101) | Time Signal connections to a randomized N number of Foo instances. |
 | [emission](https://github.com/NoAvailableAlias/signal-slot-benchmarks/blob/master/benchmark.hpp#L129) | Time the duration of an N slot emission. |
 | [combined](https://github.com/NoAvailableAlias/signal-slot-benchmarks/blob/master/benchmark.hpp#L159) | Time construction, destruction, connection, and emission together. |
-| [threaded](https://github.com/NoAvailableAlias/signal-slot-benchmarks/blob/master/benchmark.hpp#L186) | Time the runtime of parallel slot creation, connection, emission, and destruction. |
+| [threaded](https://github.com/NoAvailableAlias/signal-slot-benchmarks/blob/master/benchmark.hpp#L186) | Same as the "combined" test except threaded using a shared Signal. |
 <br/>

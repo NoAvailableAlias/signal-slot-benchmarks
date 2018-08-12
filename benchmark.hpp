@@ -1,5 +1,4 @@
-#ifndef BENCHMARK_HPP
-#define BENCHMARK_HPP
+#pragma once
 
 #include "benchmark_utility.hpp"
 
@@ -42,7 +41,7 @@ class Benchmark
         // There is an error in the signal implementation
         Rng test;
         test.discard(count);
-        if (rng != test) throw std::runtime_error(Foo::LibraryName);
+        if (rng != test) throw std::runtime_error(Foo::C_LIB_NAME);
     }
 
     //--------------------------------------------------------------------------
@@ -232,5 +231,3 @@ ChronoTimer Benchmark<Subject, Foo>::s_timer;
 
 template <typename Subject, typename Foo>
 Rng Benchmark<Subject, Foo>::s_rng;
-
-#endif // BENCHMARK_HPP

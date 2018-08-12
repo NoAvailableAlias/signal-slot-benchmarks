@@ -1,5 +1,4 @@
-#ifndef BENCHMARK_BS1_HPP
-#define BENCHMARK_BS1_HPP
+#pragma once
 
 #define BOOST_SIGNALS_NO_DEPRECATION_WARNING
 
@@ -36,10 +35,14 @@ class Bs1 : public boost::signals::trackable
     static double emission(std::size_t);
     static double combined(std::size_t);
 
-    // This may or may not be implemented
+    // NOT IMPLEMENTED FOR THIS LIB
     static double threaded(std::size_t);
 
-    static const char* LibraryName;
+    // The following is used for report outputs
+    static constexpr const char* C_LIB_NAME = "Boost Signals";
+    static constexpr const char* C_LIB_SOURCE_URL = "http://www.boost.org/doc/libs/1_56_0/doc/html/signals.html";
+    static constexpr const char* C_LIB_FILE = "benchmark_bs1";
+    static constexpr const char* C_LIB_IS_HEADER_ONLY = "-";
+    static constexpr const char* C_LIB_DATA_STRUCTURE = "?";
+    static constexpr const char* C_LIB_IS_THREAD_SAFE = "-";
 };
-
-#endif // BENCHMARK_BS1_HPP

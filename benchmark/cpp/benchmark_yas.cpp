@@ -1,7 +1,5 @@
 #include "../hpp/benchmark_yas.hpp"
 
-const char* Yas::LibraryName = "Yassi";
-
 NOINLINE(void Yas::validate_assert(std::size_t N))
 {
     return Benchmark<Signal, Yas>::validation_assert(N);
@@ -28,5 +26,6 @@ NOINLINE(double Yas::combined(std::size_t N))
 }
 NOINLINE(double Yas::threaded(std::size_t N))
 {
+    // NOT IMPLEMENTED FOR THIS LIB
     return 0.0;
 }

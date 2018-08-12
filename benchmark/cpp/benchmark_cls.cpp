@@ -1,7 +1,5 @@
 #include "../hpp/benchmark_cls.hpp"
 
-const char* Cls::LibraryName = "* lsignal";
-
 NOINLINE(void Cls::validate_assert(std::size_t N))
 {
     return Benchmark<SignalType, Cls>::validation_assert(N);

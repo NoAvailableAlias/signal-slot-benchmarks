@@ -7,6 +7,7 @@
 #include "benchmark/hpp/benchmark_bs2.hpp"
 #include "benchmark/hpp/benchmark_cls.hpp"
 #include "benchmark/hpp/benchmark_cps.hpp"
+#include "benchmark/hpp/benchmark_cps_st.hpp"
 #include "benchmark/hpp/benchmark_evl.hpp"
 #include "benchmark/hpp/benchmark_jls.hpp"
 #include "benchmark/hpp/benchmark_jos.hpp"
@@ -46,9 +47,9 @@ void run_benchmark_class(ImmediateData& records, std::size_t N)
     auto start_out = std::chrono::system_clock::to_time_t(start);
 
     std::cout << std::put_time(std::localtime(&start_out), "%c")
-        << " [BEGIN: " << T::LibraryName << "]" << std::endl;
+        << " [BEGIN: " << T::C_LIB_NAME << "]" << std::endl;
 
-    auto& metrics = records[T::LibraryName];
+    auto& metrics = records[T::C_LIB_NAME];
 
     metrics[C_CONSTRUCTION].push_back(T::construction(N));
     metrics[C_DESTRUCTION].push_back(T::destruction(N));
@@ -56,14 +57,14 @@ void run_benchmark_class(ImmediateData& records, std::size_t N)
     metrics[C_EMISSION].push_back(T::emission(N));
     metrics[C_COMBINED].push_back(T::combined(N));
 
-    // Benchmark class may or may not have this implemented
+    // T might not have this implemented
     metrics[C_THREADED].push_back(T::threaded(N));
 
     auto stop = std::chrono::system_clock::now();
     auto stop_out = std::chrono::system_clock::to_time_t(stop);
 
     std::cout << std::put_time(std::localtime(&stop_out), "%c")
-        << " [END: " << T::LibraryName << "]" << std::endl;
+        << " [END: " << T::C_LIB_NAME << "]" << std::endl;
 }
 
 //------------------------------------------------------------------------------
@@ -75,7 +76,7 @@ ImmediateData run_all_benchmarks(std::size_t begin, std::size_t end)
     try
     {
         // Double the input size N for every iteration
-        for(std::size_t N = begin; N <= end; N *= 2)
+        for (auto N = begin; N <= end; N *= 2)
         {
             std::cout << "[BEGIN: Test Size: " << N << "]\n" << std::endl;
 
@@ -84,6 +85,7 @@ ImmediateData run_all_benchmarks(std::size_t begin, std::size_t end)
             run_benchmark_class<Bs2>(records, N);
             run_benchmark_class<Cls>(records, N);
             run_benchmark_class<Cps>(records, N);
+            run_benchmark_class<Cps_st>(records, N);
             run_benchmark_class<Evl>(records, N);
             run_benchmark_class<Jls>(records, N);
             run_benchmark_class<Jos>(records, N);
@@ -127,6 +129,7 @@ void run_all_validation_tests(std::size_t N)
         Bs2::validate_assert(N);
         Cls::validate_assert(N);
         Cps::validate_assert(N);
+        Cps_st::validate_assert(N);
         Evl::validate_assert(N);
         Jls::validate_assert(N);
         Jos::validate_assert(N);
@@ -182,39 +185,39 @@ void output_report_header(RelativeResults const& first_result_row, T& ost)
 template <typename T>
 void output_reports(ImmediateData const& records, T& ost)
 {
-    RelativeData resultAverage;
-    OrderedData resultOrder;
+    RelativeData result_average;
+    OrderedData result_order;
 
     // Process and sort results by total score (sum of column averages)
 
     for (auto const& row : records)
     {
-        auto const& libName = row.first;
+        auto const& lib_name = row.first;
 
         double score = 0.0;
 
         for (auto const& column : row.second)
         {
-            auto const& opName = column.first;
+            auto const& op_name = column.first;
             auto const& val = column.second;
 
             double average = std::accumulate(std::begin(val),
                 std::end(val), 1.0) / (double)val.size();
 
-            resultAverage[libName][opName] = average;
+            result_average[lib_name][op_name] = average;
             score += average;
         }
-        resultOrder[score] = OrderedResults { libName, &resultAverage[libName] };
+        result_order[score] = OrderedResults { lib_name, &result_average[lib_name] };
     }
 
     // Output in markdown format
 
     bool show_header = true;
 
-    for (auto const& row : Range(resultOrder.rbegin(), resultOrder.rend()))
+    for (auto const& row : Range(result_order.rbegin(), result_order.rend()))
     {
         auto const& score = row.first;
-        auto const& libName = row.second.first;
+        auto const& lib_name = row.second.first;
 
         if (show_header)
         {
@@ -222,11 +225,10 @@ void output_reports(ImmediateData const& records, T& ost)
             show_header = false;
         }
 
-        ost << "| " << libName;
+        ost << "| " << lib_name;
 
         for (auto const& column : (*row.second.second))
         {
-            auto const& opName = column.first;
             auto const& val = column.second;
 
             ost << " | " << std::setprecision(0) << std::fixed << val;

@@ -1,5 +1,4 @@
-#ifndef BENCHMARK_CLS_HPP
-#define BENCHMARK_CLS_HPP
+#pragma once
 
 #include "../lib/cpp11nullptr/lsignal/lsignal.h"
 
@@ -39,11 +38,13 @@ class Cls
     static double connection(std::size_t);
     static double emission(std::size_t);
     static double combined(std::size_t);
-
-    // This may or may not be implemented
     static double threaded(std::size_t);
 
-    static const char* LibraryName;
+    // The following is used for report outputs
+    static constexpr const char* C_LIB_NAME = "* cpp11nullptr lsignal";
+    static constexpr const char* C_LIB_SOURCE_URL = "https://github.com/cpp11nullptr/lsignal";
+    static constexpr const char* C_LIB_FILE = "benchmark_cls";
+    static constexpr const char* C_LIB_IS_HEADER_ONLY = "X";
+    static constexpr const char* C_LIB_DATA_STRUCTURE = "*std::list";
+    static constexpr const char* C_LIB_IS_THREAD_SAFE = "X";
 };
-
-#endif // BENCHMARK_CLS_HPP

@@ -1,7 +1,5 @@
 #include "../hpp/benchmark_pss.hpp"
 
-const char* Pss::LibraryName = "* Pal Sigslot";
-
 NOINLINE(void Pss::validate_assert(std::size_t N))
 {
     return Benchmark<Signal, Pss>::validation_assert(N);

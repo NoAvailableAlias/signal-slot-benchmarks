@@ -1,10 +1,15 @@
 #pragma once
 
-#include "../lib/NoAvailableAlias/nano-signal-slot/nano_signal_slot.hpp"
+#include "../lib/Montellese/cpp-signal/cpp-signal.h"
 
 #include "../../benchmark.hpp"
 
-class Nss : public Nano_Deprecated::Observer
+namespace
+{
+    using cppsignal_st = cpp_signal<cpp_signal_no_locking>;
+}
+
+class Cps_st : public cppsignal_st::slot_tracker
 {
     NOINLINE(void handler(Rng& rng))
     {
@@ -13,7 +18,7 @@ class Nss : public Nano_Deprecated::Observer
 
     public:
 
-    using Signal = Nano_Deprecated::Signal<void(Rng&)>;
+    using Signal = cppsignal_st::signal<void(Rng&)>;
 
     template <typename Subject, typename Foo>
     static void connect_method(Subject& subject, Foo& foo)
@@ -36,10 +41,11 @@ class Nss : public Nano_Deprecated::Observer
     // NOT IMPLEMENTED FOR THIS LIB
     static double threaded(std::size_t);
 
-    static constexpr const char* C_LIB_NAME = "nano-signal-slot v1x";
-    static constexpr const char* C_LIB_SOURCE_URL = "https://github.com/NoAvailableAlias/nano-signal-slot";
-    static constexpr const char* C_LIB_FILE = "benchmark_nss";
+    // The following is used for report outputs
+    static constexpr const char* C_LIB_NAME = "Montellese cpp-signal";
+    static constexpr const char* C_LIB_SOURCE_URL = "https://github.com/Montellese/cpp-signal";
+    static constexpr const char* C_LIB_FILE = "benchmark_cps_st";
     static constexpr const char* C_LIB_IS_HEADER_ONLY = "X";
-    static constexpr const char* C_LIB_DATA_STRUCTURE = "singly linked list";
+    static constexpr const char* C_LIB_DATA_STRUCTURE = "std::forward_list";
     static constexpr const char* C_LIB_IS_THREAD_SAFE = "-";
 };

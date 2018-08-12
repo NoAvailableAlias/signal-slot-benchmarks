@@ -1,5 +1,4 @@
-#ifndef BENCHMARK_VDK_HPP
-#define BENCHMARK_VDK_HPP
+#pragma once
 
 #define VDK_SIGNALS_LITE
 #include "../lib/vdksoft/signals/include/signals.h"
@@ -38,10 +37,13 @@ class Vdk
     static double emission(std::size_t);
     static double combined(std::size_t);
 
-    // This may or may not be implemented
+    // NOT IMPLEMENTED FOR THIS LIB
     static double threaded(std::size_t);
 
-    static const char* LibraryName;
+    static constexpr const char* C_LIB_NAME = "vdksoft signals";
+    static constexpr const char* C_LIB_SOURCE_URL = "https://github.com/vdksoft/signals";
+    static constexpr const char* C_LIB_FILE = "benchmark_vdk";
+    static constexpr const char* C_LIB_IS_HEADER_ONLY = "-";
+    static constexpr const char* C_LIB_DATA_STRUCTURE = "singly linked list";
+    static constexpr const char* C_LIB_IS_THREAD_SAFE = "*";
 };
-
-#endif // BENCHMARK_VDK_HPP

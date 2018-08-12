@@ -1,7 +1,5 @@
 #include "../hpp/benchmark_nls_st.hpp"
 
-const char* Nls_st::LibraryName = "neolib signal";
-
 NOINLINE(void Nls_st::validate_assert(std::size_t N))
 {
     return Benchmark<Signal, Nls_st>::validation_assert(N);
@@ -28,5 +26,6 @@ NOINLINE(double Nls_st::combined(std::size_t N))
 }
 NOINLINE(double Nls_st::threaded(std::size_t N))
 {
+    // NOT IMPLEMENTED FOR THIS LIB
     return 0.0;
 }

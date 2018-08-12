@@ -1,5 +1,4 @@
-#ifndef MISCELLANEOUS_HPP
-#define MISCELLANEOUS_HPP
+#pragma once
 
 #include <algorithm>
 #include <cassert>
@@ -146,6 +145,3 @@ struct IncrementFill
     std::size_t i = 0;
     std::size_t operator()() { return i++; }
 };
-
-
-#endif // MISCELLANEOUS_HPP

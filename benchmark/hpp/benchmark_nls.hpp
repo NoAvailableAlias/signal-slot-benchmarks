@@ -1,5 +1,4 @@
-#ifndef BENCHMARK_NLS_HPP
-#define BENCHMARK_NLS_HPP
+#pragma once
 
 #include "../lib/i42output/include/neolib/signal.hpp"
 #include "../lib/i42output/include/neolib/slot.hpp"
@@ -34,11 +33,12 @@ class Nls : public neolib::has_slots<neolib::locking_policy_mutex>
     static double connection(std::size_t);
     static double emission(std::size_t);
     static double combined(std::size_t);
-
-    // This may or may not be implemented
     static double threaded(std::size_t);
 
-    static const char* LibraryName;
+    static constexpr const char* C_LIB_NAME = "* neolib signal";
+    static constexpr const char* C_LIB_SOURCE_URL = "https://github.com/i42output/neolib";
+    static constexpr const char* C_LIB_FILE = "benchmark_nls";
+    static constexpr const char* C_LIB_IS_HEADER_ONLY = "X";
+    static constexpr const char* C_LIB_DATA_STRUCTURE = "*std::unordered_map";
+    static constexpr const char* C_LIB_IS_THREAD_SAFE = "X";
 };
-
-#endif // BENCHMARK_NLS_HPP

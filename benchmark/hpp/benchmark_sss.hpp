@@ -1,5 +1,4 @@
-#ifndef BENCHMARK_SSS_HPP
-#define BENCHMARK_SSS_HPP
+#pragma once
 
 #include "../lib/supergrover/sigslot/src/signal.h"
 
@@ -34,10 +33,13 @@ class Sss : public SigSlotBase
     static double emission(std::size_t);
     static double combined(std::size_t);
 
-    // This may or may not be implemented
+    // NOT IMPLEMENTED FOR THIS LIB
     static double threaded(std::size_t);
 
-    static const char* LibraryName;
+    static constexpr const char* C_LIB_NAME = "supergrover sigslot";
+    static constexpr const char* C_LIB_SOURCE_URL = "https://github.com/supergrover/sigslot";
+    static constexpr const char* C_LIB_FILE = "benchmark_sss";
+    static constexpr const char* C_LIB_IS_HEADER_ONLY = "-";
+    static constexpr const char* C_LIB_DATA_STRUCTURE = "std::list";
+    static constexpr const char* C_LIB_IS_THREAD_SAFE = "-";
 };
-
-#endif // BENCHMARK_SSS_HPP
