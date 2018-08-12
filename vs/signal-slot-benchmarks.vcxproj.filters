@@ -96,6 +96,12 @@
     <Filter Include="Header Files\lib\i42output">
       <UniqueIdentifier>{69581605-a8ae-41b1-af56-78cb5fe64a6e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\lib\NoAvailableAlias\nano-signal-slot-v1x">
+      <UniqueIdentifier>{caf79581-9833-4cb2-960d-d50e2b45ae5c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\lib\NoAvailableAlias\nano-signal-slot-v2x">
+      <UniqueIdentifier>{ff5d5f03-614c-481f-87bc-c71e5b0debf0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\benchmark\hpp\benchmark_asg.hpp">
@@ -305,14 +311,32 @@
     <ClInclude Include="..\benchmark\hpp\benchmark_nls_st.hpp">
       <Filter>Header Files\benchmark</Filter>
     </ClInclude>
+    <ClInclude Include="..\benchmark\lib\NoAvailableAlias\nano-signal-slot\nano_signal_slot.hpp">
+      <Filter>Header Files\lib\NoAvailableAlias\nano-signal-slot-v1x</Filter>
+    </ClInclude>
     <ClInclude Include="..\benchmark\lib\NoAvailableAlias\nano-signal-slot\nano_function.hpp">
-      <Filter>Header Files\lib\NoAvailableAlias</Filter>
+      <Filter>Header Files\lib\NoAvailableAlias\nano-signal-slot-v1x</Filter>
     </ClInclude>
     <ClInclude Include="..\benchmark\lib\NoAvailableAlias\nano-signal-slot\nano_observer.hpp">
-      <Filter>Header Files\lib\NoAvailableAlias</Filter>
+      <Filter>Header Files\lib\NoAvailableAlias\nano-signal-slot-v1x</Filter>
     </ClInclude>
-    <ClInclude Include="..\benchmark\lib\NoAvailableAlias\nano-signal-slot\nano_signal_slot.hpp">
-      <Filter>Header Files\lib\NoAvailableAlias</Filter>
+    <ClInclude Include="..\benchmark\lib\NoAvailableAlias\nano-signal-slot-v2x\nano_function.hpp">
+      <Filter>Header Files\lib\NoAvailableAlias\nano-signal-slot-v2x</Filter>
+    </ClInclude>
+    <ClInclude Include="..\benchmark\lib\NoAvailableAlias\nano-signal-slot-v2x\nano_observer.hpp">
+      <Filter>Header Files\lib\NoAvailableAlias\nano-signal-slot-v2x</Filter>
+    </ClInclude>
+    <ClInclude Include="..\benchmark\lib\NoAvailableAlias\nano-signal-slot-v2x\nano_signal_slot.hpp">
+      <Filter>Header Files\lib\NoAvailableAlias\nano-signal-slot-v2x</Filter>
+    </ClInclude>
+    <ClInclude Include="..\benchmark\hpp\benchmark_nss_v2.hpp">
+      <Filter>Header Files\benchmark</Filter>
+    </ClInclude>
+    <ClInclude Include="..\benchmark\hpp\benchmark_nss_v2_st.hpp">
+      <Filter>Header Files\benchmark</Filter>
+    </ClInclude>
+    <ClInclude Include="..\benchmark\lib\NoAvailableAlias\nano-signal-slot-v2x\nano_mutex.hpp">
+      <Filter>Header Files\lib\NoAvailableAlias\nano-signal-slot-v2x</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -398,6 +422,12 @@
       <Filter>Source Files\benchmark</Filter>
     </ClCompile>
     <ClCompile Include="..\benchmark\cpp\benchmark_nls_st.cpp">
+      <Filter>Source Files\benchmark</Filter>
+    </ClCompile>
+    <ClCompile Include="..\benchmark\cpp\benchmark_nss_v2.cpp">
+      <Filter>Source Files\benchmark</Filter>
+    </ClCompile>
+    <ClCompile Include="..\benchmark\cpp\benchmark_nss_v2_st.cpp">
       <Filter>Source Files\benchmark</Filter>
     </ClCompile>
   </ItemGroup>

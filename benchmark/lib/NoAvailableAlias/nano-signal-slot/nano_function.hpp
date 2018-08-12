@@ -4,7 +4,7 @@
 #include <cstdint>
 #include <array>
 
-namespace Nano
+namespace Nano_Deprecated
 {
 
 using DelegateKey = std::array<std::uintptr_t, 2>;

@@ -42,7 +42,7 @@ class Benchmark
         // There is an error in the signal implementation
         Rng test;
         test.discard(count);
-        assert(rng == test);
+        if (rng != test) throw std::runtime_error(Foo::LibraryName);
     }
 
     //--------------------------------------------------------------------------

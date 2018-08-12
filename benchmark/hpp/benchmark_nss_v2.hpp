@@ -1,11 +1,20 @@
-#ifndef BENCHMARK_NSS_HPP
-#define BENCHMARK_NSS_HPP
+#ifndef BENCHMARK_NSS_V2_HPP
+#define BENCHMARK_NSS_V2_HPP
 
-#include "../lib/NoAvailableAlias/nano-signal-slot/nano_signal_slot.hpp"
+#include <mutex>
+
+#include "../lib/NoAvailableAlias/nano-signal-slot-v2x/nano_signal_slot.hpp"
+#include "../lib/NoAvailableAlias/nano-signal-slot-v2x/nano_mutex.hpp"
 
 #include "../../benchmark.hpp"
 
-class Nss : public Nano_Deprecated::Observer
+namespace
+{
+    //using Mutex = std::recursive_mutex;
+    using Mutex = Nano::Recursive_Mutex;
+}
+
+class Nss_v2 : public Nano::Observer<Mutex>
 {
     NOINLINE(void handler(Rng& rng))
     {
@@ -14,17 +23,17 @@ class Nss : public Nano_Deprecated::Observer
 
     public:
 
-    using Signal = Nano_Deprecated::Signal<void(Rng&)>;
+    using Signal = Nano::Signal<void(Rng&), Mutex>;
 
     template <typename Subject, typename Foo>
     static void connect_method(Subject& subject, Foo& foo)
     {
-        subject.connect<Foo, &Foo::handler>(foo);
+        subject.connect<&Foo::handler>(foo);
     }
     template <typename Subject>
     static void emit_method(Subject& subject, Rng& rng)
     {
-        subject.emit(rng);
+        subject.fire(rng);
     }
 
     static void validate_assert(std::size_t);
@@ -40,4 +49,4 @@ class Nss : public Nano_Deprecated::Observer
     static const char* LibraryName;
 };
 
-#endif // BENCHMARK_NSS_HPP
+#endif // BENCHMARK_NSS_V2_HPP

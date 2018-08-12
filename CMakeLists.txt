@@ -23,8 +23,11 @@ add_executable(bench
     benchmark/cpp/benchmark_ksc.cpp
     benchmark/cpp/benchmark_mws.cpp
     benchmark/cpp/benchmark_nls.cpp
+    benchmark/cpp/benchmark_nls_st.cpp
     benchmark/cpp/benchmark_nod.cpp
     benchmark/cpp/benchmark_nss.cpp
+    benchmark/cpp/benchmark_nss_v2.cpp
+    benchmark/cpp/benchmark_nss_v2_st.cpp
     benchmark/cpp/benchmark_psg.cpp
     benchmark/cpp/benchmark_pss.cpp
     benchmark/cpp/benchmark_pss_st.cpp

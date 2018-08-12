@@ -16,6 +16,8 @@
 #include "benchmark/hpp/benchmark_nls_st.hpp"
 #include "benchmark/hpp/benchmark_nod.hpp"
 #include "benchmark/hpp/benchmark_nss.hpp"
+#include "benchmark/hpp/benchmark_nss_v2.hpp"
+#include "benchmark/hpp/benchmark_nss_v2_st.hpp"
 #include "benchmark/hpp/benchmark_psg.hpp"
 #include "benchmark/hpp/benchmark_pss.hpp"
 #include "benchmark/hpp/benchmark_pss_st.hpp"
@@ -91,6 +93,8 @@ ImmediateData run_all_benchmarks(std::size_t begin, std::size_t end)
             run_benchmark_class<Nls_st>(records, N);
             run_benchmark_class<Nod>(records, N);
             run_benchmark_class<Nss>(records, N);
+            run_benchmark_class<Nss_v2>(records, N);
+            run_benchmark_class<Nss_v2_st>(records, N);
             run_benchmark_class<Psg>(records, N);
             run_benchmark_class<Pss>(records, N);
             run_benchmark_class<Pss_st>(records, N);
@@ -132,6 +136,8 @@ void run_all_validation_tests(std::size_t N)
         Nls_st::validate_assert(N);
         Nod::validate_assert(N);
         Nss::validate_assert(N);
+        Nss_v2::validate_assert(N);
+        Nss_v2_st::validate_assert(N);
         Psg::validate_assert(N);
         Pss::validate_assert(N);
         Pss_st::validate_assert(N);
@@ -233,7 +239,8 @@ void output_reports(ImmediateData const& records, T& ost)
 
 int main(int argc, char* argv[])
 {
-    // Jl_signal uses a static allocator for high performance
+    // Jl_signal uses a compile time allocator for high performance
+    // (this allocator cannot be resized at runtime)
     jl::StaticSignalConnectionAllocator<C_JLSIGNAL_MAX> signal_con_allocator;
     jl::StaticObserverConnectionAllocator<C_JLSIGNAL_MAX> observer_con_allocator;
     jl::SignalBase::SetCommonConnectionAllocator(&signal_con_allocator);

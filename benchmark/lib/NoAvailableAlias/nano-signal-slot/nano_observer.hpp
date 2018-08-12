@@ -3,7 +3,7 @@
 
 #include "nano_function.hpp"
 
-namespace Nano
+namespace Nano_Deprecated
 {
 
 class Observer

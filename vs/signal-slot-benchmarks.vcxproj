@@ -102,8 +102,9 @@
       <AdditionalOptions>-D_SCL_SECURE_NO_WARNINGS -D_CRT_SECURE_NO_WARNINGS %(AdditionalOptions)</AdditionalOptions>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <BasicRuntimeChecks>Default</BasicRuntimeChecks>
-      <FloatingPointModel>Fast</FloatingPointModel>
+      <FloatingPointModel>Strict</FloatingPointModel>
       <EnableEnhancedInstructionSet>NoExtensions</EnableEnhancedInstructionSet>
+      <ExceptionHandling>Async</ExceptionHandling>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -133,8 +134,9 @@
       <AdditionalOptions>-D_SCL_SECURE_NO_WARNINGS -D_CRT_SECURE_NO_WARNINGS %(AdditionalOptions)</AdditionalOptions>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <BasicRuntimeChecks>Default</BasicRuntimeChecks>
-      <FloatingPointModel>Fast</FloatingPointModel>
+      <FloatingPointModel>Strict</FloatingPointModel>
       <EnableEnhancedInstructionSet>NoExtensions</EnableEnhancedInstructionSet>
+      <ExceptionHandling>Async</ExceptionHandling>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -166,6 +168,9 @@
       <AdditionalOptions>-D_SCL_SECURE_NO_WARNINGS -D_CRT_SECURE_NO_WARNINGS %(AdditionalOptions)</AdditionalOptions>
       <FloatingPointModel>Fast</FloatingPointModel>
       <EnableEnhancedInstructionSet>NoExtensions</EnableEnhancedInstructionSet>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <EnableParallelCodeGeneration>false</EnableParallelCodeGeneration>
+      <FloatingPointExceptions>false</FloatingPointExceptions>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -198,6 +203,9 @@
       <AdditionalOptions>-D_SCL_SECURE_NO_WARNINGS -D_CRT_SECURE_NO_WARNINGS %(AdditionalOptions)</AdditionalOptions>
       <FloatingPointModel>Fast</FloatingPointModel>
       <EnableEnhancedInstructionSet>NoExtensions</EnableEnhancedInstructionSet>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <EnableParallelCodeGeneration>false</EnableParallelCodeGeneration>
+      <FloatingPointExceptions>false</FloatingPointExceptions>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -224,6 +232,8 @@
     <ClInclude Include="..\benchmark\hpp\benchmark_nls_st.hpp" />
     <ClInclude Include="..\benchmark\hpp\benchmark_nod.hpp" />
     <ClInclude Include="..\benchmark\hpp\benchmark_nss.hpp" />
+    <ClInclude Include="..\benchmark\hpp\benchmark_nss_v2.hpp" />
+    <ClInclude Include="..\benchmark\hpp\benchmark_nss_v2_st.hpp" />
     <ClInclude Include="..\benchmark\hpp\benchmark_psg.hpp" />
     <ClInclude Include="..\benchmark\hpp\benchmark_pss.hpp" />
     <ClInclude Include="..\benchmark\hpp\benchmark_pss_st.hpp" />
@@ -265,6 +275,10 @@
     <ClInclude Include="..\benchmark\lib\Montellese\cpp-signal\cpp-signal.h" />
     <ClInclude Include="..\benchmark\lib\mwthinker\Signal\src\mw\signal.h" />
     <ClInclude Include="..\benchmark\lib\mwthinker\Signal\src\mw\signals\connection.h" />
+    <ClInclude Include="..\benchmark\lib\NoAvailableAlias\nano-signal-slot-v2x\nano_function.hpp" />
+    <ClInclude Include="..\benchmark\lib\NoAvailableAlias\nano-signal-slot-v2x\nano_mutex.hpp" />
+    <ClInclude Include="..\benchmark\lib\NoAvailableAlias\nano-signal-slot-v2x\nano_observer.hpp" />
+    <ClInclude Include="..\benchmark\lib\NoAvailableAlias\nano-signal-slot-v2x\nano_signal_slot.hpp" />
     <ClInclude Include="..\benchmark\lib\NoAvailableAlias\nano-signal-slot\nano_function.hpp" />
     <ClInclude Include="..\benchmark\lib\NoAvailableAlias\nano-signal-slot\nano_observer.hpp" />
     <ClInclude Include="..\benchmark\lib\NoAvailableAlias\nano-signal-slot\nano_signal_slot.hpp" />
@@ -298,6 +312,8 @@
     <ClCompile Include="..\benchmark\cpp\benchmark_nls_st.cpp" />
     <ClCompile Include="..\benchmark\cpp\benchmark_nod.cpp" />
     <ClCompile Include="..\benchmark\cpp\benchmark_nss.cpp" />
+    <ClCompile Include="..\benchmark\cpp\benchmark_nss_v2.cpp" />
+    <ClCompile Include="..\benchmark\cpp\benchmark_nss_v2_st.cpp" />
     <ClCompile Include="..\benchmark\cpp\benchmark_psg.cpp" />
     <ClCompile Include="..\benchmark\cpp\benchmark_pss.cpp" />
     <ClCompile Include="..\benchmark\cpp\benchmark_pss_st.cpp" />
