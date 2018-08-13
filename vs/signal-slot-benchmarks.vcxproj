@@ -224,6 +224,7 @@
     <ClInclude Include="..\benchmark\hpp\benchmark_cls.hpp" />
     <ClInclude Include="..\benchmark\hpp\benchmark_cps.hpp" />
     <ClInclude Include="..\benchmark\hpp\benchmark_cps_st.hpp" />
+    <ClInclude Include="..\benchmark\hpp\benchmark_dob.hpp" />
     <ClInclude Include="..\benchmark\hpp\benchmark_evl.hpp" />
     <ClInclude Include="..\benchmark\hpp\benchmark_jls.hpp" />
     <ClInclude Include="..\benchmark\hpp\benchmark_jos.hpp" />
@@ -246,6 +247,12 @@
     <ClInclude Include="..\benchmark\hpp\benchmark_yas.hpp" />
     <ClInclude Include="..\benchmark\lib\amc522\signal11\Signal.h" />
     <ClInclude Include="..\benchmark\lib\cpp11nullptr\lsignal\lsignal.h" />
+    <ClInclude Include="..\benchmark\lib\dacap\obs\dacap_connection.h" />
+    <ClInclude Include="..\benchmark\lib\dacap\obs\dacap_signal.h" />
+    <ClInclude Include="..\benchmark\lib\dacap\obs\observable.h" />
+    <ClInclude Include="..\benchmark\lib\dacap\obs\observers.h" />
+    <ClInclude Include="..\benchmark\lib\dacap\obs\safe_list.h" />
+    <ClInclude Include="..\benchmark\lib\dacap\obs\slot.h" />
     <ClInclude Include="..\benchmark\lib\eviltwin\observer.hpp" />
     <ClInclude Include="..\benchmark\lib\fr00b0\nod\include\nod\nod.hpp" />
     <ClInclude Include="..\benchmark\lib\i42output\include\neolib\locking_policy.hpp" />
@@ -307,6 +314,7 @@
     <ClCompile Include="..\benchmark\cpp\benchmark_cls.cpp" />
     <ClCompile Include="..\benchmark\cpp\benchmark_cps.cpp" />
     <ClCompile Include="..\benchmark\cpp\benchmark_cps_st.cpp" />
+    <ClCompile Include="..\benchmark\cpp\benchmark_dob.cpp" />
     <ClCompile Include="..\benchmark\cpp\benchmark_evl.cpp" />
     <ClCompile Include="..\benchmark\cpp\benchmark_jls.cpp" />
     <ClCompile Include="..\benchmark\cpp\benchmark_jos.cpp" />
@@ -327,6 +335,7 @@
     <ClCompile Include="..\benchmark\cpp\benchmark_wnk.cpp" />
     <ClCompile Include="..\benchmark\cpp\benchmark_wsg.cpp" />
     <ClCompile Include="..\benchmark\cpp\benchmark_yas.cpp" />
+    <ClCompile Include="..\benchmark\lib\dacap\obs\dacap_connection.cpp" />
     <ClCompile Include="..\benchmark\lib\jeffomatic\jl_signal\src\ObjectPool.cpp" />
     <ClCompile Include="..\benchmark\lib\jeffomatic\jl_signal\src\SignalBase.cpp" />
     <ClCompile Include="..\benchmark\lib\mwthinker\Signal\src\mw\signals\connection.cpp" />

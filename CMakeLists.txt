@@ -18,10 +18,12 @@ add_executable(bench
     benchmark/cpp/benchmark_cls.cpp
     benchmark/cpp/benchmark_cps.cpp
     benchmark/cpp/benchmark_cps_st.cpp
+    benchmark/cpp/benchmark_dob.cpp
     benchmark/cpp/benchmark_evl.cpp
     benchmark/cpp/benchmark_jls.cpp
     benchmark/cpp/benchmark_jos.cpp
     benchmark/cpp/benchmark_ksc.cpp
+    benchmark/cpp/benchmark_lss.cpp
     benchmark/cpp/benchmark_mws.cpp
     benchmark/cpp/benchmark_nls.cpp
     benchmark/cpp/benchmark_nls_st.cpp
@@ -42,6 +44,7 @@ add_executable(bench
     benchmark/lib/jeffomatic/jl_signal/src/SignalBase.cpp
     benchmark/lib/jeffomatic/jl_signal/src/ObjectPool.cpp
     benchmark/lib/mwthinker/Signal/src/mw/signals/connection.cpp
+    benchmark/lib/dacap/obs/dacap_connection.cpp
 )
 
 set_target_properties(bench PROPERTIES CXX_EXTENSIONS NO)
