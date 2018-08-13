@@ -2,6 +2,8 @@
 #include <fstream>
 #include <iomanip>
 
+#include <boost/filesystem.hpp>
+
 #include "benchmark/hpp/benchmark_asg.hpp"
 #include "benchmark/hpp/benchmark_bs1.hpp"
 #include "benchmark/hpp/benchmark_bs2.hpp"
@@ -39,7 +41,7 @@ std::size_t g_timer_limit = Timer_u(Limit_u(4000)).count();
 
 //------------------------------------------------------------------------------
 
-template <typename T>
+template <typename Benchmark>
 void run_benchmark_class(ImmediateData& records, std::size_t N)
 {
     // Time this particular benchmark run (for display only)
@@ -47,24 +49,24 @@ void run_benchmark_class(ImmediateData& records, std::size_t N)
     auto start_out = std::chrono::system_clock::to_time_t(start);
 
     std::cout << std::put_time(std::localtime(&start_out), "%c")
-        << " [BEGIN: " << T::C_LIB_NAME << "]" << std::endl;
+        << " [BEGIN: " << Benchmark::C_LIB_NAME << "]" << std::endl;
 
-    auto& metrics = records[T::C_LIB_NAME];
+    auto& metrics = records[Benchmark::C_LIB_NAME];
 
-    metrics[C_CONSTRUCTION].push_back(T::construction(N));
-    metrics[C_DESTRUCTION].push_back(T::destruction(N));
-    metrics[C_CONNECTION].push_back(T::connection(N));
-    metrics[C_EMISSION].push_back(T::emission(N));
-    metrics[C_COMBINED].push_back(T::combined(N));
+    metrics[C_CONSTRUCTION].push_back(Benchmark::construction(N));
+    metrics[C_DESTRUCTION].push_back(Benchmark::destruction(N));
+    metrics[C_CONNECTION].push_back(Benchmark::connection(N));
+    metrics[C_EMISSION].push_back(Benchmark::emission(N));
+    metrics[C_COMBINED].push_back(Benchmark::combined(N));
 
     // T might not have this implemented
-    metrics[C_THREADED].push_back(T::threaded(N));
+    metrics[C_THREADED].push_back(Benchmark::threaded(N));
 
     auto stop = std::chrono::system_clock::now();
     auto stop_out = std::chrono::system_clock::to_time_t(stop);
 
     std::cout << std::put_time(std::localtime(&stop_out), "%c")
-        << " [END: " << T::C_LIB_NAME << "]" << std::endl;
+        << " [END: " << Benchmark::C_LIB_NAME << "]" << std::endl;
 }
 
 //------------------------------------------------------------------------------
@@ -160,7 +162,7 @@ void run_all_validation_tests(std::size_t N)
 //------------------------------------------------------------------------------
 
 template <typename T>
-void output_report_header(RelativeResults const& first_result_row, T& ost)
+void output_perf_report_header(RelativeResults const& first_result_row, T& ost)
 {
     std::string header_first_row("| Library | ");
 
@@ -178,6 +180,82 @@ void output_report_header(RelativeResults const& first_result_row, T& ost)
         ost << (ch == '|' ? '|' : '-');
     }
     ost << "\n";
+}
+
+//------------------------------------------------------------------------------
+
+std::string get_object_file_size(const char* file_stem)
+{
+    namespace fs = boost::filesystem;
+
+#if defined(__GNUC__) || defined(__GNUG__)
+
+    auto file_name = std::string(file_stem) + ".o";
+
+#else
+
+    auto file_name = std::string(file_stem) + ".obj";
+
+#endif
+
+    const fs::path file { file_name };
+
+    if (fs::exists(file))
+    {
+        return std::to_string(fs::file_size(file) / 1000) + " kb";
+    }
+    return "&mdash;";
+}
+
+template <typename Benchmark, typename T>
+void output_metrics_report_row(T& ost)
+{
+    try
+    {
+        ost << "| [" << Benchmark::C_LIB_NAME << "]("
+            << Benchmark::C_LIB_SOURCE_URL << ") | "
+            << get_object_file_size(Benchmark::C_LIB_FILE) << " | "
+            << Benchmark::C_LIB_IS_HEADER_ONLY
+            << " | " << Benchmark::C_LIB_DATA_STRUCTURE
+            << " | " << Benchmark::C_LIB_IS_THREAD_SAFE << " |\n";
+    }
+    catch (std::exception const& error)
+    {
+        std::cerr << "Exception: " << error.what() << std::endl;
+        std::cin.get();
+    }
+}
+
+template <typename T>
+void output_metrics_report(T& ost)
+{
+    ost << "| Library | Build Size | Header Only | Data Structure | Thread Safe |\n"
+        << "| ------- |:----------:|:-----------:| -------------- |:-----------:|\n";
+    output_metrics_report_row<Asg>(ost);
+    output_metrics_report_row<Bs1>(ost);
+    output_metrics_report_row<Bs2>(ost);
+    output_metrics_report_row<Cls>(ost);
+    output_metrics_report_row<Cps>(ost);
+    output_metrics_report_row<Cps_st>(ost);
+    output_metrics_report_row<Evl>(ost);
+    output_metrics_report_row<Jls>(ost);
+    output_metrics_report_row<Jos>(ost);
+    output_metrics_report_row<Ksc>(ost);
+    output_metrics_report_row<Mws>(ost);
+    output_metrics_report_row<Nls>(ost);
+    output_metrics_report_row<Nls_st>(ost);
+    output_metrics_report_row<Nod>(ost);
+    output_metrics_report_row<Nss>(ost);
+    output_metrics_report_row<Nss_v2>(ost);
+    output_metrics_report_row<Nss_v2_st>(ost);
+    output_metrics_report_row<Psg>(ost);
+    output_metrics_report_row<Pss>(ost);
+    output_metrics_report_row<Pss_st>(ost);
+    output_metrics_report_row<Sss>(ost);
+    output_metrics_report_row<Wnk>(ost);
+    output_metrics_report_row<Wsg>(ost);
+    output_metrics_report_row<Yas>(ost);
+    output_metrics_report_row<Vdk>(ost);
 }
 
 //------------------------------------------------------------------------------
@@ -221,7 +299,7 @@ void output_reports(ImmediateData const& records, T& ost)
 
         if (show_header)
         {
-            output_report_header((*row.second.second), ost);
+            output_perf_report_header((*row.second.second), ost);
             show_header = false;
         }
 
@@ -235,14 +313,16 @@ void output_reports(ImmediateData const& records, T& ost)
         }
         ost << " | " << std::setprecision(0) << std::fixed << score << " |\n";
     }
+
+    output_metrics_report(ost);
 }
 
 //------------------------------------------------------------------------------
 
 int main(int argc, char* argv[])
 {
-    // Jl_signal uses a compile time allocator for high performance
-    // (this allocator cannot be resized at runtime)
+    // Jl_signal uses a compile time allocator for maximum performance
+    // (however, this allocator cannot be resized at runtime)
     jl::StaticSignalConnectionAllocator<C_JLSIGNAL_MAX> signal_con_allocator;
     jl::StaticObserverConnectionAllocator<C_JLSIGNAL_MAX> observer_con_allocator;
     jl::SignalBase::SetCommonConnectionAllocator(&signal_con_allocator);

@@ -2,13 +2,17 @@
 # signal-slot-benchmarks
 
 Comprehensive benchmarks for a majority of GitHub c++ signal slot implementations and others.
+<br/>
+**_Boost, as well as C++17 support, is required to build this project._**
 
-**_C++17 support is now required to build this project._**
+Foreword
+--------
 
-Tested Libraries
-----------------
-
-TODO
+These benchmarks do not accurately depict real world usage patterns seen in the wild.
+<br/>
+However, these benchmarks were designed to provide impartial results regardless of implementation.
+<br/>
+It is my goal to take what I've learned from these results and apply this knowledge into making nano-signal-slot better.
 
 Tested Environments
 -------------------
@@ -16,14 +20,14 @@ Tested Environments
 <div style="text-align:center; margin-bottom:1em;">click to view results</div>
 <div style="text-align:center; display:flex;">
 	<div style="flex:1;">
-    	<a href="https://github.com/NoAvailableAlias/signal-slot-benchmarks/blob/master/results_msvc/README.md" style="">
+    	<a href="https://github.com/NoAvailableAlias/signal-slot-benchmarks/blob/master/results_msvc/README.md">
         	<button type="button" style="padding:2em; cursor:pointer;  font-size:2em; width:90%;">
             	MSVC (Windows)
             </button>
         </a>
 	</div>
 	<div style="flex:1;">
-        <a href="https://github.com/NoAvailableAlias/signal-slot-benchmarks/blob/master/results_gcc/README.md" style="">
+        <a href="https://github.com/NoAvailableAlias/signal-slot-benchmarks/blob/master/results_gcc/README.md">
             <button type="button" style="padding:2em; cursor:pointer; font-size:2em; width:90%;">
             	GCC (Linux)
             </button>

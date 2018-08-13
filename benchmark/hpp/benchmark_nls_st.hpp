@@ -41,6 +41,6 @@ class Nls_st : public neolib::has_slots<neolib::locking_policy_none>
     static constexpr const char* C_LIB_SOURCE_URL = "https://github.com/i42output/neolib";
     static constexpr const char* C_LIB_FILE = "benchmark_nls_st";
     static constexpr const char* C_LIB_IS_HEADER_ONLY = "X";
-    static constexpr const char* C_LIB_DATA_STRUCTURE = "*std::unordered_map";
+    static constexpr const char* C_LIB_DATA_STRUCTURE = "**std::unordered_map";
     static constexpr const char* C_LIB_IS_THREAD_SAFE = "-";
 };

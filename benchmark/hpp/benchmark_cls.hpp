@@ -45,6 +45,6 @@ class Cls
     static constexpr const char* C_LIB_SOURCE_URL = "https://github.com/cpp11nullptr/lsignal";
     static constexpr const char* C_LIB_FILE = "benchmark_cls";
     static constexpr const char* C_LIB_IS_HEADER_ONLY = "X";
-    static constexpr const char* C_LIB_DATA_STRUCTURE = "*std::list";
+    static constexpr const char* C_LIB_DATA_STRUCTURE = "**std::list";
     static constexpr const char* C_LIB_IS_THREAD_SAFE = "X";
 };
