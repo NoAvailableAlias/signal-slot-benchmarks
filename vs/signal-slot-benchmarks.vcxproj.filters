@@ -102,6 +102,9 @@
     <Filter Include="Header Files\lib\NoAvailableAlias\nano-signal-slot-v2x">
       <UniqueIdentifier>{ff5d5f03-614c-481f-87bc-c71e5b0debf0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\lib\larspensjo">
+      <UniqueIdentifier>{ed5f2b2a-69b4-4d8d-b4f6-91cb6c9131ab}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\benchmark\hpp\benchmark_asg.hpp">
@@ -341,6 +344,12 @@
     <ClInclude Include="..\benchmark\hpp\benchmark_cps_st.hpp">
       <Filter>Header Files\benchmark</Filter>
     </ClInclude>
+    <ClInclude Include="..\benchmark\lib\larspensjo\SimpleSignal\SimpleSignal.h">
+      <Filter>Header Files\lib\larspensjo</Filter>
+    </ClInclude>
+    <ClInclude Include="..\benchmark\hpp\benchmark_lss.hpp">
+      <Filter>Header Files\benchmark</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\benchmark\cpp\benchmark_asg.cpp">
@@ -434,6 +443,9 @@
       <Filter>Source Files\benchmark</Filter>
     </ClCompile>
     <ClCompile Include="..\benchmark\cpp\benchmark_cps_st.cpp">
+      <Filter>Source Files\benchmark</Filter>
+    </ClCompile>
+    <ClCompile Include="..\benchmark\cpp\benchmark_lss.cpp">
       <Filter>Source Files\benchmark</Filter>
     </ClCompile>
   </ItemGroup>
