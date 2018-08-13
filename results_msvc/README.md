@@ -73,7 +73,7 @@ _Size results are the size of object files from release build with Visual Studio
 | [joanrieu signal11](https://github.com/joanrieu/signal11) | 274 kb | X | std::list | - |
 | [Yassi](http://www.codeproject.com/Articles/867044/Yassi-Yet-Another-Signal-Slot-Implementation) | 274 kb | X | std::vector | - |
 | [amc522 Signal11](https://github.com/amc522/Signal11) | 275 kb | X | std::vector | - |
-| [EvilTwin Observer](http://eviltwingames.com/blog/the-observer-pattern-revisited/) | 282 kb |  |  |  |
+| [EvilTwin Observer](http://eviltwingames.com/blog/the-observer-pattern-revisited/) | 282 kb | X | std::vector | - |
 | [pbhogan Signals](https://github.com/pbhogan/Signals) | 286 kb | X | std::set | - |
 | [Boost Signals](http://www.boost.org/doc/libs/1_56_0/doc/html/signals.html) | 455 kb | - | ? | - |
 | [neolib signal](https://github.com/i42output/neolib) | 644 kb | X | **std::unordered_map | - |

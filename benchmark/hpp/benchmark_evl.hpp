@@ -43,7 +43,7 @@ class Evl
     static constexpr const char* C_LIB_NAME = "EvilTwin Observer";
     static constexpr const char* C_LIB_SOURCE_URL = "http://eviltwingames.com/blog/the-observer-pattern-revisited/";
     static constexpr const char* C_LIB_FILE = "benchmark_evl";
-    static constexpr const char* C_LIB_IS_HEADER_ONLY = "";
-    static constexpr const char* C_LIB_DATA_STRUCTURE = "";
-    static constexpr const char* C_LIB_IS_THREAD_SAFE = "";
+    static constexpr const char* C_LIB_IS_HEADER_ONLY = "X";
+    static constexpr const char* C_LIB_DATA_STRUCTURE = "std::vector";
+    static constexpr const char* C_LIB_IS_THREAD_SAFE = "-";
 };
