@@ -1,5 +1,4 @@
-#ifndef BENCHMARK_ASG_HPP
-#define BENCHMARK_ASG_HPP
+#pragma once
 
 #include "../lib/amc522/signal11/Signal.h"
 
@@ -36,10 +35,14 @@ class Asg
     static double emission(std::size_t);
     static double combined(std::size_t);
 
-    // This may or may not be implemented
+    // NOT IMPLEMENTED FOR THIS LIB
     static double threaded(std::size_t);
 
-    static const char* LibraryName;
+    // The following is used for report outputs
+    static constexpr const char* C_LIB_NAME = "amc522 Signal11";
+    static constexpr const char* C_LIB_SOURCE_URL = "https://github.com/amc522/Signal11";
+    static constexpr const char* C_LIB_FILE = "benchmark_asg";
+    static constexpr const char* C_LIB_IS_HEADER_ONLY = "X";
+    static constexpr const char* C_LIB_DATA_STRUCTURE = "std::vector";
+    static constexpr const char* C_LIB_IS_THREAD_SAFE = "-";
 };
-
-#endif // BENCHMARK_ASG_HPP

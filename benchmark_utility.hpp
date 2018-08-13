@@ -1,8 +1,8 @@
-#ifndef MISCELLANEOUS_HPP
-#define MISCELLANEOUS_HPP
+#pragma once
 
 #include <algorithm>
 #include <cassert>
+#include <numeric>
 #include <chrono>
 #include <future>
 #include <memory>
@@ -10,23 +10,46 @@
 #include <thread>
 #include <vector>
 #include <tuple>
+#include <map>
 
 #ifdef _WIN32
 #define NOINLINE(s) __declspec(noinline) s
 #elif __unix__
-#define NOINLINE(s) s __attribute__ ((noinline))
+#define NOINLINE(s) __attribute__ ((noinline)) s
 #else
 #define NOINLINE(s) s
 #endif
 
-extern std::size_t g_limit;
-const std::size_t c_jlsignal_max = 1024;
-
 typedef std::minstd_rand Rng;
 
+// Time units used internally in the benchmarks
 typedef std::chrono::nanoseconds Timer_u;
 typedef std::chrono::milliseconds Limit_u;
 typedef std::chrono::duration<double, std::milli> Delta_u;
+
+// Used for gathering raw lib benchmark scores
+typedef std::map<const char*, std::vector<double>> ImmediateResults;
+typedef std::map<const char*, ImmediateResults> ImmediateData;
+
+// Used for post-benchmark processing and report output
+typedef std::map<const char*, double> RelativeResults;
+typedef std::map<const char*, RelativeResults> RelativeData;
+typedef std::pair<const char*, RelativeResults*> OrderedResults;
+typedef std::map<double, OrderedResults> OrderedData;
+
+// Used for the initialization of jlsignal
+constexpr const std::size_t C_JLSIGNAL_MAX = 1024;
+
+// Constants used to map to a particular benchmark algorithm
+constexpr const char* C_CONSTRUCTION = "construct";
+constexpr const char* C_DESTRUCTION = "destruct";
+constexpr const char* C_CONNECTION = "connect";
+constexpr const char* C_EMISSION = "emission";
+constexpr const char* C_COMBINED = "combined";
+constexpr const char* C_THREADED = "threaded";
+
+// The milliseconds per benchmark sample
+extern std::size_t g_timer_limit;
 
 //------------------------------------------------------------------------------
 
@@ -35,12 +58,10 @@ typedef std::shared_ptr<void> SlotScope;
 template <typename Deleter>
 SlotScope make_slot_scope(Deleter&& deleter)
 {
-    return SlotScope((void*)0xDEADC0DE, deleter);
+    return SlotScope(reinterpret_cast<void*>(0xDEADC0DE), deleter);
 }
 
 //------------------------------------------------------------------------------
-
-// based stackoverflow
 
 template <unsigned int N>
 struct tee_stream
@@ -57,7 +78,7 @@ template <>
 struct tee_stream<0>
 {
     template <typename ...Args, typename T>
-    static std::tuple<Args...>& print(std::tuple<Args...>& t, T&& x)
+    static std::tuple<Args...>& print(std::tuple<Args...>& t, T&&)
     {
         return t;
     }
@@ -124,6 +145,3 @@ struct IncrementFill
     std::size_t i = 0;
     std::size_t operator()() { return i++; }
 };
-
-
-#endif // MISCELLANEOUS_HPP

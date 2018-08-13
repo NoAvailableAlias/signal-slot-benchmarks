@@ -1,7 +1,5 @@
 #include "../hpp/benchmark_bs1.hpp"
 
-const char* Bs1::LibraryName = "Boost Signals";
-
 NOINLINE(void Bs1::validate_assert(std::size_t N))
 {
     return Benchmark<Signal, Bs1>::validation_assert(N);
@@ -28,5 +26,6 @@ NOINLINE(double Bs1::combined(std::size_t N))
 }
 NOINLINE(double Bs1::threaded(std::size_t N))
 {
+    // NOT IMPLEMENTED FOR THIS LIB
     return 0.0;
 }

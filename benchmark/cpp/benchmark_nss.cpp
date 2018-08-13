@@ -1,7 +1,5 @@
 #include "../hpp/benchmark_nss.hpp"
 
-const char* Nss::LibraryName = "nano-signal-slot";
-
 NOINLINE(void Nss::validate_assert(std::size_t N))
 {
     return Benchmark<Signal, Nss>::validation_assert(N);
@@ -28,5 +26,6 @@ NOINLINE(double Nss::combined(std::size_t N))
 }
 NOINLINE(double Nss::threaded(std::size_t N))
 {
+    // NOT IMPLEMENTED FOR THIS LIB
     return 0.0;
 }

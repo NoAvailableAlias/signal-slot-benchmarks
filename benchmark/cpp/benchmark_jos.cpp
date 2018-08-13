@@ -1,7 +1,5 @@
 #include "../hpp/benchmark_jos.hpp"
 
-const char* Jos::LibraryName = "joanrieu signal11";
-
 NOINLINE(void Jos::validate_assert(std::size_t N))
 {
     return Benchmark<Signal, Jos>::validation_assert(N);
@@ -28,5 +26,6 @@ NOINLINE(double Jos::combined(std::size_t N))
 }
 NOINLINE(double Jos::threaded(std::size_t N))
 {
+    // NOT IMPLEMENTED FOR THIS LIB
     return 0.0;
 }

@@ -1,11 +1,10 @@
-#ifndef BENCHMARK_NSS_HPP
-#define BENCHMARK_NSS_HPP
+#pragma once
 
 #include "../lib/NoAvailableAlias/nano-signal-slot/nano_signal_slot.hpp"
 
 #include "../../benchmark.hpp"
 
-class Nss : public Nano::Observer
+class Nss : public Nano_Deprecated::Observer
 {
     NOINLINE(void handler(Rng& rng))
     {
@@ -14,7 +13,7 @@ class Nss : public Nano::Observer
 
     public:
 
-    using Signal = Nano::Signal<void(Rng&)>;
+    using Signal = Nano_Deprecated::Signal<void(Rng&)>;
 
     template <typename Subject, typename Foo>
     static void connect_method(Subject& subject, Foo& foo)
@@ -34,10 +33,13 @@ class Nss : public Nano::Observer
     static double emission(std::size_t);
     static double combined(std::size_t);
 
-    // This may or may not be implemented
+    // NOT IMPLEMENTED FOR THIS LIB
     static double threaded(std::size_t);
 
-    static const char* LibraryName;
+    static constexpr const char* C_LIB_NAME = "nano-signal-slot v1x";
+    static constexpr const char* C_LIB_SOURCE_URL = "https://github.com/NoAvailableAlias/nano-signal-slot";
+    static constexpr const char* C_LIB_FILE = "benchmark_nss";
+    static constexpr const char* C_LIB_IS_HEADER_ONLY = "X";
+    static constexpr const char* C_LIB_DATA_STRUCTURE = "singly linked list";
+    static constexpr const char* C_LIB_IS_THREAD_SAFE = "-";
 };
-
-#endif // BENCHMARK_NSS_HPP

@@ -1,7 +1,5 @@
 #include "../hpp/benchmark_nod.hpp"
 
-const char* Nod::LibraryName = "* fr00b0 nod";
-
 NOINLINE(void Nod::validate_assert(std::size_t N))
 {
     return Benchmark<Signal, Nod>::validation_assert(N);

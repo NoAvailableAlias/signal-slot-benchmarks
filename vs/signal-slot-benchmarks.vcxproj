@@ -1,0 +1,344 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>15.0</VCProjectVersion>
+    <ProjectGuid>{AC15350A-7C96-4147-9E43-F3704433B527}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>Nano_Benchmarks</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0.17134.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <DisableLanguageExtensions>false</DisableLanguageExtensions>
+      <EnforceTypeConversionRules>true</EnforceTypeConversionRules>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <OpenMPSupport>false</OpenMPSupport>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <EnableModules>false</EnableModules>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <OmitFramePointers>false</OmitFramePointers>
+      <AdditionalIncludeDirectories>C:\boost_1_67_0;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>-D_SCL_SECURE_NO_WARNINGS -D_CRT_SECURE_NO_WARNINGS %(AdditionalOptions)</AdditionalOptions>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <BasicRuntimeChecks>Default</BasicRuntimeChecks>
+      <FloatingPointModel>Strict</FloatingPointModel>
+      <EnableEnhancedInstructionSet>NoExtensions</EnableEnhancedInstructionSet>
+      <ExceptionHandling>Async</ExceptionHandling>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>C:\boost_1_67_0\stage\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <DisableLanguageExtensions>false</DisableLanguageExtensions>
+      <EnforceTypeConversionRules>true</EnforceTypeConversionRules>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <OpenMPSupport>false</OpenMPSupport>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <EnableModules>false</EnableModules>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <OmitFramePointers>false</OmitFramePointers>
+      <AdditionalIncludeDirectories>C:\boost_1_67_0;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>-D_SCL_SECURE_NO_WARNINGS -D_CRT_SECURE_NO_WARNINGS %(AdditionalOptions)</AdditionalOptions>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <BasicRuntimeChecks>Default</BasicRuntimeChecks>
+      <FloatingPointModel>Strict</FloatingPointModel>
+      <EnableEnhancedInstructionSet>NoExtensions</EnableEnhancedInstructionSet>
+      <ExceptionHandling>Async</ExceptionHandling>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>C:\boost_1_67_0\stage\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <DisableLanguageExtensions>false</DisableLanguageExtensions>
+      <EnforceTypeConversionRules>true</EnforceTypeConversionRules>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <OpenMPSupport>false</OpenMPSupport>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <EnableModules>false</EnableModules>
+      <OmitFramePointers>true</OmitFramePointers>
+      <WholeProgramOptimization>false</WholeProgramOptimization>
+      <AdditionalIncludeDirectories>C:\boost_1_67_0;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>-D_SCL_SECURE_NO_WARNINGS -D_CRT_SECURE_NO_WARNINGS %(AdditionalOptions)</AdditionalOptions>
+      <FloatingPointModel>Fast</FloatingPointModel>
+      <EnableEnhancedInstructionSet>NoExtensions</EnableEnhancedInstructionSet>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <EnableParallelCodeGeneration>false</EnableParallelCodeGeneration>
+      <FloatingPointExceptions>false</FloatingPointExceptions>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>C:\boost_1_67_0\stage\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <DisableLanguageExtensions>false</DisableLanguageExtensions>
+      <EnforceTypeConversionRules>true</EnforceTypeConversionRules>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <OpenMPSupport>false</OpenMPSupport>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <EnableModules>false</EnableModules>
+      <OmitFramePointers>true</OmitFramePointers>
+      <WholeProgramOptimization>false</WholeProgramOptimization>
+      <AdditionalIncludeDirectories>C:\boost_1_67_0;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>-D_SCL_SECURE_NO_WARNINGS -D_CRT_SECURE_NO_WARNINGS %(AdditionalOptions)</AdditionalOptions>
+      <FloatingPointModel>Fast</FloatingPointModel>
+      <EnableEnhancedInstructionSet>NoExtensions</EnableEnhancedInstructionSet>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <EnableParallelCodeGeneration>false</EnableParallelCodeGeneration>
+      <FloatingPointExceptions>false</FloatingPointExceptions>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>C:\boost_1_67_0\stage\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="..\benchmark.hpp" />
+    <ClInclude Include="..\benchmark\hpp\benchmark_asg.hpp" />
+    <ClInclude Include="..\benchmark\hpp\benchmark_bs1.hpp" />
+    <ClInclude Include="..\benchmark\hpp\benchmark_bs2.hpp" />
+    <ClInclude Include="..\benchmark\hpp\benchmark_cls.hpp" />
+    <ClInclude Include="..\benchmark\hpp\benchmark_cps.hpp" />
+    <ClInclude Include="..\benchmark\hpp\benchmark_cps_st.hpp" />
+    <ClInclude Include="..\benchmark\hpp\benchmark_evl.hpp" />
+    <ClInclude Include="..\benchmark\hpp\benchmark_jls.hpp" />
+    <ClInclude Include="..\benchmark\hpp\benchmark_jos.hpp" />
+    <ClInclude Include="..\benchmark\hpp\benchmark_ksc.hpp" />
+    <ClInclude Include="..\benchmark\hpp\benchmark_mws.hpp" />
+    <ClInclude Include="..\benchmark\hpp\benchmark_nls.hpp" />
+    <ClInclude Include="..\benchmark\hpp\benchmark_nls_st.hpp" />
+    <ClInclude Include="..\benchmark\hpp\benchmark_nod.hpp" />
+    <ClInclude Include="..\benchmark\hpp\benchmark_nss.hpp" />
+    <ClInclude Include="..\benchmark\hpp\benchmark_nss_v2.hpp" />
+    <ClInclude Include="..\benchmark\hpp\benchmark_nss_v2_st.hpp" />
+    <ClInclude Include="..\benchmark\hpp\benchmark_psg.hpp" />
+    <ClInclude Include="..\benchmark\hpp\benchmark_pss.hpp" />
+    <ClInclude Include="..\benchmark\hpp\benchmark_pss_st.hpp" />
+    <ClInclude Include="..\benchmark\hpp\benchmark_sss.hpp" />
+    <ClInclude Include="..\benchmark\hpp\benchmark_vdk.hpp" />
+    <ClInclude Include="..\benchmark\hpp\benchmark_wnk.hpp" />
+    <ClInclude Include="..\benchmark\hpp\benchmark_wsg.hpp" />
+    <ClInclude Include="..\benchmark\hpp\benchmark_yas.hpp" />
+    <ClInclude Include="..\benchmark\lib\amc522\signal11\Signal.h" />
+    <ClInclude Include="..\benchmark\lib\cpp11nullptr\lsignal\lsignal.h" />
+    <ClInclude Include="..\benchmark\lib\eviltwin\observer.hpp" />
+    <ClInclude Include="..\benchmark\lib\fr00b0\nod\include\nod\nod.hpp" />
+    <ClInclude Include="..\benchmark\lib\i42output\include\neolib\locking_policy.hpp" />
+    <ClInclude Include="..\benchmark\lib\i42output\include\neolib\mutex.hpp" />
+    <ClInclude Include="..\benchmark\lib\i42output\include\neolib\neolib.hpp" />
+    <ClInclude Include="..\benchmark\lib\i42output\include\neolib\signal.hpp" />
+    <ClInclude Include="..\benchmark\lib\i42output\include\neolib\signal_interface.hpp" />
+    <ClInclude Include="..\benchmark\lib\i42output\include\neolib\slot.hpp" />
+    <ClInclude Include="..\benchmark\lib\i42output\include\neolib\slot_interface.hpp" />
+    <ClInclude Include="..\benchmark\lib\jeffomatic\jl_signal\src\DoublyLinkedList.h" />
+    <ClInclude Include="..\benchmark\lib\jeffomatic\jl_signal\src\FastDelegate.h" />
+    <ClInclude Include="..\benchmark\lib\jeffomatic\jl_signal\src\ObjectPool.h" />
+    <ClInclude Include="..\benchmark\lib\jeffomatic\jl_signal\src\ObjectPoolScopedAllocator.h" />
+    <ClInclude Include="..\benchmark\lib\jeffomatic\jl_signal\src\ScopedAllocator.h" />
+    <ClInclude Include="..\benchmark\lib\jeffomatic\jl_signal\src\Signal.h" />
+    <ClInclude Include="..\benchmark\lib\jeffomatic\jl_signal\src\SignalBase.h" />
+    <ClInclude Include="..\benchmark\lib\jeffomatic\jl_signal\src\SignalDefinitions.h" />
+    <ClInclude Include="..\benchmark\lib\jeffomatic\jl_signal\src\StaticSignalConnectionAllocators.h" />
+    <ClInclude Include="..\benchmark\lib\jeffomatic\jl_signal\src\Utils.h" />
+    <ClInclude Include="..\benchmark\lib\joanrieu\signal11\signal11.h" />
+    <ClInclude Include="..\benchmark\lib\Kosta-Github\signals-cpp\signals-cpp\config.hpp" />
+    <ClInclude Include="..\benchmark\lib\Kosta-Github\signals-cpp\signals-cpp\connection.hpp" />
+    <ClInclude Include="..\benchmark\lib\Kosta-Github\signals-cpp\signals-cpp\connections.hpp" />
+    <ClInclude Include="..\benchmark\lib\Kosta-Github\signals-cpp\signals-cpp\signal.hpp" />
+    <ClInclude Include="..\benchmark\lib\Kosta-Github\signals-cpp\signals-cpp\signals.hpp" />
+    <ClInclude Include="..\benchmark\lib\miguelmartin\Wink-Signals\wink\event_queue.hpp" />
+    <ClInclude Include="..\benchmark\lib\miguelmartin\Wink-Signals\wink\signal.hpp" />
+    <ClInclude Include="..\benchmark\lib\miguelmartin\Wink-Signals\wink\slot.hpp" />
+    <ClInclude Include="..\benchmark\lib\Montellese\cpp-signal\cpp-signal.h" />
+    <ClInclude Include="..\benchmark\lib\mwthinker\Signal\src\mw\signal.h" />
+    <ClInclude Include="..\benchmark\lib\mwthinker\Signal\src\mw\signals\connection.h" />
+    <ClInclude Include="..\benchmark\lib\NoAvailableAlias\nano-signal-slot-v2x\nano_function.hpp" />
+    <ClInclude Include="..\benchmark\lib\NoAvailableAlias\nano-signal-slot-v2x\nano_mutex.hpp" />
+    <ClInclude Include="..\benchmark\lib\NoAvailableAlias\nano-signal-slot-v2x\nano_observer.hpp" />
+    <ClInclude Include="..\benchmark\lib\NoAvailableAlias\nano-signal-slot-v2x\nano_signal_slot.hpp" />
+    <ClInclude Include="..\benchmark\lib\NoAvailableAlias\nano-signal-slot\nano_function.hpp" />
+    <ClInclude Include="..\benchmark\lib\NoAvailableAlias\nano-signal-slot\nano_observer.hpp" />
+    <ClInclude Include="..\benchmark\lib\NoAvailableAlias\nano-signal-slot\nano_signal_slot.hpp" />
+    <ClInclude Include="..\benchmark\lib\palacaze\sigslot\signal.hpp" />
+    <ClInclude Include="..\benchmark\lib\pbhogan\Signals\Delegate.h" />
+    <ClInclude Include="..\benchmark\lib\pbhogan\Signals\Signal.h" />
+    <ClInclude Include="..\benchmark\lib\supergrover\sigslot\src\signal.h" />
+    <ClInclude Include="..\benchmark\lib\vdksoft\signals\include\signals.h" />
+    <ClInclude Include="..\benchmark\lib\winglot\Signals\W_Connection.h" />
+    <ClInclude Include="..\benchmark\lib\winglot\Signals\W_ConnectionBase.h" />
+    <ClInclude Include="..\benchmark\lib\winglot\Signals\W_Mutex.h" />
+    <ClInclude Include="..\benchmark\lib\winglot\Signals\W_Signal.h" />
+    <ClInclude Include="..\benchmark\lib\winglot\Signals\W_SignalBase.h" />
+    <ClInclude Include="..\benchmark\lib\winglot\Signals\W_Slot.h" />
+    <ClInclude Include="..\benchmark\lib\yassi\yassi.h" />
+    <ClInclude Include="..\benchmark_utility.hpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\benchmark.cpp" />
+    <ClCompile Include="..\benchmark\cpp\benchmark_asg.cpp" />
+    <ClCompile Include="..\benchmark\cpp\benchmark_bs1.cpp" />
+    <ClCompile Include="..\benchmark\cpp\benchmark_bs2.cpp" />
+    <ClCompile Include="..\benchmark\cpp\benchmark_cls.cpp" />
+    <ClCompile Include="..\benchmark\cpp\benchmark_cps.cpp" />
+    <ClCompile Include="..\benchmark\cpp\benchmark_cps_st.cpp" />
+    <ClCompile Include="..\benchmark\cpp\benchmark_evl.cpp" />
+    <ClCompile Include="..\benchmark\cpp\benchmark_jls.cpp" />
+    <ClCompile Include="..\benchmark\cpp\benchmark_jos.cpp" />
+    <ClCompile Include="..\benchmark\cpp\benchmark_ksc.cpp" />
+    <ClCompile Include="..\benchmark\cpp\benchmark_mws.cpp" />
+    <ClCompile Include="..\benchmark\cpp\benchmark_nls.cpp" />
+    <ClCompile Include="..\benchmark\cpp\benchmark_nls_st.cpp" />
+    <ClCompile Include="..\benchmark\cpp\benchmark_nod.cpp" />
+    <ClCompile Include="..\benchmark\cpp\benchmark_nss.cpp" />
+    <ClCompile Include="..\benchmark\cpp\benchmark_nss_v2.cpp" />
+    <ClCompile Include="..\benchmark\cpp\benchmark_nss_v2_st.cpp" />
+    <ClCompile Include="..\benchmark\cpp\benchmark_psg.cpp" />
+    <ClCompile Include="..\benchmark\cpp\benchmark_pss.cpp" />
+    <ClCompile Include="..\benchmark\cpp\benchmark_pss_st.cpp" />
+    <ClCompile Include="..\benchmark\cpp\benchmark_sss.cpp" />
+    <ClCompile Include="..\benchmark\cpp\benchmark_vdk.cpp" />
+    <ClCompile Include="..\benchmark\cpp\benchmark_wnk.cpp" />
+    <ClCompile Include="..\benchmark\cpp\benchmark_wsg.cpp" />
+    <ClCompile Include="..\benchmark\cpp\benchmark_yas.cpp" />
+    <ClCompile Include="..\benchmark\lib\jeffomatic\jl_signal\src\ObjectPool.cpp" />
+    <ClCompile Include="..\benchmark\lib\jeffomatic\jl_signal\src\SignalBase.cpp" />
+    <ClCompile Include="..\benchmark\lib\mwthinker\Signal\src\mw\signals\connection.cpp" />
+    <ClCompile Include="..\benchmark\lib\supergrover\sigslot\src\signal.cpp" />
+    <ClCompile Include="..\benchmark\lib\winglot\Signals\W_Slot.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="..\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\README.md" />
+    <None Include="..\results_gcc\README.md" />
+    <None Include="..\results_msvc\README.md" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

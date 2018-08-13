@@ -1,7 +1,5 @@
 #include "../hpp/benchmark_evl.hpp"
 
-const char* Evl::LibraryName = "EvilTwin Observer";
-
 NOINLINE(void Evl::validate_assert(std::size_t N))
 {
     return Benchmark<Signal, Evl>::validation_assert(N);
@@ -28,5 +26,6 @@ NOINLINE(double Evl::combined(std::size_t N))
 }
 NOINLINE(double Evl::threaded(std::size_t N))
 {
+    // NOT IMPLEMENTED FOR THIS LIB
     return 0.0;
 }

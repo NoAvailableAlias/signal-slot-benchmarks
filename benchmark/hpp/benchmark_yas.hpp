@@ -1,5 +1,4 @@
-#ifndef BENCHMARK_YAS_HPP
-#define BENCHMARK_YAS_HPP
+#pragma once
 
 #include "../lib/yassi/yassi.h"
 
@@ -22,7 +21,7 @@ class Yas
     template <typename Subject, typename Foo>
     static void connect_method(Subject& subject, Foo& foo)
     {
-        subject.connect<Event>(foo, &Foo::handler);
+        subject.template connect<Event>(foo, &Foo::handler);
 
         // Automatically disconnect when the foo instance is destroyed
         // Benchmarks require connection management
@@ -31,7 +30,7 @@ class Yas
     template <typename Subject>
     static void emit_method(Subject& subject, Rng& rng)
     {
-        subject.emit<Event>(rng);
+        subject.template emit<Event>(rng);
     }
 
     static void validate_assert(std::size_t);
@@ -41,10 +40,13 @@ class Yas
     static double emission(std::size_t);
     static double combined(std::size_t);
 
-    // This may or may not be implemented
+    // NOT IMPLEMENTED FOR THIS LIB
     static double threaded(std::size_t);
 
-    static const char* LibraryName;
+    static constexpr const char* C_LIB_NAME = "Yassi";
+    static constexpr const char* C_LIB_SOURCE_URL = "http://www.codeproject.com/Articles/867044/Yassi-Yet-Another-Signal-Slot-Implementation";
+    static constexpr const char* C_LIB_FILE = "benchmark_yas";
+    static constexpr const char* C_LIB_IS_HEADER_ONLY = "X";
+    static constexpr const char* C_LIB_DATA_STRUCTURE = "std::vector";
+    static constexpr const char* C_LIB_IS_THREAD_SAFE = "-";
 };
-
-#endif // BENCHMARK_YAS_HPP

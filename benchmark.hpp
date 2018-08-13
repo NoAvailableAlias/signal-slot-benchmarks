@@ -1,5 +1,4 @@
-#ifndef BENCHMARK_HPP
-#define BENCHMARK_HPP
+#pragma once
 
 #include "benchmark_utility.hpp"
 
@@ -42,7 +41,7 @@ class Benchmark
         // There is an error in the signal implementation
         Rng test;
         test.discard(count);
-        assert(rng == test);
+        if (rng != test) throw std::runtime_error(Foo::C_LIB_NAME);
     }
 
     //--------------------------------------------------------------------------
@@ -52,7 +51,7 @@ class Benchmark
         std::size_t count = 1;
         std::size_t elapsed = 0;
 
-        for (; elapsed < g_limit; ++count)
+        for (; elapsed < g_timer_limit; ++count)
         {
             s_timer.reset();
 
@@ -76,7 +75,7 @@ class Benchmark
         s_indices.resize(N);
         std::generate(s_indices.begin(), s_indices.end(), IncrementFill());
 
-        for (; elapsed < g_limit; ++count)
+        for (; elapsed < g_timer_limit; ++count)
         {
             std::shuffle(s_indices.begin(), s_indices.end(), s_rng);
             {
@@ -106,7 +105,7 @@ class Benchmark
         s_indices.resize(N);
         std::generate(s_indices.begin(), s_indices.end(), IncrementFill());
 
-        for (; elapsed < g_limit; ++count)
+        for (; elapsed < g_timer_limit; ++count)
         {
             std::shuffle(s_indices.begin(), s_indices.end(), s_rng);
 
@@ -134,7 +133,7 @@ class Benchmark
         s_indices.resize(N);
         std::generate(s_indices.begin(), s_indices.end(), IncrementFill());
         
-        for (; elapsed < g_limit; ++count)
+        for (; elapsed < g_timer_limit; ++count)
         {
             std::shuffle(s_indices.begin(), s_indices.end(), s_rng);
 
@@ -167,7 +166,7 @@ class Benchmark
 
         s_timer.reset();
         
-        for (; elapsed < g_limit; ++count, elapsed = s_timer.count<Timer_u>())
+        for (; elapsed < g_timer_limit; ++count, elapsed = s_timer.count<Timer_u>())
         {
             Subject subject;
             std::vector<Foo> foo(N);
@@ -195,7 +194,7 @@ class Benchmark
             Rng rng (s_rng);
             ChronoTimer timer;
 
-            for (; elapsed < g_limit; ++count, elapsed = timer.count<Timer_u>())
+            for (; elapsed < g_timer_limit; ++count, elapsed = timer.count<Timer_u>())
             {
                 std::vector<Foo> foo(N);
 
@@ -208,10 +207,17 @@ class Benchmark
             return calculate_score(N, elapsed, count);
         };
 
-        std::future<double> f1 = std::async(std::launch::async, context);
-        std::future<double> f2 = std::async(std::launch::async, context);
-        
-        return (f1.get() + f2.get()) / 2.0;
+        std::vector<double> results;
+        std::vector<std::future<double>> future_results;
+        for (std::size_t i = std::thread::hardware_concurrency() / 2; i > 0; --i)
+        {
+            future_results.emplace_back(std::async(std::launch::async, context));
+        }
+        for (auto& future_result : future_results)
+        {
+            results.emplace_back(future_result.get());
+        }
+        return std::accumulate(results.begin(), results.end(), 0.0) / results.size();
     }
 };
 
@@ -225,5 +231,3 @@ ChronoTimer Benchmark<Subject, Foo>::s_timer;
 
 template <typename Subject, typename Foo>
 Rng Benchmark<Subject, Foo>::s_rng;
-
-#endif // BENCHMARK_HPP

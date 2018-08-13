@@ -1,5 +1,4 @@
-#ifndef BENCHMARK_NOD_HPP
-#define BENCHMARK_NOD_HPP
+#pragma once
 
 #include "../lib/fr00b0/nod/include/nod/nod.hpp"
 
@@ -35,11 +34,12 @@ class Nod
     static double connection(std::size_t);
     static double emission(std::size_t);
     static double combined(std::size_t);
-
-    // This may or may not be implemented
     static double threaded(std::size_t);
 
-    static const char* LibraryName;
+    static constexpr const char* C_LIB_NAME = "* fr00b0 nod";
+    static constexpr const char* C_LIB_SOURCE_URL = "https://github.com/fr00b0/nod";
+    static constexpr const char* C_LIB_FILE = "benchmark_nod";
+    static constexpr const char* C_LIB_IS_HEADER_ONLY = "X";
+    static constexpr const char* C_LIB_DATA_STRUCTURE = "std::vector";
+    static constexpr const char* C_LIB_IS_THREAD_SAFE = "X";
 };
-
-#endif // BENCHMARK_NOD_HPP

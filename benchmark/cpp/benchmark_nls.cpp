@@ -1,11 +1,9 @@
 #include "../hpp/benchmark_nls.hpp"
 
-const char* Nls::LibraryName = "* neosigslot";
-
 NOINLINE(void Nls::validate_assert(std::size_t N))
 {
     return Benchmark<Signal, Nls>::validation_assert(N);
-}    
+}
 NOINLINE(double Nls::construction(std::size_t N))
 {
     return Benchmark<Signal, Nls>::construction(N);

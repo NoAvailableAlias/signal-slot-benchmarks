@@ -1,7 +1,5 @@
 #include "../hpp/benchmark_ksc.hpp"
 
-const char* Ksc::LibraryName = "* Kosta signals-cpp";
-
 NOINLINE(void Ksc::validate_assert(std::size_t N))
 {
     return Benchmark<Signal, Ksc>::validation_assert(N);

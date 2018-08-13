@@ -1,5 +1,4 @@
-#ifndef BENCHMARK_JOS_HPP
-#define BENCHMARK_JOS_HPP
+#pragma once
 
 #include "../lib/joanrieu/signal11/signal11.h"
 
@@ -41,10 +40,13 @@ class Jos
     static double emission(std::size_t);
     static double combined(std::size_t);
 
-    // This may or may not be implemented
+    // NOT IMPLEMENTED FOR THIS LIB
     static double threaded(std::size_t);
 
-    static const char* LibraryName;
+    static constexpr const char* C_LIB_NAME = "joanrieu signal11";
+    static constexpr const char* C_LIB_SOURCE_URL = "https://github.com/joanrieu/signal11";
+    static constexpr const char* C_LIB_FILE = "benchmark_jos";
+    static constexpr const char* C_LIB_IS_HEADER_ONLY = "X";
+    static constexpr const char* C_LIB_DATA_STRUCTURE = "std::list";
+    static constexpr const char* C_LIB_IS_THREAD_SAFE = "-";
 };
-
-#endif // BENCHMARK_JOS_HPP

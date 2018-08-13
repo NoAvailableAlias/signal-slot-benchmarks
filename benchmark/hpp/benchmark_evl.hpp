@@ -1,5 +1,4 @@
-#ifndef BENCHMARK_EVL_HPP
-#define BENCHMARK_EVL_HPP
+#pragma once
 
 #include "../lib/eviltwin/observer.hpp"
 
@@ -38,10 +37,13 @@ class Evl
     static double emission(std::size_t);
     static double combined(std::size_t);
 
-    // This may or may not be implemented
+    // NOT IMPLEMENTED FOR THIS LIB
     static double threaded(std::size_t);
 
-    static const char* LibraryName;
+    static constexpr const char* C_LIB_NAME = "EvilTwin Observer";
+    static constexpr const char* C_LIB_SOURCE_URL = "http://eviltwingames.com/blog/the-observer-pattern-revisited/";
+    static constexpr const char* C_LIB_FILE = "benchmark_evl";
+    static constexpr const char* C_LIB_IS_HEADER_ONLY = "";
+    static constexpr const char* C_LIB_DATA_STRUCTURE = "";
+    static constexpr const char* C_LIB_IS_THREAD_SAFE = "";
 };
-
-#endif // BENCHMARK_EVL_HPP

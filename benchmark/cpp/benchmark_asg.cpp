@@ -1,7 +1,5 @@
 #include "../hpp/benchmark_asg.hpp"
 
-const char* Asg::LibraryName = "amc522 Signal11";
-
 NOINLINE(void Asg::validate_assert(std::size_t N))
 {
     return Benchmark<Signal, Asg>::validation_assert(N);
@@ -28,5 +26,6 @@ NOINLINE(double Asg::combined(std::size_t N))
 }
 NOINLINE(double Asg::threaded(std::size_t N))
 {
+    // NOT IMPLEMENTED FOR THIS LIB
     return 0.0;
 }

@@ -1,5 +1,4 @@
-#ifndef BENCHMARK_WSG_HPP
-#define BENCHMARK_WSG_HPP
+#pragma once
 
 #include "../lib/winglot/Signals/W_Signal.h"
 
@@ -33,11 +32,12 @@ class Wsg : public W::Slot
     static double connection(std::size_t);
     static double emission(std::size_t);
     static double combined(std::size_t);
-
-    // This may or may not be implemented
     static double threaded(std::size_t);
 
-    static const char* LibraryName;
+    static constexpr const char* C_LIB_NAME = "* winglot Signals";
+    static constexpr const char* C_LIB_SOURCE_URL = "https://github.com/winglot/Signals";
+    static constexpr const char* C_LIB_FILE = "benchmark_wsg";
+    static constexpr const char* C_LIB_IS_HEADER_ONLY = "-";
+    static constexpr const char* C_LIB_DATA_STRUCTURE = "**std::list";
+    static constexpr const char* C_LIB_IS_THREAD_SAFE = "X";
 };
-
-#endif // BENCHMARK_WSG_HPP

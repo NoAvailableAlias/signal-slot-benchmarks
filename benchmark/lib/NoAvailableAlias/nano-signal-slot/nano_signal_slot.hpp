@@ -4,7 +4,7 @@
 #include "nano_function.hpp"
 #include "nano_observer.hpp"
 
-namespace Nano
+namespace Nano_Deprecated
 {
 
 template <typename RT> class Signal;

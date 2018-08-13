@@ -1,5 +1,4 @@
-#ifndef BENCHMARK_KSC_HPP
-#define BENCHMARK_KSC_HPP
+#pragma once
 
 #include "../lib/Kosta-Github/signals-cpp/signals-cpp/signals.hpp"
 
@@ -39,11 +38,12 @@ class Ksc
     static double connection(std::size_t);
     static double emission(std::size_t);
     static double combined(std::size_t);
-
-    // This may or may not be implemented
     static double threaded(std::size_t);
 
-    static const char* LibraryName;
+    static constexpr const char* C_LIB_NAME = "* Kosta signals-cpp";
+    static constexpr const char* C_LIB_SOURCE_URL = "https://github.com/Kosta-Github/signals-cpp";
+    static constexpr const char* C_LIB_FILE = "benchmark_ksc";
+    static constexpr const char* C_LIB_IS_HEADER_ONLY = "X";
+    static constexpr const char* C_LIB_DATA_STRUCTURE = "std::vector";
+    static constexpr const char* C_LIB_IS_THREAD_SAFE = "X";
 };
-
-#endif // BENCHMARK_KSC_HPP
