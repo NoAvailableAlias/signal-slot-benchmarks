@@ -12,10 +12,10 @@ template <typename RT> class Function;
 template <typename RT, typename... Args>
 class Function<RT(Args...)> final
 {
-    using Thunk = RT(*)(void*, Args&&...);
-
     // Only Nano::Observer is allowed access
     template <typename> friend class Observer;
+
+    using Thunk = RT(*)(void*, Args&&...);
 
     static inline Function bind(Delegate_Key const& delegate_key)
     {

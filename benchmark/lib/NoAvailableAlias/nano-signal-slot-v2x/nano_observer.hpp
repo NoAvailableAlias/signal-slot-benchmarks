@@ -12,13 +12,12 @@ namespace Nano
 template <typename Mutex = Noop_Mutex>
 class Observer
 {
-    using Slot_Pair = std::pair<const Delegate_Key, Observer*>;
-
     // Only Nano::Signal is allowed access
     template <typename, typename> friend class Signal;
 
-    std::forward_list<std::unique_ptr<Slot_Pair>> connections;
+    using Slot_Pair = std::pair<const Delegate_Key, Observer*>;
 
+    std::forward_list<std::unique_ptr<Slot_Pair>> connections;
     mutable Mutex mutex;
 
     //--------------------------------------------------------------------------
