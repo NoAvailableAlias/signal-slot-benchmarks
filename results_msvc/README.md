@@ -7,35 +7,37 @@
 
 | Library | construct | destruct | connect | emission | combined | threaded | total |
 |---------|-----------|----------|---------|----------|----------|----------|-------|
-| * fr00b0 nod | 67259 | 8591 | 6451 | 44790 | 3713 | 251 | 131055 |
-| * Pal Sigslot | 68411 | 7486 | 5628 | 42958 | 3246 | 232 | 127962 |
-| * nano-signal-slot v2x | 66270 | 4812 | 3815 | 46187 | 2174 | 129 | 123387 |
-| * lsignal | 50251 | 3816 | 2122 | 42472 | 1343 | 128 | 100132 |
-| * Kosta signals-cpp | 71257 | 5323 | 1321 | 13505 | 954 | 1 | 92360 |
-| * winglot Signals | 9846 | 3543 | 3921 | 44499 | 1566 | 163 | 63537 |
-| * Boost Signals2 | 7562 | 2940 | 2128 | 10533 | 963 | 3 | 24129 |
-| * neolib signal | 5709 | 2882 | 2679 | 9610 | 1039 | 107 | 22027 |
+| * fr00b0 nod | 66851 | 8444 | 6803 | 44891 | 3809 | 260 | 131057 |
+| * Pal Sigslot | 66239 | 7762 | 5832 | 43143 | 3373 | 231 | 126580 |
+| * nano-signal-slot v2x | 67798 | 4792 | 3785 | 46320 | 2143 | 174 | 125011 |
+| * cpp11nullptr lsignal | 50272 | 3907 | 2162 | 43228 | 1388 | 131 | 101088 |
+| * Kosta signals-cpp | 72334 | 5955 | 1348 | 13416 | 964 | 1 | 94017 |
+| * Montellese cpp-signal | 29258 | 5401 | 5111 | 43680 | 2609 | 199 | 86258 |
+| * winglot Signals | 10515 | 3698 | 3771 | 44146 | 1688 | 165 | 63983 |
+| * Boost Signals2 | 7931 | 2938 | 2136 | 10564 | 986 | 1 | 24556 |
+| * neolib signal | 5764 | 2854 | 2668 | 9567 | 1026 | 127 | 22005 |
 
 ### Performance of Thread Unsafe Libraries
 
 | Library | construct | destruct | connect | emission | combined | threaded | total |
 |---------|-----------|----------|---------|----------|----------|----------|-------|
-| jeffomatic jl_signal | 55956 | 15743 | 40392 | 49661 | 11576 | 0 | 173327 |
-| nano-signal-slot v1x | 75478 | 11375 | 9454 | 49145 | 5567 | 0 | 151019 |
-| Wink-Signals | 75247 | 11892 | 8870 | 49544 | 5102 | 0 | 150655 |
-| cpp-signal | 75124 | 10209 | 8353 | 48363 | 4847 | 0 | 146897 |
-| Yassi | 74469 | 8026 | 6133 | 50331 | 3642 | 0 | 142601 |
-| Pal Sigslot ST | 70105 | 7829 | 6886 | 47510 | 3917 | 0 | 136247 |
-| nano-signal-slot v2x | 73316 | 6435 | 4497 | 49197 | 2533 | 0 | 135978 |
-| vdksoft signals | 65443 | 5917 | 6486 | 49027 | 3072 | 0 | 129944 |
-| mwthinker Signal | 64940 | 7051 | 5653 | 48785 | 3273 | 0 | 129703 |
-| amc522 Signal11 | 65807 | 7756 | 5526 | 47092 | 3319 | 0 | 129502 |
-| joanrieu signal11 | 58101 | 9824 | 8090 | 43983 | 4233 | 0 | 124231 |
-| pbhogan Signals | 65729 | 6984 | 6310 | 41281 | 3552 | 0 | 123855 |
-| EvilTwin Observer | 64878 | 4335 | 2485 | 20524 | 1545 | 0 | 93767 |
-| supergrover sigslot | 11826 | 2043 | 2566 | 48972 | 1089 | 0 | 66496 |
-| Boost Signals | 8608 | 3266 | 1214 | 15136 | 760 | 0 | 28985 |
-| neolib signal | 6344 | 4793 | 3714 | 11988 | 1442 | 0 | 28281 |
+| jeffomatic jl_signal | 54956 | 15982 | 38908 | 49249 | 11795 | 0 | 170891 |
+| Wink-Signals | 75446 | 11487 | 8938 | 49565 | 5197 | 0 | 150633 |
+| Montellese cpp-signal | 75224 | 10157 | 8140 | 50076 | 4734 | 0 | 148331 |
+| SimpleSignal | 75867 | 9440 | 7937 | 47752 | 4501 | 0 | 145497 |
+| Yassi | 75001 | 8438 | 6523 | 50471 | 3873 | 0 | 144306 |
+| Pal Sigslot | 72531 | 8148 | 7872 | 47843 | 4160 | 0 | 140555 |
+| nano-signal-slot v2x | 72763 | 6388 | 4294 | 49396 | 2754 | 0 | 135596 |
+| nano-signal-slot v1x | 59363 | 11064 | 8666 | 49153 | 5069 | 0 | 133314 |
+| amc522 Signal11 | 66104 | 7677 | 5515 | 47584 | 3344 | 0 | 130224 |
+| mwthinker Signal | 64006 | 7244 | 5721 | 49513 | 3299 | 0 | 129783 |
+| vdksoft signals | 65324 | 5749 | 5875 | 49108 | 3185 | 0 | 129241 |
+| joanrieu signal11 | 55865 | 9655 | 7699 | 44064 | 4306 | 0 | 121589 |
+| pbhogan Signals | 54437 | 6816 | 5950 | 41798 | 3362 | 0 | 112363 |
+| EvilTwin Observer | 65633 | 4255 | 2435 | 20482 | 1467 | 0 | 94271 |
+| supergrover sigslot | 12323 | 2122 | 2708 | 49523 | 1123 | 0 | 67799 |
+| Boost Signals | 9350 | 3295 | 1194 | 15290 | 769 | 0 | 29898 |
+| neolib signal | 6335 | 4787 | 3828 | 12619 | 1508 | 0 | 29078 |
 
 ___
 _Size results are the size of object files from release build with Visual Studio 17._
@@ -65,6 +67,7 @@ _Size results are the size of object files from release build with Visual Studio
 | [Montellese cpp-signal](https://github.com/Montellese/cpp-signal) | 212 kb | X | std::forward_list | - |
 | [Pal Sigslot](https://github.com/palacaze/sigslot) | 222 kb | X | singly linked list | - |
 | [nano-signal-slot v2x](https://github.com/NoAvailableAlias/nano-signal-slot/tree/rework) | 229 kb | X | std::forward_list | - |
+| [SimpleSignal](https://github.com/larspensjo/SimpleSignal) | 235 kb | X | std::vector | - |
 | [supergrover sigslot](https://github.com/supergrover/sigslot) | 244 kb | - | std::list | - |
 | [mwthinker Signal](https://github.com/mwthinker/Signal) | 247 kb | - | std::list | - |
 | [joanrieu signal11](https://github.com/joanrieu/signal11) | 274 kb | X | std::list | - |
