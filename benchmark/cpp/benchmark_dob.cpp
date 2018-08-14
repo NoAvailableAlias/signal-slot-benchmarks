@@ -30,7 +30,5 @@ NOINLINE(double Dob::combined(std::size_t N))
 }
 NOINLINE(double Dob::threaded(std::size_t N))
 {
-    // TODO This lib is currently not thread safe
-    //return Benchmark<Signal, Dob>::threaded(N);
-    return 0.0;
+    return Benchmark<Signal, Dob>::threaded(N);
 }

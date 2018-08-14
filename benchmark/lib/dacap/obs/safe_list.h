@@ -8,6 +8,7 @@
 #define OBS_SAFE_LIST_H_INCLUDED
 #pragma once
 
+#include <atomic>
 #include <cassert>
 #include <chrono>
 #include <condition_variable>
@@ -43,16 +44,14 @@ private:
     T* value;
 
     // Number of locks for this node, it means the number of iterators
-    // being used and currently pointing to this node. (I.e. number of
-    // times an iterator::operator*() was called for this node and the
-    // iterator is still alive.)
+    // being used and currently pointing to this node.
     //
     // This variable is incremented/decremented only when
     // m_mutex_nodes is locked.
-    int locks;
+    int locks = 0;
 
     // Next node in the list. It's nullptr for the last node in the list.
-    node* next;
+    node* next = nullptr;
 
     // Thread used to add the node to the list (i.e. the thread where
     // safe_list::push_back() was used). We suppose that the same
@@ -62,14 +61,11 @@ private:
     // Pointer to the first iterator that locked this node in the same
     // thread it was created. It is used to unlock() the node when
     // erase() is called in the same iterator loop/call.
-    iterator* creator_thread_iterator;
+    iterator* creator_thread_iterator = nullptr;
 
     node(T* value = nullptr)
       : value(value),
-        locks(0),
-        next(nullptr),
-        creator_thread(std::this_thread::get_id()),
-        creator_thread_iterator(nullptr) {
+        creator_thread(std::this_thread::get_id()) {
     }
 
     node(const node&) = delete;
@@ -97,8 +93,8 @@ private:
     // called.
     void unlock(iterator* it);
 
-    // Notify to all iterators in the "creator thread" that they don't
-    // own a node lock anymore. It's used to erase() the node.
+    // Notifies to all iterators in the "creator thread" that they
+    // don't own a node lock anymore. It's used to erase() the node.
     void unlock_all();
   };
 
@@ -117,8 +113,7 @@ private:
   // with value=nullptr). While "m_ref" > 0 it means that we shouldn't
   // remove nodes (so we can ensure that an actual node reference is
   // still valid until the next unref()).
-  std::mutex m_mutex_ref;
-  int m_ref = 0;
+  std::atomic<int> m_ref = { 0 };
 
   // Flag that indicates if some node was erased and delete_nodes()
   // should iterate the whole list to clean disabled nodes (nodes with
@@ -137,22 +132,30 @@ public:
   // The iterator works in the following way:
   //
   // 1. It adds a new reference (ref()/unref()) to the safe_list so
-  //    nodes are not deleted while the iterator is alive
-  // 2. operator*() locks the node and returns its value, when a node
-  //    is locked we can use it's "value" (call a slot/observer)
-  // 3. When the iterator is incremented (operator++) it unlocks the
-  //    previous node and goes to the next one (the next node is not
-  //    locked until we use operator*() again)
-  class iterator : public std::iterator<std::forward_iterator_tag, T*> {
+  //    nodes are not deleted while the iterator is alive.
+  // 2. It "locks" the given node in iterator() ctor so the node is
+  //    not deleted when there is an existent iterator pointing to it.
+  // 3. operator*() returns the node's value.
+  // 4. When the iterator is incremented (operator++) it unlocks the
+  //    previous node, goes to the next one, and locks it.
+  class iterator {
   public:
     friend struct node;
 
+    typedef T*                        value_type;
+    typedef std::ptrdiff_t            difference_type;
+    typedef T**                       pointer;
+    typedef T*&                       reference;
+    typedef std::forward_iterator_tag iterator_category;
+
     iterator(safe_list& list, node* node)
       : m_list(list),
-        m_node(node),
-        m_locked(false),
-        m_next_iterator(nullptr) {
+        m_node(node) {
       m_list.ref();
+
+      // Lock the node because this iterator is pointing to it.
+      if (m_node)
+        lock();
     }
 
     // Cannot copy iterators
@@ -162,14 +165,17 @@ public:
     // We can only move iterators
     iterator(iterator&& other)
       : m_list(other.m_list),
-        m_node(other.m_node),
-        m_locked(false),
-        m_next_iterator(nullptr) {
+        m_node(other.m_node) {
       assert(!other.m_locked);
       m_list.ref();
     }
 
     ~iterator() {
+      if (m_node) {
+        std::lock_guard<std::mutex> l(m_list.m_mutex_nodes);
+        unlock();
+      }
+
       assert(!m_locked);
       m_list.unref();
     }
@@ -184,59 +190,37 @@ public:
       }
     }
 
-    // Unlocks the current m_node and goes to the next enabled
-    // (node::value != nullptr) node. It doesn't lock the new found
-    // node, operator*() is the member function that locks the node.
+    // Unlocks the current m_node and goes to the next one and locks it.
     iterator& operator++() {
-      std::lock_guard<std::mutex> lock(m_list.m_mutex_nodes);
+      std::lock_guard<std::mutex> l(m_list.m_mutex_nodes);
       assert(m_node);
       if (m_node) {
-        if (m_locked) {
-          m_node->unlock(this);
-          m_locked = false;
+        unlock();
 
-          // node's locks count is zero
-          if (m_node->locks == 0)
-            m_list.m_delete_cv.notify_all();
-        }
+        // Go to the next node.
         m_node = m_node->next;
+
+        // Lock the new node that we're pointing to now.
+        if (m_node)
+          lock();
       }
       return *this;
     }
 
-    // Tries to lock the node and returns it's value. If the node was
-    // already deleted, it will return nullptr and the client will
-    // need to call operator++() again. We cannot guarantee that this
-    // function will return a value != nullptr.
-    T* operator*() {
-      std::lock_guard<std::mutex> lock(m_list.m_mutex_nodes);
-      assert(m_node);
-      if (m_node->value) {
-        // Add a lock to m_node before we access to its value. It's
-        // used to keep track of how many iterators are using the node
-        // in the list.
-        if (!m_locked) {
-          m_node->lock(this);
-          m_locked = true;
-        }
-
-        assert(m_node->value);
-        return m_node->value;
-      }
-      else {
-        // We might try to iterate to the following nodes to get a
-        // m_node->value != nullptr, but we might reach the last node
-        // and should return nullptr anyway (also the next
-        // operator++() call would be an invalid "++it" call using the
-        // end of the list).
-        return nullptr;
-      }
+    // Returns the node's value. The node at this point is locked.
+    //
+    // If the node was already deleted, it will return nullptr and the
+    // client will need to call operator++() again. We cannot
+    // guarantee that this function will return a value != nullptr.
+    T* operator*() const {
+      assert(m_node && m_locked);
+      return m_value;
     }
 
     // This can be used only to compare an iterator created from
     // begin() (in "this" pointer) with end() ("other" argument).
     bool operator!=(const iterator& other) const {
-      std::lock_guard<std::mutex> lock(m_list.m_mutex_nodes);
+      std::lock_guard<std::mutex> l(m_list.m_mutex_nodes);
       if (m_node && other.m_node)
         return (m_node != other.m_node->next);
       else
@@ -244,17 +228,47 @@ public:
     }
 
   private:
+    // Adds a lock to m_node before we access to its value. It's used
+    // to keep track of how many iterators are using the node in the
+    // list.
+    void lock() {
+      if (m_locked)
+        return;
+
+      assert(m_node);
+      m_node->lock(this);
+      m_value = m_node->value;
+      m_locked = true;
+    }
+
+    void unlock() {
+      if (!m_locked)
+        return;
+
+      assert(m_node);
+      m_node->unlock(this);
+      m_value = nullptr;
+      m_locked = false;
+
+      // node's locks count is zero
+      if (m_node->locks == 0)
+        m_list.m_delete_cv.notify_all();
+    }
+
     safe_list& m_list;
 
     // Current node being iterated. It is never nullptr.
     node* m_node;
 
+    // Cached value of m_node->value
+    T* m_value = nullptr;
+
     // True if this iterator has added a lock to the "m_node"
-    bool m_locked;
+    bool m_locked = false;
 
     // Next iterator locking the same "m_node" from its creator
     // thread.
-    iterator* m_next_iterator;
+    iterator* m_next_iterator = nullptr;
   };
 
   safe_list() {
@@ -262,14 +276,6 @@ public:
 
   ~safe_list() {
     assert(m_ref == 0);
-#if _DEBUG
-    {
-      std::lock_guard<std::mutex> lock(m_mutex_nodes);
-      for (node* node=m_first; node; node=node->next) {
-        assert(!node->locks);
-      }
-    }
-#endif
     delete_nodes(true);
 
     assert(m_first == m_last);
@@ -340,19 +346,18 @@ public:
   }
 
   void ref() {
-    std::lock_guard<std::mutex> lock(m_mutex_ref);
-    ++m_ref;
-    assert(m_ref > 0);
+#if !defined(NDEBUG)
+    int v =
+#endif
+    m_ref.fetch_add(1);
+    assert(v >= 0);
   }
 
   void unref() {
-    std::lock_guard<std::mutex> lock(m_mutex_ref);
-    assert(m_ref > 0);
-    --m_ref;
-    if (m_ref == 0 && m_delete_nodes) {
+    int v = m_ref.fetch_sub(1);
+    assert(v >= 1);
+    if (v == 1)
       delete_nodes(false);
-      m_delete_nodes = false;
-    }
   }
 
 private:
@@ -360,13 +365,17 @@ private:
   // if it's false, it deletes only nodes with value == nullptr, which
   // are nodes that were disabled
   void delete_nodes(bool all) {
+    std::lock_guard<std::mutex> lock(m_mutex_nodes);
+    if (!all && !m_delete_nodes)
+      return;
+
     node* prev = nullptr;
     node* next = nullptr;
 
     for (node* node=m_first; node; node=next) {
       next = node->next;
 
-      if ((all || !node->value) && !node->locks) {
+      if (all || (!node->value && !node->locks)) {
         if (prev) {
           prev->next = next;
           if (node == m_last)
@@ -378,11 +387,15 @@ private:
             m_last = m_first;
         }
 
+        assert(!node->locks);
         delete node;
       }
-      else
+      else {
         prev = node;
+      }
     }
+
+    m_delete_nodes = false;
   }
 
 };

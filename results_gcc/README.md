@@ -64,8 +64,6 @@ _Size results are the size of object files from release build with Gcc 6.3._
 
 _* Library is designed to be thread safe._
 <br/>
-_! Library failed to pass the threaded benchmark._
-<br/>
 _** Uses additional data structures._
 
 Benchmark Algorithms

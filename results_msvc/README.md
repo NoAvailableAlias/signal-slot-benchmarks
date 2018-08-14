@@ -12,6 +12,7 @@
 | * nano-signal-slot v2x | 67798 | 4792 | 3785 | 46320 | 2143 | 174 | 125011 |
 | * cpp11nullptr lsignal | 50272 | 3907 | 2162 | 43228 | 1388 | 131 | 101088 |
 | * Kosta signals-cpp | 72334 | 5955 | 1348 | 13416 | 964 | 1 | 94017 |
+| * dacap observable | 69077 | 4428 | 6872 | 7498 | 2110 | 14 | 89999 |
 | * Montellese cpp-signal | 29258 | 5401 | 5111 | 43680 | 2609 | 199 | 86258 |
 | * winglot Signals | 10515 | 3698 | 3771 | 44146 | 1688 | 165 | 63983 |
 | * Boost Signals2 | 7931 | 2938 | 2136 | 10564 | 986 | 1 | 24556 |
@@ -36,7 +37,6 @@
 | Ansoulom cpp-observe | 42880 | 12221 | 7594 | 49668 | 4852 | 0 | 117215 |
 | pbhogan Signals | 54437 | 6816 | 5950 | 41798 | 3362 | 0 | 112363 |
 | EvilTwin Observer | 65633 | 4255 | 2435 | 20482 | 1467 | 0 | 94271 |
-| ! dacap observable | 68557 | 4109 | 6976 | 5867 | 1908 | 0 | 87418 |
 | supergrover sigslot | 12323 | 2122 | 2708 | 49523 | 1123 | 0 | 67799 |
 | Boost Signals | 9350 | 3295 | 1194 | 15290 | 769 | 0 | 29898 |
 | neolib signal | 6335 | 4787 | 3828 | 12619 | 1508 | 0 | 29078 |
@@ -51,6 +51,7 @@ _Size results are the size of object files from release build with Visual Studio
 | [* Pal Sigslot](https://github.com/palacaze/sigslot) | 840 kb | X | singly linked list | X |
 | [* Montellese cpp-signal](https://github.com/Montellese/cpp-signal) | 843 kb | X | std::forward_list | X |
 | [* nano-signal-slot v2x](https://github.com/NoAvailableAlias/nano-signal-slot/tree/rework) | 852 kb | X | std::forward_list | X |
+| [* dacap observable](https://github.com/dacap/observable) | 857 kb | - | std::vector | X |
 | [* winglot Signals](https://github.com/winglot/Signals) | 869 kb | - | **std::list | X |
 | [* fr00b0 nod](https://github.com/fr00b0/nod) | 919 kb | X | std::vector | X |
 | [* Kosta signals-cpp](https://github.com/Kosta-Github/signals-cpp) | 925 kb | X | std::vector | X |
@@ -70,7 +71,6 @@ _Size results are the size of object files from release build with Visual Studio
 | [Pal Sigslot](https://github.com/palacaze/sigslot) | 222 kb | X | singly linked list | - |
 | [nano-signal-slot v2x](https://github.com/NoAvailableAlias/nano-signal-slot/tree/rework) | 229 kb | X | std::forward_list | - |
 | [SimpleSignal](https://github.com/larspensjo/SimpleSignal) | 235 kb | X | std::vector | - |
-| [! dacap observable](https://github.com/dacap/observable) | 238 kb | - | std::vector | ! |
 | [supergrover sigslot](https://github.com/supergrover/sigslot) | 244 kb | - | std::list | - |
 | [mwthinker Signal](https://github.com/mwthinker/Signal) | 247 kb | - | std::list | - |
 | [Ansoulom cpp-observe](https://github.com/Ansoulom/cpp-observe) | 267 kb | X | std::vector | - |
@@ -83,8 +83,6 @@ _Size results are the size of object files from release build with Visual Studio
 | [neolib signal](https://github.com/i42output/neolib) | 644 kb | X | **std::unordered_map | - |
 
 _* Library is designed to be thread safe._
-<br/>
-_! Library failed to pass the threaded benchmark._
 <br/>
 _** Uses additional data structures._
 
