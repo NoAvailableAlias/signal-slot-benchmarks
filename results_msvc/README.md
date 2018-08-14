@@ -33,6 +33,7 @@
 | mwthinker Signal | 64006 | 7244 | 5721 | 49513 | 3299 | 0 | 129783 |
 | vdksoft signals | 65324 | 5749 | 5875 | 49108 | 3185 | 0 | 129241 |
 | joanrieu signal11 | 55865 | 9655 | 7699 | 44064 | 4306 | 0 | 121589 |
+| Ansoulom cpp-observe | 42880 | 12221 | 7594 | 49668 | 4852 | 0 | 117215 |
 | pbhogan Signals | 54437 | 6816 | 5950 | 41798 | 3362 | 0 | 112363 |
 | EvilTwin Observer | 65633 | 4255 | 2435 | 20482 | 1467 | 0 | 94271 |
 | ! dacap observable | 68557 | 4109 | 6976 | 5867 | 1908 | 0 | 87418 |
@@ -72,6 +73,7 @@ _Size results are the size of object files from release build with Visual Studio
 | [! dacap observable](https://github.com/dacap/observable) | 238 kb | - | std::vector | ! |
 | [supergrover sigslot](https://github.com/supergrover/sigslot) | 244 kb | - | std::list | - |
 | [mwthinker Signal](https://github.com/mwthinker/Signal) | 247 kb | - | std::list | - |
+| [Ansoulom cpp-observe](https://github.com/Ansoulom/cpp-observe) | 267 kb | X | std::vector | - |
 | [joanrieu signal11](https://github.com/joanrieu/signal11) | 274 kb | X | std::list | - |
 | [Yassi](http://www.codeproject.com/Articles/867044/Yassi-Yet-Another-Signal-Slot-Implementation) | 274 kb | X | std::vector | - |
 | [amc522 Signal11](https://github.com/amc522/Signal11) | 275 kb | X | std::vector | - |

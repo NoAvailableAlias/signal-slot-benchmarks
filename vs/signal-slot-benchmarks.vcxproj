@@ -218,6 +218,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="..\benchmark.hpp" />
+    <ClInclude Include="..\benchmark\hpp\benchmark_aco.hpp" />
     <ClInclude Include="..\benchmark\hpp\benchmark_asg.hpp" />
     <ClInclude Include="..\benchmark\hpp\benchmark_bs1.hpp" />
     <ClInclude Include="..\benchmark\hpp\benchmark_bs2.hpp" />
@@ -246,6 +247,7 @@
     <ClInclude Include="..\benchmark\hpp\benchmark_wsg.hpp" />
     <ClInclude Include="..\benchmark\hpp\benchmark_yas.hpp" />
     <ClInclude Include="..\benchmark\lib\amc522\signal11\Signal.h" />
+    <ClInclude Include="..\benchmark\lib\Ansoulom\cpp-observe\cpp_observe.hpp" />
     <ClInclude Include="..\benchmark\lib\cpp11nullptr\lsignal\lsignal.h" />
     <ClInclude Include="..\benchmark\lib\dacap\obs\dacap_connection.h" />
     <ClInclude Include="..\benchmark\lib\dacap\obs\dacap_signal.h" />
@@ -308,6 +310,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\benchmark.cpp" />
+    <ClCompile Include="..\benchmark\cpp\benchmark_aco.cpp" />
     <ClCompile Include="..\benchmark\cpp\benchmark_asg.cpp" />
     <ClCompile Include="..\benchmark\cpp\benchmark_bs1.cpp" />
     <ClCompile Include="..\benchmark\cpp\benchmark_bs2.cpp" />

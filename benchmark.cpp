@@ -4,6 +4,7 @@
 
 #include <boost/filesystem.hpp>
 
+#include "benchmark/hpp/benchmark_aco.hpp"
 #include "benchmark/hpp/benchmark_asg.hpp"
 #include "benchmark/hpp/benchmark_bs1.hpp"
 #include "benchmark/hpp/benchmark_bs2.hpp"
@@ -87,6 +88,7 @@ ImmediateData run_all_benchmarks(std::size_t begin, std::size_t end)
         {
             std::cout << "[BEGIN: Test Size: " << N << "]\n" << std::endl;
 
+            run_benchmark_class<Aco>(records, N);
             run_benchmark_class<Asg>(records, N);
             run_benchmark_class<Bs1>(records, N);
             run_benchmark_class<Bs2>(records, N);
@@ -133,6 +135,7 @@ void run_all_validation_tests(std::size_t N)
     try
     {
         // Abort if any implementation isn't functioning correctly
+        Aco::validate_assert(N);
         Asg::validate_assert(N);
         Bs1::validate_assert(N);
         Bs2::validate_assert(N);
@@ -240,12 +243,14 @@ void output_metrics_report(T& ost)
 {
     ost << "| Library | Build Size | Header Only | Data Structure | Thread Safe |\n"
         << "| ------- |:----------:|:-----------:| -------------- |:-----------:|\n";
+    output_metrics_report_row<Aco>(ost);
     output_metrics_report_row<Asg>(ost);
     output_metrics_report_row<Bs1>(ost);
     output_metrics_report_row<Bs2>(ost);
     output_metrics_report_row<Cls>(ost);
     output_metrics_report_row<Cps>(ost);
     output_metrics_report_row<Cps_st>(ost);
+    output_metrics_report_row<Dob>(ost);
     output_metrics_report_row<Evl>(ost);
     output_metrics_report_row<Jls>(ost);
     output_metrics_report_row<Jos>(ost);

@@ -111,6 +111,9 @@
     <Filter Include="Source Files\lib\dacap">
       <UniqueIdentifier>{f85242f7-c2be-4753-af27-b974f0afaa25}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\lib\Ansoulom">
+      <UniqueIdentifier>{686f5e9a-8b4a-4e83-99e3-de27328ed336}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\benchmark\hpp\benchmark_asg.hpp">
@@ -377,6 +380,12 @@
     <ClInclude Include="..\benchmark\lib\dacap\obs\dacap_signal.h">
       <Filter>Header Files\lib\dacap</Filter>
     </ClInclude>
+    <ClInclude Include="..\benchmark\hpp\benchmark_aco.hpp">
+      <Filter>Header Files\benchmark</Filter>
+    </ClInclude>
+    <ClInclude Include="..\benchmark\lib\Ansoulom\cpp-observe\cpp_observe.hpp">
+      <Filter>Header Files\lib\Ansoulom</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\benchmark\cpp\benchmark_asg.cpp">
@@ -480,6 +489,9 @@
     </ClCompile>
     <ClCompile Include="..\benchmark\lib\dacap\obs\dacap_connection.cpp">
       <Filter>Source Files\lib\dacap</Filter>
+    </ClCompile>
+    <ClCompile Include="..\benchmark\cpp\benchmark_aco.cpp">
+      <Filter>Source Files\benchmark</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
