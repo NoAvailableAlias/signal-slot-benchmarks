@@ -1,5 +1,9 @@
 #include "../hpp/benchmark_yas.hpp"
 
+NOINLINE(void Yas::initialize())
+{
+    // NOOP
+}
 NOINLINE(void Yas::validate_assert(std::size_t N))
 {
     return Benchmark<Signal, Yas>::validation_assert(N);

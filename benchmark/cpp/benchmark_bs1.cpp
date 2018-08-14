@@ -1,5 +1,9 @@
 #include "../hpp/benchmark_bs1.hpp"
 
+NOINLINE(void Bs1::initialize())
+{
+    // NOOP
+}
 NOINLINE(void Bs1::validate_assert(std::size_t N))
 {
     return Benchmark<Signal, Bs1>::validation_assert(N);

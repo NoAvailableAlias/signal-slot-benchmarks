@@ -1,5 +1,9 @@
 #include "../hpp/benchmark_jls.hpp"
 
+NOINLINE(void Jls::initialize())
+{
+    // NOOP
+}
 NOINLINE(void Jls::validate_assert(std::size_t N))
 {
     return Benchmark<Signal, Jls>::validation_assert(N);

@@ -1,5 +1,9 @@
 #include "../hpp/benchmark_asg.hpp"
 
+NOINLINE(void Asg::initialize())
+{
+    // NOOP
+}
 NOINLINE(void Asg::validate_assert(std::size_t N))
 {
     return Benchmark<Signal, Asg>::validation_assert(N);

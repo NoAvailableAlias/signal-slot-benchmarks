@@ -1,5 +1,9 @@
 #include "../hpp/benchmark_wnk.hpp"
 
+NOINLINE(void Wnk::initialize())
+{
+    // NOOP
+}
 NOINLINE(void Wnk::validate_assert(std::size_t N))
 {
     return Benchmark<Signal, Wnk>::validation_assert(N);

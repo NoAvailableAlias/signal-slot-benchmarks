@@ -1,5 +1,9 @@
 #include "../hpp/benchmark_pss.hpp"
 
+NOINLINE(void Pss::initialize())
+{
+    // NOOP
+}
 NOINLINE(void Pss::validate_assert(std::size_t N))
 {
     return Benchmark<Signal, Pss>::validation_assert(N);

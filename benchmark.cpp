@@ -54,6 +54,9 @@ void run_benchmark_class(ImmediateData& records, std::size_t N)
 
     auto& metrics = records[Benchmark::C_LIB_NAME];
 
+    // Used for switching policies at runtime
+    Benchmark::initialize();
+
     metrics[C_CONSTRUCTION].push_back(Benchmark::construction(N));
     metrics[C_DESTRUCTION].push_back(Benchmark::destruction(N));
     metrics[C_CONNECTION].push_back(Benchmark::connection(N));

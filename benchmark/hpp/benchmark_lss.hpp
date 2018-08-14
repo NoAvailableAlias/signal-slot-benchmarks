@@ -33,6 +33,9 @@ class Lss
         subject.emit(rng);
     }
 
+    // Used for switching policies at runtime
+    static void initialize();
+
     static void validate_assert(std::size_t);
     static double construction(std::size_t);
     static double destruction(std::size_t);

@@ -29,7 +29,7 @@ class Dob
         subject(rng);
     }
 
-    // Only used by a few benchmark classes
+    // Used for switching policies at runtime
     static void initialize();
 
     static void validate_assert(std::size_t);

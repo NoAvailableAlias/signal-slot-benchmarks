@@ -1,5 +1,9 @@
 #include "../hpp/benchmark_jos.hpp"
 
+NOINLINE(void Jos::initialize())
+{
+    // NOOP
+}
 NOINLINE(void Jos::validate_assert(std::size_t N))
 {
     return Benchmark<Signal, Jos>::validation_assert(N);

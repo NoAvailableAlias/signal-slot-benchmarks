@@ -1,5 +1,9 @@
 #include "../hpp/benchmark_ksc.hpp"
 
+NOINLINE(void Ksc::initialize())
+{
+    // NOOP
+}
 NOINLINE(void Ksc::validate_assert(std::size_t N))
 {
     return Benchmark<Signal, Ksc>::validation_assert(N);

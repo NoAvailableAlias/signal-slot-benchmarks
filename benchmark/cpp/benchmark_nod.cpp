@@ -1,5 +1,9 @@
 #include "../hpp/benchmark_nod.hpp"
 
+NOINLINE(void Nod::initialize())
+{
+    // NOOP
+}
 NOINLINE(void Nod::validate_assert(std::size_t N))
 {
     return Benchmark<Signal, Nod>::validation_assert(N);

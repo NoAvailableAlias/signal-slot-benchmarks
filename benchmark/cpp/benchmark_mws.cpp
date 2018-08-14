@@ -1,5 +1,9 @@
 #include "../hpp/benchmark_mws.hpp"
 
+NOINLINE(void Mws::initialize())
+{
+    // NOOP
+}
 NOINLINE(void Mws::validate_assert(std::size_t N))
 {
     return Benchmark<Signal, Mws>::validation_assert(N);

@@ -1,5 +1,9 @@
 #include "../hpp/benchmark_cps.hpp"
 
+NOINLINE(void Cps::initialize())
+{
+    // NOOP
+}
 NOINLINE(void Cps::validate_assert(std::size_t N))
 {
     return Benchmark<Signal, Cps>::validation_assert(N);

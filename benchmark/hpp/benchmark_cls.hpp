@@ -21,7 +21,7 @@ class Cls
     template <typename Subject, typename Foo>
     static void connect_method(Subject& subject, Foo& foo)
     {
-		auto reg = subject.connect(&foo, &Foo::handler);
+        auto reg = subject.connect(&foo, &Foo::handler);
         // Automatically disconnect when the foo instance is destroyed
         // Benchmarks require connection management
         foo.reg = make_slot_scope([reg, &subject](void*) { subject.disconnect(reg); });
@@ -31,6 +31,9 @@ class Cls
     {
         subject(rng);
     }
+
+    // Used for switching policies at runtime
+    static void initialize();
 
     static void validate_assert(std::size_t);
     static double construction(std::size_t);

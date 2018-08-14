@@ -1,5 +1,9 @@
 #include "../hpp/benchmark_sss.hpp"
 
+NOINLINE(void Sss::initialize())
+{
+    // NOOP
+}
 NOINLINE(void Sss::validate_assert(std::size_t N))
 {
     return Benchmark<Signal, Sss>::validation_assert(N);

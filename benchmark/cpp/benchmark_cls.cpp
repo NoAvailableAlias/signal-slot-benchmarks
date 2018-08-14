@@ -1,5 +1,9 @@
 #include "../hpp/benchmark_cls.hpp"
 
+NOINLINE(void Cls::initialize())
+{
+    // NOOP
+}
 NOINLINE(void Cls::validate_assert(std::size_t N))
 {
     return Benchmark<SignalType, Cls>::validation_assert(N);

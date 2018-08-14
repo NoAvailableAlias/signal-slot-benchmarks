@@ -1,5 +1,9 @@
 #include "../hpp/benchmark_vdk.hpp"
 
+NOINLINE(void Vdk::initialize())
+{
+    // NOOP
+}
 NOINLINE(void Vdk::validate_assert(std::size_t N))
 {
     return Benchmark<Signal, Vdk>::validation_assert(N);

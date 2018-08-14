@@ -1,5 +1,9 @@
 #include "../hpp/benchmark_evl.hpp"
 
+NOINLINE(void Evl::initialize())
+{
+    // NOOP
+}
 NOINLINE(void Evl::validate_assert(std::size_t N))
 {
     return Benchmark<Signal, Evl>::validation_assert(N);

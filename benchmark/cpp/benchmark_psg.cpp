@@ -1,5 +1,9 @@
 #include "../hpp/benchmark_psg.hpp"
 
+NOINLINE(void Psg::initialize())
+{
+    // NOOP
+}
 NOINLINE(void Psg::validate_assert(std::size_t N))
 {
     return Benchmark<Signal, Psg>::validation_assert(N);
