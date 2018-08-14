@@ -41,10 +41,11 @@ class Dob
     static double threaded(std::size_t);
 
     // The following is used for report outputs
-    static constexpr const char* C_LIB_NAME = "* dacap observable";
+    static constexpr const char* C_LIB_NAME = "! dacap observable";
     static constexpr const char* C_LIB_SOURCE_URL = "https://github.com/dacap/observable";
     static constexpr const char* C_LIB_FILE = "benchmark_dob";
     static constexpr const char* C_LIB_IS_HEADER_ONLY = "-";
     static constexpr const char* C_LIB_DATA_STRUCTURE = "std::vector";
-    static constexpr const char* C_LIB_IS_THREAD_SAFE = "X";
+    // TODO This lib is currently not thread safe
+    static constexpr const char* C_LIB_IS_THREAD_SAFE = "!";
 };

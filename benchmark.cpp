@@ -10,6 +10,7 @@
 #include "benchmark/hpp/benchmark_cls.hpp"
 #include "benchmark/hpp/benchmark_cps.hpp"
 #include "benchmark/hpp/benchmark_cps_st.hpp"
+#include "benchmark/hpp/benchmark_dob.hpp"
 #include "benchmark/hpp/benchmark_evl.hpp"
 #include "benchmark/hpp/benchmark_jls.hpp"
 #include "benchmark/hpp/benchmark_jos.hpp"
@@ -63,7 +64,7 @@ void run_benchmark_class(ImmediateData& records, std::size_t N)
     metrics[C_EMISSION].push_back(Benchmark::emission(N));
     metrics[C_COMBINED].push_back(Benchmark::combined(N));
 
-    // T might not have this implemented
+    // Benchmark might not have this implemented
     metrics[C_THREADED].push_back(Benchmark::threaded(N));
 
     auto stop = std::chrono::system_clock::now();
@@ -92,6 +93,7 @@ ImmediateData run_all_benchmarks(std::size_t begin, std::size_t end)
             run_benchmark_class<Cls>(records, N);
             run_benchmark_class<Cps>(records, N);
             run_benchmark_class<Cps_st>(records, N);
+            run_benchmark_class<Dob>(records, N);
             run_benchmark_class<Evl>(records, N);
             run_benchmark_class<Jls>(records, N);
             run_benchmark_class<Jos>(records, N);
@@ -137,6 +139,7 @@ void run_all_validation_tests(std::size_t N)
         Cls::validate_assert(N);
         Cps::validate_assert(N);
         Cps_st::validate_assert(N);
+        Dob::validate_assert(N);
         Evl::validate_assert(N);
         Jls::validate_assert(N);
         Jos::validate_assert(N);
