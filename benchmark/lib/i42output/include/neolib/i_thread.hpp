@@ -1,4 +1,4 @@
-// signal.hpp -- deprecated: use event.hpp directly
+// i_thread.hpp v1.0
 /*
  *  Copyright (c) 2007 Leigh Johnston.
  *
@@ -31,46 +31,25 @@
  *  LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
  *  NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  *  SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-*/
+ */
 
 #pragma once
 
 #include "neolib.hpp"
-#include "event.hpp"
 
 namespace neolib
 {
-	// deprecated; use new event system directly
-	template <typename... Args>
-	class signal : public event<Args...>
+	class i_thread
 	{
-	private:
-		typedef event<Args...> event_type;
+		// construction
 	public:
-		using event_type::event_type;
+		virtual ~i_thread() {}
+		// operations
 	public:
-		template <typename Class>
-		void operator()(Class& aObject, void (Class::*aMemberFunction)(Args...) )
-		{
-			(*this)([&aObject, aMemberFunction](Args&& aArguments...) { (aObject.*aMemberFunction)(std::forward<Args>(aArguments)...); });
-		}
-	};
-
-	// deprecated; use new event system directly
-	template <typename... Args>
-	class signal<void(Args...)> : public event<Args...>
-	{
-	private:
-		typedef event<Args...> event_type;
-	public:
-		using event_type::event_type;
-	public:
-		using event_type::operator();
-		template <typename Class>
-		void operator()(Class& aObject, void (Class::*aMemberFunction)(Args...))
-		{
-			auto handle = (*this)([&aObject, aMemberFunction](Args&& aArguments...) { (aObject.*aMemberFunction)(std::forward<Args>(aArguments)...); });
-			aObject += handle; // sink (slot)
-		}
+		virtual const std::string& name() const = 0;
+		virtual bool finished() const = 0;
+		// implementation
+	protected:
+		virtual void exec() = 0;
 	};
 }

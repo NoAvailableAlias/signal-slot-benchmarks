@@ -1,4 +1,4 @@
-// signal.hpp -- deprecated: use event.hpp directly
+// message_queue.hpp
 /*
  *  Copyright (c) 2007 Leigh Johnston.
  *
@@ -36,41 +36,33 @@
 #pragma once
 
 #include "neolib.hpp"
-#include "event.hpp"
 
 namespace neolib
 {
-	// deprecated; use new event system directly
-	template <typename... Args>
-	class signal : public event<Args...>
+	class message_queue
 	{
-	private:
-		typedef event<Args...> event_type;
 	public:
-		using event_type::event_type;
-	public:
-		template <typename Class>
-		void operator()(Class& aObject, void (Class::*aMemberFunction)(Args...) )
+		struct scoped_context
 		{
-			(*this)([&aObject, aMemberFunction](Args&& aArguments...) { (aObject.*aMemberFunction)(std::forward<Args>(aArguments)...); });
-		}
-	};
-
-	// deprecated; use new event system directly
-	template <typename... Args>
-	class signal<void(Args...)> : public event<Args...>
-	{
-	private:
-		typedef event<Args...> event_type;
+			message_queue& iMessageQueue;
+			scoped_context(message_queue& aMessageQueue) : 
+				iMessageQueue(aMessageQueue)
+			{
+				iMessageQueue.push_context();
+			}
+			~scoped_context()
+			{
+				iMessageQueue.pop_context();
+			}
+		};
 	public:
-		using event_type::event_type;
+		virtual ~message_queue() {}
 	public:
-		using event_type::operator();
-		template <typename Class>
-		void operator()(Class& aObject, void (Class::*aMemberFunction)(Args...))
-		{
-			auto handle = (*this)([&aObject, aMemberFunction](Args&& aArguments...) { (aObject.*aMemberFunction)(std::forward<Args>(aArguments)...); });
-			aObject += handle; // sink (slot)
-		}
+		virtual void push_context() = 0;
+		virtual void pop_context() = 0;
+		virtual bool have_message() const = 0;
+		virtual int get_message() const = 0;
+		virtual void bump() = 0;
+		virtual void idle() = 0;
 	};
 }

@@ -1,4 +1,4 @@
-// signal.hpp -- deprecated: use event.hpp directly
+// i_lifetime.hpp
 /*
  *  Copyright (c) 2007 Leigh Johnston.
  *
@@ -36,41 +36,54 @@
 #pragma once
 
 #include "neolib.hpp"
-#include "event.hpp"
 
 namespace neolib
 {
-	// deprecated; use new event system directly
-	template <typename... Args>
-	class signal : public event<Args...>
+	class i_lifetime_flag
 	{
-	private:
-		typedef event<Args...> event_type;
 	public:
-		using event_type::event_type;
+		virtual ~i_lifetime_flag() {}
 	public:
-		template <typename Class>
-		void operator()(Class& aObject, void (Class::*aMemberFunction)(Args...) )
-		{
-			(*this)([&aObject, aMemberFunction](Args&& aArguments...) { (aObject.*aMemberFunction)(std::forward<Args>(aArguments)...); });
-		}
+		virtual bool is_creating() const = 0;
+		virtual bool is_alive() const = 0;
+		virtual bool is_destroying() const = 0;
+		virtual bool is_destroyed() const = 0;
+		virtual operator bool() const = 0;
+		virtual void set_alive() = 0;
+		virtual void set_destroying() = 0;
+		virtual void set_destroyed() = 0;
+	public:
+		virtual bool debug() const = 0;
+		virtual void set_debug(bool aDebug = true) = 0;
 	};
 
-	// deprecated; use new event system directly
-	template <typename... Args>
-	class signal<void(Args...)> : public event<Args...>
+	enum class lifetime_state
 	{
-	private:
-		typedef event<Args...> event_type;
+		Creating,
+		Alive,
+		Destroying,
+		Destroyed
+	};
+
+	class i_lifetime
+	{
 	public:
-		using event_type::event_type;
+		struct not_creating : std::logic_error { not_creating() : std::logic_error("neolib::i_lifetime::not_creating") {} };
+		struct already_destroyed : std::logic_error { already_destroyed() : std::logic_error("neolib::i_lifetime::already_destroyed") {} };
 	public:
-		using event_type::operator();
-		template <typename Class>
-		void operator()(Class& aObject, void (Class::*aMemberFunction)(Args...))
-		{
-			auto handle = (*this)([&aObject, aMemberFunction](Args&& aArguments...) { (aObject.*aMemberFunction)(std::forward<Args>(aArguments)...); });
-			aObject += handle; // sink (slot)
-		}
+	public:
+		virtual ~i_lifetime() {}
+	public:
+		virtual lifetime_state object_state() const = 0;
+		virtual bool is_creating() const = 0;
+		virtual bool is_alive() const = 0;
+		virtual bool is_destroying() const = 0;
+		virtual bool is_destroyed() const = 0;
+		virtual void set_alive() = 0;
+		virtual void set_destroying() = 0;
+		virtual void set_destroyed() = 0;
+	public:
+		virtual void add_flag(i_lifetime_flag* aFlag) const = 0;
+		virtual void remove_flag(i_lifetime_flag* aFlag) const = 0;
 	};
 }

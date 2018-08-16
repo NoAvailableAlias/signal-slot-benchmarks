@@ -1,4 +1,4 @@
-// signal.hpp -- deprecated: use event.hpp directly
+// singleton.hpp v1.3
 /*
  *  Copyright (c) 2007 Leigh Johnston.
  *
@@ -36,41 +36,17 @@
 #pragma once
 
 #include "neolib.hpp"
-#include "event.hpp"
 
 namespace neolib
 {
-	// deprecated; use new event system directly
-	template <typename... Args>
-	class signal : public event<Args...>
+	template <typename T>
+	class singleton
 	{
-	private:
-		typedef event<Args...> event_type;
 	public:
-		using event_type::event_type;
-	public:
-		template <typename Class>
-		void operator()(Class& aObject, void (Class::*aMemberFunction)(Args...) )
+		static T& instance()
 		{
-			(*this)([&aObject, aMemberFunction](Args&& aArguments...) { (aObject.*aMemberFunction)(std::forward<Args>(aArguments)...); });
-		}
-	};
-
-	// deprecated; use new event system directly
-	template <typename... Args>
-	class signal<void(Args...)> : public event<Args...>
-	{
-	private:
-		typedef event<Args...> event_type;
-	public:
-		using event_type::event_type;
-	public:
-		using event_type::operator();
-		template <typename Class>
-		void operator()(Class& aObject, void (Class::*aMemberFunction)(Args...))
-		{
-			auto handle = (*this)([&aObject, aMemberFunction](Args&& aArguments...) { (aObject.*aMemberFunction)(std::forward<Args>(aArguments)...); });
-			aObject += handle; // sink (slot)
+			static T sInstance;
+			return sInstance;
 		}
 	};
 }

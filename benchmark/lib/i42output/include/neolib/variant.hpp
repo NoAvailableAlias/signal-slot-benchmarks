@@ -1,4 +1,4 @@
-// locking_policy.hpp
+// variant.hpp - v1.0
 /*
  *  Copyright (c) 2007 Leigh Johnston.
  *
@@ -36,98 +36,77 @@
 #pragma once
 
 #include "neolib.hpp"
-#include <mutex>
+
+#include <type_traits>
+#include <variant>
 
 namespace neolib
 {
-	class locking_policy_none
+	typedef std::monostate none_t;
+	const none_t none;
+
+	template <typename... Types>
+	class variant : public std::variant<none_t, Types...>
 	{
 	public:
-		class scope_lock
-		{
-		public:
-			scope_lock(const locking_policy_none& aParent)
-			{
-			};
-		};
+		typedef std::variant<none_t, Types...> value_type;
 	public:
-		void lock() {}
-		void unlock() {}
+		using value_type::value_type;
+	public:
+		const value_type& for_visitor() const
+		{
+			return *this;
+		}
+		value_type& for_visitor()
+		{
+			return *this;
+		}
+	public:
+		bool operator==(const none_t) const
+		{
+			return std::holds_alternative<std::monostate>(*this);
+		}
+		bool operator!=(const none_t) const
+		{
+			return !std::holds_alternative<std::monostate>(*this);
+		}
 	};
 
-	class locking_policy_mutex
+	// Deprecated, use std::get.
+	template <typename T, typename Variant>
+	inline T static_variant_cast(const Variant& aVariant)
 	{
-	public:
-		locking_policy_mutex() {}
-	private:
-		locking_policy_mutex(const locking_policy_mutex&);
-	public:
-		class scope_lock
-		{
-		public:
-			scope_lock(const locking_policy_mutex& aParent) :
-				iParent(aParent)
-			{
-				iParent.lock();
-			};
-			~scope_lock()
-			{
-				iParent.unlock();
-			}
-		private:
-			const locking_policy_mutex& iParent;
-		};
-	public:
-		void lock() const
-		{
-			iMutex.lock();
-		}
-		void unlock() const
-		{
-			iMutex.unlock();
-		}
-	private:
-		mutable std::recursive_mutex iMutex;
-	};
-
-	namespace detail
-	{
-		struct shared_mutex
-		{
-			static std::recursive_mutex& instance()
-			{
-				static std::recursive_mutex sMutex;
-				return sMutex;
-			}
-		};
+		typedef T result_type;
+		typedef typename std::remove_cv<typename std::remove_reference<result_type>::type>::type alternative_type;
+		auto& result = std::get<alternative_type>(aVariant);
+		return static_cast<result_type>(result);
 	}
 
-	class locking_policy_shared_mutex
-	{
-	public:
-		class scope_lock
-		{
-		public:
-			scope_lock(const locking_policy_shared_mutex& aParent) :
-				iParent(aParent)
-			{
-				iParent.lock();
-			};
-			~scope_lock()
-			{
-				iParent.unlock();
-			}
-		private:
-			const locking_policy_shared_mutex& iParent;
-		};
-	public:
-		void lock() const
-		{
-			detail::shared_mutex::instance().lock();
-		}
-		void unlock() const
-		{
-			detail::shared_mutex::instance().unlock();
-		}
-	};
+	// Deprecated, use std::get.
+	template <typename T, typename Variant>
+	inline T static_variant_cast(Variant& aVariant)
+	{ 
+		typedef T result_type;
+		typedef typename std::remove_cv<typename std::remove_reference<result_type>::type>::type alternative_type;
+		auto& result = std::get<alternative_type>(aVariant);
+		return static_cast<result_type>(result);
+	}
 }
+
+namespace std
+{
+	template <typename Visitor, typename... Types>
+	auto visit(Visitor&& vis, const neolib::variant<Types...>& var)
+	{
+		return std::visit(std::forward<Visitor>(vis), var.for_visitor());
+	}
+
+	template <typename Visitor, typename... Types>
+	auto visit(Visitor&& vis, neolib::variant<Types...>& var)
+	{
+		return std::visit(std::forward<Visitor>(vis), var.for_visitor());
+	}
+}
+
+// Deprecated, use std::get.
+using neolib::static_variant_cast;

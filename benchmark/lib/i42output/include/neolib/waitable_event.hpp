@@ -1,4 +1,4 @@
-// locking_policy.hpp
+// waitable_event.hpp
 /*
  *  Copyright (c) 2007 Leigh Johnston.
  *
@@ -36,98 +36,81 @@
 #pragma once
 
 #include "neolib.hpp"
+#include <stdexcept>
+#include <thread>
 #include <mutex>
+#include "message_queue.hpp"
+#include "waitable.hpp"
+#include "variant.hpp"
 
 namespace neolib
 {
-	class locking_policy_none
+	class waitable_event
 	{
+		// constants
 	public:
-		class scope_lock
+		static const uint32_t ShortTimeout_ms = 20;
+		// types
+	private:
+		enum signal_type
 		{
-		public:
-			scope_lock(const locking_policy_none& aParent)
-			{
-			};
+			SignalOne,
+			SignalAll
 		};
+		// construction
 	public:
-		void lock() {}
-		void unlock() {}
+		waitable_event();
+		// operations
+	public:
+		void signal_one() const;
+		void signal_all() const;
+		void wait() const;
+		bool wait(uint32_t aTimeout_ms) const;
+		bool msg_wait(const message_queue& aMessageQueue) const;
+		bool msg_wait(const message_queue& aMessageQueue, uint32_t aTimeout_ms) const;
+		void reset() const;
+	private:
+		mutable std::mutex iMutex;
+		mutable std::condition_variable iCondVar;
+		mutable bool iReady;
+		mutable std::size_t iTotalWaiting;
+		mutable signal_type iSignalType;
 	};
 
-	class locking_policy_mutex
-	{
-	public:
-		locking_policy_mutex() {}
-	private:
-		locking_policy_mutex(const locking_policy_mutex&);
-	public:
-		class scope_lock
-		{
-		public:
-			scope_lock(const locking_policy_mutex& aParent) :
-				iParent(aParent)
-			{
-				iParent.lock();
-			};
-			~scope_lock()
-			{
-				iParent.unlock();
-			}
-		private:
-			const locking_policy_mutex& iParent;
-		};
-	public:
-		void lock() const
-		{
-			iMutex.lock();
-		}
-		void unlock() const
-		{
-			iMutex.unlock();
-		}
-	private:
-		mutable std::recursive_mutex iMutex;
-	};
+	struct wait_result_event { wait_result_event(const waitable_event& aEvent) : iEvent(aEvent) {} const waitable_event& iEvent; };
+	struct wait_result_message {};
+	struct wait_result_waitable {};
+	typedef variant<wait_result_event, wait_result_message, wait_result_waitable> wait_result;
 
-	namespace detail
+	class waitable_event_list
 	{
-		struct shared_mutex
-		{
-			static std::recursive_mutex& instance()
-			{
-				static std::recursive_mutex sMutex;
-				return sMutex;
-			}
-		};
-	}
+		// types
+	private:
+		typedef const waitable_event* event_pointer;
+		typedef std::vector<event_pointer> list_type;
 
-	class locking_policy_shared_mutex
-	{
+		// construction
 	public:
-		class scope_lock
+		waitable_event_list(const waitable_event& aEvent)
 		{
-		public:
-			scope_lock(const locking_policy_shared_mutex& aParent) :
-				iParent(aParent)
-			{
-				iParent.lock();
-			};
-			~scope_lock()
-			{
-				iParent.unlock();
-			}
-		private:
-			const locking_policy_shared_mutex& iParent;
-		};
+			iEvents.push_back(&aEvent);
+		}
+		template <typename InputIterator>
+		waitable_event_list(InputIterator aFirst, InputIterator aLast)
+		{
+			while(aFirst != aLast)
+				iEvents.push_back(&*aFirst++);
+		}
+
+		// operations
 	public:
-		void lock() const
-		{
-			detail::shared_mutex::instance().lock();
-		}
-		void unlock() const
-		{
-			detail::shared_mutex::instance().unlock();
-		}
+		wait_result wait() const;
+		wait_result wait(const waitable& aWaitable) const;
+		wait_result msg_wait(const message_queue& aMessageQueue) const;
+		wait_result msg_wait(const message_queue& aMessageQueue, const waitable& aWaitable) const;
+
+		// attributes
+	private:
+		mutable list_type iEvents;
 	};
 }

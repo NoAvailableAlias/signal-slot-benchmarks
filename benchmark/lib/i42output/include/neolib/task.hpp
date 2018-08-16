@@ -1,4 +1,4 @@
-// signal.hpp -- deprecated: use event.hpp directly
+// task.hpp v1.0
 /*
  *  Copyright (c) 2007 Leigh Johnston.
  *
@@ -31,46 +31,77 @@
  *  LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
  *  NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  *  SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-*/
+ */
 
 #pragma once
 
 #include "neolib.hpp"
-#include "event.hpp"
+#include <future>
+#include <atomic>
+#include "i_task.hpp"
 
 namespace neolib
 {
-	// deprecated; use new event system directly
-	template <typename... Args>
-	class signal : public event<Args...>
+	class task : public i_task
 	{
-	private:
-		typedef event<Args...> event_type;
+		// construction
 	public:
-		using event_type::event_type;
-	public:
-		template <typename Class>
-		void operator()(Class& aObject, void (Class::*aMemberFunction)(Args...) )
+		task(const std::string& aName = std::string{}) : iName{ aName }, iCancelled{ false }
 		{
-			(*this)([&aObject, aMemberFunction](Args&& aArguments...) { (aObject.*aMemberFunction)(std::forward<Args>(aArguments)...); });
 		}
+		// operations
+	public:
+		const std::string& name() const override
+		{
+			return iName;
+		}
+		// implementation
+	public:
+		void cancel() override
+		{
+			iCancelled = true;
+		}
+		bool cancelled() const override
+		{
+			return iCancelled;
+		}
+		// attributes
+	private:
+		std::string iName;
+		std::atomic<bool> iCancelled;
 	};
 
-	// deprecated; use new event system directly
-	template <typename... Args>
-	class signal<void(Args...)> : public event<Args...>
+	template <typename T>
+	class function_task : public task
 	{
-	private:
-		typedef event<Args...> event_type;
 	public:
-		using event_type::event_type;
-	public:
-		using event_type::operator();
-		template <typename Class>
-		void operator()(Class& aObject, void (Class::*aMemberFunction)(Args...))
+		function_task(std::function<T()> aFunction) : task{}, iFunction{ aFunction }
 		{
-			auto handle = (*this)([&aObject, aMemberFunction](Args&& aArguments...) { (aObject.*aMemberFunction)(std::forward<Args>(aArguments)...); });
-			aObject += handle; // sink (slot)
 		}
+	public:
+		std::future<T> get_future()
+		{
+			return iPromise.get_future();
+		}
+	public:
+		const std::string& name() const override
+		{
+			static std::string sName = "neogfx::function_task";
+			return sName;
+		}
+		void run() override
+		{
+			iPromise.set_value(iFunction());
+		}
+	private:
+		std::function<T()> iFunction;
+		std::promise<T> iPromise;
 	};
+
+	template <>
+	inline void function_task<void>::run()
+	{
+		iFunction();
+		iPromise.set_value();
+	}
 }

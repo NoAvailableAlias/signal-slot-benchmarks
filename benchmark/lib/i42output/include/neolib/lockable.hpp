@@ -1,4 +1,4 @@
-// signal.hpp -- deprecated: use event.hpp directly
+// lockable.hpp v2.1
 /*
  *  Copyright (c) 2007 Leigh Johnston.
  *
@@ -36,41 +36,72 @@
 #pragma once
 
 #include "neolib.hpp"
-#include "event.hpp"
+#include <mutex>
+#include "noncopyable.hpp"
+
+#ifdef _WIN32
+#include <intrin.h>
+#pragma intrinsic(_ReadBarrier)
+#pragma intrinsic(_WriteBarrier)
+#pragma intrinsic(_ReadWriteBarrier)
+#define MEMORY_BARRIER_ACQUIRE _ReadBarrier();
+#define MEMORY_BARRIER_ACQUIRE_DEPENDANT _ReadBarrier();
+#define MEMORY_BARRIER_RELEASE _WriteBarrier();
+#define MEMORY_BARRIER _ReadWriteBarrier();
+#else
+#define MEMORY_BARRIER_ACQUIRE
+#define MEMORY_BARRIER_ACQUIRE_DEPENDANT
+#define MEMORY_BARRIER_RELEASE
+#define MEMORY_BARRIER
+#endif
 
 namespace neolib
 {
-	// deprecated; use new event system directly
-	template <typename... Args>
-	class signal : public event<Args...>
+	class lockable
 	{
+		// construction
+	public:
+		lockable() {}
+		lockable(const lockable&) {}
+		virtual ~lockable() {}
+		lockable& operator=(const lockable&) { return *this; }
+		// operations
+	public:
+		void lock() const { iMutex.lock(); }
+		void unlock() const { iMutex.unlock(); }
+		// attributes
 	private:
-		typedef event<Args...> event_type;
-	public:
-		using event_type::event_type;
-	public:
-		template <typename Class>
-		void operator()(Class& aObject, void (Class::*aMemberFunction)(Args...) )
-		{
-			(*this)([&aObject, aMemberFunction](Args&& aArguments...) { (aObject.*aMemberFunction)(std::forward<Args>(aArguments)...); });
-		}
+		mutable std::recursive_mutex iMutex;
 	};
 
-	// deprecated; use new event system directly
-	template <typename... Args>
-	class signal<void(Args...)> : public event<Args...>
+	class lock : noncopyable
 	{
+		// construction
+	public:
+		lock(const lockable& aLockable) : iLockable(aLockable) { iLockable.lock(); }
+		~lock() { iLockable.unlock(); }
+		// attributes
 	private:
-		typedef event<Args...> event_type;
-	public:
-		using event_type::event_type;
-	public:
-		using event_type::operator();
-		template <typename Class>
-		void operator()(Class& aObject, void (Class::*aMemberFunction)(Args...))
-		{
-			auto handle = (*this)([&aObject, aMemberFunction](Args&& aArguments...) { (aObject.*aMemberFunction)(std::forward<Args>(aArguments)...); });
-			aObject += handle; // sink (slot)
-		}
+		const lockable& iLockable;
 	};
+
+	inline void memory_barrier_acquire()
+	{
+		MEMORY_BARRIER_ACQUIRE
+	}
+
+	inline void memory_barrier_acquire_dependant()
+	{
+		MEMORY_BARRIER_ACQUIRE
+	}
+
+	inline void memory_barrier_release()
+	{
+		MEMORY_BARRIER_RELEASE
+	}
+
+	inline void memory_barrier()
+	{
+		MEMORY_BARRIER
+	}
 }

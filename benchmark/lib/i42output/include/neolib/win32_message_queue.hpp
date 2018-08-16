@@ -1,4 +1,4 @@
-// signal.hpp -- deprecated: use event.hpp directly
+// win32_message_queue.hpp
 /*
  *  Copyright (c) 2007 Leigh Johnston.
  *
@@ -36,41 +36,32 @@
 #pragma once
 
 #include "neolib.hpp"
-#include "event.hpp"
+#include <deque>
+#include <optional>
+#include "async_task.hpp"
+#include "message_queue.hpp"
 
 namespace neolib
 {
-	// deprecated; use new event system directly
-	template <typename... Args>
-	class signal : public event<Args...>
+	class win32_message_queue : public message_queue
 	{
+	public:
+		win32_message_queue(async_task& aIoTask, std::function<bool()> aIdleFunction, bool aCreateTimer = true);
+		~win32_message_queue();
+	public:
+		virtual void push_context();
+		virtual void pop_context();
+		virtual bool have_message() const;
+		virtual int get_message() const;
+		virtual void bump();
+		virtual void idle();
 	private:
-		typedef event<Args...> event_type;
-	public:
-		using event_type::event_type;
-	public:
-		template <typename Class>
-		void operator()(Class& aObject, void (Class::*aMemberFunction)(Args...) )
-		{
-			(*this)([&aObject, aMemberFunction](Args&& aArguments...) { (aObject.*aMemberFunction)(std::forward<Args>(aArguments)...); });
-		}
-	};
-
-	// deprecated; use new event system directly
-	template <typename... Args>
-	class signal<void(Args...)> : public event<Args...>
-	{
+		static void CALLBACK timer_proc(HWND, UINT, UINT_PTR, DWORD);
 	private:
-		typedef event<Args...> event_type;
-	public:
-		using event_type::event_type;
-	public:
-		using event_type::operator();
-		template <typename Class>
-		void operator()(Class& aObject, void (Class::*aMemberFunction)(Args...))
-		{
-			auto handle = (*this)([&aObject, aMemberFunction](Args&& aArguments...) { (aObject.*aMemberFunction)(std::forward<Args>(aArguments)...); });
-			aObject += handle; // sink (slot)
-		}
+		async_task& iIoTask;
+		std::function<bool()> iIdleFunction;
+		static std::map<UINT_PTR, win32_message_queue*> sTimerMap;
+		UINT_PTR iTimer;
+		std::deque<bool> iInIdle;
 	};
 }

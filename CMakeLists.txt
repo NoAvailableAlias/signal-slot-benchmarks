@@ -46,6 +46,12 @@ add_executable(bench
     benchmark/lib/jeffomatic/jl_signal/src/ObjectPool.cpp
     benchmark/lib/mwthinker/Signal/src/mw/signals/connection.cpp
     benchmark/lib/dacap/obs/dacap_connection.cpp
+    benchmark/lib/i42output/src/async_task.cpp
+    benchmark/lib/i42output/src/async_thread.cpp
+    benchmark/lib/i42output/src/event.cpp
+    benchmark/lib/i42output/src/thread.cpp
+    benchmark/lib/i42output/src/timer.cpp
+    benchmark/lib/i42output/src/waitable_event.cpp
 )
 
 set_target_properties(bench PROPERTIES CXX_EXTENSIONS NO)
