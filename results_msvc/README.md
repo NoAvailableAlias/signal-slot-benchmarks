@@ -56,7 +56,7 @@ _Size results are the size of object files from release build with Visual Studio
 | [* fr00b0 nod](https://github.com/fr00b0/nod) | 919 kb | X | std::vector | X |
 | [* Kosta signals-cpp](https://github.com/Kosta-Github/signals-cpp) | 925 kb | X | std::vector | X |
 | [* cpp11nullptr lsignal](https://github.com/cpp11nullptr/lsignal) | 1035 kb | X | **std::list | X |
-| [* neolib signal](https://github.com/i42output/neolib) | 2080 kb | - | **std::unordered_map | X |
+| [* neolib signal](https://github.com/i42output/neolib) | 2039 kb | - | **std::unordered_map | X |
 | [* Boost Signals2](http://www.boost.org/doc/libs/1_58_0/doc/html/signals2.html) | 2604 kb | - | ? | X |
 
 ### Metrics of Thread Unsafe Libraries
@@ -80,7 +80,7 @@ _Size results are the size of object files from release build with Visual Studio
 | [EvilTwin Observer](http://eviltwingames.com/blog/the-observer-pattern-revisited/) | 282 kb | X | std::vector | - |
 | [pbhogan Signals](https://github.com/pbhogan/Signals) | 286 kb | X | std::set | - |
 | [Boost Signals](http://www.boost.org/doc/libs/1_56_0/doc/html/signals.html) | 455 kb | - | ? | - |
-| [neolib signal](https://github.com/i42output/neolib) | 1575 kb | - | **std::unordered_map | - |
+| [neolib signal](https://github.com/i42output/neolib) | 1546 kb | - | **std::unordered_map | - |
 
 _* Library is designed to be thread safe._
 <br/>
