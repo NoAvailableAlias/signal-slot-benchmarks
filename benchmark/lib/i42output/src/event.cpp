@@ -25,54 +25,66 @@
 
 namespace neolib
 { 
-	async_event_queue::async_event_queue(neolib::async_task& aIoTask) : iTimer{ aIoTask,
-		[this](neolib::callback_timer& aTimer)
-		{
-			publish_events();
-			if (!iEvents.empty() && !aTimer.waiting())
-				aTimer.again();
-		}, 10, false },
+	async_event_queue::async_event_queue() :
+		async_event_queue{ std::make_shared<async_thread>() }
+	{
+		static_cast<async_thread&>(*iTask).start();
+	}
+
+	async_event_queue::async_event_queue(async_task& aTask) : 
+		async_event_queue{ std::shared_ptr<async_task>{std::shared_ptr<async_task>{}, &aTask} }
+	{
+		std::lock_guard lg{ instance_mutex() };
+		instance_ptrs().aliased = this;
+	}
+
+	async_event_queue::async_event_queue(std::shared_ptr<async_task> aTask) :
+		iTask { aTask },
+		iTimer {
+			*aTask,
+			[this](neolib::callback_timer& aTimer)
+			{
+				publish_events();
+				if (!iEvents.empty() && !aTimer.waiting())
+					aTimer.again();
+				if (iCache.first && std::chrono::steady_clock::now() > iCache.second)
+					iCache.first.reset();
+			}, 10, false
+		},
 		iHaveThreadedCallbacks{ false },
 		iTerminated{ false }
 	{
-		if (sInstance != nullptr)
-			throw instance_exists();
-		sInstance = this;
 	}
 
 	async_event_queue::~async_event_queue()
 	{
-		sInstance = nullptr;
+		std::lock_guard lg{ instance_mutex() };
+		if (instance_ptrs().aliased == this)
+			instance_ptrs().aliased = nullptr;
 	}
 
-	async_event_queue* async_event_queue::sInstance;
-
-	bool async_event_queue::instantiated()
+	std::shared_ptr<async_event_queue> async_event_queue::instance()
 	{
-		return sInstance != nullptr;
+		std::lock_guard lg{ instance_mutex() };
+		if (instance_ptrs().aliased != nullptr)
+			return std::shared_ptr<async_event_queue>{ std::shared_ptr<async_event_queue>{}, instance_ptrs().aliased };
+		if (!instance_ptrs().counted.expired())
+			return instance_ptrs().counted.lock();
+		auto instanceRef = std::make_shared<async_event_queue>();
+		instance_ptrs().counted = instanceRef;
+		return instanceRef;
 	}
 
-	async_event_queue& async_event_queue::instance()
+	std::recursive_mutex& async_event_queue::instance_mutex()
 	{
-		if (sInstance != nullptr)
-			return *sInstance;
-		throw no_instance();
+		static std::recursive_mutex sMutex;
+		return sMutex;
 	}
 
-	async_event_queue& async_event_queue::local_instance()
+	async_event_queue::instance_pointers& async_event_queue::instance_ptrs()
 	{
-		static neolib::async_thread sThread{};
-		static async_event_queue sLocalInstance{ sThread };
-		if (!sThread.started())
-			sThread.start();
-		return sLocalInstance;
-	}
-
-	async_event_queue& async_event_queue::any_instance()
-	{
-		if (instantiated())
-			return instance();
-		return local_instance();
+		static instance_pointers sInstancePtrs;
+		return sInstancePtrs;
 	}
 
 	bool async_event_queue::exec()
@@ -107,6 +119,12 @@ namespace neolib
 			iTimer.cancel();
 		iThreadedCallbacks.clear();
 		iHaveThreadedCallbacks = false;
+	}
+
+	void async_event_queue::persist(std::shared_ptr<async_event_queue> aPtr, uint32_t aDuration_ms)
+	{
+		iCache.first = aPtr;
+		iCache.second = std::chrono::steady_clock::now() + std::chrono::milliseconds(aDuration_ms);
 	}
 
 	void async_event_queue::enqueue_to_thread(std::thread::id aThreadId, callback aCallback)

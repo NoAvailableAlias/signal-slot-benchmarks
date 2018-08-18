@@ -40,6 +40,8 @@
 #endif
 #include "../include/neolib/async_task.hpp"
 
+#include <iostream>
+
 namespace neolib
 {
 	namespace
@@ -69,6 +71,11 @@ namespace neolib
 	async_task::async_task(i_thread& aThread, const std::string& aName) :
 		task{ aName }, iThread{ aThread }, iTimerIoService{ *this }, iNetworkingIoService{ *this }, iHalted{ false }
 	{
+	}
+
+	async_task::~async_task()
+	{
+		thread().abort();
 	}
 
 	i_thread& async_task::thread() const

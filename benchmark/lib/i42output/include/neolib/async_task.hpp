@@ -80,6 +80,7 @@ namespace neolib
 		// construction
 	public:
 		async_task(i_thread& aThread, const std::string& aName = std::string{});
+		~async_task();
 		// operations
 	public:
 		i_thread& thread() const;

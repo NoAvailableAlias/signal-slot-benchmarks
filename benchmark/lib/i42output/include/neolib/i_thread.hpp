@@ -48,6 +48,7 @@ namespace neolib
 	public:
 		virtual const std::string& name() const = 0;
 		virtual bool finished() const = 0;
+		virtual void abort(bool aWait = true) = 0;
 		// implementation
 	protected:
 		virtual void exec() = 0;

@@ -14,7 +14,7 @@
 | * Kosta signals-cpp | 72334 | 5955 | 1348 | 13416 | 964 | 1 | 94017 |
 | * dacap observable | 69077 | 4428 | 6872 | 7498 | 2110 | 14 | 89999 |
 | * Montellese cpp-signal | 29258 | 5401 | 5111 | 43680 | 2609 | 199 | 86258 |
-| * neolib signal | 63261 | 1481 | 1286 | 6127 | 615 | 36 | 72807 |
+| * neolib signal | 65495 | 1459 | 1250 | 6476 | 605 | 35 | 75320 |
 | * winglot Signals | 10515 | 3698 | 3771 | 44146 | 1688 | 165 | 63983 |
 | * Boost Signals2 | 7931 | 2938 | 2136 | 10564 | 986 | 1 | 24556 |
 
@@ -37,10 +37,9 @@
 | Ansoulom cpp-observe | 42880 | 12221 | 7594 | 49668 | 4852 | 0 | 117215 |
 | pbhogan Signals | 54437 | 6816 | 5950 | 41798 | 3362 | 0 | 112363 |
 | EvilTwin Observer | 65633 | 4255 | 2435 | 20482 | 1467 | 0 | 94271 |
-| neolib signal | 63068 | 1631 | 1354 | 6063 | 658 | 0 | 72773 |
+| neolib signal | 64480 | 1606 | 1335 | 6638 | 657 | 0 | 74715 |
 | supergrover sigslot | 12323 | 2122 | 2708 | 49523 | 1123 | 0 | 67799 |
 | Boost Signals | 9350 | 3295 | 1194 | 15290 | 769 | 0 | 29898 |
-| neolib signal | 6335 | 4787 | 3828 | 12619 | 1508 | 0 | 29078 |
 
 ___
 _Size results are the size of object files from release build with Visual Studio 17._

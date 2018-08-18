@@ -39,6 +39,7 @@
 #include <stdexcept>
 #include <memory>
 #include <thread>
+#include <atomic>
 #include "noncopyable.hpp"
 #include "lockable.hpp"
 #include "waitable.hpp"
@@ -107,9 +108,9 @@ namespace neolib
 	private:
 		const std::string iName;
 		bool iUsingExistingThread;
-		volatile state_e iState;
+		std::atomic<state_e> iState;
 		thread_object_pointer iThreadObject;
 		id_type iId;
-		volatile std::size_t iBlockedCount;
+		std::atomic<std::size_t> iBlockedCount;
 	};
 }
