@@ -1,4 +1,4 @@
-// signal.hpp -- deprecated: use event.hpp directly
+// noncopyable.hpp v1.0
 /*
  *  Copyright (c) 2007 Leigh Johnston.
  *
@@ -35,42 +35,14 @@
 
 #pragma once
 
-#include "neolib.hpp"
-#include "event.hpp"
-
 namespace neolib
 {
-	// deprecated; use new event system directly
-	template <typename... Args>
-	class signal : public event<Args...>
+	class noncopyable
 	{
-	private:
-		typedef event<Args...> event_type;
-	public:
-		using event_type::event_type;
-	public:
-		template <typename Class>
-		void operator()(Class& aObject, void (Class::*aMemberFunction)(Args...) )
-		{
-			(*this)([&aObject, aMemberFunction](Args&& aArguments...) { (aObject.*aMemberFunction)(std::forward<Args>(aArguments)...); });
-		}
-	};
-
-	// deprecated; use new event system directly
-	template <typename... Args>
-	class signal<void(Args...)> : public event<Args...>
-	{
-	private:
-		typedef event<Args...> event_type;
-	public:
-		using event_type::event_type;
-	public:
-		using event_type::operator();
-		template <typename Class>
-		void operator()(Class& aObject, void (Class::*aMemberFunction)(Args...))
-		{
-			auto handle = (*this)([&aObject, aMemberFunction](Args&& aArguments...) { (aObject.*aMemberFunction)(std::forward<Args>(aArguments)...); });
-			aObject += handle; // sink (slot)
-		}
+	protected:
+		constexpr noncopyable() = default;
+		~noncopyable() = default;
+		noncopyable(const noncopyable&) = delete;
+		noncopyable& operator=(const noncopyable&) = delete;
 	};
 }

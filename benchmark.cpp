@@ -1,4 +1,3 @@
-#include <iostream>
 #include <fstream>
 #include <iomanip>
 
@@ -47,32 +46,39 @@ std::size_t g_timer_limit = Timer_u(Limit_u(4000)).count();
 template <typename Benchmark>
 void run_benchmark_class(ImmediateData& records, std::size_t N)
 {
-    // Time this particular benchmark run (for display only)
-    auto start = std::chrono::system_clock::now();
-    auto start_out = std::chrono::system_clock::to_time_t(start);
+    try
+    {
+        // Time this particular benchmark run (for display only)
+        auto start = std::chrono::system_clock::now();
+        auto start_out = std::chrono::system_clock::to_time_t(start);
 
-    std::cout << std::put_time(std::localtime(&start_out), "%c")
-        << " [BEGIN: " << Benchmark::C_LIB_NAME << "]" << std::endl;
+        std::cout << std::put_time(std::localtime(&start_out), "%c")
+            << " [BEGIN: " << Benchmark::C_LIB_NAME << "]" << std::endl;
 
-    auto& metrics = records[Benchmark::C_LIB_NAME];
+        auto& metrics = records[Benchmark::C_LIB_NAME];
 
-    // Used for switching policies at runtime
-    Benchmark::initialize();
+        // Used for switching policies at runtime
+        Benchmark::initialize();
 
-    metrics[C_CONSTRUCTION].push_back(Benchmark::construction(N));
-    metrics[C_DESTRUCTION].push_back(Benchmark::destruction(N));
-    metrics[C_CONNECTION].push_back(Benchmark::connection(N));
-    metrics[C_EMISSION].push_back(Benchmark::emission(N));
-    metrics[C_COMBINED].push_back(Benchmark::combined(N));
+        metrics[C_CONSTRUCTION].push_back(Benchmark::construction(N));
+        metrics[C_DESTRUCTION].push_back(Benchmark::destruction(N));
+        metrics[C_CONNECTION].push_back(Benchmark::connection(N));
+        metrics[C_EMISSION].push_back(Benchmark::emission(N));
+        metrics[C_COMBINED].push_back(Benchmark::combined(N));
 
-    // Benchmark might not have this implemented
-    metrics[C_THREADED].push_back(Benchmark::threaded(N));
+        // Benchmark might not have this implemented
+        metrics[C_THREADED].push_back(Benchmark::threaded(N));
 
-    auto stop = std::chrono::system_clock::now();
-    auto stop_out = std::chrono::system_clock::to_time_t(stop);
+        auto stop = std::chrono::system_clock::now();
+        auto stop_out = std::chrono::system_clock::to_time_t(stop);
 
-    std::cout << std::put_time(std::localtime(&stop_out), "%c")
+        std::cout << std::put_time(std::localtime(&stop_out), "%c")
         << " [END: " << Benchmark::C_LIB_NAME << "]" << std::endl;
+    }
+    catch (std::exception const& error)
+    {
+        std::cerr << "Exception: " << error.what() << std::endl;
+    }
 }
 
 //------------------------------------------------------------------------------
@@ -81,49 +87,41 @@ ImmediateData run_all_benchmarks(std::size_t begin, std::size_t end)
 {
     ImmediateData records;
 
-    try
+    // Double the input size N for every iteration
+    for (auto N = begin; N <= end; N *= 2)
     {
-        // Double the input size N for every iteration
-        for (auto N = begin; N <= end; N *= 2)
-        {
-            std::cout << "[BEGIN: Test Size: " << N << "]\n" << std::endl;
+        std::cout << "[BEGIN: Test Size: " << N << "]\n" << std::endl;
 
-            run_benchmark_class<Aco>(records, N);
-            run_benchmark_class<Asg>(records, N);
-            run_benchmark_class<Bs1>(records, N);
-            run_benchmark_class<Bs2>(records, N);
-            run_benchmark_class<Cls>(records, N);
-            run_benchmark_class<Cps>(records, N);
-            run_benchmark_class<Cps_st>(records, N);
-            run_benchmark_class<Dob>(records, N);
-            run_benchmark_class<Evl>(records, N);
-            run_benchmark_class<Jls>(records, N);
-            run_benchmark_class<Jos>(records, N);
-            run_benchmark_class<Ksc>(records, N);
-            run_benchmark_class<Lss>(records, N);
-            run_benchmark_class<Mws>(records, N);
-            run_benchmark_class<Nls>(records, N);
-            run_benchmark_class<Nls_st>(records, N);
-            run_benchmark_class<Nod>(records, N);
-            run_benchmark_class<Nss>(records, N);
-            run_benchmark_class<Nss_v2>(records, N);
-            run_benchmark_class<Nss_v2_st>(records, N);
-            run_benchmark_class<Psg>(records, N);
-            run_benchmark_class<Pss>(records, N);
-            run_benchmark_class<Pss_st>(records, N);
-            run_benchmark_class<Sss>(records, N);
-            run_benchmark_class<Wnk>(records, N);
-            run_benchmark_class<Wsg>(records, N);
-            run_benchmark_class<Yas>(records, N);
-            run_benchmark_class<Vdk>(records, N);
+        run_benchmark_class<Aco>(records, N);
+        run_benchmark_class<Asg>(records, N);
+        run_benchmark_class<Bs1>(records, N);
+        run_benchmark_class<Bs2>(records, N);
+        run_benchmark_class<Cls>(records, N);
+        run_benchmark_class<Cps>(records, N);
+        run_benchmark_class<Cps_st>(records, N);
+        run_benchmark_class<Dob>(records, N);
+        run_benchmark_class<Evl>(records, N);
+        run_benchmark_class<Jls>(records, N);
+        run_benchmark_class<Jos>(records, N);
+        run_benchmark_class<Ksc>(records, N);
+        run_benchmark_class<Lss>(records, N);
+        run_benchmark_class<Mws>(records, N);
+        run_benchmark_class<Nls>(records, N);
+        run_benchmark_class<Nls_st>(records, N);
+        run_benchmark_class<Nod>(records, N);
+        run_benchmark_class<Nss>(records, N);
+        run_benchmark_class<Nss_v2>(records, N);
+        run_benchmark_class<Nss_v2_st>(records, N);
+        run_benchmark_class<Psg>(records, N);
+        run_benchmark_class<Pss>(records, N);
+        run_benchmark_class<Pss_st>(records, N);
+        run_benchmark_class<Sss>(records, N);
+        run_benchmark_class<Wnk>(records, N);
+        run_benchmark_class<Wsg>(records, N);
+        run_benchmark_class<Yas>(records, N);
+        run_benchmark_class<Vdk>(records, N);
 
-            std::cout << "\n[END: Test Size: " << N << "]" << std::endl;
-        }
-    }
-    catch (std::exception const& error)
-    {
-        std::cerr << "Exception: " << error.what() << std::endl;
-        std::cin.get();
+        std::cout << "\n[END: Test Size: " << N << "]" << std::endl;
     }
     return records;
 }
@@ -132,43 +130,34 @@ ImmediateData run_all_benchmarks(std::size_t begin, std::size_t end)
 
 void run_all_validation_tests(std::size_t N)
 {
-    try
-    {
-        // Abort if any implementation isn't functioning correctly
-        Aco::validate_assert(N);
-        Asg::validate_assert(N);
-        Bs1::validate_assert(N);
-        Bs2::validate_assert(N);
-        Cls::validate_assert(N);
-        Cps::validate_assert(N);
-        Cps_st::validate_assert(N);
-        Dob::validate_assert(N);
-        Evl::validate_assert(N);
-        Jls::validate_assert(N);
-        Jos::validate_assert(N);
-        Ksc::validate_assert(N);
-        Lss::validate_assert(N);
-        Mws::validate_assert(N);
-        Nls::validate_assert(N);
-        Nls_st::validate_assert(N);
-        Nod::validate_assert(N);
-        Nss::validate_assert(N);
-        Nss_v2::validate_assert(N);
-        Nss_v2_st::validate_assert(N);
-        Psg::validate_assert(N);
-        Pss::validate_assert(N);
-        Pss_st::validate_assert(N);
-        Sss::validate_assert(N);
-        Wnk::validate_assert(N);
-        Wsg::validate_assert(N);
-        Yas::validate_assert(N);
-        Vdk::validate_assert(N);
-    }
-    catch (std::exception const& error)
-    {
-        std::cerr << "Exception: " << error.what() << std::endl;
-        std::cin.get();
-    }
+    Aco::validate_assert(N);
+    Asg::validate_assert(N);
+    Bs1::validate_assert(N);
+    Bs2::validate_assert(N);
+    Cls::validate_assert(N);
+    Cps::validate_assert(N);
+    Cps_st::validate_assert(N);
+    Dob::validate_assert(N);
+    Evl::validate_assert(N);
+    Jls::validate_assert(N);
+    Jos::validate_assert(N);
+    Ksc::validate_assert(N);
+    Lss::validate_assert(N);
+    Mws::validate_assert(N);
+    Nls::validate_assert(N);
+    Nls_st::validate_assert(N);
+    Nod::validate_assert(N);
+    Nss::validate_assert(N);
+    Nss_v2::validate_assert(N);
+    Nss_v2_st::validate_assert(N);
+    Psg::validate_assert(N);
+    Pss::validate_assert(N);
+    Pss_st::validate_assert(N);
+    Sss::validate_assert(N);
+    Wnk::validate_assert(N);
+    Wsg::validate_assert(N);
+    Yas::validate_assert(N);
+    Vdk::validate_assert(N);
 }
 
 //------------------------------------------------------------------------------
@@ -234,7 +223,6 @@ void output_metrics_report_row(T& ost)
     catch (std::exception const& error)
     {
         std::cerr << "Exception: " << error.what() << std::endl;
-        std::cin.get();
     }
 }
 

@@ -36,6 +36,8 @@
 #pragma once
 
 #include "neolib.hpp"
+#include <mutex>
+#include "lifetime.hpp"
 
 namespace neolib
 {
@@ -44,5 +46,32 @@ namespace neolib
 		void lock() {}
 		void unlock() noexcept {}
 		bool try_lock() { return true; }
+	};
+
+	template<class Mutex>
+	class destroyable_mutex_lock_guard
+	{
+	public:
+		typedef Mutex mutex_type;
+	public:
+		explicit destroyable_mutex_lock_guard(Mutex& aMutex) :
+			iMutex{ aMutex }, iMutexDestroyed{ aMutex }
+		{
+			iMutex.lock();
+		}
+		destroyable_mutex_lock_guard(Mutex& aMutex, std::adopt_lock_t) :
+			iMutex{ aMutex }, iMutexDestroyed{ aMutex }
+		{
+		}
+		~destroyable_mutex_lock_guard() noexcept
+		{
+			if (!iMutexDestroyed)
+				iMutex.unlock();
+		}
+		destroyable_mutex_lock_guard(const destroyable_mutex_lock_guard&) = delete;
+		destroyable_mutex_lock_guard& operator=(const destroyable_mutex_lock_guard&) = delete;
+	private:
+		mutex_type& iMutex;
+		destroyed_flag iMutexDestroyed;
 	};
 }

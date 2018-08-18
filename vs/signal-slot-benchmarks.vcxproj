@@ -88,8 +88,8 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <ConformanceMode>true</ConformanceMode>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions);_SILENCE_ALL_CXX17_DEPRECATION_WARNINGS</PreprocessorDefinitions>
+      <ConformanceMode>false</ConformanceMode>
       <DisableLanguageExtensions>false</DisableLanguageExtensions>
       <EnforceTypeConversionRules>true</EnforceTypeConversionRules>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
@@ -120,8 +120,8 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <ConformanceMode>true</ConformanceMode>
+      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions);_SILENCE_ALL_CXX17_DEPRECATION_WARNINGS</PreprocessorDefinitions>
+      <ConformanceMode>false</ConformanceMode>
       <DisableLanguageExtensions>false</DisableLanguageExtensions>
       <EnforceTypeConversionRules>true</EnforceTypeConversionRules>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
@@ -154,8 +154,8 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <ConformanceMode>true</ConformanceMode>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions);_SILENCE_ALL_CXX17_DEPRECATION_WARNINGS</PreprocessorDefinitions>
+      <ConformanceMode>false</ConformanceMode>
       <DisableLanguageExtensions>false</DisableLanguageExtensions>
       <EnforceTypeConversionRules>true</EnforceTypeConversionRules>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
@@ -189,8 +189,8 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <ConformanceMode>true</ConformanceMode>
+      <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions);_SILENCE_ALL_CXX17_DEPRECATION_WARNINGS</PreprocessorDefinitions>
+      <ConformanceMode>false</ConformanceMode>
       <DisableLanguageExtensions>false</DisableLanguageExtensions>
       <EnforceTypeConversionRules>true</EnforceTypeConversionRules>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
@@ -257,13 +257,32 @@
     <ClInclude Include="..\benchmark\lib\dacap\obs\slot.h" />
     <ClInclude Include="..\benchmark\lib\eviltwin\observer.hpp" />
     <ClInclude Include="..\benchmark\lib\fr00b0\nod\include\nod\nod.hpp" />
+    <ClInclude Include="..\benchmark\lib\i42output\include\neolib\allocator.hpp" />
+    <ClInclude Include="..\benchmark\lib\i42output\include\neolib\async_task.hpp" />
+    <ClInclude Include="..\benchmark\lib\i42output\include\neolib\async_thread.hpp" />
+    <ClInclude Include="..\benchmark\lib\i42output\include\neolib\detail_memory.hpp" />
+    <ClInclude Include="..\benchmark\lib\i42output\include\neolib\event.hpp" />
+    <ClInclude Include="..\benchmark\lib\i42output\include\neolib\i_lifetime.hpp" />
+    <ClInclude Include="..\benchmark\lib\i42output\include\neolib\i_task.hpp" />
+    <ClInclude Include="..\benchmark\lib\i42output\include\neolib\i_thread.hpp" />
+    <ClInclude Include="..\benchmark\lib\i42output\include\neolib\lifetime.hpp" />
+    <ClInclude Include="..\benchmark\lib\i42output\include\neolib\lockable.hpp" />
     <ClInclude Include="..\benchmark\lib\i42output\include\neolib\locking_policy.hpp" />
+    <ClInclude Include="..\benchmark\lib\i42output\include\neolib\memory.hpp" />
+    <ClInclude Include="..\benchmark\lib\i42output\include\neolib\message_queue.hpp" />
     <ClInclude Include="..\benchmark\lib\i42output\include\neolib\mutex.hpp" />
     <ClInclude Include="..\benchmark\lib\i42output\include\neolib\neolib.hpp" />
+    <ClInclude Include="..\benchmark\lib\i42output\include\neolib\noncopyable.hpp" />
     <ClInclude Include="..\benchmark\lib\i42output\include\neolib\signal.hpp" />
-    <ClInclude Include="..\benchmark\lib\i42output\include\neolib\signal_interface.hpp" />
+    <ClInclude Include="..\benchmark\lib\i42output\include\neolib\singleton.hpp" />
     <ClInclude Include="..\benchmark\lib\i42output\include\neolib\slot.hpp" />
-    <ClInclude Include="..\benchmark\lib\i42output\include\neolib\slot_interface.hpp" />
+    <ClInclude Include="..\benchmark\lib\i42output\include\neolib\task.hpp" />
+    <ClInclude Include="..\benchmark\lib\i42output\include\neolib\thread.hpp" />
+    <ClInclude Include="..\benchmark\lib\i42output\include\neolib\timer.hpp" />
+    <ClInclude Include="..\benchmark\lib\i42output\include\neolib\variant.hpp" />
+    <ClInclude Include="..\benchmark\lib\i42output\include\neolib\waitable.hpp" />
+    <ClInclude Include="..\benchmark\lib\i42output\include\neolib\waitable_event.hpp" />
+    <ClInclude Include="..\benchmark\lib\i42output\include\neolib\win32_message_queue.hpp" />
     <ClInclude Include="..\benchmark\lib\jeffomatic\jl_signal\src\DoublyLinkedList.h" />
     <ClInclude Include="..\benchmark\lib\jeffomatic\jl_signal\src\FastDelegate.h" />
     <ClInclude Include="..\benchmark\lib\jeffomatic\jl_signal\src\ObjectPool.h" />
@@ -339,6 +358,13 @@
     <ClCompile Include="..\benchmark\cpp\benchmark_wsg.cpp" />
     <ClCompile Include="..\benchmark\cpp\benchmark_yas.cpp" />
     <ClCompile Include="..\benchmark\lib\dacap\obs\dacap_connection.cpp" />
+    <ClCompile Include="..\benchmark\lib\i42output\src\async_task.cpp" />
+    <ClCompile Include="..\benchmark\lib\i42output\src\async_thread.cpp" />
+    <ClCompile Include="..\benchmark\lib\i42output\src\event.cpp" />
+    <ClCompile Include="..\benchmark\lib\i42output\src\thread.cpp" />
+    <ClCompile Include="..\benchmark\lib\i42output\src\timer.cpp" />
+    <ClCompile Include="..\benchmark\lib\i42output\src\waitable_event.cpp" />
+    <ClCompile Include="..\benchmark\lib\i42output\src\win32_message_queue.cpp" />
     <ClCompile Include="..\benchmark\lib\jeffomatic\jl_signal\src\ObjectPool.cpp" />
     <ClCompile Include="..\benchmark\lib\jeffomatic\jl_signal\src\SignalBase.cpp" />
     <ClCompile Include="..\benchmark\lib\mwthinker\Signal\src\mw\signals\connection.cpp" />

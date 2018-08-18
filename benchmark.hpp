@@ -41,7 +41,7 @@ class Benchmark
         // There is an error in the signal implementation
         Rng test;
         test.discard(count);
-        if (rng != test) throw std::runtime_error(Foo::C_LIB_NAME);
+        if (rng != test) std::cerr << "Validation Failed: " << Foo::C_LIB_NAME << std::endl;
     }
 
     //--------------------------------------------------------------------------

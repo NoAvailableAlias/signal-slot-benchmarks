@@ -14,9 +14,9 @@
 | * Kosta signals-cpp | 72334 | 5955 | 1348 | 13416 | 964 | 1 | 94017 |
 | * dacap observable | 69077 | 4428 | 6872 | 7498 | 2110 | 14 | 89999 |
 | * Montellese cpp-signal | 29258 | 5401 | 5111 | 43680 | 2609 | 199 | 86258 |
+| * neolib signal | 65495 | 1459 | 1250 | 6476 | 605 | 35 | 75320 |
 | * winglot Signals | 10515 | 3698 | 3771 | 44146 | 1688 | 165 | 63983 |
 | * Boost Signals2 | 7931 | 2938 | 2136 | 10564 | 986 | 1 | 24556 |
-| * neolib signal | 5764 | 2854 | 2668 | 9567 | 1026 | 127 | 22005 |
 
 ### Performance of Thread Unsafe Libraries
 
@@ -37,9 +37,9 @@
 | Ansoulom cpp-observe | 42880 | 12221 | 7594 | 49668 | 4852 | 0 | 117215 |
 | pbhogan Signals | 54437 | 6816 | 5950 | 41798 | 3362 | 0 | 112363 |
 | EvilTwin Observer | 65633 | 4255 | 2435 | 20482 | 1467 | 0 | 94271 |
+| neolib signal | 64480 | 1606 | 1335 | 6638 | 657 | 0 | 74715 |
 | supergrover sigslot | 12323 | 2122 | 2708 | 49523 | 1123 | 0 | 67799 |
 | Boost Signals | 9350 | 3295 | 1194 | 15290 | 769 | 0 | 29898 |
-| neolib signal | 6335 | 4787 | 3828 | 12619 | 1508 | 0 | 29078 |
 
 ___
 _Size results are the size of object files from release build with Visual Studio 17._
@@ -56,7 +56,7 @@ _Size results are the size of object files from release build with Visual Studio
 | [* fr00b0 nod](https://github.com/fr00b0/nod) | 919 kb | X | std::vector | X |
 | [* Kosta signals-cpp](https://github.com/Kosta-Github/signals-cpp) | 925 kb | X | std::vector | X |
 | [* cpp11nullptr lsignal](https://github.com/cpp11nullptr/lsignal) | 1035 kb | X | **std::list | X |
-| [* neolib signal](https://github.com/i42output/neolib) | 1288 kb | X | **std::unordered_map | X |
+| [* neolib signal](https://github.com/i42output/neolib) | 2039 kb | - | **std::unordered_map | X |
 | [* Boost Signals2](http://www.boost.org/doc/libs/1_58_0/doc/html/signals2.html) | 2604 kb | - | ? | X |
 
 ### Metrics of Thread Unsafe Libraries
@@ -80,7 +80,7 @@ _Size results are the size of object files from release build with Visual Studio
 | [EvilTwin Observer](http://eviltwingames.com/blog/the-observer-pattern-revisited/) | 282 kb | X | std::vector | - |
 | [pbhogan Signals](https://github.com/pbhogan/Signals) | 286 kb | X | std::set | - |
 | [Boost Signals](http://www.boost.org/doc/libs/1_56_0/doc/html/signals.html) | 455 kb | - | ? | - |
-| [neolib signal](https://github.com/i42output/neolib) | 644 kb | X | **std::unordered_map | - |
+| [neolib signal](https://github.com/i42output/neolib) | 1546 kb | - | **std::unordered_map | - |
 
 _* Library is designed to be thread safe._
 <br/>

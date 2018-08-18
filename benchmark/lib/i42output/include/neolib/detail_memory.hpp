@@ -1,4 +1,4 @@
-// signal.hpp -- deprecated: use event.hpp directly
+// detail_memory.hpp
 /*
  *  Copyright (c) 2007 Leigh Johnston.
  *
@@ -36,41 +36,39 @@
 #pragma once
 
 #include "neolib.hpp"
-#include "event.hpp"
+#include <cstring>
+#include <type_traits>
 
-namespace neolib
+namespace neolib 
 {
-	// deprecated; use new event system directly
-	template <typename... Args>
-	class signal : public event<Args...>
+	namespace detail
 	{
-	private:
-		typedef event<Args...> event_type;
-	public:
-		using event_type::event_type;
-	public:
-		template <typename Class>
-		void operator()(Class& aObject, void (Class::*aMemberFunction)(Args...) )
+		template <typename T> inline
+		void construct(void* mem, const T& object)
 		{
-			(*this)([&aObject, aMemberFunction](Args&& aArguments...) { (aObject.*aMemberFunction)(std::forward<Args>(aArguments)...); });
+			new (mem) T(object);
 		}
-	};
 
-	// deprecated; use new event system directly
-	template <typename... Args>
-	class signal<void(Args...)> : public event<Args...>
-	{
-	private:
-		typedef event<Args...> event_type;
-	public:
-		using event_type::event_type;
-	public:
-		using event_type::operator();
-		template <typename Class>
-		void operator()(Class& aObject, void (Class::*aMemberFunction)(Args...))
+		template <typename InIter, typename OutIter> inline
+		OutIter uninitialized_copy_dispatch(InIter first, InIter last, OutIter result, std::false_type)
 		{
-			auto handle = (*this)([&aObject, aMemberFunction](Args&& aArguments...) { (aObject.*aMemberFunction)(std::forward<Args>(aArguments)...); });
-			aObject += handle; // sink (slot)
+			while (first != last)
+				detail::construct(static_cast<void*>(&*result++), *first++);
+			return result;
 		}
-	};
+
+		template <typename T> inline
+		T* uninitialized_copy_dispatch(const T* first, const T* last, T* result, std::true_type)
+		{
+			memcpy(result, first, (last-first) * sizeof(T));
+			result += (last-first);
+			return result;
+		}
+
+		template <typename InIter, typename OutIter, typename T> inline
+		OutIter uninitialized_copy(InIter first, InIter last, OutIter result, const T&)
+		{
+			return uninitialized_copy_dispatch(first, last, result, std::is_scalar<T>::type());
+		}
+	}
 }

@@ -2,7 +2,7 @@
 
 NOINLINE(void Nls_st::initialize())
 {
-    // NOOP
+    neolib::event_system::set_single_threaded();
 }
 NOINLINE(void Nls_st::validate_assert(std::size_t N))
 {

@@ -1,4 +1,4 @@
-// slot.hpp
+// slot.hpp -- deprecated: use event.hpp directly
 /*
  *  Copyright (c) 2007 Leigh Johnston.
  *
@@ -36,53 +36,13 @@
 #pragma once
 
 #include "neolib.hpp"
-#include <unordered_set>
-#include <deque>
-#include <functional>
-#include "locking_policy.hpp"
-#include "slot_interface.hpp"
-#include "signal_interface.hpp"
+#include "event.hpp"
 
 namespace neolib
 {
-	template <typename LockingPolicy = locking_policy_none>
-	class has_slots : public slot_interface, private LockingPolicy
+	// deprecated; use new event system directly
+	template <typename T = void>
+	struct has_slots : sink
 	{
-		template <typename Function, std::size_t ParameterCount, typename LockingPolicy2>
-		friend class signal_base;
-		template <typename Key, typename Function, std::size_t ParameterCount, typename LockingPolicy2>
-		friend class signal_with_key_base;
-		// types
-	private:
-		typedef std::unordered_set<const signal_interface*> signal_list;
-		// construction
-	public:
-		has_slots() {}
-		virtual ~has_slots()
-		{
-			typename LockingPolicy::scope_lock sl(*this);
-			for (signal_list::iterator i = iSignals.begin(); i != iSignals.end(); ++i)
-				(**i).slot_destroyed(*this);
-		}
-	private:
-		has_slots(const has_slots&);
-		// implementation
-	private:
-		// from slot_interface
-		virtual void signal_created(signal_interface& aSignal) const
-		{
-			typename LockingPolicy::scope_lock sl(*this);
-			iSignals.insert(&aSignal);
-		}
-		virtual void signal_destroyed(signal_interface& aSignal) const
-		{
-			typename LockingPolicy::scope_lock sl(*this);
-			signal_list::iterator existingSignal = iSignals.find(&aSignal);
-			if (existingSignal != iSignals.end())
-				iSignals.erase(existingSignal);
-		}
-		// attributes
-	private:
-		mutable signal_list iSignals;
 	};
 }
