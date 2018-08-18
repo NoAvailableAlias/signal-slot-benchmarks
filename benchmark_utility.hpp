@@ -1,6 +1,7 @@
 #pragma once
 
 #include <algorithm>
+#include <iostream>
 #include <cassert>
 #include <numeric>
 #include <chrono>
