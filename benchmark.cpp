@@ -20,6 +20,7 @@
 #include "benchmark/hpp/benchmark_nls.hpp"
 #include "benchmark/hpp/benchmark_nls_st.hpp"
 #include "benchmark/hpp/benchmark_nod.hpp"
+#include "benchmark/hpp/benchmark_nod_st.hpp"
 #include "benchmark/hpp/benchmark_nss.hpp"
 #include "benchmark/hpp/benchmark_nss_v2.hpp"
 #include "benchmark/hpp/benchmark_nss_v2_st.hpp"
@@ -109,6 +110,7 @@ ImmediateData run_all_benchmarks(std::size_t begin, std::size_t end)
         run_benchmark_class<Nls>(records, N);
         run_benchmark_class<Nls_st>(records, N);
         run_benchmark_class<Nod>(records, N);
+        run_benchmark_class<Nod_st>(records, N);
         run_benchmark_class<Nss>(records, N);
         run_benchmark_class<Nss_v2>(records, N);
         run_benchmark_class<Nss_v2_st>(records, N);
@@ -147,6 +149,7 @@ void run_all_validation_tests(std::size_t N)
     Nls::validate_assert(N);
     Nls_st::validate_assert(N);
     Nod::validate_assert(N);
+    Nod_st::validate_assert(N);
     Nss::validate_assert(N);
     Nss_v2::validate_assert(N);
     Nss_v2_st::validate_assert(N);
@@ -248,6 +251,7 @@ void output_metrics_report(T& ost)
     output_metrics_report_row<Nls>(ost);
     output_metrics_report_row<Nls_st>(ost);
     output_metrics_report_row<Nod>(ost);
+    output_metrics_report_row<Nod_st>(ost);
     output_metrics_report_row<Nss>(ost);
     output_metrics_report_row<Nss_v2>(ost);
     output_metrics_report_row<Nss_v2_st>(ost);

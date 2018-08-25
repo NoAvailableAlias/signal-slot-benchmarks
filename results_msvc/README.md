@@ -7,9 +7,9 @@
 
 | Library | construct | destruct | connect | emission | combined | threaded | total |
 |---------|-----------|----------|---------|----------|----------|----------|-------|
-| * fr00b0 nod | 66851 | 8444 | 6803 | 44891 | 3809 | 260 | 131057 |
 | ! Pal Sigslot | 66239 | 7762 | 5832 | 43143 | 3373 | 231 | 126580 |
 | ! nano-signal-slot v2x | 67798 | 4792 | 3785 | 46320 | 2143 | 174 | 125011 |
+| * fr00b0 nod | 64476 | 8834 | 6595 | 23439 | 3524 | 35 | 106902 |
 | ! cpp11nullptr lsignal | 50272 | 3907 | 2162 | 43228 | 1388 | 131 | 101088 |
 | ! Kosta signals-cpp | 72334 | 5955 | 1348 | 13416 | 964 | 1 | 94017 |
 | * dacap observable | 69077 | 4428 | 6872 | 7498 | 2110 | 14 | 89999 |
@@ -34,6 +34,7 @@
 | mwthinker Signal | 64006 | 7244 | 5721 | 49513 | 3299 | 0 | 129783 |
 | vdksoft signals | 65324 | 5749 | 5875 | 49108 | 3185 | 0 | 129241 |
 | joanrieu signal11 | 55865 | 9655 | 7699 | 44064 | 4306 | 0 | 121589 |
+| fr00b0 nod | 70438 | 13032 | 8842 | 24206 | 4882 | 0 | 121401 |
 | Ansoulom cpp-observe | 42880 | 12221 | 7594 | 49668 | 4852 | 0 | 117215 |
 | pbhogan Signals | 54437 | 6816 | 5950 | 41798 | 3362 | 0 | 112363 |
 | EvilTwin Observer | 65633 | 4255 | 2435 | 20482 | 1467 | 0 | 94271 |
@@ -53,7 +54,7 @@ _Size results are the size of object files from release build with Visual Studio
 | [* nano-signal-slot v2x](https://github.com/NoAvailableAlias/nano-signal-slot/tree/rework) | 852 kb | X | std::forward_list | ! |
 | [* dacap observable](https://github.com/dacap/observable) | 857 kb | - | std::vector | X |
 | [* winglot Signals](https://github.com/winglot/Signals) | 869 kb | - | **std::list | ! |
-| [* fr00b0 nod](https://github.com/fr00b0/nod) | 919 kb | X | std::vector | X |
+| [* fr00b0 nod](https://github.com/fr00b0/nod) | 880 kb | X | std::vector | X |
 | [* Kosta signals-cpp](https://github.com/Kosta-Github/signals-cpp) | 925 kb | X | std::vector | ! |
 | [* cpp11nullptr lsignal](https://github.com/cpp11nullptr/lsignal) | 1035 kb | X | **std::list | ! |
 | [* neolib signal](https://github.com/i42output/neolib) | 2039 kb | - | **std::unordered_map | X |
@@ -79,6 +80,7 @@ _Size results are the size of object files from release build with Visual Studio
 | [amc522 Signal11](https://github.com/amc522/Signal11) | 275 kb | X | std::vector | - |
 | [EvilTwin Observer](http://eviltwingames.com/blog/the-observer-pattern-revisited/) | 282 kb | X | std::vector | - |
 | [pbhogan Signals](https://github.com/pbhogan/Signals) | 286 kb | X | std::set | - |
+| [fr00b0 nod](https://github.com/fr00b0/nod) | 305 kb | X | std::vector | - |
 | [Boost Signals](http://www.boost.org/doc/libs/1_56_0/doc/html/signals.html) | 455 kb | - | ? | - |
 | [neolib signal](https://github.com/i42output/neolib) | 1546 kb | - | **std::unordered_map | - |
 

@@ -29,6 +29,7 @@ add_executable(bench
     benchmark/cpp/benchmark_nls.cpp
     benchmark/cpp/benchmark_nls_st.cpp
     benchmark/cpp/benchmark_nod.cpp
+    benchmark/cpp/benchmark_nod_st.cpp
     benchmark/cpp/benchmark_nss.cpp
     benchmark/cpp/benchmark_nss_v2.cpp
     benchmark/cpp/benchmark_nss_v2_st.cpp

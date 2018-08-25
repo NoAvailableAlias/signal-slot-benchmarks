@@ -446,6 +446,9 @@
     <ClInclude Include="..\benchmark\lib\i42output\include\neolib\singleton.hpp">
       <Filter>Header Files\lib\i42output</Filter>
     </ClInclude>
+    <ClInclude Include="..\benchmark\hpp\benchmark_nod_st.hpp">
+      <Filter>Header Files\benchmark</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\benchmark\cpp\benchmark_asg.cpp">
@@ -573,6 +576,9 @@
     </ClCompile>
     <ClCompile Include="..\benchmark\lib\i42output\src\waitable_event.cpp">
       <Filter>Source Files\lib\i42output</Filter>
+    </ClCompile>
+    <ClCompile Include="..\benchmark\cpp\benchmark_nod_st.cpp">
+      <Filter>Source Files\benchmark</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
