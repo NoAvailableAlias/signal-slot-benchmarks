@@ -35,6 +35,12 @@ Tested Environments
 	</div>
 </div>
 
+Maintainers
+-----------
+
+Generally, implementations that get added to this benchmark project aren't regularly updated by me unless asked to do so.
+If you are a maintainer of a referenced library, I encourage you to fork this project and create pull requests to expedite updates.
+
 Benchmark Algorithms
 --------------------
 

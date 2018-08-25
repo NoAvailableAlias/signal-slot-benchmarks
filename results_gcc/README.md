@@ -7,11 +7,11 @@
 
 | Library | threaded | combined | emission | connect | destruct | construct | total |
 |---------|----------|----------|----------|---------|----------|-----------|-------|
-| * Pal Sigslot | 1166 | 5440 | 70240 | 10716 | 12937 | 163314 | 263813 |
+| ! Pal Sigslot | 1166 | 5440 | 70240 | 10716 | 12937 | 163314 | 263813 |
 | * fr00b0 nod | 994 | 3847 | 73628 | 7021 | 9962 | 164957 | 260409 |
-| * Kosta signals-cpp | 12 | 911 | 27394 | 1279 | 7448 | 192119 | 229164 |
-| * lsignal | 883 | 1932 | 72456 | 3114 | 5665 | 142482 | 226531 |
-| * winglot Signals | 562 | 2868 | 69693 | 6765 | 5610 | 54596 | 140094 |
+| ! Kosta signals-cpp | 12 | 911 | 27394 | 1279 | 7448 | 192119 | 229164 |
+| ! lsignal | 883 | 1932 | 72456 | 3114 | 5665 | 142482 | 226531 |
+| ! winglot Signals | 562 | 2868 | 69693 | 6765 | 5610 | 54596 | 140094 |
 | * neosigslot | 410 | 1687 | 13345 | 3871 | 4309 | 90011 | 113634 |
 | * Boost Signals2 | 56 | 1572 | 17062 | 3668 | 4462 | 15082 | 41902 |
 
@@ -38,11 +38,11 @@ _Size results are the size of object files from release build with Gcc 6.3._
 
 | Library | Build Size | Header Only | Data Structure | Thread Safe |
 | ------- |:----------:|:-----------:| -------------- |:-----------:|
-| [winglot Signals](https://github.com/winglot/Signals) | 122 kb | - | **std::list | X |
-| [Pal Sigslot](https://github.com/palacaze/sigslot) | 132 kb | X | singly linked list | X |
-| [Kosta-Github signals-cpp](https://github.com/Kosta-Github/signals-cpp) | 140 kb | X | std::vector | X |
+| [winglot Signals](https://github.com/winglot/Signals) | 122 kb | - | **std::list | ! |
+| [Pal Sigslot](https://github.com/palacaze/sigslot) | 132 kb | X | singly linked list | ! |
+| [Kosta-Github signals-cpp](https://github.com/Kosta-Github/signals-cpp) | 140 kb | X | std::vector | ! |
 | [fr00b0 nod](https://github.com/fr00b0/nod) | 148 kb | X | std::vector | X |
-| [cpp11nullptr lsignal](https://github.com/cpp11nullptr/lsignal) | 155 kb | X | **std::list | X |
+| [cpp11nullptr lsignal](https://github.com/cpp11nullptr/lsignal) | 155 kb | X | **std::list | ! |
 | [neosigslot](http://www.i42.co.uk/stuff/neosigslot.htm) | 224 kb | - | **std::map | X |
 | [Boost Signals2](http://www.boost.org/doc/libs/1_58_0/doc/html/signals2.html) | 298 kb | ? | ? | X |
 
@@ -62,9 +62,9 @@ _Size results are the size of object files from release build with Gcc 6.3._
 | [amc522 Signal11](https://github.com/amc522/Signal11) | 72 kb | X | std::vector | - |
 | [Boost Signals](http://www.boost.org/doc/libs/1_56_0/doc/html/signals.html) | 96 kb | - | ? | - |
 
-_* Library is designed to be thread safe._
-<br/>
-_** Uses additional data structures._
+| * | ** | ! |
+|:-:|:--:|:-:|
+| _Library is designed to be thread safe_ | _Uses additional data structures_ | **Library has potential thread safety issues** |
 
 Benchmark Algorithms
 --------------------
