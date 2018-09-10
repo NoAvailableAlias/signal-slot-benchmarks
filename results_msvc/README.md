@@ -11,7 +11,7 @@
 | ! nano-signal-slot v2x | 67798 | 4792 | 3785 | 46320 | 2143 | 174 | 125011 |
 | * fr00b0 nod | 64476 | 8834 | 6595 | 23439 | 3524 | 35 | 106902 |
 | ! cpp11nullptr lsignal | 50272 | 3907 | 2162 | 43228 | 1388 | 131 | 101088 |
-| ! Kosta signals-cpp | 72334 | 5955 | 1348 | 13416 | 964 | 1 | 94017 |
+| * Kosta signals-cpp | 70888 | 6131 | 1807 | 13008 | 1235 | 55 | 93124 |
 | * dacap observable | 69077 | 4428 | 6872 | 7498 | 2110 | 14 | 89999 |
 | ! Montellese cpp-signal | 29258 | 5401 | 5111 | 43680 | 2609 | 199 | 86258 |
 | * neolib signal | 65495 | 1459 | 1250 | 6476 | 605 | 35 | 75320 |
@@ -51,11 +51,11 @@ _Size results are the size of object files from release build with Visual Studio
 | ------- |:----------:|:-----------:| -------------- |:-----------:|
 | [* Pal Sigslot](https://github.com/palacaze/sigslot) | 840 kb | X | singly linked list | ! |
 | [* Montellese cpp-signal](https://github.com/Montellese/cpp-signal) | 843 kb | X | std::forward_list | ! |
-| [* nano-signal-slot v2x](https://github.com/NoAvailableAlias/nano-signal-slot/tree/rework) | 852 kb | X | std::forward_list | ! |
+| [* nano-signal-slot v2x](https://github.com/NoAvailableAlias/nano-signal-slot) | 852 kb | X | std::forward_list | ! |
 | [* dacap observable](https://github.com/dacap/observable) | 857 kb | - | std::vector | X |
 | [* winglot Signals](https://github.com/winglot/Signals) | 869 kb | - | **std::list | ! |
 | [* fr00b0 nod](https://github.com/fr00b0/nod) | 880 kb | X | std::vector | X |
-| [* Kosta signals-cpp](https://github.com/Kosta-Github/signals-cpp) | 925 kb | X | std::vector | ! |
+| [* Kosta signals-cpp](https://github.com/Kosta-Github/signals-cpp) | 889 kb | X | std::vector | X |
 | [* cpp11nullptr lsignal](https://github.com/cpp11nullptr/lsignal) | 1035 kb | X | **std::list | ! |
 | [* neolib signal](https://github.com/i42output/neolib) | 2039 kb | - | **std::unordered_map | X |
 | [* Boost Signals2](http://www.boost.org/doc/libs/1_58_0/doc/html/signals2.html) | 2604 kb | - | ? | X |
@@ -64,13 +64,13 @@ _Size results are the size of object files from release build with Visual Studio
 
 | Library | Build Size | Header Only | Data Structure | Thread Safe |
 | ------- |:----------:|:-----------:| -------------- |:-----------:|
-| [nano-signal-slot v1x](https://github.com/NoAvailableAlias/nano-signal-slot) | 164 kb | X | singly linked list | - |
+| [nano-signal-slot v1x](https://github.com/NoAvailableAlias/nano-signal-slot/releases/tag/v1.x) | 164 kb | X | singly linked list | - |
 | [jeffomatic jl_signal](https://github.com/jeffomatic/jl_signal) | 179 kb | - | doubly linked list | - |
 | [Wink-Signals](https://github.com/miguelmartin75/Wink-Signals) | 205 kb | X | std::vector | - |
 | [vdksoft signals](https://github.com/vdksoft/signals) | 209 kb | - | singly linked list | directive |
 | [Montellese cpp-signal](https://github.com/Montellese/cpp-signal) | 212 kb | X | std::forward_list | - |
 | [Pal Sigslot](https://github.com/palacaze/sigslot) | 222 kb | X | singly linked list | - |
-| [nano-signal-slot v2x](https://github.com/NoAvailableAlias/nano-signal-slot/tree/rework) | 229 kb | X | std::forward_list | - |
+| [nano-signal-slot v2x](https://github.com/NoAvailableAlias/nano-signal-slot | 229 kb | X | std::forward_list | - |
 | [SimpleSignal](https://github.com/larspensjo/SimpleSignal) | 235 kb | X | std::vector | - |
 | [supergrover sigslot](https://github.com/supergrover/sigslot) | 244 kb | - | std::list | - |
 | [mwthinker Signal](https://github.com/mwthinker/Signal) | 247 kb | - | std::list | - |
