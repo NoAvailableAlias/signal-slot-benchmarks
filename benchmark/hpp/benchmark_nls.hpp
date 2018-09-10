@@ -39,7 +39,7 @@ class Nls
     static double combined(std::size_t);
     static double threaded(std::size_t);
 
-    static constexpr const char* C_LIB_NAME = "* neolib signal";
+    static constexpr const char* C_LIB_NAME = "* neolib event";
     static constexpr const char* C_LIB_SOURCE_URL = "https://github.com/i42output/neolib";
     static constexpr const char* C_LIB_FILE = "benchmark_nls";
     static constexpr const char* C_LIB_IS_HEADER_ONLY = "-";

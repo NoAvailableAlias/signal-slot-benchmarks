@@ -41,7 +41,7 @@ class Nls_st
     // NOT IMPLEMENTED FOR THIS LIB
     static double threaded(std::size_t);
 
-    static constexpr const char* C_LIB_NAME = "neolib signal";
+    static constexpr const char* C_LIB_NAME = "neolib event";
     static constexpr const char* C_LIB_SOURCE_URL = "https://github.com/i42output/neolib";
     static constexpr const char* C_LIB_FILE = "benchmark_nls_st";
     static constexpr const char* C_LIB_IS_HEADER_ONLY = "-";
