@@ -40,7 +40,7 @@ class Nss_v2_st : public Nano::Observer<>
     static double threaded(std::size_t);
 
     static constexpr const char* C_LIB_NAME = "nano-signal-slot v2x";
-    static constexpr const char* C_LIB_SOURCE_URL = "https://github.com/NoAvailableAlias/nano-signal-slot/tree/rework";
+    static constexpr const char* C_LIB_SOURCE_URL = "https://github.com/NoAvailableAlias/nano-signal-slot";
     static constexpr const char* C_LIB_FILE = "benchmark_nss_v2_st";
     static constexpr const char* C_LIB_IS_HEADER_ONLY = "X";
     static constexpr const char* C_LIB_DATA_STRUCTURE = "std::forward_list";

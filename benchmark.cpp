@@ -39,10 +39,22 @@
 
 #include "benchmark_utility.hpp"
 
-// Extern defined in benchmark_utility.hpp
-std::size_t g_timer_limit = Timer_u(Limit_u(4000)).count();
+// Externs defined in benchmark_utility.hpp
+std::size_t g_timer_limit = Timer_u(Limit_u(1000)).count();
+std::size_t g_number_of_rounds = 2;
 
 //------------------------------------------------------------------------------
+
+template <auto fun_ptr>
+double best_of(std::size_t N)
+{
+    std::vector<double> results;
+    for (std::size_t i = 0; i < g_number_of_rounds; ++i)
+    {
+        results.push_back((*fun_ptr)(N));
+    }
+    return *std::max_element(results.begin(), results.end());
+}
 
 template <typename Benchmark>
 void run_benchmark_class(ImmediateData& records, std::size_t N)
@@ -61,14 +73,16 @@ void run_benchmark_class(ImmediateData& records, std::size_t N)
         // Used for switching policies at runtime
         Benchmark::initialize();
 
-        metrics[C_CONSTRUCTION].push_back(Benchmark::construction(N));
-        metrics[C_DESTRUCTION].push_back(Benchmark::destruction(N));
-        metrics[C_CONNECTION].push_back(Benchmark::connection(N));
-        metrics[C_EMISSION].push_back(Benchmark::emission(N));
-        metrics[C_COMBINED].push_back(Benchmark::combined(N));
+        // TODO add support for graphs in the future by saving N with result
+
+        metrics[C_CONSTRUCTION].push_back(best_of<Benchmark::construction>(N));
+        metrics[C_DESTRUCTION].push_back(best_of<Benchmark::destruction>(N));
+        metrics[C_CONNECTION].push_back(best_of<Benchmark::connection>(N));
+        metrics[C_EMISSION].push_back(best_of<Benchmark::emission>(N));
+        metrics[C_COMBINED].push_back(best_of<Benchmark::combined>(N));
 
         // Benchmark might not have this implemented
-        metrics[C_THREADED].push_back(Benchmark::threaded(N));
+        metrics[C_THREADED].push_back(best_of<Benchmark::threaded>(N));
 
         auto stop = std::chrono::system_clock::now();
         auto stop_out = std::chrono::system_clock::to_time_t(stop);
@@ -347,6 +361,16 @@ int main(int argc, char* argv[])
     }
     // Must compile as x64 or else wrapping might happen
     g_timer_limit = Timer_u(Limit_u(user_limit)).count();
+    std::cin.ignore();
+
+    std::cout << "Enter the number of rounds per benchmark (best of N runs): ";
+
+    if (!(std::cin >> user_limit))
+    {
+        return 1;
+    }
+    // This will really start discarding watt hours
+    g_number_of_rounds = user_limit;
     std::cin.ignore();
 
     // Make sure to set process to high priority

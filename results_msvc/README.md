@@ -70,7 +70,7 @@ _Size results are the size of object files from release build with Visual Studio
 | [vdksoft signals](https://github.com/vdksoft/signals) | 209 kb | - | singly linked list | directive |
 | [Montellese cpp-signal](https://github.com/Montellese/cpp-signal) | 212 kb | X | std::forward_list | - |
 | [Pal Sigslot](https://github.com/palacaze/sigslot) | 222 kb | X | singly linked list | - |
-| [nano-signal-slot v2x](https://github.com/NoAvailableAlias/nano-signal-slot | 229 kb | X | std::forward_list | - |
+| [nano-signal-slot v2x](https://github.com/NoAvailableAlias/nano-signal-slot) | 229 kb | X | std::forward_list | - |
 | [SimpleSignal](https://github.com/larspensjo/SimpleSignal) | 235 kb | X | std::vector | - |
 | [supergrover sigslot](https://github.com/supergrover/sigslot) | 244 kb | - | std::list | - |
 | [mwthinker Signal](https://github.com/mwthinker/Signal) | 247 kb | - | std::list | - |
@@ -95,11 +95,11 @@ _The individual benchmark algorithms are completely generic through templates._
 
 | Algorithm | Description |
 | --------- | ----------- |
-| [validation_assert](https://github.com/NoAvailableAlias/signal-slot-benchmarks/blob/master/benchmark.hpp#L20) | Make sure each signal implementation is functioning correctly. |
-| [construction](https://github.com/NoAvailableAlias/signal-slot-benchmarks/blob/master/benchmark.hpp#L49) | Time the construction of a Signal to an N number of Foo instances. |
-| [destruction](https://github.com/NoAvailableAlias/signal-slot-benchmarks/blob/master/benchmark.hpp#L70) | Time the destruction of a Signal and associated Connections to N number of Foo instances. |
-| [connection](https://github.com/NoAvailableAlias/signal-slot-benchmarks/blob/master/benchmark.hpp#L100) | Time Signal connections to a randomized N number of Foo instances. |
-| [emission](https://github.com/NoAvailableAlias/signal-slot-benchmarks/blob/master/benchmark.hpp#L128) | Time the duration of an N slot emission. |
-| [combined](https://github.com/NoAvailableAlias/signal-slot-benchmarks/blob/master/benchmark.hpp#L158) | Time construction, destruction, connection, and emission together. |
-| [threaded](https://github.com/NoAvailableAlias/signal-slot-benchmarks/blob/master/benchmark.hpp#L185) | Same as the "combined" test except threaded using a shared Signal. |
+| [validation_assert](https://github.com/NoAvailableAlias/signal-slot-benchmarks/blob/master/benchmark.hpp#L27) | Make sure each signal implementation is functioning correctly. |
+| [construction](https://github.com/NoAvailableAlias/signal-slot-benchmarks/blob/master/benchmark.hpp#L56) | Time the construction of a Signal to an N number of Foo instances. |
+| [destruction](https://github.com/NoAvailableAlias/signal-slot-benchmarks/blob/master/benchmark.hpp#L77) | Time the destruction of a Signal and associated Connections to N number of Foo instances. |
+| [connection](https://github.com/NoAvailableAlias/signal-slot-benchmarks/blob/master/benchmark.hpp#L105) | Time Signal connections to a randomized N number of Foo instances. |
+| [emission](https://github.com/NoAvailableAlias/signal-slot-benchmarks/blob/master/benchmark.hpp#L130) | Time the duration of an N slot emission. |
+| [combined](https://github.com/NoAvailableAlias/signal-slot-benchmarks/blob/master/benchmark.hpp#L157) | Time construction, destruction, connection, and emission together. |
+| [threaded](https://github.com/NoAvailableAlias/signal-slot-benchmarks/blob/master/benchmark.hpp#L182) | Same as the "combined" test except threaded using a shared Signal. |
 <br/>

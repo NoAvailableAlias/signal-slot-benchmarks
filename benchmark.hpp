@@ -15,6 +15,13 @@ class Benchmark
         return N / std::chrono::duration_cast<Delta_u>(Timer_u(limit / count)).count();
     }
 
+    static void randomize_indices(std::size_t N)
+    {
+        s_indices.resize(N);
+        std::generate(s_indices.begin(), s_indices.end(), IncrementFill());
+        std::shuffle(s_indices.begin(), s_indices.end(), s_rng);
+    }
+
     public:
 
     static void validation_assert(std::size_t N)
@@ -69,15 +76,13 @@ class Benchmark
 
     static double destruction(std::size_t N)
     {
+        randomize_indices(N);
+
         std::size_t count = 1;
         std::size_t elapsed = 0;
 
-        s_indices.resize(N);
-        std::generate(s_indices.begin(), s_indices.end(), IncrementFill());
-
         for (; elapsed < g_timer_limit; ++count)
         {
-            std::shuffle(s_indices.begin(), s_indices.end(), s_rng);
             {
                 Subject subject;
                 std::vector<Foo> foo(N);
@@ -99,16 +104,13 @@ class Benchmark
 
     static double connection(std::size_t N)
     {
+        randomize_indices(N);
+
         std::size_t count = 1;
         std::size_t elapsed = 0;
 
-        s_indices.resize(N);
-        std::generate(s_indices.begin(), s_indices.end(), IncrementFill());
-
         for (; elapsed < g_timer_limit; ++count)
         {
-            std::shuffle(s_indices.begin(), s_indices.end(), s_rng);
-
             Subject subject;
             std::vector<Foo> foo(N);
 
@@ -127,16 +129,13 @@ class Benchmark
 
     static double emission(std::size_t N)
     {
+        randomize_indices(N);
+
         std::size_t count = 1;
         std::size_t elapsed = 0;
 
-        s_indices.resize(N);
-        std::generate(s_indices.begin(), s_indices.end(), IncrementFill());
-        
         for (; elapsed < g_timer_limit; ++count)
         {
-            std::shuffle(s_indices.begin(), s_indices.end(), s_rng);
-
             Subject subject;
             std::vector<Foo> foo(N);
 
@@ -157,15 +156,13 @@ class Benchmark
 
     static double combined(std::size_t N)
     {
+        randomize_indices(N);
+
         std::size_t count = 1;
         std::size_t elapsed = 0;
 
-        s_indices.resize(N);
-        std::generate(s_indices.begin(), s_indices.end(), IncrementFill());
-        std::shuffle(s_indices.begin(), s_indices.end(), s_rng);
-
         s_timer.reset();
-        
+
         for (; elapsed < g_timer_limit; ++count, elapsed = s_timer.count<Timer_u>())
         {
             Subject subject;
@@ -191,7 +188,7 @@ class Benchmark
             std::size_t count = 1;
             std::size_t elapsed = 0;
 
-            Rng rng (s_rng);
+            Rng rng(s_rng);
             ChronoTimer timer;
 
             for (; elapsed < g_timer_limit; ++count, elapsed = timer.count<Timer_u>())

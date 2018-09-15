@@ -51,6 +51,8 @@ constexpr const char* C_THREADED = "threaded";
 
 // The milliseconds per benchmark sample
 extern std::size_t g_timer_limit;
+// The number of rounds of "best of N"
+extern std::size_t g_number_of_rounds;
 
 //------------------------------------------------------------------------------
 

@@ -40,7 +40,7 @@ class Nss : public Nano_Deprecated::Observer
     static double threaded(std::size_t);
 
     static constexpr const char* C_LIB_NAME = "nano-signal-slot v1x";
-    static constexpr const char* C_LIB_SOURCE_URL = "https://github.com/NoAvailableAlias/nano-signal-slot";
+    static constexpr const char* C_LIB_SOURCE_URL = "https://github.com/NoAvailableAlias/nano-signal-slot/releases/tag/v1.x";
     static constexpr const char* C_LIB_FILE = "benchmark_nss";
     static constexpr const char* C_LIB_IS_HEADER_ONLY = "X";
     static constexpr const char* C_LIB_DATA_STRUCTURE = "singly linked list";
