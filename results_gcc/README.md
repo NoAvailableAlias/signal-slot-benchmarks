@@ -64,7 +64,7 @@ _Size results are the size of object files from release build with Gcc 6.3._
 
 | * | ** | ! |
 |:-:|:--:|:-:|
-| _Library is designed to be thread safe_ | _Uses additional data structures_ | **Library has potential thread safety issues** |
+| _Library is designed to be thread safe_ | _Uses additional data structures_ | **Library has open thread safety issues** |
 
 Benchmark Algorithms
 --------------------

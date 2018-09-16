@@ -51,7 +51,7 @@ _Size results are the size of object files from release build with Visual Studio
 | ------- |:----------:|:-----------:| -------------- |:-----------:|
 | [* Pal Sigslot](https://github.com/palacaze/sigslot) | 840 kb | X | singly linked list | ! |
 | [* Montellese cpp-signal](https://github.com/Montellese/cpp-signal) | 843 kb | X | std::forward_list | ! |
-| [* nano-signal-slot v2x](https://github.com/NoAvailableAlias/nano-signal-slot) | 852 kb | X | std::forward_list | ! |
+| [* nano-signal-slot v2x](https://github.com/NoAvailableAlias/nano-signal-slot/tree/rework) | 852 kb | X | std::forward_list | X |
 | [* dacap observable](https://github.com/dacap/observable) | 857 kb | - | std::vector | X |
 | [* winglot Signals](https://github.com/winglot/Signals) | 869 kb | - | **std::list | ! |
 | [* fr00b0 nod](https://github.com/fr00b0/nod) | 880 kb | X | std::vector | X |
@@ -70,7 +70,7 @@ _Size results are the size of object files from release build with Visual Studio
 | [vdksoft signals](https://github.com/vdksoft/signals) | 209 kb | - | singly linked list | directive |
 | [Montellese cpp-signal](https://github.com/Montellese/cpp-signal) | 212 kb | X | std::forward_list | - |
 | [Pal Sigslot](https://github.com/palacaze/sigslot) | 222 kb | X | singly linked list | - |
-| [nano-signal-slot v2x](https://github.com/NoAvailableAlias/nano-signal-slot) | 229 kb | X | std::forward_list | - |
+| [nano-signal-slot v2x](https://github.com/NoAvailableAlias/nano-signal-slot/tree/rework) | 229 kb | X | std::forward_list | - |
 | [SimpleSignal](https://github.com/larspensjo/SimpleSignal) | 235 kb | X | std::vector | - |
 | [supergrover sigslot](https://github.com/supergrover/sigslot) | 244 kb | - | std::list | - |
 | [mwthinker Signal](https://github.com/mwthinker/Signal) | 247 kb | - | std::list | - |
@@ -86,7 +86,7 @@ _Size results are the size of object files from release build with Visual Studio
 
 | * | ** | ! |
 |:-:|:--:|:-:|
-| _Library is designed to be thread safe_ | _Uses additional data structures_ | **Library has potential thread safety issues** |
+| _Library is designed to be thread safe_ | _Uses additional data structures_ | **Library has open thread safety issues** |
 
 Benchmark Algorithms
 --------------------
