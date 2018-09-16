@@ -53,6 +53,9 @@ add_executable(bench
     benchmark/lib/i42output/src/thread.cpp
     benchmark/lib/i42output/src/timer.cpp
     benchmark/lib/i42output/src/waitable_event.cpp
+    benchmark/lib/CppFakeIt/libfastsignals/src/connection.cpp
+    benchmark/lib/CppFakeIt/libfastsignals/src/function_detail.cpp
+    benchmark/lib/CppFakeIt/libfastsignals/src/signal_impl.cpp
 )
 
 set_target_properties(bench PROPERTIES CXX_EXTENSIONS NO)

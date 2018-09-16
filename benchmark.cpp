@@ -15,6 +15,7 @@
 #include "benchmark/hpp/benchmark_jls.hpp"
 #include "benchmark/hpp/benchmark_jos.hpp"
 #include "benchmark/hpp/benchmark_ksc.hpp"
+#include "benchmark/hpp/benchmark_lfs.hpp"
 #include "benchmark/hpp/benchmark_lss.hpp"
 #include "benchmark/hpp/benchmark_mws.hpp"
 #include "benchmark/hpp/benchmark_nls.hpp"
@@ -119,6 +120,7 @@ ImmediateData run_all_benchmarks(std::size_t begin, std::size_t end)
         run_benchmark_class<Jls>(records, N);
         run_benchmark_class<Jos>(records, N);
         run_benchmark_class<Ksc>(records, N);
+        run_benchmark_class<Lfs>(records, N);
         run_benchmark_class<Lss>(records, N);
         run_benchmark_class<Mws>(records, N);
         run_benchmark_class<Nls>(records, N);
@@ -158,6 +160,7 @@ void run_all_validation_tests(std::size_t N)
     Jls::validate_assert(N);
     Jos::validate_assert(N);
     Ksc::validate_assert(N);
+    Lfs::validate_assert(N);
     Lss::validate_assert(N);
     Mws::validate_assert(N);
     Nls::validate_assert(N);
@@ -260,6 +263,7 @@ void output_metrics_report(T& ost)
     output_metrics_report_row<Jls>(ost);
     output_metrics_report_row<Jos>(ost);
     output_metrics_report_row<Ksc>(ost);
+    output_metrics_report_row<Lfs>(ost);
     output_metrics_report_row<Lss>(ost);
     output_metrics_report_row<Mws>(ost);
     output_metrics_report_row<Nls>(ost);

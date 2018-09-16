@@ -117,6 +117,12 @@
     <Filter Include="Source Files\lib\i42output">
       <UniqueIdentifier>{df805c2b-4296-4403-97ce-9201eaa212e1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\lib\CppFakeIt">
+      <UniqueIdentifier>{953945f2-4e40-4ed8-8bd2-70215ac118f9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\lib\CppFakeIt">
+      <UniqueIdentifier>{408ef3ff-0f4d-47a0-9622-59a2248a9b40}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\benchmark\hpp\benchmark_asg.hpp">
@@ -449,6 +455,36 @@
     <ClInclude Include="..\benchmark\hpp\benchmark_nod_st.hpp">
       <Filter>Header Files\benchmark</Filter>
     </ClInclude>
+    <ClInclude Include="..\benchmark\lib\CppFakeIt\libfastsignals\include\bind_weak.h">
+      <Filter>Header Files\lib\CppFakeIt</Filter>
+    </ClInclude>
+    <ClInclude Include="..\benchmark\lib\CppFakeIt\libfastsignals\include\combiners.h">
+      <Filter>Header Files\lib\CppFakeIt</Filter>
+    </ClInclude>
+    <ClInclude Include="..\benchmark\lib\CppFakeIt\libfastsignals\include\function.h">
+      <Filter>Header Files\lib\CppFakeIt</Filter>
+    </ClInclude>
+    <ClInclude Include="..\benchmark\lib\CppFakeIt\libfastsignals\include\function_detail.h">
+      <Filter>Header Files\lib\CppFakeIt</Filter>
+    </ClInclude>
+    <ClInclude Include="..\benchmark\lib\CppFakeIt\libfastsignals\include\signal.h">
+      <Filter>Header Files\lib\CppFakeIt</Filter>
+    </ClInclude>
+    <ClInclude Include="..\benchmark\lib\CppFakeIt\libfastsignals\include\signal_impl.h">
+      <Filter>Header Files\lib\CppFakeIt</Filter>
+    </ClInclude>
+    <ClInclude Include="..\benchmark\lib\CppFakeIt\libfastsignals\include\spin_mutex.h">
+      <Filter>Header Files\lib\CppFakeIt</Filter>
+    </ClInclude>
+    <ClInclude Include="..\benchmark\lib\CppFakeIt\libfastsignals\include\type_traits.h">
+      <Filter>Header Files\lib\CppFakeIt</Filter>
+    </ClInclude>
+    <ClInclude Include="..\benchmark\hpp\benchmark_lfs.hpp">
+      <Filter>Header Files\benchmark</Filter>
+    </ClInclude>
+    <ClInclude Include="..\benchmark\lib\CppFakeIt\libfastsignals\include\lfs_connection.h">
+      <Filter>Header Files\lib\CppFakeIt</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\benchmark\cpp\benchmark_asg.cpp">
@@ -579,6 +615,18 @@
     </ClCompile>
     <ClCompile Include="..\benchmark\cpp\benchmark_nod_st.cpp">
       <Filter>Source Files\benchmark</Filter>
+    </ClCompile>
+    <ClCompile Include="..\benchmark\lib\CppFakeIt\libfastsignals\src\function_detail.cpp">
+      <Filter>Source Files\lib\CppFakeIt</Filter>
+    </ClCompile>
+    <ClCompile Include="..\benchmark\lib\CppFakeIt\libfastsignals\src\signal_impl.cpp">
+      <Filter>Source Files\lib\CppFakeIt</Filter>
+    </ClCompile>
+    <ClCompile Include="..\benchmark\cpp\benchmark_lfs.cpp">
+      <Filter>Source Files\benchmark</Filter>
+    </ClCompile>
+    <ClCompile Include="..\benchmark\lib\CppFakeIt\libfastsignals\src\lfs_connection.cpp">
+      <Filter>Source Files\lib\CppFakeIt</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -230,6 +230,7 @@
     <ClInclude Include="..\benchmark\hpp\benchmark_jls.hpp" />
     <ClInclude Include="..\benchmark\hpp\benchmark_jos.hpp" />
     <ClInclude Include="..\benchmark\hpp\benchmark_ksc.hpp" />
+    <ClInclude Include="..\benchmark\hpp\benchmark_lfs.hpp" />
     <ClInclude Include="..\benchmark\hpp\benchmark_lss.hpp" />
     <ClInclude Include="..\benchmark\hpp\benchmark_mws.hpp" />
     <ClInclude Include="..\benchmark\hpp\benchmark_nls.hpp" />
@@ -250,6 +251,15 @@
     <ClInclude Include="..\benchmark\lib\amc522\signal11\Signal.h" />
     <ClInclude Include="..\benchmark\lib\Ansoulom\cpp-observe\cpp_observe.hpp" />
     <ClInclude Include="..\benchmark\lib\cpp11nullptr\lsignal\lsignal.h" />
+    <ClInclude Include="..\benchmark\lib\CppFakeIt\libfastsignals\include\bind_weak.h" />
+    <ClInclude Include="..\benchmark\lib\CppFakeIt\libfastsignals\include\combiners.h" />
+    <ClInclude Include="..\benchmark\lib\CppFakeIt\libfastsignals\include\function.h" />
+    <ClInclude Include="..\benchmark\lib\CppFakeIt\libfastsignals\include\function_detail.h" />
+    <ClInclude Include="..\benchmark\lib\CppFakeIt\libfastsignals\include\lfs_connection.h" />
+    <ClInclude Include="..\benchmark\lib\CppFakeIt\libfastsignals\include\signal.h" />
+    <ClInclude Include="..\benchmark\lib\CppFakeIt\libfastsignals\include\signal_impl.h" />
+    <ClInclude Include="..\benchmark\lib\CppFakeIt\libfastsignals\include\spin_mutex.h" />
+    <ClInclude Include="..\benchmark\lib\CppFakeIt\libfastsignals\include\type_traits.h" />
     <ClInclude Include="..\benchmark\lib\dacap\obs\dacap_connection.h" />
     <ClInclude Include="..\benchmark\lib\dacap\obs\dacap_signal.h" />
     <ClInclude Include="..\benchmark\lib\dacap\obs\observable.h" />
@@ -342,6 +352,7 @@
     <ClCompile Include="..\benchmark\cpp\benchmark_jls.cpp" />
     <ClCompile Include="..\benchmark\cpp\benchmark_jos.cpp" />
     <ClCompile Include="..\benchmark\cpp\benchmark_ksc.cpp" />
+    <ClCompile Include="..\benchmark\cpp\benchmark_lfs.cpp" />
     <ClCompile Include="..\benchmark\cpp\benchmark_lss.cpp" />
     <ClCompile Include="..\benchmark\cpp\benchmark_mws.cpp" />
     <ClCompile Include="..\benchmark\cpp\benchmark_nls.cpp" />
@@ -359,6 +370,9 @@
     <ClCompile Include="..\benchmark\cpp\benchmark_wnk.cpp" />
     <ClCompile Include="..\benchmark\cpp\benchmark_wsg.cpp" />
     <ClCompile Include="..\benchmark\cpp\benchmark_yas.cpp" />
+    <ClCompile Include="..\benchmark\lib\CppFakeIt\libfastsignals\src\function_detail.cpp" />
+    <ClCompile Include="..\benchmark\lib\CppFakeIt\libfastsignals\src\lfs_connection.cpp" />
+    <ClCompile Include="..\benchmark\lib\CppFakeIt\libfastsignals\src\signal_impl.cpp" />
     <ClCompile Include="..\benchmark\lib\dacap\obs\dacap_connection.cpp" />
     <ClCompile Include="..\benchmark\lib\i42output\src\async_task.cpp" />
     <ClCompile Include="..\benchmark\lib\i42output\src\async_thread.cpp" />

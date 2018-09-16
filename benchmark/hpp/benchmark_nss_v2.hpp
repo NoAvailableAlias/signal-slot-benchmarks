@@ -1,7 +1,5 @@
 #pragma once
 
-#include <mutex>
-
 #include "../lib/NoAvailableAlias/nano-signal-slot-v2x/nano_signal_slot.hpp"
 #include "../lib/NoAvailableAlias/nano-signal-slot-v2x/nano_mutex.hpp"
 
