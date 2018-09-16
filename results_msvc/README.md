@@ -51,14 +51,14 @@ _Size results are the size of object files from release build with Visual Studio
 | Library | Build Size | Header Only | Data Structure | Thread Safe |
 | ------- |:----------:|:-----------:| -------------- |:-----------:|
 | [* libfastsignals](https://github.com/CppFakeIt/FastSignals) | 764 kb | - | std::vector | X |
-| [* Montellese cpp-signal](https://github.com/Montellese/cpp-signal) | 780 kb | X | std::forward_list | ! |
-| [* Pal Sigslot](https://github.com/palacaze/sigslot) | 783 kb | X | singly linked list | ! |
+| [! Montellese cpp-signal](https://github.com/Montellese/cpp-signal) | 780 kb | X | std::forward_list | ! |
+| [! Pal Sigslot](https://github.com/palacaze/sigslot) | 783 kb | X | singly linked list | ! |
 | [* dacap observable](https://github.com/dacap/observable) | 798 kb | - | std::vector | X |
 | [* nano-signal-slot v2x](https://github.com/NoAvailableAlias/nano-signal-slot/tree/rework) | 803 kb | X | std::vector | X |
-| [* winglot Signals](https://github.com/winglot/Signals) | 812 kb | - | **std::list | ! |
+| [! winglot Signals](https://github.com/winglot/Signals) | 812 kb | - | **std::list | ! |
 | [* fr00b0 nod](https://github.com/fr00b0/nod) | 870 kb | X | std::vector | X |
 | [* Kosta signals-cpp](https://github.com/Kosta-Github/signals-cpp) | 880 kb | X | std::vector | X |
-| [* cpp11nullptr lsignal](https://github.com/cpp11nullptr/lsignal) | 985 kb | X | **std::list | ! |
+| [! cpp11nullptr lsignal](https://github.com/cpp11nullptr/lsignal) | 985 kb | X | **std::list | ! |
 | [* neolib event](https://github.com/i42output/neolib) | 2078 kb | - | **std::unordered_map | X |
 | [* Boost Signals2](http://www.boost.org/doc/libs/1_58_0/doc/html/signals2.html) | 2549 kb | - | ? | X |
 
