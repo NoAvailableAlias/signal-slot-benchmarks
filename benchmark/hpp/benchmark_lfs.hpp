@@ -6,7 +6,7 @@
 
 class Lfs
 {
-    is::signals::connection reg;
+    is::signals::scoped_connection reg;
 
     NOINLINE(void handler(Rng& rng))
     {
