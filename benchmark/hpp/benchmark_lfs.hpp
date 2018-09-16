@@ -39,10 +39,10 @@ class Lfs
     static double combined(std::size_t);
     static double threaded(std::size_t);
 
-    static constexpr const char* C_LIB_NAME = "* libfastsignals";
+    static constexpr const char* C_LIB_NAME = "* CppFakeIt FastSignals";
     static constexpr const char* C_LIB_SOURCE_URL = "https://github.com/CppFakeIt/FastSignals";
     static constexpr const char* C_LIB_FILE = "benchmark_lfs";
     static constexpr const char* C_LIB_IS_HEADER_ONLY = "-";
-    static constexpr const char* C_LIB_DATA_STRUCTURE = "**std::vector";
+    static constexpr const char* C_LIB_DATA_STRUCTURE = "std::vector";
     static constexpr const char* C_LIB_IS_THREAD_SAFE = "X";
 };
