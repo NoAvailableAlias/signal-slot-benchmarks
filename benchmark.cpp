@@ -41,7 +41,7 @@
 #include "benchmark_utility.hpp"
 
 // Externs defined in benchmark_utility.hpp
-std::size_t g_timer_limit = Timer_u(Limit_u(1000)).count();
+std::size_t g_timer_limit = Timer_u(Limit_u(100)).count();
 std::size_t g_number_of_rounds = 2;
 
 //------------------------------------------------------------------------------
@@ -58,7 +58,7 @@ double best_of(std::size_t N)
 }
 
 template <typename Benchmark>
-void run_benchmark_class(ImmediateData& records, std::size_t N)
+void run_benchmark_class(BenchmarkClassResults& records, std::size_t N)
 {
     try
     {
@@ -74,16 +74,14 @@ void run_benchmark_class(ImmediateData& records, std::size_t N)
         // Used for switching policies at runtime
         Benchmark::initialize();
 
-        // TODO add support for graphs in the future by saving N with result
-
-        metrics[C_CONSTRUCTION].push_back(best_of<Benchmark::construction>(N));
-        metrics[C_DESTRUCTION].push_back(best_of<Benchmark::destruction>(N));
-        metrics[C_CONNECTION].push_back(best_of<Benchmark::connection>(N));
-        metrics[C_EMISSION].push_back(best_of<Benchmark::emission>(N));
-        metrics[C_COMBINED].push_back(best_of<Benchmark::combined>(N));
+        metrics[C_CONSTRUCTION].emplace_back(N, best_of<Benchmark::construction>(N));
+        metrics[C_DESTRUCTION].emplace_back(N, best_of<Benchmark::destruction>(N));
+        metrics[C_CONNECTION].emplace_back(N, best_of<Benchmark::connection>(N));
+        metrics[C_EMISSION].emplace_back(N, best_of<Benchmark::emission>(N));
+        metrics[C_COMBINED].emplace_back(N, best_of<Benchmark::combined>(N));
 
         // Benchmark might not have this implemented
-        metrics[C_THREADED].push_back(best_of<Benchmark::threaded>(N));
+        metrics[C_THREADED].emplace_back(N, best_of<Benchmark::threaded>(N));
 
         auto stop = std::chrono::system_clock::now();
         auto stop_out = std::chrono::system_clock::to_time_t(stop);
@@ -99,9 +97,9 @@ void run_benchmark_class(ImmediateData& records, std::size_t N)
 
 //------------------------------------------------------------------------------
 
-ImmediateData run_all_benchmarks(std::size_t begin, std::size_t end)
+BenchmarkClassResults run_all_benchmarks(std::size_t begin, std::size_t end)
 {
-    ImmediateData records;
+    BenchmarkClassResults records;
 
     // Double the input size N for every iteration
     for (auto N = begin; N <= end; N *= 2)
@@ -183,13 +181,13 @@ void run_all_validation_tests(std::size_t N)
 //------------------------------------------------------------------------------
 
 template <typename T>
-void output_perf_report_header(RelativeResults const& first_result_row, T& ost)
+void output_perf_report_header(ReportMethodResults const& first_result_row, T& ost)
 {
     std::string header_first_row("| Library | ");
 
-    for (auto const& column : first_result_row)
+    for (auto const& [op_name, result] : first_result_row)
     {
-        header_first_row.append(column.first);
+        header_first_row.append(op_name);
         header_first_row.append(" | ");
     }
     header_first_row += "total |";
@@ -251,6 +249,7 @@ void output_metrics_report(T& ost)
 {
     ost << "| Library | Build Size | Header Only | Data Structure | Thread Safe |\n"
         << "| ------- |:----------:|:-----------:| -------------- |:-----------:|\n";
+
     output_metrics_report_row<Aco>(ost);
     output_metrics_report_row<Asg>(ost);
     output_metrics_report_row<Bs1>(ost);
@@ -286,31 +285,30 @@ void output_metrics_report(T& ost)
 //------------------------------------------------------------------------------
 
 template <typename T>
-void output_reports(ImmediateData const& records, T& ost)
+void output_reports(BenchmarkClassResults const& records, T& ost)
 {
-    RelativeData result_average;
-    OrderedData result_order;
+    ReportClassResults result_average;
+    ReportOrderedResults result_order;
 
     // Process and sort results by total score (sum of column averages)
 
-    for (auto const& row : records)
+    for (auto const& [lib_name, results] : records)
     {
-        auto const& lib_name = row.first;
-
         double score = 0.0;
 
-        for (auto const& column : row.second)
+        for (auto const& [op_name, vals] : results)
         {
-            auto const& op_name = column.first;
-            auto const& val = column.second;
-
-            double average = std::accumulate(std::begin(val),
-                std::end(val), 1.0) / (double)val.size();
+            auto sum = 0.0;
+            for (auto const& [N, result] : vals)
+            {
+                sum += result;
+            }
+            auto average = sum / (double)vals.size();
 
             result_average[lib_name][op_name] = average;
             score += average;
         }
-        result_order[score] = OrderedResults { lib_name, &result_average[lib_name] };
+        result_order[score] = ReportOrderedResult { lib_name, &result_average[lib_name] };
     }
 
     // Output in markdown format

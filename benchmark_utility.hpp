@@ -29,19 +29,20 @@ typedef std::chrono::milliseconds Limit_u;
 typedef std::chrono::duration<double, std::milli> Delta_u;
 
 // Used for gathering raw lib benchmark scores
-typedef std::map<const char*, std::vector<double>> ImmediateResults;
-typedef std::map<const char*, ImmediateResults> ImmediateData;
+typedef std::pair<std::size_t, double> BenchmarkRawResult;
+typedef std::map<const char*, std::vector<BenchmarkRawResult>> BenchmarkMethodResults;
+typedef std::map<const char*, BenchmarkMethodResults> BenchmarkClassResults;
 
 // Used for post-benchmark processing and report output
-typedef std::map<const char*, double> RelativeResults;
-typedef std::map<const char*, RelativeResults> RelativeData;
-typedef std::pair<const char*, RelativeResults*> OrderedResults;
-typedef std::map<double, OrderedResults> OrderedData;
+typedef std::map<const char*, double> ReportMethodResults;
+typedef std::map<const char*, ReportMethodResults> ReportClassResults;
+typedef std::pair<const char*, ReportMethodResults*> ReportOrderedResult;
+typedef std::map<double, ReportOrderedResult> ReportOrderedResults;
 
 // Used for the initialization of jlsignal
 constexpr const std::size_t C_JLSIGNAL_MAX = 1024;
 
-// Constants used to map to a particular benchmark algorithm
+// Constants used to map to a particular benchmark method
 constexpr const char* C_CONSTRUCTION = "construct";
 constexpr const char* C_DESTRUCTION = "destruct";
 constexpr const char* C_CONNECTION = "connect";
@@ -61,7 +62,7 @@ typedef std::shared_ptr<void> SlotScope;
 template <typename Deleter>
 SlotScope make_slot_scope(Deleter&& deleter)
 {
-    return SlotScope(reinterpret_cast<void*>(0xDEADC0DE), deleter);
+    return SlotScope(nullptr, deleter);
 }
 
 //------------------------------------------------------------------------------
