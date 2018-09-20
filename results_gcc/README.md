@@ -29,7 +29,6 @@
 | joanrieu signal11 | - | 3978 | 15947 | 10148 | 12002 | 187540 | 229615 |
 | supergrover sigslot | - | 1330 | 79462 | 4164 | 2092 | 138097 | 225145 |
 | EvilTwin Observer | - | 1717 | 47223 | 2741 | 5406 | 141403 | 198489 |
-| Boost Signals | - | 1279 | 32548 | 1973 | 5992 | 37808 | 79601 |
 
 ___
 _Size results are the size of object files from release build with Gcc 6.3._
@@ -60,7 +59,6 @@ _Size results are the size of object files from release build with Gcc 6.3._
 | [Pal Sigslot ST](https://github.com/palacaze/sigslot) | 59 kb | X | singly linked list | - |
 | [EvilTwin Observer](http://eviltwingames.com/blog/the-observer-pattern-revisited/) | 69 kb | X | std::vector | - |
 | [amc522 Signal11](https://github.com/amc522/Signal11) | 72 kb | X | std::vector | - |
-| [Boost Signals](http://www.boost.org/doc/libs/1_56_0/doc/html/signals.html) | 96 kb | - | ? | - |
 
 | * | ** | ! |
 |:-:|:--:|:-:|

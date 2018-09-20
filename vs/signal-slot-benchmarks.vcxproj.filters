@@ -293,9 +293,6 @@
     <ClInclude Include="..\benchmark\lib\yassi\yassi.h">
       <Filter>Header Files\lib\yassi</Filter>
     </ClInclude>
-    <ClInclude Include="..\benchmark\hpp\benchmark_bs1.hpp">
-      <Filter>Header Files\benchmark</Filter>
-    </ClInclude>
     <ClInclude Include="..\benchmark\hpp\benchmark_bs2.hpp">
       <Filter>Header Files\benchmark</Filter>
     </ClInclude>
@@ -555,9 +552,6 @@
     </ClCompile>
     <ClCompile Include="..\benchmark\lib\winglot\Signals\W_Slot.cpp">
       <Filter>Source Files\lib\winglot</Filter>
-    </ClCompile>
-    <ClCompile Include="..\benchmark\cpp\benchmark_bs1.cpp">
-      <Filter>Source Files\benchmark</Filter>
     </ClCompile>
     <ClCompile Include="..\benchmark\cpp\benchmark_bs2.cpp">
       <Filter>Source Files\benchmark</Filter>

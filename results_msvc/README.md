@@ -41,7 +41,6 @@
 | EvilTwin Observer | 64144 | 4459 | 2578 | 20920 | 1586 | 0 | 93687 |
 | neolib event | 63633 | 1646 | 1352 | 6643 | 656 | 0 | 73930 |
 | supergrover sigslot | 12535 | 2199 | 2651 | 47166 | 1135 | 0 | 65687 |
-| Boost Signals | 8200 | 3328 | 1240 | 12565 | 771 | 0 | 26104 |
 
 ___
 _Size results are the size of object files from release build with Visual Studio 17._
@@ -71,7 +70,7 @@ _Size results are the size of object files from release build with Visual Studio
 | [Wink-Signals](https://github.com/miguelmartin75/Wink-Signals) | 207 kb | X | std::vector | - |
 | [Montellese cpp-signal](https://github.com/Montellese/cpp-signal) | 211 kb | X | std::forward_list | - |
 | [vdksoft signals](https://github.com/vdksoft/signals) | 214 kb | - | singly linked list | directive |
-| [nano-signal-slot v2x](https://github.com/NoAvailableAlias/nano-signal-slot/tree/rework) | 219 kb | X | std::vector | - |
+| [nano-signal-slot v2x](https://github.com/NoAvailableAlias/nano-signal-slot/tree/rework) | 217 kb | X | std::vector | - |
 | [Pal Sigslot](https://github.com/palacaze/sigslot) | 221 kb | X | singly linked list | - |
 | [SimpleSignal](https://github.com/larspensjo/SimpleSignal) | 242 kb | X | std::vector | - |
 | [supergrover sigslot](https://github.com/supergrover/sigslot) | 243 kb | - | std::list | - |
@@ -83,7 +82,6 @@ _Size results are the size of object files from release build with Visual Studio
 | [EvilTwin Observer](http://eviltwingames.com/blog/the-observer-pattern-revisited/) | 291 kb | X | std::vector | - |
 | [pbhogan Signals](https://github.com/pbhogan/Signals) | 292 kb | X | std::set | - |
 | [fr00b0 nod](https://github.com/fr00b0/nod) | 302 kb | X | std::vector | - |
-| [Boost Signals](http://www.boost.org/doc/libs/1_56_0/doc/html/signals.html) | 465 kb | - | ? | - |
 | [neolib event](https://github.com/i42output/neolib) | 1573 kb | - | **std::unordered_map | - |
 
 | * | ** | ! |

@@ -14,7 +14,6 @@ add_executable(bench
     benchmark.cpp
     benchmark/cpp/benchmark_aco.cpp
     benchmark/cpp/benchmark_asg.cpp
-    benchmark/cpp/benchmark_bs1.cpp
     benchmark/cpp/benchmark_bs2.cpp
     benchmark/cpp/benchmark_cls.cpp
     benchmark/cpp/benchmark_cps.cpp

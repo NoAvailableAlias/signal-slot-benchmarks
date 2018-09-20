@@ -220,7 +220,6 @@
     <ClInclude Include="..\benchmark.hpp" />
     <ClInclude Include="..\benchmark\hpp\benchmark_aco.hpp" />
     <ClInclude Include="..\benchmark\hpp\benchmark_asg.hpp" />
-    <ClInclude Include="..\benchmark\hpp\benchmark_bs1.hpp" />
     <ClInclude Include="..\benchmark\hpp\benchmark_bs2.hpp" />
     <ClInclude Include="..\benchmark\hpp\benchmark_cls.hpp" />
     <ClInclude Include="..\benchmark\hpp\benchmark_cps.hpp" />
@@ -342,7 +341,6 @@
     <ClCompile Include="..\benchmark.cpp" />
     <ClCompile Include="..\benchmark\cpp\benchmark_aco.cpp" />
     <ClCompile Include="..\benchmark\cpp\benchmark_asg.cpp" />
-    <ClCompile Include="..\benchmark\cpp\benchmark_bs1.cpp" />
     <ClCompile Include="..\benchmark\cpp\benchmark_bs2.cpp" />
     <ClCompile Include="..\benchmark\cpp\benchmark_cls.cpp" />
     <ClCompile Include="..\benchmark\cpp\benchmark_cps.cpp" />

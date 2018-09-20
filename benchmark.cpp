@@ -5,7 +5,6 @@
 
 #include "benchmark/hpp/benchmark_aco.hpp"
 #include "benchmark/hpp/benchmark_asg.hpp"
-#include "benchmark/hpp/benchmark_bs1.hpp"
 #include "benchmark/hpp/benchmark_bs2.hpp"
 #include "benchmark/hpp/benchmark_cls.hpp"
 #include "benchmark/hpp/benchmark_cps.hpp"
@@ -42,7 +41,9 @@
 
 // Externs defined in benchmark_utility.hpp
 std::size_t g_timer_limit = Timer_u(Limit_u(100)).count();
-std::size_t g_number_of_rounds = 2;
+std::size_t g_best_of_limit = 2;
+std::size_t g_start_test_size = 8;
+std::size_t g_ending_test_size = 256;
 
 //------------------------------------------------------------------------------
 
@@ -50,7 +51,7 @@ template <auto fun_ptr>
 double best_of(std::size_t N)
 {
     std::vector<double> results;
-    for (std::size_t i = 0; i < g_number_of_rounds; ++i)
+    for (std::size_t i = 0; i < g_best_of_limit; ++i)
     {
         results.push_back((*fun_ptr)(N));
     }
@@ -108,7 +109,6 @@ BenchmarkClassResults run_all_benchmarks(std::size_t begin, std::size_t end)
 
         run_benchmark_class<Aco>(records, N);
         run_benchmark_class<Asg>(records, N);
-        run_benchmark_class<Bs1>(records, N);
         run_benchmark_class<Bs2>(records, N);
         run_benchmark_class<Cls>(records, N);
         run_benchmark_class<Cps>(records, N);
@@ -148,7 +148,6 @@ void run_all_validation_tests(std::size_t N)
 {
     Aco::validate_assert(N);
     Asg::validate_assert(N);
-    Bs1::validate_assert(N);
     Bs2::validate_assert(N);
     Cls::validate_assert(N);
     Cps::validate_assert(N);
@@ -252,7 +251,6 @@ void output_metrics_report(T& ost)
 
     output_metrics_report_row<Aco>(ost);
     output_metrics_report_row<Asg>(ost);
-    output_metrics_report_row<Bs1>(ost);
     output_metrics_report_row<Bs2>(ost);
     output_metrics_report_row<Cls>(ost);
     output_metrics_report_row<Cps>(ost);
@@ -285,6 +283,45 @@ void output_metrics_report(T& ost)
 //------------------------------------------------------------------------------
 
 template <typename T>
+void output_plotly_reports(BenchmarkClassResults const& records, T& ost)
+{
+    std::string lib_columns;
+    for (auto const& [lib_name, results] : records)
+    {
+        lib_columns += std::string("\"") + std::string(lib_name) + ", y;\",";
+    }
+    ost << "\"Test Size N, x;\"," << lib_columns;
+
+    for (auto c = g_start_test_size; c <= g_ending_test_size; c *= 2)
+    {
+        ost << "\n" << std::to_string(c) << ",";
+        for (auto const& [lib_name, results] : records)
+        {
+            auto score = 0.0;
+            auto sum = 0.0;
+            auto ops = 0;
+
+            for (auto const& [op_name, vals] : results)
+            {
+                for (auto const& [N, result] : vals)
+                {
+                    if (c == N)
+                    {
+                        sum += result;
+                    }
+                }
+                ++ops;
+            }
+            score = sum / (double)ops;
+            ost << std::to_string(score) << ",";
+        }
+    }
+    ost << "\n";
+}
+
+//------------------------------------------------------------------------------
+
+template <typename T>
 void output_reports(BenchmarkClassResults const& records, T& ost)
 {
     ReportClassResults result_average;
@@ -294,7 +331,7 @@ void output_reports(BenchmarkClassResults const& records, T& ost)
 
     for (auto const& [lib_name, results] : records)
     {
-        double score = 0.0;
+        auto score = 0.0;
 
         for (auto const& [op_name, vals] : results)
         {
@@ -338,22 +375,22 @@ void output_reports(BenchmarkClassResults const& records, T& ost)
     }
 
     output_metrics_report(ost);
+    output_plotly_reports(records, ost);
 }
 
 //------------------------------------------------------------------------------
 
 int main(int argc, char* argv[])
 {
-    // Jl_signal uses a compile time allocator for maximum performance
-    // (however, this allocator cannot be resized at runtime)
+    // Jl_signal uses a custom allocator for maximum performance
     jl::StaticSignalConnectionAllocator<C_JLSIGNAL_MAX> signal_con_allocator;
     jl::StaticObserverConnectionAllocator<C_JLSIGNAL_MAX> observer_con_allocator;
     jl::SignalBase::SetCommonConnectionAllocator(&signal_con_allocator);
     jl::SignalObserver::SetCommonConnectionAllocator(&observer_con_allocator);
 
     std::size_t user_limit = 0;
-    std::size_t start_test_size = 2;
-    std::size_t maximum_test_size = 64;
+    std::size_t start_test_size = g_start_test_size;
+    std::size_t maximum_test_size = g_ending_test_size;
 
     std::cout << "Enter the milliseconds per sample (4000 takes several hours): ";
 
@@ -371,8 +408,8 @@ int main(int argc, char* argv[])
     {
         return 1;
     }
-    // This will really start discarding watt hours
-    g_number_of_rounds = user_limit;
+    // Time to start discarding watt hours
+    g_best_of_limit = user_limit;
     std::cin.ignore();
 
     // Make sure to set process to high priority
