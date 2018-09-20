@@ -1,6 +1,6 @@
-// mutex.hpp
+// raii.hpp
 /*
- *  Copyright (c) 2018-present, Leigh Johnston.
+ *  Copyright (c) 2007 Leigh Johnston.
  *
  *  All rights reserved.
  *
@@ -36,64 +36,47 @@
 #pragma once
 
 #include "neolib.hpp"
-#include <mutex>
-#include <memory>
-#include "lifetime.hpp"
 
 namespace neolib
 {
-	struct null_mutex
+	struct scoped_flag
 	{
-		void lock() {}
-		void unlock() noexcept {}
-		bool try_lock() { return true; }
+		bool& iFlag;
+		bool iSaved;
+		bool iIgnore;
+		scoped_flag(bool& aFlag, bool aValue = true) : iFlag{ aFlag }, iSaved{ aFlag }, iIgnore{ false } { iFlag = aValue; }
+		~scoped_flag() { if (!iIgnore) iFlag = iSaved; }
+		void ignore() { iIgnore = true; }
 	};
 
-	template<class Mutex>
-	class destroyable_mutex_lock_guard
+	struct scoped_atomic_flag
 	{
-	public:
-		typedef Mutex mutex_type;
-		typedef std::shared_ptr<mutex_type> shared_mutex_type;
-	public:
-		explicit destroyable_mutex_lock_guard(mutex_type& aMutex) :
-			iMutex{ aMutex }, iMutexDestroyed{ aMutex }, iLocked{ false }
-		{
-			iMutex.lock();
-			iLocked = true;
-		}
-		explicit destroyable_mutex_lock_guard(shared_mutex_type& aMutex) :
-			iMutex{ *aMutex }, iMutexDestroyed{ *aMutex }, iLocked{ false }
-		{
-			iMutex.lock();
-			iLocked = true;
-		}
-		destroyable_mutex_lock_guard(mutex_type& aMutex, std::adopt_lock_t) :
-			iMutex{ aMutex }, iMutexDestroyed{ aMutex }, iLocked{ true }
-		{
-		}
-		destroyable_mutex_lock_guard(shared_mutex_type& aMutex, std::adopt_lock_t) :
-			iMutex{ *aMutex }, iMutexDestroyed{ *aMutex }, iLocked{ true }
-		{
-		}
-		~destroyable_mutex_lock_guard() noexcept
-		{
-			unlock();
-		}
-		destroyable_mutex_lock_guard(const destroyable_mutex_lock_guard&) = delete;
-		destroyable_mutex_lock_guard& operator=(const destroyable_mutex_lock_guard&) = delete;
-	public:
-		void unlock()
-		{
-			if (iLocked && !iMutexDestroyed)
-			{
-				iMutex.unlock();
-				iLocked = false;
-			}
-		}
-	private:
-		mutex_type& iMutex;
-		destroyed_flag iMutexDestroyed;
-		bool iLocked;
+		std::atomic<bool>& iFlag;
+		bool iSaved;
+		bool iIgnore;
+		scoped_atomic_flag(std::atomic<bool>& aFlag, bool aValue = true) : iFlag{ aFlag }, iSaved{ aFlag }, iIgnore{ false } { iFlag = aValue; }
+		~scoped_atomic_flag() { if (!iIgnore) iFlag = iSaved; }
+		void ignore() { iIgnore = true; }
 	};
+
+	struct scoped_counter
+	{
+		uint32_t& iCounter;
+		bool iIgnore;
+		scoped_counter(uint32_t& aCounter) : iCounter(aCounter), iIgnore{ false } { ++iCounter; }
+		~scoped_counter() { if (!iIgnore) --iCounter; }
+		void ignore() { iIgnore = true; }
+	};
+
+	template <typename T>
+	struct scoped_pointer
+	{
+		T*& iPointer;
+		T* iSaved;
+		bool iIgnore;
+		scoped_pointer(T*& aPointer, T* aValue) : iPointer{ aPointer }, iSaved{ aPointer }, iIgnore{ false } { iPointer = aValue; }
+		~scoped_pointer() { if (!iIgnore) iPointer = iSaved; }
+		void ignore() { iIgnore = true; }
+	};
+
 }

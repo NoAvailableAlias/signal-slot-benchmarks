@@ -482,6 +482,9 @@
     <ClInclude Include="..\benchmark\lib\CppFakeIt\libfastsignals\include\lfs_connection.h">
       <Filter>Header Files\lib\CppFakeIt</Filter>
     </ClInclude>
+    <ClInclude Include="..\benchmark\lib\i42output\include\neolib\raii.hpp">
+      <Filter>Header Files\lib\i42output</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\benchmark\cpp\benchmark_asg.cpp">

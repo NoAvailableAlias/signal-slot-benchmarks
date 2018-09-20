@@ -283,6 +283,7 @@
     <ClInclude Include="..\benchmark\lib\i42output\include\neolib\mutex.hpp" />
     <ClInclude Include="..\benchmark\lib\i42output\include\neolib\neolib.hpp" />
     <ClInclude Include="..\benchmark\lib\i42output\include\neolib\noncopyable.hpp" />
+    <ClInclude Include="..\benchmark\lib\i42output\include\neolib\raii.hpp" />
     <ClInclude Include="..\benchmark\lib\i42output\include\neolib\signal.hpp" />
     <ClInclude Include="..\benchmark\lib\i42output\include\neolib\singleton.hpp" />
     <ClInclude Include="..\benchmark\lib\i42output\include\neolib\slot.hpp" />
