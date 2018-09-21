@@ -1,7 +1,7 @@
 
 # GCC (Linux)
 
-**_Higher score is better._** _N / (sample size / count)._
+**_Higher score is better._** _[2, 64] / (sample size / count)._
 
 ### Performance of Thread Safe Libraries
 

@@ -1,46 +1,47 @@
 
 # MSVC (Windows)
 
-**_Higher score is better._** _N / (sample size / count)._
+**_Higher score is better._** _[8, 128] / (sample size / count)._
 
 ### Performance of Thread Safe Libraries
 
 | Library | construct | destruct | connect | emission | combined | threaded | total |
 |---------|-----------|----------|---------|----------|----------|----------|-------|
-| * nano-signal-slot v2x | 61880 | 7813 | 5825 | 45853 | 3447 | 128 | 124945 |
-| ! Pal Sigslot | 63631 | 7825 | 6035 | 41766 | 3446 | 244 | 122948 |
-| * fr00b0 nod | 65557 | 9067 | 6651 | 25923 | 3617 | 61 | 110877 |
-| ! cpp11nullptr lsignal | 47560 | 3994 | 2220 | 42046 | 1419 | 134 | 97373 |
-| * Kosta signals-cpp | 71664 | 6152 | 1779 | 13044 | 1176 | 58 | 93872 |
-| * CppFakeIt FastSignals | 55014 | 7437 | 4302 | 18429 | 2496 | 38 | 87716 |
-| ! Montellese cpp-signal | 29392 | 5764 | 5400 | 43614 | 2731 | 190 | 87090 |
-| * dacap observable | 64656 | 4449 | 6200 | 7994 | 2035 | 19 | 85353 |
-| * neolib event | 63534 | 1482 | 1259 | 6465 | 606 | 38 | 73384 |
-| ! winglot Signals | 11116 | 3861 | 4038 | 42521 | 1791 | 167 | 63494 |
-| * Boost Signals2 | 7870 | 2992 | 2060 | 10448 | 959 | 2 | 24332 |
+| ! Pal Sigslot | 125777 | 8667 | 5887 | 64411 | 3470 | 266 | 208479 |
+| * nano-signal-slot v2x | 115402 | 7448 | 5816 | 70373 | 3193 | 76 | 202309 |
+| * fr00b0 nod | 129692 | 11296 | 8102 | 35240 | 4309 | 25 | 188664 |
+| ! cpp11nullptr lsignal | 102679 | 4372 | 2292 | 65882 | 1481 | 119 | 176824 |
+| * Kosta signals-cpp | 149810 | 7234 | 1177 | 16495 | 913 | 46 | 175676 |
+| * dacap observable | 139509 | 4617 | 5751 | 10291 | 2075 | 42 | 162284 |
+| * CppFakeIt FastSignals | 103698 | 7599 | 5311 | 23588 | 2674 | 26 | 142897 |
+| * neolib event | 131924 | 1827 | 1326 | 4238 | 640 | 44 | 140000 |
+| ! Montellese cpp-signal | 44846 | 6100 | 6017 | 67446 | 2895 | 178 | 127483 |
+| ! winglot Signals | 12309 | 3745 | 4110 | 68162 | 1700 | 149 | 90175 |
+| * Boost Signals2 | 11712 | 3443 | 2028 | 13419 | 1061 | 5 | 31669 |
+| [Interactive Graph](https://plot.ly/~NoAvailableAlias/1/) |
 
 ### Performance of Thread Unsafe Libraries
 
 | Library | construct | destruct | connect | emission | combined | threaded | total |
 |---------|-----------|----------|---------|----------|----------|----------|-------|
-| jeffomatic jl_signal | 53737 | 17581 | 40136 | 48671 | 11937 | 0 | 172062 |
-| nano-signal-slot v1x | 76478 | 10985 | 8743 | 48521 | 4812 | 0 | 149540 |
-| Wink-Signals | 72447 | 11593 | 9273 | 50016 | 5206 | 0 | 148535 |
-| Montellese cpp-signal | 72580 | 10448 | 8240 | 47651 | 4872 | 0 | 143791 |
-| SimpleSignal | 73261 | 9486 | 7735 | 46699 | 4528 | 0 | 141709 |
-| nano-signal-slot v2x | 72962 | 10251 | 6579 | 47038 | 4115 | 0 | 140946 |
-| Yassi | 72640 | 8797 | 6531 | 48806 | 3894 | 0 | 140667 |
-| Pal Sigslot | 71590 | 8231 | 7881 | 44962 | 3900 | 0 | 136564 |
-| mwthinker Signal | 62734 | 7518 | 5769 | 47797 | 3346 | 0 | 127165 |
-| pbhogan Signals | 61947 | 7069 | 6782 | 47333 | 3550 | 0 | 126682 |
-| amc522 Signal11 | 63139 | 7696 | 5426 | 46645 | 3278 | 0 | 126184 |
-| vdksoft signals | 63638 | 6659 | 5906 | 46779 | 3185 | 0 | 126166 |
-| fr00b0 nod | 70167 | 13608 | 8625 | 27375 | 4918 | 0 | 124693 |
-| Ansoulom cpp-observe | 40044 | 12732 | 7594 | 48271 | 4588 | 0 | 113228 |
-| joanrieu signal11 | 45049 | 10032 | 8146 | 43754 | 4397 | 0 | 111378 |
-| EvilTwin Observer | 64144 | 4459 | 2578 | 20920 | 1586 | 0 | 93687 |
-| neolib event | 63633 | 1646 | 1352 | 6643 | 656 | 0 | 73930 |
-| supergrover sigslot | 12535 | 2199 | 2651 | 47166 | 1135 | 0 | 65687 |
+| nano-signal-slot v1x | 167640 | 12265 | 10105 | 72938 | 5525 | 0 | 268473 |
+| jeffomatic jl_signal | 96591 | 18847 | 56596 | 74872 | 12844 | 0 | 259750 |
+| Wink-Signals | 153561 | 13170 | 11199 | 76016 | 5672 | 0 | 259618 |
+| Montellese cpp-signal | 155507 | 10822 | 9603 | 72912 | 4915 | 0 | 253759 |
+| SimpleSignal | 156376 | 10228 | 8712 | 70443 | 4659 | 0 | 250418 |
+| Yassi | 154765 | 8708 | 7816 | 73733 | 3785 | 0 | 248808 |
+| nano-signal-slot v2x | 147127 | 9740 | 6448 | 71960 | 3781 | 0 | 239056 |
+| Pal Sigslot | 144024 | 8719 | 7505 | 68303 | 4090 | 0 | 232642 |
+| mwthinker Signal | 136564 | 7595 | 6474 | 73049 | 3448 | 0 | 227130 |
+| vdksoft signals | 139598 | 6376 | 4163 | 71449 | 2489 | 0 | 224075 |
+| pbhogan Signals | 136437 | 7954 | 7018 | 67331 | 3685 | 0 | 222426 |
+| joanrieu signal11 | 125499 | 11445 | 8434 | 65201 | 4718 | 0 | 215296 |
+| fr00b0 nod | 141315 | 17913 | 11339 | 37225 | 6080 | 0 | 213872 |
+| amc522 Signal11 | 120526 | 8378 | 5681 | 70554 | 3343 | 0 | 208483 |
+| EvilTwin Observer | 138807 | 4469 | 2579 | 26669 | 1593 | 0 | 174116 |
+| Ansoulom cpp-observe | 65788 | 13888 | 7984 | 72320 | 4999 | 0 | 164979 |
+| neolib event | 136577 | 2001 | 1399 | 4223 | 680 | 0 | 144880 |
+| supergrover sigslot | 15560 | 1850 | 2755 | 72903 | 1005 | 0 | 94073 |
 
 ___
 _Size results are the size of object files from release build with Visual Studio 17._
@@ -58,7 +59,7 @@ _Size results are the size of object files from release build with Visual Studio
 | [* fr00b0 nod](https://github.com/fr00b0/nod) | 870 kb | X | std::vector | X |
 | [* Kosta signals-cpp](https://github.com/Kosta-Github/signals-cpp) | 880 kb | X | std::vector | X |
 | [! cpp11nullptr lsignal](https://github.com/cpp11nullptr/lsignal) | 985 kb | X | **std::list | ! |
-| [* neolib event](https://github.com/i42output/neolib) | 2078 kb | - | **std::unordered_map | X |
+| [* neolib event](https://github.com/i42output/neolib) | 2345 kb | - | **std::unordered_map | X |
 | [* Boost Signals2](http://www.boost.org/doc/libs/1_58_0/doc/html/signals2.html) | 2549 kb | - | ? | X |
 
 ### Metrics of Thread Unsafe Libraries
@@ -82,7 +83,7 @@ _Size results are the size of object files from release build with Visual Studio
 | [EvilTwin Observer](http://eviltwingames.com/blog/the-observer-pattern-revisited/) | 291 kb | X | std::vector | - |
 | [pbhogan Signals](https://github.com/pbhogan/Signals) | 292 kb | X | std::set | - |
 | [fr00b0 nod](https://github.com/fr00b0/nod) | 302 kb | X | std::vector | - |
-| [neolib event](https://github.com/i42output/neolib) | 1573 kb | - | **std::unordered_map | - |
+| [neolib event](https://github.com/i42output/neolib) | 1840 kb | - | **std::unordered_map | - |
 
 | * | ** | ! |
 |:-:|:--:|:-:|

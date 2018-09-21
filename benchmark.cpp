@@ -43,7 +43,7 @@
 std::size_t g_timer_limit = Timer_u(Limit_u(100)).count();
 std::size_t g_best_of_limit = 2;
 std::size_t g_start_test_size = 8;
-std::size_t g_ending_test_size = 256;
+std::size_t g_ending_test_size = 128;
 
 //------------------------------------------------------------------------------
 
