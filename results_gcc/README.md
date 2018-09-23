@@ -5,7 +5,7 @@
 
 ### Performance of Thread Safe Libraries
 
-| Library | threaded | combined | emission | connect | destruct | construct | total |
+| Library | threaded | combined | emission | connect | destruct | construct | score |
 |---------|----------|----------|----------|---------|----------|-----------|-------|
 | ! Pal Sigslot | 1166 | 5440 | 70240 | 10716 | 12937 | 163314 | 263813 |
 | * fr00b0 nod | 994 | 3847 | 73628 | 7021 | 9962 | 164957 | 260409 |
@@ -17,7 +17,7 @@
 
 ### Performance of Thread Unsafe Libraries
 
-| Library | threaded | combined | emission | connect | destruct | construct | total |
+| Library | threaded | combined | emission | connect | destruct | construct | score |
 |---------|----------|----------|----------|---------|----------|-----------|-------|
 | jeffomatic jl_signal | - | 14402 | 83513 | 66056 | 20536 | 124488 | 308996 |
 | Pal Sigslot ST | - | 6131 | 79574 | 13636 | 12923 | 174087 | 286351 |
@@ -60,9 +60,9 @@ _Size results are the size of object files from release build with Gcc 6.3._
 | [EvilTwin Observer](http://eviltwingames.com/blog/the-observer-pattern-revisited/) | 69 kb | X | std::vector | - |
 | [amc522 Signal11](https://github.com/amc522/Signal11) | 72 kb | X | std::vector | - |
 
-| * | ** | ! |
-|:-:|:--:|:-:|
-| _Library is designed to be thread safe_ | _Uses additional data structures_ | **Library has open thread safety issues** |
+| * | ** | ! | [] |
+|:-:|:--:|:-:|:--:|
+| _Supports thread-safety_ | _Uses other containers_ | **Has thread-safety issues** | Excluded from final score |
 
 Benchmark Algorithms
 --------------------
