@@ -43,7 +43,7 @@
 std::size_t g_timer_limit = Timer_u(Limit_u(100)).count();
 std::size_t g_best_of_limit = 2;
 std::size_t g_start_test_size = 8;
-std::size_t g_ending_test_size = 128;
+std::size_t g_ending_test_size = 256;
 
 //------------------------------------------------------------------------------
 
@@ -81,7 +81,7 @@ void run_benchmark_class(BenchmarkClassResults& records, std::size_t N)
         metrics[C_EMISSION].emplace_back(N, best_of<Benchmark::emission>(N));
         metrics[C_COMBINED].emplace_back(N, best_of<Benchmark::combined>(N));
 
-        // Benchmark might not have this implemented
+        // Only thread safe benchmark classes will have this implemented
         metrics[C_THREADED].emplace_back(N, best_of<Benchmark::threaded>(N));
 
         auto stop = std::chrono::system_clock::now();
@@ -189,7 +189,7 @@ void output_perf_report_header(ReportMethodResults const& first_result_row, T& o
         header_first_row.append(op_name);
         header_first_row.append(" | ");
     }
-    header_first_row += "total |";
+    header_first_row += "score |";
 
     ost << "\n" << header_first_row << "\n";
 
@@ -303,6 +303,11 @@ void output_plotly_reports(BenchmarkClassResults const& records, T& ost)
 
             for (auto const& [op_name, vals] : results)
             {
+                if (op_name[0] == '[')
+                {
+                    continue;
+                }
+
                 for (auto const& [N, result] : vals)
                 {
                     if (c == N)
@@ -343,7 +348,11 @@ void output_reports(BenchmarkClassResults const& records, T& ost)
             auto average = sum / (double)vals.size();
 
             result_average[lib_name][op_name] = average;
-            score += average;
+
+            if (op_name[0] != '[')
+            {
+                score += average;
+            }
         }
         result_order[score] = ReportOrderedResult { lib_name, &result_average[lib_name] };
     }
