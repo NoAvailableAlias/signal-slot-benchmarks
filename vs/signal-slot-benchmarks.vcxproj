@@ -262,6 +262,7 @@
     <ClInclude Include="..\benchmark\lib\CppFakeIt\libfastsignals\include\function.h" />
     <ClInclude Include="..\benchmark\lib\CppFakeIt\libfastsignals\include\function_detail.h" />
     <ClInclude Include="..\benchmark\lib\CppFakeIt\libfastsignals\include\lfs_connection.h" />
+    <ClInclude Include="..\benchmark\lib\CppFakeIt\libfastsignals\include\msvc_autolink.h" />
     <ClInclude Include="..\benchmark\lib\CppFakeIt\libfastsignals\include\signal.h" />
     <ClInclude Include="..\benchmark\lib\CppFakeIt\libfastsignals\include\signal_impl.h" />
     <ClInclude Include="..\benchmark\lib\CppFakeIt\libfastsignals\include\spin_mutex.h" />

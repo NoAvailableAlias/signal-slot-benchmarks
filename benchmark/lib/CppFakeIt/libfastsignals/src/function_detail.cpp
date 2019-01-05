@@ -5,46 +5,55 @@
 namespace is::signals::detail
 {
 
-packed_function::packed_function(packed_function&& other)
+packed_function::packed_function(packed_function&& other) noexcept
+	: m_proxy(move_proxy_from(std::move(other)))
 {
-	if (other.is_buffer_allocated())
-	{
-		m_proxy = other.m_proxy->clone(&m_buffer);
-	}
-	else
-	{
-		m_proxy = other.m_proxy;
-		other.m_proxy = nullptr;
-	}
 }
 
 packed_function::packed_function(const packed_function& other)
+	: m_proxy(clone_proxy_from(other))
 {
-	m_proxy = other.m_proxy->clone(&m_buffer);
 }
 
-packed_function& packed_function::operator=(packed_function&& other)
+packed_function& packed_function::operator=(packed_function&& other) noexcept
 {
-	if (other.is_buffer_allocated())
-	{
-		// There are no strong exception safety since we cannot allocate
-		//  new object on buffer and than reset same buffer.
-		reset();
-		m_proxy = other.m_proxy->clone(&m_buffer);
-	}
-	else
-	{
-		reset();
-		std::swap(m_proxy, other.m_proxy);
-	}
+	assert(this != &other);
+	reset();
+	m_proxy = move_proxy_from(std::move(other));
 	return *this;
+}
+
+base_function_proxy* packed_function::move_proxy_from(packed_function&& other) noexcept
+{
+	auto proxy = other.m_proxy ? other.m_proxy->move(&m_buffer) : nullptr;
+	other.m_proxy = nullptr;
+	return proxy;
+}
+
+base_function_proxy* packed_function::clone_proxy_from(const packed_function& other)
+{
+	return other.m_proxy ? other.m_proxy->clone(&m_buffer) : nullptr;
 }
 
 packed_function& packed_function::operator=(const packed_function& other)
 {
-	auto* proxy = other.m_proxy->clone(&m_buffer);
-	reset();
-	m_proxy = proxy;
+	if (this != &other)
+	{
+		if (other.is_buffer_allocated() && is_buffer_allocated())
+		{
+			// "This" and "other" are using SBO. Safe assignment must use copy+move
+			*this = packed_function(other);
+		}
+		else
+		{
+			// Buffer is used either by "this" or by "other" or not used at all.
+			// If this uses buffer then other's proxy is null or allocated on heap, so clone won't overwrite buffer
+			// If this uses heap or null then other's proxy can safely use buffer because reset() won't access buffer
+			auto newProxy = clone_proxy_from(other);
+			reset();
+			m_proxy = newProxy;
+		}
+	}
 	return *this;
 }
 
@@ -80,10 +89,8 @@ base_function_proxy& packed_function::unwrap() const
 
 bool packed_function::is_buffer_allocated() const noexcept
 {
-	const std::byte* bufferStart = reinterpret_cast<const std::byte*>(&m_buffer);
-	const std::byte* bufferEnd = reinterpret_cast<const std::byte*>(&m_buffer + 1);
-	const std::byte* proxy = reinterpret_cast<const std::byte*>(m_proxy);
-	return (proxy >= bufferStart && proxy < bufferEnd);
+	return std::less_equal<const void*>()(&m_buffer[0], m_proxy)
+		&& std::less<const void*>()(m_proxy, &m_buffer[1]);
 }
 
 } // namespace is::signals::detail

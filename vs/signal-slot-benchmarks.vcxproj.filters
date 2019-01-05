@@ -512,6 +512,9 @@
     <ClInclude Include="..\benchmark\hpp\benchmark_css.hpp">
       <Filter>Header Files\benchmark</Filter>
     </ClInclude>
+    <ClInclude Include="..\benchmark\lib\CppFakeIt\libfastsignals\include\msvc_autolink.h">
+      <Filter>Header Files\lib\CppFakeIt</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\benchmark\cpp\benchmark_asg.cpp">

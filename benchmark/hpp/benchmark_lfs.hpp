@@ -1,5 +1,6 @@
 #pragma once
 
+#include "../lib/CppFakeIt/libfastsignals/include/lfs_connection.h"
 #include "../lib/CppFakeIt/libfastsignals/include/signal.h"
 
 #include "../../benchmark.hpp"

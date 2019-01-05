@@ -17,12 +17,14 @@ public:
 
 	void remove_all() noexcept;
 
+	size_t count() const noexcept;
+
 	template <class Combiner, class Result, class Signature, class... Args>
 	Result invoke(Args... args) const
 	{
 		packed_function slot;
-		size_t slotIndex = static_cast<size_t>(-1);
-		uint64_t slotId = 0;
+		size_t slotIndex = 0;
+		uint64_t slotId = 1;
 
 		if constexpr (std::is_same_v<Result, void>)
 		{
@@ -46,7 +48,6 @@ private:
 	bool get_next_slot(packed_function& slot, size_t& expectedIndex, uint64_t& nextId) const;
 
 	mutable spin_mutex m_mutex;
-	// TODO: (performance) use single std::vector for functions and IDs
 	std::vector<packed_function> m_functions;
 	std::vector<uint64_t> m_ids;
 	uint64_t m_nextId = 1;

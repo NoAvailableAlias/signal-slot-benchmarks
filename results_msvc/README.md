@@ -13,7 +13,7 @@
 | ! winglot Signals | 14517 | 3504 | 4123 | 75309 | 1653 | 140 | 84728 |
 | ! cpp11nullptr lsignal | 159804 | 4845 | 2343 | 73981 | 1547 | 127 | 82842 |
 | * fr00b0 nod | 191200 | 11588 | 8582 | 40919 | 4503 | 27 | 65618 |
-| * CppFakeIt FastSignals | 132089 | 4514 | 5664 | 24384 | 2008 | 24 | 36594 |
+| * CppFakeIt FastSignals | 138503 | 5020 | 5608 | 27332 | 2140 | 33 | 40133 |
 | * Kosta signals-cpp | 227593 | 7232 | 1025 | 16958 | 808 | 43 | 26065 |
 | * dacap observable | 208903 | 4539 | 6317 | 10039 | 2123 | 40 | 23058 |
 | * Boost Signals2 | 13516 | 3544 | 2146 | 14152 | 1119 | 6 | 20968 |
@@ -51,7 +51,7 @@ _Size results are the size of object files from release build with Visual Studio
 
 | Library | Build Size | Header Only | Data Structure | Thread Safe |
 | ------- |:----------:|:-----------:| -------------- |:-----------:|
-| [* CppFakeIt FastSignals](https://github.com/CppFakeIt/FastSignals) | 738 kb | - | std::vector | X |
+| [* CppFakeIt FastSignals](https://github.com/CppFakeIt/FastSignals) | 748 kb | - | std::vector | X |
 | [! Montellese cpp-signal](https://github.com/Montellese/cpp-signal) | 754 kb | X | std::forward_list | ! |
 | [! Pal Sigslot](https://github.com/palacaze/sigslot) | 758 kb | X | singly linked list | ! |
 | [* nano-signal-slot v2x](https://github.com/NoAvailableAlias/nano-signal-slot/tree/rework) | 769 kb | X | std::vector | X |
