@@ -123,6 +123,12 @@
     <Filter Include="Header Files\lib\CppFakeIt">
       <UniqueIdentifier>{408ef3ff-0f4d-47a0-9622-59a2248a9b40}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\lib\copperspice">
+      <UniqueIdentifier>{334eb96f-b53d-46cf-aafd-e1a6027a8b4d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\lib\copperspice">
+      <UniqueIdentifier>{d2a37173-b19a-484a-8de5-147939f14671}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\benchmark\hpp\benchmark_asg.hpp">
@@ -485,6 +491,27 @@
     <ClInclude Include="..\benchmark\lib\i42output\include\neolib\raii.hpp">
       <Filter>Header Files\lib\i42output</Filter>
     </ClInclude>
+    <ClInclude Include="..\benchmark\lib\copperspice\cs_signal\src\cs_internal.h">
+      <Filter>Header Files\lib\copperspice</Filter>
+    </ClInclude>
+    <ClInclude Include="..\benchmark\lib\copperspice\cs_signal\src\cs_macro.h">
+      <Filter>Header Files\lib\copperspice</Filter>
+    </ClInclude>
+    <ClInclude Include="..\benchmark\lib\copperspice\cs_signal\src\cs_signal.h">
+      <Filter>Header Files\lib\copperspice</Filter>
+    </ClInclude>
+    <ClInclude Include="..\benchmark\lib\copperspice\cs_signal\src\cs_slot.h">
+      <Filter>Header Files\lib\copperspice</Filter>
+    </ClInclude>
+    <ClInclude Include="..\benchmark\lib\copperspice\cs_signal\src\rcu_guarded.hpp">
+      <Filter>Header Files\lib\copperspice</Filter>
+    </ClInclude>
+    <ClInclude Include="..\benchmark\lib\copperspice\cs_signal\src\rcu_list.hpp">
+      <Filter>Header Files\lib\copperspice</Filter>
+    </ClInclude>
+    <ClInclude Include="..\benchmark\hpp\benchmark_css.hpp">
+      <Filter>Header Files\benchmark</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\benchmark\cpp\benchmark_asg.cpp">
@@ -624,6 +651,15 @@
     </ClCompile>
     <ClCompile Include="..\benchmark\lib\CppFakeIt\libfastsignals\src\lfs_connection.cpp">
       <Filter>Source Files\lib\CppFakeIt</Filter>
+    </ClCompile>
+    <ClCompile Include="..\benchmark\lib\copperspice\cs_signal\src\cs_signal.cpp">
+      <Filter>Source Files\lib\copperspice</Filter>
+    </ClCompile>
+    <ClCompile Include="..\benchmark\lib\copperspice\cs_signal\src\cs_slot.cpp">
+      <Filter>Source Files\lib\copperspice</Filter>
+    </ClCompile>
+    <ClCompile Include="..\benchmark\cpp\benchmark_css.cpp">
+      <Filter>Source Files\benchmark</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

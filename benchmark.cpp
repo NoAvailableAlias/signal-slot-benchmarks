@@ -9,6 +9,7 @@
 #include "benchmark/hpp/benchmark_cls.hpp"
 #include "benchmark/hpp/benchmark_cps.hpp"
 #include "benchmark/hpp/benchmark_cps_st.hpp"
+#include "benchmark/hpp/benchmark_css.hpp"
 #include "benchmark/hpp/benchmark_dob.hpp"
 #include "benchmark/hpp/benchmark_evl.hpp"
 #include "benchmark/hpp/benchmark_jls.hpp"
@@ -113,6 +114,7 @@ BenchmarkClassResults run_all_benchmarks(std::size_t begin, std::size_t end)
         run_benchmark_class<Cls>(records, N);
         run_benchmark_class<Cps>(records, N);
         run_benchmark_class<Cps_st>(records, N);
+        run_benchmark_class<Css>(records, N);
         run_benchmark_class<Dob>(records, N);
         run_benchmark_class<Evl>(records, N);
         run_benchmark_class<Jls>(records, N);
@@ -152,6 +154,7 @@ void run_all_validation_tests(std::size_t N)
     Cls::validate_assert(N);
     Cps::validate_assert(N);
     Cps_st::validate_assert(N);
+    Css::validate_assert(N);
     Dob::validate_assert(N);
     Evl::validate_assert(N);
     Jls::validate_assert(N);
@@ -255,6 +258,7 @@ void output_metrics_report(T& ost)
     output_metrics_report_row<Cls>(ost);
     output_metrics_report_row<Cps>(ost);
     output_metrics_report_row<Cps_st>(ost);
+    output_metrics_report_row<Css>(ost);
     output_metrics_report_row<Dob>(ost);
     output_metrics_report_row<Evl>(ost);
     output_metrics_report_row<Jls>(ost);

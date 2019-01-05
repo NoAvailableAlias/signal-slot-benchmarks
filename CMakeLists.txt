@@ -55,6 +55,8 @@ add_executable(bench
     benchmark/lib/CppFakeIt/libfastsignals/src/connection.cpp
     benchmark/lib/CppFakeIt/libfastsignals/src/function_detail.cpp
     benchmark/lib/CppFakeIt/libfastsignals/src/signal_impl.cpp
+    benchmark/lib/copperspice/cs_signal/src/cs_signal.cpp
+    benchmark/lib/copperspice/cs_signal/src/cs_slot.cpp
 )
 
 set_target_properties(bench PROPERTIES CXX_EXTENSIONS NO)

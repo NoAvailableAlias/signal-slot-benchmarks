@@ -224,6 +224,7 @@
     <ClInclude Include="..\benchmark\hpp\benchmark_cls.hpp" />
     <ClInclude Include="..\benchmark\hpp\benchmark_cps.hpp" />
     <ClInclude Include="..\benchmark\hpp\benchmark_cps_st.hpp" />
+    <ClInclude Include="..\benchmark\hpp\benchmark_css.hpp" />
     <ClInclude Include="..\benchmark\hpp\benchmark_dob.hpp" />
     <ClInclude Include="..\benchmark\hpp\benchmark_evl.hpp" />
     <ClInclude Include="..\benchmark\hpp\benchmark_jls.hpp" />
@@ -249,6 +250,12 @@
     <ClInclude Include="..\benchmark\hpp\benchmark_yas.hpp" />
     <ClInclude Include="..\benchmark\lib\amc522\signal11\Signal.h" />
     <ClInclude Include="..\benchmark\lib\Ansoulom\cpp-observe\cpp_observe.hpp" />
+    <ClInclude Include="..\benchmark\lib\copperspice\cs_signal\src\cs_internal.h" />
+    <ClInclude Include="..\benchmark\lib\copperspice\cs_signal\src\cs_macro.h" />
+    <ClInclude Include="..\benchmark\lib\copperspice\cs_signal\src\cs_signal.h" />
+    <ClInclude Include="..\benchmark\lib\copperspice\cs_signal\src\cs_slot.h" />
+    <ClInclude Include="..\benchmark\lib\copperspice\cs_signal\src\rcu_guarded.hpp" />
+    <ClInclude Include="..\benchmark\lib\copperspice\cs_signal\src\rcu_list.hpp" />
     <ClInclude Include="..\benchmark\lib\cpp11nullptr\lsignal\lsignal.h" />
     <ClInclude Include="..\benchmark\lib\CppFakeIt\libfastsignals\include\bind_weak.h" />
     <ClInclude Include="..\benchmark\lib\CppFakeIt\libfastsignals\include\combiners.h" />
@@ -346,6 +353,7 @@
     <ClCompile Include="..\benchmark\cpp\benchmark_cls.cpp" />
     <ClCompile Include="..\benchmark\cpp\benchmark_cps.cpp" />
     <ClCompile Include="..\benchmark\cpp\benchmark_cps_st.cpp" />
+    <ClCompile Include="..\benchmark\cpp\benchmark_css.cpp" />
     <ClCompile Include="..\benchmark\cpp\benchmark_dob.cpp" />
     <ClCompile Include="..\benchmark\cpp\benchmark_evl.cpp" />
     <ClCompile Include="..\benchmark\cpp\benchmark_jls.cpp" />
@@ -369,6 +377,8 @@
     <ClCompile Include="..\benchmark\cpp\benchmark_wnk.cpp" />
     <ClCompile Include="..\benchmark\cpp\benchmark_wsg.cpp" />
     <ClCompile Include="..\benchmark\cpp\benchmark_yas.cpp" />
+    <ClCompile Include="..\benchmark\lib\copperspice\cs_signal\src\cs_signal.cpp" />
+    <ClCompile Include="..\benchmark\lib\copperspice\cs_signal\src\cs_slot.cpp" />
     <ClCompile Include="..\benchmark\lib\CppFakeIt\libfastsignals\src\function_detail.cpp" />
     <ClCompile Include="..\benchmark\lib\CppFakeIt\libfastsignals\src\lfs_connection.cpp" />
     <ClCompile Include="..\benchmark\lib\CppFakeIt\libfastsignals\src\signal_impl.cpp" />
