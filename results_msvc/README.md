@@ -17,6 +17,7 @@
 | * Kosta signals-cpp | 227593 | 7232 | 1025 | 16958 | 808 | 43 | 26065 |
 | * dacap observable | 208903 | 4539 | 6317 | 10039 | 2123 | 40 | 23058 |
 | * Boost Signals2 | 13516 | 3544 | 2146 | 14152 | 1119 | 6 | 20968 |
+| ! copperspice cs_signal | 23496 | 1845 | 2002 | 8356 | 830 | ! | 13034 |
 | * neolib event | 193905 | 1911 | 1342 | 4524 | 662 | 43 | 8483 |
 | [Interactive Graph](https://plot.ly/~NoAvailableAlias/1/) |
 
@@ -59,6 +60,7 @@ _Size results are the size of object files from release build with Visual Studio
 | [* fr00b0 nod](https://github.com/fr00b0/nod) | 845 kb | X | std::vector | X |
 | [* Kosta signals-cpp](https://github.com/Kosta-Github/signals-cpp) | 854 kb | X | std::vector | X |
 | [! cpp11nullptr lsignal](https://github.com/cpp11nullptr/lsignal) | 958 kb | X | **std::list | ! |
+| [! copperspice cs_signal](https://github.com/copperspice/cs_signal) | 971 kb | - | **RCU List | ! |
 | [* neolib event](https://github.com/i42output/neolib) | 2320 kb | - | **std::unordered_map | X |
 | [* Boost Signals2](http://www.boost.org/doc/libs/1_58_0/doc/html/signals2.html) | 2518 kb | - | ? | X |
 

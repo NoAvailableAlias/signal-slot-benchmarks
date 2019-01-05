@@ -30,5 +30,6 @@ NOINLINE(double Css::combined(std::size_t N))
 }
 NOINLINE(double Css::threaded(std::size_t N))
 {
-    return Benchmark<Signal, Css>::threaded(N);
+    //return Benchmark<Signal, Css>::threaded(N);
+    return 0.0;
 }

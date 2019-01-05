@@ -1,34 +1,35 @@
 #pragma once
 
+#include <deque>
+
 #include "../lib/copperspice/cs_signal/src/cs_signal.h"
 #include "../lib/copperspice/cs_signal/src/cs_slot.h"
 
 #include "../../benchmark.hpp"
 
-class Css : public CsSignal::SignalBase, public CsSignal::SlotBase
+class Css_Signal : public CsSignal::SignalBase
 {
-    SlotScope reg;
+    public:
 
+    SIGNAL_1(void fire(Rng& rng))
+    SIGNAL_2(fire, rng)
+};
+
+class Css : public CsSignal::SlotBase
+{
     NOINLINE(void handler(Rng& rng))
     {
         volatile std::size_t a = rng(); (void)a;
     }
 
-    SIGNAL_1(void fire(Rng& rng))
-    SIGNAL_2(fire, rng)
-
     public:
 
-    // IS THIS EVEN
-    using Signal = Css;
+    using Signal = Css_Signal;
 
     template <typename Subject, typename Foo>
     static void connect_method(Subject& subject, Foo& foo)
     {
         CsSignal::connect(subject, &Subject::fire, foo, &Foo::handler);
-
-        // Add auto disconnect required by the benchmarks
-        foo.reg = make_slot_scope([&](void*) { CsSignal::disconnect(subject, &Subject::fire, foo, &Foo::handler); });
     }
     template <typename Subject>
     static void emit_method(Subject& subject, Rng& rng)
@@ -47,10 +48,10 @@ class Css : public CsSignal::SignalBase, public CsSignal::SlotBase
     static double combined(std::size_t);
     static double threaded(std::size_t);
 
-    static constexpr const char* C_LIB_NAME = "* copperspice cs_signal";
+    static constexpr const char* C_LIB_NAME = "! copperspice cs_signal";
     static constexpr const char* C_LIB_SOURCE_URL = "https://github.com/copperspice/cs_signal";
     static constexpr const char* C_LIB_FILE = "benchmark_css";
     static constexpr const char* C_LIB_IS_HEADER_ONLY = "-";
     static constexpr const char* C_LIB_DATA_STRUCTURE = "**RCU List";
-    static constexpr const char* C_LIB_IS_THREAD_SAFE = "X";
+    static constexpr const char* C_LIB_IS_THREAD_SAFE = "!";
 };
