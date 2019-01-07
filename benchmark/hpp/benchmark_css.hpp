@@ -1,6 +1,6 @@
 #pragma once
 
-#include <deque>
+//#include <deque>
 
 #include "../lib/copperspice/cs_signal/src/cs_signal.h"
 #include "../lib/copperspice/cs_signal/src/cs_slot.h"
@@ -21,6 +21,13 @@ class Css : public CsSignal::SlotBase
     {
         volatile std::size_t a = rng(); (void)a;
     }
+
+    //std::deque<CsSignal::PendingSlot> *m_array;
+    //std::mutex *m_mutex;
+    //std::condition_variable *m_alarm;
+
+    //bool compareThreads() const override;
+    //void queueSlot(CsSignal::PendingSlot data, CsSignal::ConnectionKind type) override;
 
     public:
 
@@ -48,10 +55,10 @@ class Css : public CsSignal::SlotBase
     static double combined(std::size_t);
     static double threaded(std::size_t);
 
-    static constexpr const char* C_LIB_NAME = "! copperspice cs_signal";
+    static constexpr const char* C_LIB_NAME = "copperspice cs_signal";
     static constexpr const char* C_LIB_SOURCE_URL = "https://github.com/copperspice/cs_signal";
     static constexpr const char* C_LIB_FILE = "benchmark_css";
     static constexpr const char* C_LIB_IS_HEADER_ONLY = "-";
     static constexpr const char* C_LIB_DATA_STRUCTURE = "**RCU List";
-    static constexpr const char* C_LIB_IS_THREAD_SAFE = "!";
+    static constexpr const char* C_LIB_IS_THREAD_SAFE = "DIY";
 };

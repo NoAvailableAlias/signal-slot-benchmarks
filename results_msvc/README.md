@@ -17,7 +17,6 @@
 | * Kosta signals-cpp | 227593 | 7232 | 1025 | 16958 | 808 | 43 | 26065 |
 | * dacap observable | 208903 | 4539 | 6317 | 10039 | 2123 | 40 | 23058 |
 | * Boost Signals2 | 13516 | 3544 | 2146 | 14152 | 1119 | 6 | 20968 |
-| ! copperspice cs_signal | 23496 | 1845 | 2002 | 8356 | 830 | ! | 13034 |
 | * neolib event | 193905 | 1911 | 1342 | 4524 | 662 | 43 | 8483 |
 | [Interactive Graph](https://plot.ly/~NoAvailableAlias/1/) |
 
@@ -28,7 +27,6 @@
 | jeffomatic jl_signal | 117251 | 15621 | 64947 | 81209 | 10978 | 0 | 172755 |
 | Wink-Signals | 223990 | 11666 | 12995 | 83574 | 5405 | 0 | 113639 |
 | Ansoulom cpp-observe | 75058 | 12809 | 7957 | 80497 | 4640 | 0 | 105904 |
-| nano-signal-slot v1x | 251692 | 9634 | 11195 | 80173 | 4823 | 0 | 105826 |
 | Montellese cpp-signal | 230891 | 9537 | 9985 | 78710 | 4568 | 0 | 102800 |
 | SimpleSignal | 226410 | 11385 | 8507 | 78096 | 4784 | 0 | 102773 |
 | nano-signal-slot v2x | 200184 | 8718 | 8707 | 78646 | 3920 | 0 | 99991 |
@@ -42,6 +40,7 @@
 | supergrover sigslot | 18972 | 2988 | 2718 | 80122 | 1330 | 0 | 87158 |
 | fr00b0 nod | 196915 | 18432 | 11770 | 43156 | 6501 | 0 | 79860 |
 | EvilTwin Observer | 205417 | 4087 | 2765 | 27634 | 1536 | 0 | 36022 |
+| copperspice cs_signal | 23505 | 1855 | 2012 | 8429 | 838 | 0 | 13134 |
 | neolib event | 195453 | 2104 | 1451 | 4455 | 708 | 0 | 8718 |
 
 ___
@@ -60,7 +59,6 @@ _Size results are the size of object files from release build with Visual Studio
 | [* fr00b0 nod](https://github.com/fr00b0/nod) | 845 kb | X | std::vector | X |
 | [* Kosta signals-cpp](https://github.com/Kosta-Github/signals-cpp) | 854 kb | X | std::vector | X |
 | [! cpp11nullptr lsignal](https://github.com/cpp11nullptr/lsignal) | 958 kb | X | **std::list | ! |
-| [! copperspice cs_signal](https://github.com/copperspice/cs_signal) | 971 kb | - | **RCU List | ! |
 | [* neolib event](https://github.com/i42output/neolib) | 2320 kb | - | **std::unordered_map | X |
 | [* Boost Signals2](http://www.boost.org/doc/libs/1_58_0/doc/html/signals2.html) | 2518 kb | - | ? | X |
 
@@ -68,7 +66,6 @@ _Size results are the size of object files from release build with Visual Studio
 
 | Library | Build Size | Header Only | Data Structure | Thread Safe |
 | ------- |:----------:|:-----------:| -------------- |:-----------:|
-| [nano-signal-slot v1x](https://github.com/NoAvailableAlias/nano-signal-slot/releases/tag/v1.x) | 137 kb | X | singly linked list | - |
 | [jeffomatic jl_signal](https://github.com/jeffomatic/jl_signal) | 152 kb | - | doubly linked list | - |
 | [Wink-Signals](https://github.com/miguelmartin75/Wink-Signals) | 179 kb | X | std::vector | - |
 | [Montellese cpp-signal](https://github.com/Montellese/cpp-signal) | 185 kb | X | std::forward_list | - |
@@ -85,6 +82,7 @@ _Size results are the size of object files from release build with Visual Studio
 | [pbhogan Signals](https://github.com/pbhogan/Signals) | 265 kb | X | std::set | - |
 | [EvilTwin Observer](http://eviltwingames.com/blog/the-observer-pattern-revisited/) | 267 kb | X | std::vector | - |
 | [fr00b0 nod](https://github.com/fr00b0/nod) | 277 kb | X | std::vector | - |
+| [copperspice cs_signal](https://github.com/copperspice/cs_signal) | 452 kb | - | **RCU List | DIY |
 | [neolib event](https://github.com/i42output/neolib) | 1815 kb | - | **std::unordered_map | - |
 
 | * | ** | ! | [] |
