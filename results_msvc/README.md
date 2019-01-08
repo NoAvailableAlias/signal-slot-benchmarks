@@ -8,12 +8,12 @@
 | Library | [construct] | destruct | connect | emission | combined | threaded | score |
 |---------|-----------|----------|---------|----------|----------|----------|-------|
 | * nano-signal-slot v2x | 146127 | 6548 | 7626 | 76373 | 3210 | 66 | 93822 |
-| ! Pal Sigslot | 173750 | 8760 | 6513 | 71279 | 3677 | 278 | 90508 |
 | ! Montellese cpp-signal | 49166 | 5547 | 6189 | 74666 | 2720 | 164 | 89286 |
 | ! winglot Signals | 14517 | 3504 | 4123 | 75309 | 1653 | 140 | 84728 |
 | ! cpp11nullptr lsignal | 159804 | 4845 | 2343 | 73981 | 1547 | 127 | 82842 |
 | * fr00b0 nod | 191200 | 11588 | 8582 | 40919 | 4503 | 27 | 65618 |
 | * CppFakeIt FastSignals | 138503 | 5020 | 5608 | 27332 | 2140 | 33 | 40133 |
+| * Pal Sigslot | 180729 | 8928 | 6064 | 20620 | 3186 | 268 | 39066 |
 | * Kosta signals-cpp | 227593 | 7232 | 1025 | 16958 | 808 | 43 | 26065 |
 | * dacap observable | 208903 | 4539 | 6317 | 10039 | 2123 | 40 | 23058 |
 | * Boost Signals2 | 13516 | 3544 | 2146 | 14152 | 1119 | 6 | 20968 |
@@ -34,11 +34,11 @@
 | amc522 Signal11 | 155427 | 9314 | 5567 | 78607 | 3421 | 0 | 96909 |
 | vdksoft signals | 202948 | 12013 | 3582 | 78632 | 2654 | 0 | 96882 |
 | mwthinker Signal | 206927 | 6391 | 6236 | 80668 | 3004 | 0 | 96299 |
-| Pal Sigslot | 188151 | 8709 | 8088 | 75015 | 4143 | 0 | 95956 |
 | joanrieu signal11 | 188207 | 11524 | 8387 | 70308 | 4692 | 0 | 94912 |
 | pbhogan Signals | 203434 | 7762 | 6440 | 73569 | 3441 | 0 | 91213 |
 | supergrover sigslot | 18972 | 2988 | 2718 | 80122 | 1330 | 0 | 87158 |
 | fr00b0 nod | 196915 | 18432 | 11770 | 43156 | 6501 | 0 | 79860 |
+| Pal Sigslot | 187237 | 9078 | 7393 | 21336 | 3562 | 0 | 41368 |
 | EvilTwin Observer | 205417 | 4087 | 2765 | 27634 | 1536 | 0 | 36022 |
 | copperspice cs_signal | 23505 | 1855 | 2012 | 8429 | 838 | 0 | 13134 |
 | neolib event | 195453 | 2104 | 1451 | 4455 | 708 | 0 | 8718 |
@@ -52,10 +52,10 @@ _Size results are the size of object files from release build with Visual Studio
 | ------- |:----------:|:-----------:| -------------- |:-----------:|
 | [* CppFakeIt FastSignals](https://github.com/CppFakeIt/FastSignals) | 748 kb | - | std::vector | X |
 | [! Montellese cpp-signal](https://github.com/Montellese/cpp-signal) | 754 kb | X | std::forward_list | ! |
-| [! Pal Sigslot](https://github.com/palacaze/sigslot) | 758 kb | X | singly linked list | ! |
 | [* nano-signal-slot v2x](https://github.com/NoAvailableAlias/nano-signal-slot/tree/rework) | 769 kb | X | std::vector | X |
 | [* dacap observable](https://github.com/dacap/observable) | 774 kb | - | std::vector | X |
 | [! winglot Signals](https://github.com/winglot/Signals) | 787 kb | - | **std::list | ! |
+| [* Pal Sigslot](https://github.com/palacaze/sigslot) | 813 kb | X | singly linked list | X |
 | [* fr00b0 nod](https://github.com/fr00b0/nod) | 845 kb | X | std::vector | X |
 | [* Kosta signals-cpp](https://github.com/Kosta-Github/signals-cpp) | 854 kb | X | std::vector | X |
 | [! cpp11nullptr lsignal](https://github.com/cpp11nullptr/lsignal) | 958 kb | X | **std::list | ! |
@@ -71,13 +71,13 @@ _Size results are the size of object files from release build with Visual Studio
 | [Montellese cpp-signal](https://github.com/Montellese/cpp-signal) | 185 kb | X | std::forward_list | - |
 | [nano-signal-slot v2x](https://github.com/NoAvailableAlias/nano-signal-slot/tree/rework) | 187 kb | X | std::vector | - |
 | [vdksoft signals](https://github.com/vdksoft/signals) | 188 kb | - | singly linked list | directive |
-| [Pal Sigslot](https://github.com/palacaze/sigslot) | 196 kb | X | singly linked list | - |
 | [SimpleSignal](https://github.com/larspensjo/SimpleSignal) | 215 kb | X | std::vector | - |
 | [supergrover sigslot](https://github.com/supergrover/sigslot) | 216 kb | - | std::list | - |
 | [mwthinker Signal](https://github.com/mwthinker/Signal) | 228 kb | - | std::list | - |
 | [Ansoulom cpp-observe](https://github.com/Ansoulom/cpp-observe) | 242 kb | X | std::vector | - |
 | [Yassi](http://www.codeproject.com/Articles/867044/Yassi-Yet-Another-Signal-Slot-Implementation) | 244 kb | X | std::vector | - |
 | [joanrieu signal11](https://github.com/joanrieu/signal11) | 254 kb | X | std::list | - |
+| [Pal Sigslot](https://github.com/palacaze/sigslot) | 254 kb | X | singly linked list | - |
 | [amc522 Signal11](https://github.com/amc522/Signal11) | 261 kb | X | std::vector | - |
 | [pbhogan Signals](https://github.com/pbhogan/Signals) | 265 kb | X | std::set | - |
 | [EvilTwin Observer](http://eviltwingames.com/blog/the-observer-pattern-revisited/) | 267 kb | X | std::vector | - |

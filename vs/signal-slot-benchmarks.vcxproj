@@ -332,7 +332,7 @@
     <ClInclude Include="..\benchmark\lib\NoAvailableAlias\nano-signal-slot\nano_function.hpp" />
     <ClInclude Include="..\benchmark\lib\NoAvailableAlias\nano-signal-slot\nano_observer.hpp" />
     <ClInclude Include="..\benchmark\lib\NoAvailableAlias\nano-signal-slot\nano_signal_slot.hpp" />
-    <ClInclude Include="..\benchmark\lib\palacaze\sigslot\signal.hpp" />
+    <ClInclude Include="..\benchmark\lib\palacaze\sigslot\include\sigslot\signal.hpp" />
     <ClInclude Include="..\benchmark\lib\pbhogan\Signals\Delegate.h" />
     <ClInclude Include="..\benchmark\lib\pbhogan\Signals\Signal.h" />
     <ClInclude Include="..\benchmark\lib\supergrover\sigslot\src\signal.h" />

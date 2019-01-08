@@ -4,6 +4,7 @@
 #include <utility>
 #include <mutex>
 #include <atomic>
+#include <vector>
 
 namespace sigslot {
 
@@ -95,7 +96,7 @@ public:
 
     virtual ~slot_state() = default;
 
-    bool connected() const noexcept { return m_connected; }
+    virtual bool connected() const noexcept { return m_connected; }
     bool disconnect() noexcept { return m_connected.exchange(false); }
 
     bool blocked() const noexcept { return m_blocked.load(); }
@@ -135,13 +136,13 @@ private:
     connection_blocker(std::weak_ptr<detail::slot_state> s) noexcept
         : m_state{std::move(s)}
     {
-        auto d = m_state.lock();
-        if (d) d->block();
+        if (auto d = m_state.lock())
+            d->block();
     }
 
     void release() noexcept {
-        auto d = m_state.lock();
-        if (d) d->unblock();
+        if (auto d = m_state.lock())
+            d->unblock();
     }
 
 private:
@@ -186,14 +187,12 @@ public:
     }
 
     void block() noexcept {
-        auto d = m_state.lock();
-        if(d)
+        if (auto d = m_state.lock())
             d->block();
     }
 
     void unblock() noexcept {
-        auto d = m_state.lock();
-        if(d)
+        if (auto d = m_state.lock())
             d->unblock();
     }
 
@@ -273,8 +272,6 @@ public:
         if (slot_state::connected() && !slot_state::blocked())
             call_slot(std::forward<U>(u)...);
     }
-
-    slot_ptr<Args...> next;
 };
 
 template <typename, typename...> class slot {};
@@ -376,12 +373,14 @@ public:
           ptr{std::forward<P>(p)}
     {}
 
+    bool connected() const noexcept override {
+        return !ptr.expired() && slot_state::connected();
+    }
+
     virtual void call_slot(Args ...args) override {
-        if (! slot_state::connected())
-            return;
         if (ptr.expired())
             slot_state::disconnect();
-        else
+        if (slot_state::connected())
             func(args...);
     }
 
@@ -406,13 +405,17 @@ public:
           ptr{std::forward<P>(p)}
     {}
 
+    bool connected() const noexcept override {
+        return !ptr.expired() && slot_state::connected();
+    }
+
     virtual void call_slot(Args ...args) override {
-        if (! slot_state::connected())
-            return;
         auto sp = ptr.lock();
-        if (!sp)
+        if (!sp) {
             slot_state::disconnect();
-        else
+            return;
+        }
+        if (slot_state::connected())
             ((*sp).*pmf)(args...);
     }
 
@@ -498,30 +501,38 @@ public:
      *
      * @param a... arguments to emit
      */
-    template <typename... A>
-    void operator()(A && ... a) {
-        lock_type lock(m_mutex);
-        slot_ptr *prev = nullptr;
-        slot_ptr *curr = m_slots ? &m_slots : nullptr;
+    void operator()(T ...a) {
+        std::vector<slot_ptr> copy;
 
-        while (curr) {
-            // call non blocked, non connected slots
-            if ((*curr)->connected()) {
-                if (!m_block && !(*curr)->blocked())
-                    (*curr)->operator()(std::forward<A>(a)...);
-                prev = curr;
-                curr = (*curr)->next ? &((*curr)->next) : nullptr;
-            }
-            // remove slots marked as disconnected
-            else {
-                if (prev) {
-                    (*prev)->next = (*curr)->next;
-                    curr = (*prev)->next ? &((*prev)->next) : nullptr;
+        {
+            lock_type lock(m_mutex);
+            if (m_slots.empty())
+                return;
+
+            copy.reserve(m_slots.size());
+
+            auto it = std::begin(m_slots);
+            auto end = std::end(m_slots);
+
+            while (it != end) {
+                if ((*it)->connected()) {
+                    copy.push_back(*it);
+                    ++it;
                 }
-                else
-                    curr = (*curr)->next ? &((*curr)->next) : nullptr;
+                else {
+                    --end;
+                    std::iter_swap(it, end);
+                }
             }
+
+            m_slots.erase(end, std::end(m_slots));
         }
+
+        if (m_block)
+            return;
+
+        for (const auto &s : copy)
+            s->operator()(a...);
     }
 
     /**
@@ -534,9 +545,9 @@ public:
      * @param c a callable
      * @return a connection object that can be used to interact with the slot
      */
-    template <typename Callable, typename Args = arg_list,
-              std::enable_if_t<trait::is_callable_v<Args, Callable>>* = nullptr>
-    connection connect(Callable && c) {
+    template <typename Callable>
+    std::enable_if_t<trait::is_callable_v<arg_list, Callable>, connection>
+    connect(Callable && c) {
         using slot_t = detail::slot<Callable, arg_list>;
         auto s = std::make_shared<slot_t>(std::forward<Callable>(c));
         add_slot(s);
@@ -552,10 +563,10 @@ public:
      * @param c a callable
      * @return a connection object that can be used to interact with the slot
      */
-    template <typename Callable, typename Args = arg_list, typename EArgs = ext_arg_list>
-    std::enable_if_t<!trait::is_callable_v<Args, Callable>, connection>
-    connect(Callable && c) {
-        using slot_t = detail::slot<Callable, EArgs>;
+    template <typename Callable>
+    std::enable_if_t<trait::is_callable_v<ext_arg_list, Callable>, connection>
+    connect_extended(Callable && c) {
+        using slot_t = detail::slot<Callable, ext_arg_list>;
         auto s = std::make_shared<slot_t>(std::forward<Callable>(c));
         s->conn = connection(s);
         add_slot(s);
@@ -569,10 +580,10 @@ public:
      * @param ptr an object pointer
      * @return a connection object that can be used to interact with the slot
      */
-    template <typename Pmf, typename Ptr,
-              std::enable_if_t<trait::is_callable_v<arg_list, Pmf, Ptr> &&
-                               !trait::is_weak_ptr_compatible_v<Ptr>>* = nullptr>
-    connection connect(Pmf && pmf, Ptr && ptr) {
+    template <typename Pmf, typename Ptr>
+    std::enable_if_t<trait::is_callable_v<arg_list, Pmf, Ptr> &&
+                     !trait::is_weak_ptr_compatible_v<Ptr>, connection>
+    connect(Pmf && pmf, Ptr && ptr) {
         using slot_t = detail::slot<Pmf, Ptr, arg_list>;
         auto s = std::make_shared<slot_t>(std::forward<Pmf>(pmf), std::forward<Ptr>(ptr));
         add_slot(s);
@@ -586,10 +597,10 @@ public:
      * @param ptr an object pointer
      * @return a connection object that can be used to interact with the slot
      */
-    template <typename Pmf, typename Ptr,
-              std::enable_if_t<trait::is_callable_v<ext_arg_list, Pmf, Ptr> &&
-                               !trait::is_weak_ptr_compatible_v<Ptr>>* = nullptr>
-    connection connect(Pmf && pmf, Ptr && ptr) {
+    template <typename Pmf, typename Ptr>
+    std::enable_if_t<trait::is_callable_v<ext_arg_list, Pmf, Ptr> &&
+                     !trait::is_weak_ptr_compatible_v<Ptr>, connection>
+    connect_extended(Pmf && pmf, Ptr && ptr) {
         using slot_t = detail::slot<Pmf, Ptr, ext_arg_list>;
         auto s = std::make_shared<slot_t>(std::forward<Pmf>(pmf), std::forward<Ptr>(ptr));
         s->conn = connection(s);
@@ -613,10 +624,10 @@ public:
      * @param ptr a trackable object pointer
      * @return a connection object that can be used to interact with the slot
      */
-    template <typename Pmf, typename Ptr,
-              std::enable_if_t<!trait::is_callable_v<arg_list, Pmf> &&
-                               trait::is_weak_ptr_compatible_v<Ptr>>* = nullptr>
-    connection connect(Pmf && pmf, Ptr && ptr) {
+    template <typename Pmf, typename Ptr>
+    std::enable_if_t<!trait::is_callable_v<arg_list, Pmf> &&
+                     trait::is_weak_ptr_compatible_v<Ptr>, connection>
+    connect(Pmf && pmf, Ptr && ptr) {
         using trait::to_weak;
         auto w = to_weak(std::forward<Ptr>(ptr));
         using slot_t = detail::slot_pmf_tracked<Pmf, decltype(w), arg_list>;
@@ -641,10 +652,10 @@ public:
      * @param ptr a trackable object pointer
      * @return a connection object that can be used to interact with the slot
      */
-    template <typename Callable, typename Trackable,
-              std::enable_if_t<trait::is_callable_v<arg_list, Callable> &&
-                               trait::is_weak_ptr_compatible_v<Trackable>>* = nullptr>
-    connection connect(Callable && c, Trackable && ptr) {
+    template <typename Callable, typename Trackable>
+    std::enable_if_t<trait::is_callable_v<arg_list, Callable> &&
+                     trait::is_weak_ptr_compatible_v<Trackable>, connection>
+    connect(Callable && c, Trackable && ptr) {
         using trait::to_weak;
         auto w = to_weak(std::forward<Trackable>(ptr));
         using slot_t = detail::slot_tracked<Callable, decltype(w), arg_list>;
@@ -698,17 +709,16 @@ private:
     template <typename S>
     void add_slot(S &s) {
         lock_type lock(m_mutex);
-        s->next = m_slots;
-        m_slots = s;
+        m_slots.push_back(s);
     }
 
     void clear() {
-        m_slots.reset();
+        m_slots.clear();
     }
 
 private:
-    slot_ptr m_slots;
     Lockable m_mutex;
+    std::vector<slot_ptr> m_slots;
     std::atomic<bool> m_block;
 };
 
@@ -725,21 +735,10 @@ using signal_st = signal_base<detail::null_mutex, T...>;
  * Specialization of signal_base to be used in multi-threaded contexts.
  * Slot connection, disconnection and signal emission are thread-safe.
  *
- * Beware of accidentally using recursive signal emission or cycles between
- * two or more signals in your code. Locking std::mutex more than once is
- * undefined behaviour, even if it "seems to work somehow". Use signal_r
- * instead for that use case.
+ * Recursive signal emission and emission cycles are supported too.
  */
 template <typename... T>
 using signal = signal_base<std::mutex, T...>;
-
-/**
- * Specialization of signal_base to be used in multi-threaded contexts, allowing
- * for recursive signal emission and emission cycles.
- * Slot connection, disconnection and signal emission are thread-safe.
- */
-template <typename... T>
-using signal_r = signal_base<std::recursive_mutex, T...>;
 
 } // namespace sigslot
 

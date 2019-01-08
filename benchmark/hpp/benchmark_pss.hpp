@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../lib/palacaze/sigslot/signal.hpp"
+#include "../lib/palacaze/sigslot/include/sigslot/signal.hpp"
 
 #include "../../benchmark.hpp"
 
