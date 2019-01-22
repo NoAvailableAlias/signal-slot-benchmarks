@@ -20,6 +20,14 @@ NOINLINE(double Yas::connection(std::size_t N))
 {
     return Benchmark<Signal, Yas>::connection(N);
 }
+NOINLINE(double Yas::disconnect(std::size_t N))
+{
+    return Benchmark<Signal, Yas>::disconnect(N);
+}
+NOINLINE(double Yas::reconnect(std::size_t N))
+{
+    return Benchmark<Signal, Yas>::reconnect(N);
+}
 NOINLINE(double Yas::emission(std::size_t N))
 {
     return Benchmark<Signal, Yas>::emission(N);

@@ -5,43 +5,39 @@
 
 ### Performance of Thread Safe Libraries
 
-| Library | [construct] | destruct | connect | emission | combined | threaded | score |
-|---------|-----------|----------|---------|----------|----------|----------|-------|
-| * nano-signal-slot v2x | 146127 | 6548 | 7626 | 76373 | 3210 | 66 | 93822 |
-| ! Montellese cpp-signal | 49166 | 5547 | 6189 | 74666 | 2720 | 164 | 89286 |
-| ! winglot Signals | 14517 | 3504 | 4123 | 75309 | 1653 | 140 | 84728 |
-| ! cpp11nullptr lsignal | 159804 | 4845 | 2343 | 73981 | 1547 | 127 | 82842 |
-| * fr00b0 nod | 191200 | 11588 | 8582 | 40919 | 4503 | 27 | 65618 |
-| * CppFakeIt FastSignals | 138503 | 5020 | 5608 | 27332 | 2140 | 33 | 40133 |
-| * Pal Sigslot | 180729 | 8928 | 6064 | 20620 | 3186 | 268 | 39066 |
-| * Kosta signals-cpp | 227593 | 7232 | 1025 | 16958 | 808 | 43 | 26065 |
-| * dacap observable | 208903 | 4539 | 6317 | 10039 | 2123 | 40 | 23058 |
-| * Boost Signals2 | 13516 | 3544 | 2146 | 14152 | 1119 | 6 | 20968 |
-| * neolib event | 193905 | 1911 | 1342 | 4524 | 662 | 43 | 8483 |
-| [Interactive Graph](https://plot.ly/~NoAvailableAlias/1/) |
+| Library | [constr] | [destr] | conn | disconn | reconn | emit | combined | threaded | score |
+|---------|----------|---------|------|---------|--------|------|----------|----------|-------|
+| * nano-signal-slot ts | 143620 | 13631 | 6995 | 7019 | 5014 | 76722 | 2924 | 85 | 98759 |
+| ! Montellese cpp-signal | 48280 | 7053 | 5909 | 5425 | 5934 | 74646 | 2499 | 164 | 94576 |
+| ! winglot Signals | 13978 | 4423 | 4015 | 3388 | 4074 | 75892 | 1620 | 130 | 89119 |
+| ! nano-signal-slot tss | 147072 | 13287 | 6674 | 6935 | 4769 | 58799 | 2750 | 84 | 80011 |
+| * fr00b0 nod | 189352 | 36229 | 8469 | 12168 | 14357 | 37221 | 5901 | 25 | 78141 |
+| * palacaze sigslot | 172249 | 12379 | 5763 | 16827 | 5270 | 20606 | 3605 | 257 | 52329 |
+| * CppFakeIt FastSignals | 137485 | 35360 | 5482 | 5562 | 9419 | 27008 | 2935 | 29 | 50436 |
+| * Kosta signals-cpp | 218117 | 7048 | 1012 | 19526 | 930 | 16817 | 823 | 43 | 39151 |
+| * Boost Signals2 | 11975 | 3435 | 2158 | 16607 | 1895 | 13830 | 61 | 6 | 34558 |
+| * neolib event | 189786 | 5824 | 1319 | 2147 | 1396 | 4502 | 715 | 44 | 10123 |
+| [Interactive Graph](https://plot.ly/~NoAvailableAlias/1/) (NOT UPDATED YET) |
 
 ### Performance of Thread Unsafe Libraries
 
-| Library | [construct] | destruct | connect | emission | combined | threaded | score |
-|---------|-----------|----------|---------|----------|----------|----------|-------|
-| jeffomatic jl_signal | 117251 | 15621 | 64947 | 81209 | 10978 | 0 | 172755 |
-| Wink-Signals | 223990 | 11666 | 12995 | 83574 | 5405 | 0 | 113639 |
-| Ansoulom cpp-observe | 75058 | 12809 | 7957 | 80497 | 4640 | 0 | 105904 |
-| Montellese cpp-signal | 230891 | 9537 | 9985 | 78710 | 4568 | 0 | 102800 |
-| SimpleSignal | 226410 | 11385 | 8507 | 78096 | 4784 | 0 | 102773 |
-| nano-signal-slot v2x | 200184 | 8718 | 8707 | 78646 | 3920 | 0 | 99991 |
-| Yassi | 223746 | 5451 | 8446 | 81744 | 2756 | 0 | 98398 |
-| amc522 Signal11 | 155427 | 9314 | 5567 | 78607 | 3421 | 0 | 96909 |
-| vdksoft signals | 202948 | 12013 | 3582 | 78632 | 2654 | 0 | 96882 |
-| mwthinker Signal | 206927 | 6391 | 6236 | 80668 | 3004 | 0 | 96299 |
-| joanrieu signal11 | 188207 | 11524 | 8387 | 70308 | 4692 | 0 | 94912 |
-| pbhogan Signals | 203434 | 7762 | 6440 | 73569 | 3441 | 0 | 91213 |
-| supergrover sigslot | 18972 | 2988 | 2718 | 80122 | 1330 | 0 | 87158 |
-| fr00b0 nod | 196915 | 18432 | 11770 | 43156 | 6501 | 0 | 79860 |
-| Pal Sigslot | 187237 | 9078 | 7393 | 21336 | 3562 | 0 | 41368 |
-| EvilTwin Observer | 205417 | 4087 | 2765 | 27634 | 1536 | 0 | 36022 |
-| copperspice cs_signal | 23505 | 1855 | 2012 | 8429 | 838 | 0 | 13134 |
-| neolib event | 195453 | 2104 | 1451 | 4455 | 708 | 0 | 8718 |
+| Library | [constr] | [destr] | conn | disconn | reconn | emit | combined | threaded | score |
+|---------|----------|---------|------|---------|--------|------|----------|----------|-------|
+| jeffomatic jl_signal | 115893 | 46854 | 66126 | 15442 | 65516 | 81337 | 11026 | 0 | 239449 |
+| Ansoulom cpp-observe | 73095 | 24516 | 7525 | 13246 | 10444 | 79439 | 5590 | 0 | 116242 |
+| Montellese cpp-signal | 229122 | 15266 | 9474 | 9239 | 9474 | 80378 | 4440 | 0 | 113004 |
+| Yassi | 226784 | 15753 | 8091 | 5508 | 14336 | 81096 | 3568 | 0 | 112600 |
+| fr00b0 nod | 196181 | 36310 | 12130 | 19105 | 26506 | 38401 | 9665 | 0 | 105807 |
+| nano-signal-slot st | 198676 | 18164 | 7883 | 7925 | 5312 | 78763 | 3309 | 0 | 103193 |
+| mwthinker Signal | 199555 | 9283 | 5968 | 6183 | 5897 | 80266 | 2852 | 0 | 101166 |
+| vdksoft signals | 197301 | 16120 | 4008 | 12086 | 3893 | 78225 | 2650 | 0 | 100862 |
+| amc522 Signal11 | 152987 | 11159 | 5302 | 9121 | 5397 | 76877 | 3354 | 0 | 100052 |
+| pbhogan Signals | 201551 | 10391 | 6459 | 7687 | 6341 | 72442 | 3426 | 0 | 96355 |
+| supergrover sigslot | 17998 | 3299 | 2620 | 2989 | 2615 | 79977 | 1285 | 0 | 89486 |
+| palacaze sigslot | 187073 | 13109 | 7097 | 16849 | 6222 | 21285 | 4007 | 0 | 55460 |
+| EvilTwin Observer | 203020 | 5744 | 2614 | 3963 | 3046 | 26889 | 1611 | 0 | 38123 |
+| copperspice cs_signal | 23309 | 1923 | 1874 | 1755 | 1941 | 8321 | 804 | 0 | 14695 |
+| neolib event | 190989 | 5905 | 1432 | 2397 | 1528 | 4464 | 767 | 0 | 10589 |
 
 ___
 _Size results are the size of object files from release build with Visual Studio 17._
@@ -50,40 +46,36 @@ _Size results are the size of object files from release build with Visual Studio
 
 | Library | Build Size | Header Only | Data Structure | Thread Safe |
 | ------- |:----------:|:-----------:| -------------- |:-----------:|
-| [* CppFakeIt FastSignals](https://github.com/CppFakeIt/FastSignals) | 748 kb | - | std::vector | X |
-| [! Montellese cpp-signal](https://github.com/Montellese/cpp-signal) | 754 kb | X | std::forward_list | ! |
-| [* nano-signal-slot v2x](https://github.com/NoAvailableAlias/nano-signal-slot/tree/rework) | 769 kb | X | std::vector | X |
-| [* dacap observable](https://github.com/dacap/observable) | 774 kb | - | std::vector | X |
-| [! winglot Signals](https://github.com/winglot/Signals) | 787 kb | - | **std::list | ! |
-| [* Pal Sigslot](https://github.com/palacaze/sigslot) | 813 kb | X | singly linked list | X |
-| [* fr00b0 nod](https://github.com/fr00b0/nod) | 845 kb | X | std::vector | X |
-| [* Kosta signals-cpp](https://github.com/Kosta-Github/signals-cpp) | 854 kb | X | std::vector | X |
-| [! cpp11nullptr lsignal](https://github.com/cpp11nullptr/lsignal) | 958 kb | X | **std::list | ! |
-| [* neolib event](https://github.com/i42output/neolib) | 2320 kb | - | **std::unordered_map | X |
-| [* Boost Signals2](http://www.boost.org/doc/libs/1_58_0/doc/html/signals2.html) | 2518 kb | - | ? | X |
+| [* nano-signal-slot ts](https://github.com/NoAvailableAlias/nano-signal-slot/tree/rework) | 760 kb | X | std::vector | X |
+| [* CppFakeIt FastSignals](https://github.com/CppFakeIt/FastSignals) | 767 kb | - | std::vector | X |
+| [! Montellese cpp-signal](https://github.com/Montellese/cpp-signal) | 777 kb | X | std::forward_list | ! |
+| [! nano-signal-slot tss](https://github.com/NoAvailableAlias/nano-signal-slot/tree/rework) | 784 kb | X | std::vector | X |
+| [! winglot Signals](https://github.com/winglot/Signals) | 806 kb | - | **std::list | ! |
+| [* palacaze sigslot](https://github.com/palacaze/sigslot) | 830 kb | X | singly linked list | X |
+| [* fr00b0 nod](https://github.com/fr00b0/nod) | 864 kb | X | std::vector | X |
+| [* Kosta signals-cpp](https://github.com/Kosta-Github/signals-cpp) | 873 kb | X | std::vector | X |
+| [* neolib event](https://github.com/i42output/neolib) | 2338 kb | - | **std::unordered_map | X |
+| [* Boost Signals2](http://www.boost.org/doc/libs/1_58_0/doc/html/signals2.html) | 2587 kb | - | ? | X |
 
 ### Metrics of Thread Unsafe Libraries
 
 | Library | Build Size | Header Only | Data Structure | Thread Safe |
 | ------- |:----------:|:-----------:| -------------- |:-----------:|
-| [jeffomatic jl_signal](https://github.com/jeffomatic/jl_signal) | 152 kb | - | doubly linked list | - |
-| [Wink-Signals](https://github.com/miguelmartin75/Wink-Signals) | 179 kb | X | std::vector | - |
-| [Montellese cpp-signal](https://github.com/Montellese/cpp-signal) | 185 kb | X | std::forward_list | - |
-| [nano-signal-slot v2x](https://github.com/NoAvailableAlias/nano-signal-slot/tree/rework) | 187 kb | X | std::vector | - |
-| [vdksoft signals](https://github.com/vdksoft/signals) | 188 kb | - | singly linked list | directive |
-| [SimpleSignal](https://github.com/larspensjo/SimpleSignal) | 215 kb | X | std::vector | - |
-| [supergrover sigslot](https://github.com/supergrover/sigslot) | 216 kb | - | std::list | - |
-| [mwthinker Signal](https://github.com/mwthinker/Signal) | 228 kb | - | std::list | - |
-| [Ansoulom cpp-observe](https://github.com/Ansoulom/cpp-observe) | 242 kb | X | std::vector | - |
-| [Yassi](http://www.codeproject.com/Articles/867044/Yassi-Yet-Another-Signal-Slot-Implementation) | 244 kb | X | std::vector | - |
-| [joanrieu signal11](https://github.com/joanrieu/signal11) | 254 kb | X | std::list | - |
-| [Pal Sigslot](https://github.com/palacaze/sigslot) | 254 kb | X | singly linked list | - |
-| [amc522 Signal11](https://github.com/amc522/Signal11) | 261 kb | X | std::vector | - |
-| [pbhogan Signals](https://github.com/pbhogan/Signals) | 265 kb | X | std::set | - |
-| [EvilTwin Observer](http://eviltwingames.com/blog/the-observer-pattern-revisited/) | 267 kb | X | std::vector | - |
-| [fr00b0 nod](https://github.com/fr00b0/nod) | 277 kb | X | std::vector | - |
-| [copperspice cs_signal](https://github.com/copperspice/cs_signal) | 452 kb | - | **RCU List | DIY |
-| [neolib event](https://github.com/i42output/neolib) | 1815 kb | - | **std::unordered_map | - |
+| [jeffomatic jl_signal](https://github.com/jeffomatic/jl_signal) | 167 kb | - | doubly linked list | - |
+| [nano-signal-slot st](https://github.com/NoAvailableAlias/nano-signal-slot/tree/rework) | 170 kb | X | std::vector | - |
+| [Montellese cpp-signal](https://github.com/Montellese/cpp-signal) | 202 kb | X | std::forward_list | - |
+| [vdksoft signals](https://github.com/vdksoft/signals) | 211 kb | - | singly linked list | directive |
+| [supergrover sigslot](https://github.com/supergrover/sigslot) | 229 kb | - | std::list | - |
+| [mwthinker Signal](https://github.com/mwthinker/Signal) | 248 kb | - | std::list | - |
+| [Yassi](http://www.codeproject.com/Articles/867044/Yassi-Yet-Another-Signal-Slot-Implementation) | 266 kb | X | std::vector | - |
+| [Ansoulom cpp-observe](https://github.com/Ansoulom/cpp-observe) | 267 kb | X | std::vector | - |
+| [palacaze sigslot](https://github.com/palacaze/sigslot) | 270 kb | X | singly linked list | - |
+| [pbhogan Signals](https://github.com/pbhogan/Signals) | 284 kb | X | std::set | - |
+| [EvilTwin Observer](http://eviltwingames.com/blog/the-observer-pattern-revisited/) | 289 kb | X | std::vector | - |
+| [amc522 Signal11](https://github.com/amc522/Signal11) | 292 kb | X | std::vector | - |
+| [fr00b0 nod](https://github.com/fr00b0/nod) | 294 kb | X | std::vector | - |
+| [copperspice cs_signal](https://github.com/copperspice/cs_signal) | 470 kb | - | **RCU List | DIY |
+| [neolib event](https://github.com/i42output/neolib) | 1831 kb | - | **std::unordered_map | - |
 
 | * | ** | ! | [] |
 |:-:|:--:|:-:|:--:|
@@ -98,9 +90,11 @@ _The individual benchmark algorithms are completely generic through templates._
 | --------- | ----------- |
 | [validation_assert](https://github.com/NoAvailableAlias/signal-slot-benchmarks/blob/master/benchmark.hpp#L19) | Make sure each signal implementation is functioning correctly. |
 | [construction](https://github.com/NoAvailableAlias/signal-slot-benchmarks/blob/master/benchmark.hpp#L48) | Time the construction of a Signal to an N number of Foo instances. |
-| [destruction](https://github.com/NoAvailableAlias/signal-slot-benchmarks/blob/master/benchmark.hpp#L69) | Time the destruction of a Signal and associated Connections to N number of Foo instances. |
+| [destruction](https://github.com/NoAvailableAlias/signal-slot-benchmarks/blob/master/benchmark.hpp#L69) | Time the destruction of a Signal followed by N number of Foo instances. |
 | [connection](https://github.com/NoAvailableAlias/signal-slot-benchmarks/blob/master/benchmark.hpp#L95) | Time Signal connections to a randomized N number of Foo instances. |
-| [emission](https://github.com/NoAvailableAlias/signal-slot-benchmarks/blob/master/benchmark.hpp#L118) | Time the duration of an N slot emission. |
-| [combined](https://github.com/NoAvailableAlias/signal-slot-benchmarks/blob/master/benchmark.hpp#L143) | Time construction, destruction, connection, and emission together. |
-| [threaded](https://github.com/NoAvailableAlias/signal-slot-benchmarks/blob/master/benchmark.hpp#L166) | Same as the "combined" test except threaded using a shared Signal. |
+| [disconnect](https://github.com/NoAvailableAlias/signal-slot-benchmarks/blob/master/benchmark.hpp#L118) | Time disconnecting N number of Foo instances from a single Signal. |
+| [reconnect](https://github.com/NoAvailableAlias/signal-slot-benchmarks/blob/master/benchmark.hpp#L145) | Time reconnecting N number of Foo instances to a global Signal. |
+| [emission](https://github.com/NoAvailableAlias/signal-slot-benchmarks/blob/master/benchmark.hpp#L169) | Time the duration of an N slot emission. |
+| [combined](https://github.com/NoAvailableAlias/signal-slot-benchmarks/blob/master/benchmark.hpp#L194) | Time all previous benchmarks together in one combined benchmark. |
+| [threaded](https://github.com/NoAvailableAlias/signal-slot-benchmarks/blob/master/benchmark.hpp#L218) | Same as the previous benchmark but is now threaded. |
 <br/>

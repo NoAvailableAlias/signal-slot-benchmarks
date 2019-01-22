@@ -74,8 +74,8 @@ class Benchmark
         for (; elapsed < g_timer_limit; ++count)
         {
             {
-                Subject subject;
                 std::vector<Foo> foo(N);
+                Subject subject;
 
                 for (auto& foo_instance : foo)
                 {
@@ -83,7 +83,7 @@ class Benchmark
                 }
                 s_timer.reset();
                 
-                // Destruction
+                // Destruct Subject followed by N Foo
             }
             elapsed += s_timer.count<Timer_u>();
         }
@@ -100,6 +100,57 @@ class Benchmark
         for (; elapsed < g_timer_limit; ++count)
         {
             Subject subject;
+            std::vector<Foo> foo(N);
+
+            s_timer.reset();
+
+            for (auto& foo_instance : foo)
+            {
+                Foo::connect_method(subject, foo_instance);
+            }
+            elapsed += s_timer.count<Timer_u>();
+        }
+        return calculate_score(N, elapsed, count);
+    }
+
+    //--------------------------------------------------------------------------
+
+    static double disconnect(std::size_t N)
+    {
+        std::size_t count = 1;
+        std::size_t elapsed = 0;
+
+        for (; elapsed < g_timer_limit; ++count)
+        {
+            Subject subject;
+            {
+                std::vector<Foo> foo(N);
+
+                for (auto& foo_instance : foo)
+                {
+                    Foo::connect_method(subject, foo_instance);
+                }
+                s_timer.reset();
+
+                // Disconnect N Foo from Subject
+            }
+            elapsed += s_timer.count<Timer_u>();
+        }
+        return calculate_score(N, elapsed, count);
+    }
+
+
+    //--------------------------------------------------------------------------
+
+    static double reconnect(std::size_t N)
+    {
+        std::size_t count = 1;
+        std::size_t elapsed = 0;
+
+        Subject subject;
+
+        for (; elapsed < g_timer_limit; ++count)
+        {
             std::vector<Foo> foo(N);
 
             s_timer.reset();
@@ -147,9 +198,10 @@ class Benchmark
 
         s_timer.reset();
 
+        Subject subject;
+
         for (; elapsed < g_timer_limit; ++count, elapsed = s_timer.count<Timer_u>())
         {
-            Subject subject;
             std::vector<Foo> foo(N);
 
             for (auto& foo_instance : foo)

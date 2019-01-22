@@ -38,6 +38,8 @@ class Cps_st : public cppsignal_st::slot_tracker
     static double construction(std::size_t);
     static double destruction(std::size_t);
     static double connection(std::size_t);
+    static double disconnect(std::size_t);
+    static double reconnect(std::size_t);
     static double emission(std::size_t);
     static double combined(std::size_t);
 

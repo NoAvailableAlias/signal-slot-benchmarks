@@ -44,9 +44,11 @@ constexpr const std::size_t C_JLSIGNAL_MAX = 2048;
 
 // Constants used to map to a particular benchmark method
 constexpr const char* C_CONSTRUCTION = "[construct]";
-constexpr const char* C_DESTRUCTION = "destruct";
+constexpr const char* C_DESTRUCTION = "[destruct]";
 constexpr const char* C_CONNECTION = "connect";
-constexpr const char* C_EMISSION = "emission";
+constexpr const char* C_DISCONNECT = "disconnect";
+constexpr const char* C_RECONNECT = "reconnect";
+constexpr const char* C_EMISSION = "emit";
 constexpr const char* C_COMBINED = "combined";
 constexpr const char* C_THREADED = "threaded";
 

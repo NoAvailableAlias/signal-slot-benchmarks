@@ -20,6 +20,14 @@ NOINLINE(double Wnk::connection(std::size_t N))
 {
     return Benchmark<Signal, Wnk>::connection(N);
 }
+NOINLINE(double Wnk::disconnect(std::size_t N))
+{
+    return Benchmark<Signal, Wnk>::disconnect(N);
+}
+NOINLINE(double Wnk::reconnect(std::size_t N))
+{
+    return Benchmark<Signal, Wnk>::reconnect(N);
+}
 NOINLINE(double Wnk::emission(std::size_t N))
 {
     return Benchmark<Signal, Wnk>::emission(N);

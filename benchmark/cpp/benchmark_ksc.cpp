@@ -20,6 +20,14 @@ NOINLINE(double Ksc::connection(std::size_t N))
 {
     return Benchmark<Signal, Ksc>::connection(N);
 }
+NOINLINE(double Ksc::disconnect(std::size_t N))
+{
+    return Benchmark<Signal, Ksc>::disconnect(N);
+}
+NOINLINE(double Ksc::reconnect(std::size_t N))
+{
+    return Benchmark<Signal, Ksc>::reconnect(N);
+}
 NOINLINE(double Ksc::emission(std::size_t N))
 {
     return Benchmark<Signal, Ksc>::emission(N);

@@ -20,6 +20,14 @@ NOINLINE(double Jos::connection(std::size_t N))
 {
     return Benchmark<Signal, Jos>::connection(N);
 }
+NOINLINE(double Jos::disconnect(std::size_t N))
+{
+    return Benchmark<Signal, Jos>::disconnect(N);
+}
+NOINLINE(double Jos::reconnect(std::size_t N))
+{
+    return Benchmark<Signal, Jos>::reconnect(N);
+}
 NOINLINE(double Jos::emission(std::size_t N))
 {
     return Benchmark<Signal, Jos>::emission(N);

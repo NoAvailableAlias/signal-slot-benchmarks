@@ -20,6 +20,14 @@ NOINLINE(double Lfs::connection(std::size_t N))
 {
     return Benchmark<Signal, Lfs>::connection(N);
 }
+NOINLINE(double Lfs::disconnect(std::size_t N))
+{
+    return Benchmark<Signal, Lfs>::disconnect(N);
+}
+NOINLINE(double Lfs::reconnect(std::size_t N))
+{
+    return Benchmark<Signal, Lfs>::reconnect(N);
+}
 NOINLINE(double Lfs::emission(std::size_t N))
 {
     return Benchmark<Signal, Lfs>::emission(N);

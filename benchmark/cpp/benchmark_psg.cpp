@@ -20,6 +20,14 @@ NOINLINE(double Psg::connection(std::size_t N))
 {
     return Benchmark<Signal, Psg>::connection(N);
 }
+NOINLINE(double Psg::disconnect(std::size_t N))
+{
+    return Benchmark<Signal, Psg>::disconnect(N);
+}
+NOINLINE(double Psg::reconnect(std::size_t N))
+{
+    return Benchmark<Signal, Psg>::reconnect(N);
+}
 NOINLINE(double Psg::emission(std::size_t N))
 {
     return Benchmark<Signal, Psg>::emission(N);

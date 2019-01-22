@@ -20,6 +20,14 @@ NOINLINE(double Cls::connection(std::size_t N))
 {
     return Benchmark<SignalType, Cls>::connection(N);
 }
+NOINLINE(double Cls::disconnect(std::size_t N))
+{
+    return Benchmark<SignalType, Cls>::disconnect(N);
+}
+NOINLINE(double Cls::reconnect(std::size_t N))
+{
+    return Benchmark<SignalType, Cls>::reconnect(N);
+}
 NOINLINE(double Cls::emission(std::size_t N))
 {
     return Benchmark<SignalType, Cls>::emission(N);

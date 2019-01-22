@@ -155,9 +155,6 @@
     <ClInclude Include="..\benchmark\hpp\benchmark_nod.hpp">
       <Filter>Header Files\benchmark</Filter>
     </ClInclude>
-    <ClInclude Include="..\benchmark\hpp\benchmark_nss.hpp">
-      <Filter>Header Files\benchmark</Filter>
-    </ClInclude>
     <ClInclude Include="..\benchmark\hpp\benchmark_psg.hpp">
       <Filter>Header Files\benchmark</Filter>
     </ClInclude>
@@ -344,12 +341,6 @@
     <ClInclude Include="..\benchmark\lib\NoAvailableAlias\nano-signal-slot-v2x\nano_signal_slot.hpp">
       <Filter>Header Files\lib\NoAvailableAlias\nano-signal-slot-v2x</Filter>
     </ClInclude>
-    <ClInclude Include="..\benchmark\hpp\benchmark_nss_v2.hpp">
-      <Filter>Header Files\benchmark</Filter>
-    </ClInclude>
-    <ClInclude Include="..\benchmark\hpp\benchmark_nss_v2_st.hpp">
-      <Filter>Header Files\benchmark</Filter>
-    </ClInclude>
     <ClInclude Include="..\benchmark\lib\NoAvailableAlias\nano-signal-slot-v2x\nano_mutex.hpp">
       <Filter>Header Files\lib\NoAvailableAlias\nano-signal-slot-v2x</Filter>
     </ClInclude>
@@ -515,6 +506,15 @@
     <ClInclude Include="..\benchmark\lib\palacaze\sigslot\include\sigslot\signal.hpp">
       <Filter>Header Files\lib\palacaze</Filter>
     </ClInclude>
+    <ClInclude Include="..\benchmark\hpp\benchmark_nss_ts.hpp">
+      <Filter>Header Files\benchmark</Filter>
+    </ClInclude>
+    <ClInclude Include="..\benchmark\hpp\benchmark_nss_st.hpp">
+      <Filter>Header Files\benchmark</Filter>
+    </ClInclude>
+    <ClInclude Include="..\benchmark\hpp\benchmark_nss_tss.hpp">
+      <Filter>Header Files\benchmark</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\benchmark\cpp\benchmark_asg.cpp">
@@ -539,9 +539,6 @@
       <Filter>Source Files\benchmark</Filter>
     </ClCompile>
     <ClCompile Include="..\benchmark\cpp\benchmark_nod.cpp">
-      <Filter>Source Files\benchmark</Filter>
-    </ClCompile>
-    <ClCompile Include="..\benchmark\cpp\benchmark_nss.cpp">
       <Filter>Source Files\benchmark</Filter>
     </ClCompile>
     <ClCompile Include="..\benchmark\cpp\benchmark_psg.cpp">
@@ -596,12 +593,6 @@
       <Filter>Source Files\benchmark</Filter>
     </ClCompile>
     <ClCompile Include="..\benchmark\cpp\benchmark_nls_st.cpp">
-      <Filter>Source Files\benchmark</Filter>
-    </ClCompile>
-    <ClCompile Include="..\benchmark\cpp\benchmark_nss_v2.cpp">
-      <Filter>Source Files\benchmark</Filter>
-    </ClCompile>
-    <ClCompile Include="..\benchmark\cpp\benchmark_nss_v2_st.cpp">
       <Filter>Source Files\benchmark</Filter>
     </ClCompile>
     <ClCompile Include="..\benchmark\cpp\benchmark_cps_st.cpp">
@@ -662,6 +653,15 @@
       <Filter>Source Files\lib\copperspice</Filter>
     </ClCompile>
     <ClCompile Include="..\benchmark\cpp\benchmark_css.cpp">
+      <Filter>Source Files\benchmark</Filter>
+    </ClCompile>
+    <ClCompile Include="..\benchmark\cpp\benchmark_nss_ts.cpp">
+      <Filter>Source Files\benchmark</Filter>
+    </ClCompile>
+    <ClCompile Include="..\benchmark\cpp\benchmark_nss_st.cpp">
+      <Filter>Source Files\benchmark</Filter>
+    </ClCompile>
+    <ClCompile Include="..\benchmark\cpp\benchmark_nss_tss.cpp">
       <Filter>Source Files\benchmark</Filter>
     </ClCompile>
   </ItemGroup>

@@ -25,6 +25,9 @@ class Cls
         // Automatically disconnect when the foo instance is destroyed
         // Benchmarks require connection management
         foo.reg = make_slot_scope([reg, &subject](void*) { subject.disconnect(reg); });
+
+        // does not compile due to "cannot convert this pointer from const lsignal::connection to lsignal::connection&"
+        //foo.reg = make_slot_scope([reg, &subject](void*) { reg.disconnect(); });
     }
     template <typename Subject>
     static void emit_method(Subject& subject, Rng& rng)
@@ -39,6 +42,8 @@ class Cls
     static double construction(std::size_t);
     static double destruction(std::size_t);
     static double connection(std::size_t);
+    static double disconnect(std::size_t);
+    static double reconnect(std::size_t);
     static double emission(std::size_t);
     static double combined(std::size_t);
     static double threaded(std::size_t);

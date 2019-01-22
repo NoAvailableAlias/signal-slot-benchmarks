@@ -20,6 +20,14 @@ NOINLINE(double Nod::connection(std::size_t N))
 {
     return Benchmark<Signal, Nod>::connection(N);
 }
+NOINLINE(double Nod::disconnect(std::size_t N))
+{
+    return Benchmark<Signal, Nod>::disconnect(N);
+}
+NOINLINE(double Nod::reconnect(std::size_t N))
+{
+    return Benchmark<Signal, Nod>::reconnect(N);
+}
 NOINLINE(double Nod::emission(std::size_t N))
 {
     return Benchmark<Signal, Nod>::emission(N);

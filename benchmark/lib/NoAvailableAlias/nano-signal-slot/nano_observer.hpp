@@ -1,100 +1,154 @@
-#ifndef NANO_OBSERVER_HPP
-#define NANO_OBSERVER_HPP
+#pragma once
+
+#include <algorithm>
+#include <vector>
 
 #include "nano_function.hpp"
+#include "nano_mutex.hpp"
 
-namespace Nano_Deprecated
+namespace Nano
 {
 
-class Observer
+template <typename MT_Policy = ST_Policy>
+class Observer : private MT_Policy
 {
-    template <typename T> friend class Signal;
+    // Only Nano::Signal is allowed private access
+    template <typename, typename> friend class Signal;
 
-    struct DelegateKeyObserver { DelegateKey delegate; Observer* observer; };
-    struct Node { DelegateKeyObserver data; Node* next; } *head = nullptr;
-
-    //--------------------------------------------------------------------------
-
-    void insert(DelegateKey const& key, Observer* ptr)
+    struct Connection
     {
-        head = new Node { { key, ptr }, head };
-    }
-    void insert(DelegateKey const& key)
-    {
-        this->insert(key, this);
-    }
+        Delegate_Key delegate;
+        Observer* observer;
 
-    //--------------------------------------------------------------------------
+        Connection() noexcept = default;
+        Connection(Delegate_Key const& key) : delegate(key), observer(nullptr) {}
+        Connection(Delegate_Key const& key, Observer* obs) : delegate(key), observer(obs) {}
+    };
 
-    void remove(DelegateKey const& key)
+    struct Z_Order
     {
-        Node* node = head;
-        Node* prev = nullptr;
-        // Only delete the first occurrence
-        for ( ; node; prev = node, node = node->next)
+        inline bool operator()(Delegate_Key const& lhs, Delegate_Key const& rhs) const
         {
-            if (node->data.delegate == key)
+            std::size_t x = lhs[0] ^ rhs[0];
+            std::size_t y = lhs[1] ^ rhs[1];
+
+            if ((x < y) && (x < (x ^ y)))
             {
-                if (prev)
-                {
-                    prev->next = node->next;
-                }
-                else
-                {
-                    head = head->next;
-                }
-                delete node;
-                break;
+                return lhs[1] < rhs[1];
+            }
+            return lhs[0] < rhs[0];
+        }
+
+        inline bool operator()(Connection const& lhs, Connection const& rhs) const
+        {
+            return operator()(lhs.delegate, rhs.delegate);
+        }
+    };
+
+    std::vector<Connection> connections;
+
+    //--------------------------------------------------------------------------
+
+    void insert(Delegate_Key const& key, Observer* observer)
+    {
+        auto lock = MT_Policy::get_lock_guard();
+
+        auto start = connections.begin();
+        auto stop = connections.end();
+
+        if (start == stop || start->observer)
+        {
+            // No empty slot can be reused so binary emplace to the correct index
+            connections.emplace(std::upper_bound(start, stop, key, Z_Order()), key, observer);
+        }
+        else
+        {
+            // Reuse an empty slot and rotate slot to the correct index
+            connections[0] = { key, observer };
+            std::rotate(start, start + 1, std::upper_bound(start, stop, key, Z_Order()));
+        }
+    }
+
+    void remove(Delegate_Key const& key) noexcept
+    {
+        auto lock = MT_Policy::get_lock_guard();
+
+        auto start = connections.begin();
+        auto stop = connections.end();
+
+        auto slot = std::lower_bound(start, stop, key, Z_Order());
+
+        if (slot != stop)
+        {
+            // Rotate the slot to the front then zero out the slot
+            std::rotate(start, slot, slot + 1);
+            connections[0] = {};
+        }
+    }
+
+    //--------------------------------------------------------------------------
+
+    template <typename Function, typename... Uref>
+    void for_each(Uref&&... args)
+    {
+        auto lock = MT_Policy::get_lock_guard();
+
+        for (auto const& slot : MT_Policy::copy_or_ref(connections, lock))
+        {
+            if (slot.observer)
+            {
+                Function::bind(slot.delegate)(std::forward<Uref>(args)...);
+            }
+        }
+    }
+
+    template <typename Function, typename Accumulate, typename... Uref>
+    void for_each_accumulate(Accumulate&& accumulate, Uref&&... args)
+    {
+        auto lock = MT_Policy::get_lock_guard();
+
+        for (auto const& slot : MT_Policy::copy_or_ref(connections, lock))
+        {
+            if (slot.observer)
+            {
+                accumulate(Function::bind(slot.delegate)(std::forward<Uref>(args)...));
             }
         }
     }
 
     //--------------------------------------------------------------------------
 
-    template <typename Delegate, typename... Uref>
-    void onEach(Uref&&... args)
+    public:
+
+    void disconnect_all() noexcept
     {
-        for (auto node = head, next = head; node; node = next)
+        auto lock = MT_Policy::get_lock_guard();
+
+        for (auto const& slot : connections)
         {
-            next = node->next;
-            // Perfect forward and emit
-            Delegate(node->data.delegate)(std::forward<Uref>(args)...);
+            if (slot.observer && slot.observer != this)
+            {
+                slot.observer->remove(slot.delegate);
+            }
         }
+        connections.clear();
     }
 
-    template <typename Delegate, typename Accumulate, typename... Uref>
-    void onEach_Accumulate(Accumulate&& accumulate, Uref&&... args)
+    bool is_empty() const noexcept
     {
-        for (auto node = head, next = head; node; node = next)
-        {
-            next = node->next;
-            // Perfect forward, emit, and accumulate the return value
-            accumulate(Delegate(node->data.delegate)(std::forward<Uref>(args)...));
-        }
-    }
+        auto lock = MT_Policy::get_lock_guard();
 
-    //--------------------------------------------------------------------------
+        return connections.empty() || connections.back().observer == nullptr;
+    }
 
     protected:
 
+    // Guideline #4: A base class destructor should be
+    // either public and virtual, or protected and non-virtual.
     ~Observer()
     {
-        for (auto node = head; node;)
-        {
-            auto temp = node;
-            // If this is us we only need to delete
-            if (this != node->data.observer)
-            {
-                // Remove this slot from this listening Observer
-                node->data.observer->remove(node->data.delegate);
-            }  
-            node = node->next;
-            delete temp;       
-        }
+        disconnect_all();
     }
-
 };
 
 } // namespace Nano ------------------------------------------------------------
-
-#endif // NANO_OBSERVER_HPP
