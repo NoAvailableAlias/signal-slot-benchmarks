@@ -5,12 +5,12 @@
 
 ### Performance of Thread Safe Libraries
 
-| Library | [constr] | [destr] | conn | disconn | reconn | emit | combined | threaded | score |
+| Library | [constr] | [destr] | conn | disconn | reconn | emit | all | threaded | score |
 |---------|----------|---------|------|---------|--------|------|----------|----------|-------|
-| * nano-signal-slot ts | 143620 | 13631 | 6995 | 7019 | 5014 | 76722 | 2924 | 85 | 98759 |
+| * nano-signal-slot ts | 143987 | 14052 | 7203 | 8161 | 9403 | 77956 | 4277 | 147 | 107145 |
 | ! Montellese cpp-signal | 48280 | 7053 | 5909 | 5425 | 5934 | 74646 | 2499 | 164 | 94576 |
 | ! winglot Signals | 13978 | 4423 | 4015 | 3388 | 4074 | 75892 | 1620 | 130 | 89119 |
-| ! nano-signal-slot tss | 147072 | 13287 | 6674 | 6935 | 4769 | 58799 | 2750 | 84 | 80011 |
+| ! nano-signal-slot tss | 146769 | 13372 | 7180 | 8106 | 9062 | 59723 | 4129 | 150 | 88351 |
 | * fr00b0 nod | 189352 | 36229 | 8469 | 12168 | 14357 | 37221 | 5901 | 25 | 78141 |
 | * palacaze sigslot | 172249 | 12379 | 5763 | 16827 | 5270 | 20606 | 3605 | 257 | 52329 |
 | * CppFakeIt FastSignals | 137485 | 35360 | 5482 | 5562 | 9419 | 27008 | 2935 | 29 | 50436 |
@@ -21,14 +21,14 @@
 
 ### Performance of Thread Unsafe Libraries
 
-| Library | [constr] | [destr] | conn | disconn | reconn | emit | combined | threaded | score |
+| Library | [constr] | [destr] | conn | disconn | reconn | emit | all | threaded | score |
 |---------|----------|---------|------|---------|--------|------|----------|----------|-------|
 | jeffomatic jl_signal | 115893 | 46854 | 66126 | 15442 | 65516 | 81337 | 11026 | 0 | 239449 |
 | Ansoulom cpp-observe | 73095 | 24516 | 7525 | 13246 | 10444 | 79439 | 5590 | 0 | 116242 |
+| nano-signal-slot st | 196523 | 18382 | 8365 | 10410 | 11227 | 79697 | 5298 | 0 | 114997 |
 | Montellese cpp-signal | 229122 | 15266 | 9474 | 9239 | 9474 | 80378 | 4440 | 0 | 113004 |
 | Yassi | 226784 | 15753 | 8091 | 5508 | 14336 | 81096 | 3568 | 0 | 112600 |
 | fr00b0 nod | 196181 | 36310 | 12130 | 19105 | 26506 | 38401 | 9665 | 0 | 105807 |
-| nano-signal-slot st | 198676 | 18164 | 7883 | 7925 | 5312 | 78763 | 3309 | 0 | 103193 |
 | mwthinker Signal | 199555 | 9283 | 5968 | 6183 | 5897 | 80266 | 2852 | 0 | 101166 |
 | vdksoft signals | 197301 | 16120 | 4008 | 12086 | 3893 | 78225 | 2650 | 0 | 100862 |
 | amc522 Signal11 | 152987 | 11159 | 5302 | 9121 | 5397 | 76877 | 3354 | 0 | 100052 |
@@ -46,10 +46,10 @@ _Size results are the size of object files from release build with Visual Studio
 
 | Library | Build Size | Header Only | Data Structure | Thread Safe |
 | ------- |:----------:|:-----------:| -------------- |:-----------:|
-| [* nano-signal-slot ts](https://github.com/NoAvailableAlias/nano-signal-slot/tree/rework) | 760 kb | X | std::vector | X |
+| [* nano-signal-slot ts](https://github.com/NoAvailableAlias/nano-signal-slot/tree/rework) | 756 kb | X | std::vector | X |
 | [* CppFakeIt FastSignals](https://github.com/CppFakeIt/FastSignals) | 767 kb | - | std::vector | X |
 | [! Montellese cpp-signal](https://github.com/Montellese/cpp-signal) | 777 kb | X | std::forward_list | ! |
-| [! nano-signal-slot tss](https://github.com/NoAvailableAlias/nano-signal-slot/tree/rework) | 784 kb | X | std::vector | X |
+| [! nano-signal-slot tss](https://github.com/NoAvailableAlias/nano-signal-slot/tree/rework) | 780 kb | X | std::vector | ! |
 | [! winglot Signals](https://github.com/winglot/Signals) | 806 kb | - | **std::list | ! |
 | [* palacaze sigslot](https://github.com/palacaze/sigslot) | 830 kb | X | singly linked list | X |
 | [* fr00b0 nod](https://github.com/fr00b0/nod) | 864 kb | X | std::vector | X |
@@ -62,7 +62,7 @@ _Size results are the size of object files from release build with Visual Studio
 | Library | Build Size | Header Only | Data Structure | Thread Safe |
 | ------- |:----------:|:-----------:| -------------- |:-----------:|
 | [jeffomatic jl_signal](https://github.com/jeffomatic/jl_signal) | 167 kb | - | doubly linked list | - |
-| [nano-signal-slot st](https://github.com/NoAvailableAlias/nano-signal-slot/tree/rework) | 170 kb | X | std::vector | - |
+| [nano-signal-slot st](https://github.com/NoAvailableAlias/nano-signal-slot/tree/rework) | 169 kb | X | std::vector | - |
 | [Montellese cpp-signal](https://github.com/Montellese/cpp-signal) | 202 kb | X | std::forward_list | - |
 | [vdksoft signals](https://github.com/vdksoft/signals) | 211 kb | - | singly linked list | directive |
 | [supergrover sigslot](https://github.com/supergrover/sigslot) | 229 kb | - | std::list | - |
@@ -84,7 +84,7 @@ _Size results are the size of object files from release build with Visual Studio
 Benchmark Algorithms
 --------------------
 
-_The individual benchmark algorithms are completely generic through templates._
+_The individual benchmark algorithms are completely generic through the use of templates._
 
 | Algorithm | Description |
 | --------- | ----------- |
@@ -94,7 +94,7 @@ _The individual benchmark algorithms are completely generic through templates._
 | [connection](https://github.com/NoAvailableAlias/signal-slot-benchmarks/blob/master/benchmark.hpp#L95) | Time Signal connections to a randomized N number of Foo instances. |
 | [disconnect](https://github.com/NoAvailableAlias/signal-slot-benchmarks/blob/master/benchmark.hpp#L118) | Time disconnecting N number of Foo instances from a single Signal. |
 | [reconnect](https://github.com/NoAvailableAlias/signal-slot-benchmarks/blob/master/benchmark.hpp#L145) | Time reconnecting N number of Foo instances to a global Signal. |
-| [emission](https://github.com/NoAvailableAlias/signal-slot-benchmarks/blob/master/benchmark.hpp#L169) | Time the duration of an N slot emission. |
-| [combined](https://github.com/NoAvailableAlias/signal-slot-benchmarks/blob/master/benchmark.hpp#L194) | Time all previous benchmarks together in one combined benchmark. |
+| [emit](https://github.com/NoAvailableAlias/signal-slot-benchmarks/blob/master/benchmark.hpp#L169) | Time the duration of an N slot emission. |
+| [all](https://github.com/NoAvailableAlias/signal-slot-benchmarks/blob/master/benchmark.hpp#L194) | Time all previous benchmarks together in one combined benchmark. |
 | [threaded](https://github.com/NoAvailableAlias/signal-slot-benchmarks/blob/master/benchmark.hpp#L218) | Same as the previous benchmark but is now threaded. |
 <br/>

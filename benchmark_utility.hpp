@@ -43,13 +43,13 @@ typedef std::map<double, ReportOrderedResult> ReportOrderedResults;
 constexpr const std::size_t C_JLSIGNAL_MAX = 2048;
 
 // Constants used to map to a particular benchmark method
-constexpr const char* C_CONSTRUCTION = "[construct]";
-constexpr const char* C_DESTRUCTION = "[destruct]";
-constexpr const char* C_CONNECTION = "connect";
-constexpr const char* C_DISCONNECT = "disconnect";
-constexpr const char* C_RECONNECT = "reconnect";
+constexpr const char* C_CONSTRUCTION = "[constr]";
+constexpr const char* C_DESTRUCTION = "[destr]";
+constexpr const char* C_CONNECTION = "conn";
+constexpr const char* C_DISCONNECT = "disconn";
+constexpr const char* C_RECONNECT = "reconn";
 constexpr const char* C_EMISSION = "emit";
-constexpr const char* C_COMBINED = "combined";
+constexpr const char* C_COMBINED = "all";
 constexpr const char* C_THREADED = "threaded";
 
 // The milliseconds per benchmark sample

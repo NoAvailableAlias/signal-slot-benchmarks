@@ -325,11 +325,8 @@
     <ClInclude Include="..\benchmark\lib\Montellese\cpp-signal\cpp-signal.h" />
     <ClInclude Include="..\benchmark\lib\mwthinker\Signal\src\mw\signal.h" />
     <ClInclude Include="..\benchmark\lib\mwthinker\Signal\src\mw\signals\connection.h" />
-    <ClInclude Include="..\benchmark\lib\NoAvailableAlias\nano-signal-slot-v2x\nano_function.hpp" />
-    <ClInclude Include="..\benchmark\lib\NoAvailableAlias\nano-signal-slot-v2x\nano_mutex.hpp" />
-    <ClInclude Include="..\benchmark\lib\NoAvailableAlias\nano-signal-slot-v2x\nano_observer.hpp" />
-    <ClInclude Include="..\benchmark\lib\NoAvailableAlias\nano-signal-slot-v2x\nano_signal_slot.hpp" />
     <ClInclude Include="..\benchmark\lib\NoAvailableAlias\nano-signal-slot\nano_function.hpp" />
+    <ClInclude Include="..\benchmark\lib\NoAvailableAlias\nano-signal-slot\nano_mutex.hpp" />
     <ClInclude Include="..\benchmark\lib\NoAvailableAlias\nano-signal-slot\nano_observer.hpp" />
     <ClInclude Include="..\benchmark\lib\NoAvailableAlias\nano-signal-slot\nano_signal_slot.hpp" />
     <ClInclude Include="..\benchmark\lib\palacaze\sigslot\include\sigslot\signal.hpp" />

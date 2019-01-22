@@ -40,10 +40,10 @@ class Nss_tss : public Nano::Observer<Nano::TS_Policy_Safe<>>
     static double combined(std::size_t);
     static double threaded(std::size_t);
 
-    static constexpr const char* C_LIB_NAME = "* nano-signal-slot tss";
+    static constexpr const char* C_LIB_NAME = "! nano-signal-slot tss";
     static constexpr const char* C_LIB_SOURCE_URL = "https://github.com/NoAvailableAlias/nano-signal-slot/tree/rework";
     static constexpr const char* C_LIB_FILE = "benchmark_nss_tss";
     static constexpr const char* C_LIB_IS_HEADER_ONLY = "X";
     static constexpr const char* C_LIB_DATA_STRUCTURE = "std::vector";
-    static constexpr const char* C_LIB_IS_THREAD_SAFE = "X";
+    static constexpr const char* C_LIB_IS_THREAD_SAFE = "!";
 };
