@@ -238,6 +238,7 @@
     <ClInclude Include="..\benchmark\hpp\benchmark_nod.hpp" />
     <ClInclude Include="..\benchmark\hpp\benchmark_nod_st.hpp" />
     <ClInclude Include="..\benchmark\hpp\benchmark_nss_st.hpp" />
+    <ClInclude Include="..\benchmark\hpp\benchmark_nss_sts.hpp" />
     <ClInclude Include="..\benchmark\hpp\benchmark_nss_ts.hpp" />
     <ClInclude Include="..\benchmark\hpp\benchmark_nss_tss.hpp" />
     <ClInclude Include="..\benchmark\hpp\benchmark_psg.hpp" />
@@ -365,6 +366,7 @@
     <ClCompile Include="..\benchmark\cpp\benchmark_nod.cpp" />
     <ClCompile Include="..\benchmark\cpp\benchmark_nod_st.cpp" />
     <ClCompile Include="..\benchmark\cpp\benchmark_nss_st.cpp" />
+    <ClCompile Include="..\benchmark\cpp\benchmark_nss_sts.cpp" />
     <ClCompile Include="..\benchmark\cpp\benchmark_nss_ts.cpp" />
     <ClCompile Include="..\benchmark\cpp\benchmark_nss_tss.cpp" />
     <ClCompile Include="..\benchmark\cpp\benchmark_psg.cpp" />

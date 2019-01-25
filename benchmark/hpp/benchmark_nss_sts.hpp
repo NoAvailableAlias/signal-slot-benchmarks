@@ -5,7 +5,7 @@
 
 #include "../../benchmark.hpp"
 
-class Nss_tss : public Nano::Observer<Nano::TS_Policy_Safe<>>
+class Nss_sts : public Nano::Observer<Nano::ST_Policy_Safe>
 {
     NOINLINE(void handler(Rng& rng))
     {
@@ -14,7 +14,7 @@ class Nss_tss : public Nano::Observer<Nano::TS_Policy_Safe<>>
 
     public:
 
-    using Signal = Nano::Signal<void(Rng&), Nano::TS_Policy_Safe<>>;
+    using Signal = Nano::Signal<void(Rng&), Nano::ST_Policy_Safe>;
 
     template <typename Subject, typename Foo>
     static void connect_method(Subject& subject, Foo& foo)
@@ -38,12 +38,14 @@ class Nss_tss : public Nano::Observer<Nano::TS_Policy_Safe<>>
     static double reconnect(std::size_t);
     static double emission(std::size_t);
     static double combined(std::size_t);
+
+    // NOT IMPLEMENTED FOR THIS LIB
     static double threaded(std::size_t);
 
-    static constexpr const char* C_LIB_NAME = "* nano-signal-slot tss";
+    static constexpr const char* C_LIB_NAME = "nano-signal-slot sts";
     static constexpr const char* C_LIB_SOURCE_URL = "https://github.com/NoAvailableAlias/nano-signal-slot/tree/rework";
-    static constexpr const char* C_LIB_FILE = "benchmark_nss_tss";
+    static constexpr const char* C_LIB_FILE = "benchmark_nss_sts";
     static constexpr const char* C_LIB_IS_HEADER_ONLY = "X";
     static constexpr const char* C_LIB_DATA_STRUCTURE = "std::vector";
-    static constexpr const char* C_LIB_IS_THREAD_SAFE = "X";
+    static constexpr const char* C_LIB_IS_THREAD_SAFE = "-";
 };

@@ -23,6 +23,7 @@
 #include "benchmark/hpp/benchmark_nod.hpp"
 #include "benchmark/hpp/benchmark_nod_st.hpp"
 #include "benchmark/hpp/benchmark_nss_st.hpp"
+#include "benchmark/hpp/benchmark_nss_sts.hpp"
 #include "benchmark/hpp/benchmark_nss_ts.hpp"
 #include "benchmark/hpp/benchmark_nss_tss.hpp"
 #include "benchmark/hpp/benchmark_psg.hpp"
@@ -130,6 +131,7 @@ BenchmarkClassResults run_all_benchmarks(std::size_t begin, std::size_t end)
         run_benchmark_class<Nod>(records, N);
         run_benchmark_class<Nod_st>(records, N);
         run_benchmark_class<Nss_st>(records, N);
+        run_benchmark_class<Nss_sts>(records, N);
         run_benchmark_class<Nss_ts>(records, N);
         run_benchmark_class<Nss_tss>(records, N);
         run_benchmark_class<Psg>(records, N);
@@ -170,6 +172,7 @@ void run_all_validation_tests(std::size_t N)
     Nod::validate_assert(N);
     Nod_st::validate_assert(N);
     Nss_st::validate_assert(N);
+    Nss_sts::validate_assert(N);
     Nss_ts::validate_assert(N);
     Nss_tss::validate_assert(N);
     Psg::validate_assert(N);
@@ -274,6 +277,7 @@ void output_metrics_report(T& ost)
     output_metrics_report_row<Nod>(ost);
     output_metrics_report_row<Nod_st>(ost);
     output_metrics_report_row<Nss_st>(ost);
+    output_metrics_report_row<Nss_sts>(ost);
     output_metrics_report_row<Nss_ts>(ost);
     output_metrics_report_row<Nss_tss>(ost);
     output_metrics_report_row<Psg>(ost);

@@ -9,13 +9,13 @@
 |---------|----------|---------|------|---------|--------|------|----------|----------|-------|
 | * nano-signal-slot ts | 145061 | 13522 | 7356 | 8161 | 9562 | 78441 | 4334 | 147 | 108000 |
 | ! Montellese cpp-signal | 48280 | 7053 | 5909 | 5425 | 5934 | 74646 | 2499 | 164 | 94576 |
-| ! nano-signal-slot tss | 145724 | 13676 | 7305 | 8179 | 9274 | 60377 | 4157 | 142 | 89435 |
 | ! winglot Signals | 13978 | 4423 | 4015 | 3388 | 4074 | 75892 | 1620 | 130 | 89119 |
 | * fr00b0 nod | 189352 | 36229 | 8469 | 12168 | 14357 | 37221 | 5901 | 25 | 78141 |
 | * palacaze sigslot | 172249 | 12379 | 5763 | 16827 | 5270 | 20606 | 3605 | 257 | 52329 |
 | * CppFakeIt FastSignals | 137485 | 35360 | 5482 | 5562 | 9419 | 27008 | 2935 | 29 | 50436 |
 | * Kosta signals-cpp | 218117 | 7048 | 1012 | 19526 | 930 | 16817 | 823 | 43 | 39151 |
 | * Boost Signals2 | 11975 | 3435 | 2158 | 16607 | 1895 | 13830 | 61 | 6 | 34558 |
+| * nano-signal-slot tss | 17378 | 4108 | 5613 | 3103 | 7410 | 11265 | 1698 | 95 | 29184 |
 | * neolib event | 189786 | 5824 | 1319 | 2147 | 1396 | 4502 | 715 | 44 | 10123 |
 | [Interactive Graph](https://plot.ly/~NoAvailableAlias/1/) (NOT UPDATED YET) |
 
@@ -32,6 +32,7 @@
 | mwthinker Signal | 199555 | 9283 | 5968 | 6183 | 5897 | 80266 | 2852 | 0 | 101166 |
 | vdksoft signals | 197301 | 16120 | 4008 | 12086 | 3893 | 78225 | 2650 | 0 | 100862 |
 | amc522 Signal11 | 152987 | 11159 | 5302 | 9121 | 5397 | 76877 | 3354 | 0 | 100052 |
+| nano-signal-slot sts | 198871 | 18619 | 8787 | 10447 | 11629 | 63849 | 5216 | 0 | 99928 |
 | pbhogan Signals | 201551 | 10391 | 6459 | 7687 | 6341 | 72442 | 3426 | 0 | 96355 |
 | supergrover sigslot | 17998 | 3299 | 2620 | 2989 | 2615 | 79977 | 1285 | 0 | 89486 |
 | palacaze sigslot | 187073 | 13109 | 7097 | 16849 | 6222 | 21285 | 4007 | 0 | 55460 |
@@ -49,8 +50,8 @@ _Size results are the size of object files from release build with Visual Studio
 | [* nano-signal-slot ts](https://github.com/NoAvailableAlias/nano-signal-slot/tree/rework) | 756 kb | X | std::vector | X |
 | [* CppFakeIt FastSignals](https://github.com/CppFakeIt/FastSignals) | 767 kb | - | std::vector | X |
 | [! Montellese cpp-signal](https://github.com/Montellese/cpp-signal) | 777 kb | X | std::forward_list | ! |
-| [! nano-signal-slot tss](https://github.com/NoAvailableAlias/nano-signal-slot/tree/rework) | 780 kb | X | std::vector | ! |
 | [! winglot Signals](https://github.com/winglot/Signals) | 806 kb | - | **std::list | ! |
+| [* nano-signal-slot tss](https://github.com/NoAvailableAlias/nano-signal-slot/tree/rework) | 814 kb | X | std::vector | X |
 | [* palacaze sigslot](https://github.com/palacaze/sigslot) | 830 kb | X | singly linked list | X |
 | [* fr00b0 nod](https://github.com/fr00b0/nod) | 864 kb | X | std::vector | X |
 | [* Kosta signals-cpp](https://github.com/Kosta-Github/signals-cpp) | 873 kb | X | std::vector | X |
@@ -63,6 +64,7 @@ _Size results are the size of object files from release build with Visual Studio
 | ------- |:----------:|:-----------:| -------------- |:-----------:|
 | [jeffomatic jl_signal](https://github.com/jeffomatic/jl_signal) | 167 kb | - | doubly linked list | - |
 | [nano-signal-slot st](https://github.com/NoAvailableAlias/nano-signal-slot/tree/rework) | 169 kb | X | std::vector | - |
+| [nano-signal-slot sts](https://github.com/NoAvailableAlias/nano-signal-slot/tree/rework) | 185 kb | X | std::vector | - |
 | [Montellese cpp-signal](https://github.com/Montellese/cpp-signal) | 202 kb | X | std::forward_list | - |
 | [vdksoft signals](https://github.com/vdksoft/signals) | 211 kb | - | singly linked list | directive |
 | [supergrover sigslot](https://github.com/supergrover/sigslot) | 229 kb | - | std::list | - |

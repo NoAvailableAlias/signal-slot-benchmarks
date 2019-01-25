@@ -503,6 +503,9 @@
     <ClInclude Include="..\benchmark\lib\NoAvailableAlias\nano-signal-slot\nano_signal_slot.hpp">
       <Filter>Header Files\lib\NoAvailableAlias\nano-signal-slot</Filter>
     </ClInclude>
+    <ClInclude Include="..\benchmark\hpp\benchmark_nss_sts.hpp">
+      <Filter>Header Files\benchmark</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\benchmark\cpp\benchmark_asg.cpp">
@@ -650,6 +653,9 @@
       <Filter>Source Files\benchmark</Filter>
     </ClCompile>
     <ClCompile Include="..\benchmark\cpp\benchmark_nss_tss.cpp">
+      <Filter>Source Files\benchmark</Filter>
+    </ClCompile>
+    <ClCompile Include="..\benchmark\cpp\benchmark_nss_sts.cpp">
       <Filter>Source Files\benchmark</Filter>
     </ClCompile>
   </ItemGroup>
