@@ -17,7 +17,6 @@
 | * Boost Signals2 | 11975 | 3435 | 2158 | 16607 | 1895 | 13830 | 61 | 6 | 34558 |
 | * nano-signal-slot tss | 17378 | 4108 | 5613 | 3103 | 7410 | 11265 | 1698 | 95 | 29184 |
 | * neolib event | 189786 | 5824 | 1319 | 2147 | 1396 | 4502 | 715 | 44 | 10123 |
-| [Interactive Graph](https://plot.ly/~NoAvailableAlias/1/) (NOT UPDATED YET) |
 
 ### Performance of Thread Unsafe Libraries
 
@@ -51,7 +50,7 @@ _Size results are the size of object files from release build with Visual Studio
 | [* CppFakeIt FastSignals](https://github.com/CppFakeIt/FastSignals) | 767 kb | - | std::vector | X |
 | [! Montellese cpp-signal](https://github.com/Montellese/cpp-signal) | 777 kb | X | std::forward_list | ! |
 | [! winglot Signals](https://github.com/winglot/Signals) | 806 kb | - | **std::list | ! |
-| [* nano-signal-slot tss](https://github.com/NoAvailableAlias/nano-signal-slot/tree/rework) | 814 kb | X | std::vector | X |
+| [* nano-signal-slot tss](https://github.com/NoAvailableAlias/nano-signal-slot/tree/rework) | 813 kb | X | std::vector | X |
 | [* palacaze sigslot](https://github.com/palacaze/sigslot) | 830 kb | X | singly linked list | X |
 | [* fr00b0 nod](https://github.com/fr00b0/nod) | 864 kb | X | std::vector | X |
 | [* Kosta signals-cpp](https://github.com/Kosta-Github/signals-cpp) | 873 kb | X | std::vector | X |
