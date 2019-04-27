@@ -44,6 +44,7 @@
 #include <new>
 #include <stdexcept>
 #include <memory>
+#include <iostream>
 #include "detail_memory.hpp"
 
 namespace neolib
