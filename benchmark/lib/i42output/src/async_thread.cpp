@@ -39,7 +39,7 @@
 namespace neolib
 {
 	async_thread::async_thread(const std::string& aName, bool aAttachToCurrentThread) : 
-		thread{ aName, aAttachToCurrentThread }, async_task{ static_cast<i_thread&>(*this) }
+		::neolib::thread{ aName, aAttachToCurrentThread }, async_task{ static_cast<i_thread&>(*this) }
 	{
 	}
 

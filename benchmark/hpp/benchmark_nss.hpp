@@ -18,7 +18,7 @@ class Nss : public Nano_Deprecated::Observer
     template <typename Subject, typename Foo>
     static void connect_method(Subject& subject, Foo& foo)
     {
-        subject.connect<Foo, &Foo::handler>(foo);
+        subject.template connect<Foo, &Foo::handler>(foo);
     }
     template <typename Subject>
     static void emit_method(Subject& subject, Rng& rng)

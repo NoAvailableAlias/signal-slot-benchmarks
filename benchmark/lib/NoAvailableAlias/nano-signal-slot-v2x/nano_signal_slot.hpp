@@ -9,10 +9,10 @@ namespace Nano
 template <typename RT, typename Mutex = Noop_Mutex>
 class Signal;
 template <typename RT, typename Mutex, typename... Args>
-class Signal<RT(Args...), Mutex> final : public Observer<Mutex>
+class Signal<RT(Args...), Mutex> final : public ::Nano::Observer<Mutex>
 {
-    using Observer = Observer<Mutex>;
-    using Function = Function<RT(Args...)>;
+    using Observer = ::Nano::Observer<Mutex>;
+    using Function = ::Nano::Function<RT(Args...)>;
 
     template <typename T>
     void insert_sfinae(Delegate_Key const& key, typename T::Observer* instance)
@@ -148,13 +148,13 @@ class Signal<RT(Args...), Mutex> final : public Observer<Mutex>
     template <typename... Uref>
     void fire(Uref&&... args)
     {
-        Observer::for_each<Function>(std::forward<Uref>(args)...);
+        Observer::template for_each<Function>(std::forward<Uref>(args)...);
     }
 
     template <typename Accumulate, typename... Uref>
     void fire_accumulate(Accumulate&& accumulate, Uref&&... args)
     {
-        Observer::for_each_accumulate<Function, Accumulate>
+        Observer::template for_each_accumulate<Function, Accumulate>
             (std::forward<Accumulate>(accumulate), std::forward<Uref>(args)...);
     }
 };

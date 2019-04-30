@@ -2,6 +2,7 @@
 
 #include <forward_list>
 #include <memory>
+#include <mutex>
 
 #include "nano_function.hpp"
 #include "nano_mutex.hpp"

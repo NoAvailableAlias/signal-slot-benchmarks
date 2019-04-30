@@ -6,7 +6,7 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED YES)
 
 # dependencies
-find_package(Boost COMPONENTS signals system thread REQUIRED)
+find_package(Boost COMPONENTS signals system chrono filesystem thread REQUIRED)
 find_package(Threads)
 
 # project definition
@@ -36,8 +36,8 @@ add_executable(bench
     benchmark/cpp/benchmark_psg.cpp
     benchmark/cpp/benchmark_pss.cpp
     benchmark/cpp/benchmark_pss_st.cpp
-    benchmark/cpp/benchmark_spp.cpp
     benchmark/cpp/benchmark_sss.cpp
+    benchmark/cpp/benchmark_vdk.cpp
     benchmark/cpp/benchmark_wnk.cpp
     benchmark/cpp/benchmark_wsg.cpp
     benchmark/cpp/benchmark_yas.cpp
@@ -58,5 +58,5 @@ add_executable(bench
 set_target_properties(bench PROPERTIES CXX_EXTENSIONS NO)
 target_include_directories(bench PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
 target_compile_options(bench PRIVATE  "-fdiagnostics-color=always")
-target_link_libraries(bench Boost::system Boost::signals Threads::Threads)
+target_link_libraries(bench Boost::system Boost::signals Boost::chrono Boost::filesystem Threads::Threads)
 
