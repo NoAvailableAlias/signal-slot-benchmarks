@@ -47,6 +47,6 @@ class Pss_st
     static constexpr const char* C_LIB_SOURCE_URL = "https://github.com/palacaze/sigslot";
     static constexpr const char* C_LIB_FILE = "benchmark_pss_st";
     static constexpr const char* C_LIB_IS_HEADER_ONLY = "X";
-    static constexpr const char* C_LIB_DATA_STRUCTURE = "singly linked list";
+    static constexpr const char* C_LIB_DATA_STRUCTURE = "std::vector";
     static constexpr const char* C_LIB_IS_THREAD_SAFE = "-";
 };

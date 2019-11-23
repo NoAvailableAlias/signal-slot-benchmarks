@@ -366,13 +366,13 @@ public:
     template<typename... TEmitArgs>
     inline void emit(TEmitArgs&&... args)
     {
-      slot_tracker::call<connected_slot>(std::forward<TEmitArgs>(args)...);
+      slot_tracker::template call<connected_slot>(std::forward<TEmitArgs>(args)...);
     }
 
     template<typename TCollector, typename... TEmitArgs>
     inline void emit_collect(TCollector&& collector, TEmitArgs&&... args)
     {
-      slot_tracker::call_collect<connected_slot, TCollector>(std::forward<TCollector>(collector), std::forward<TEmitArgs>(args)...);
+      slot_tracker::template call_collect<connected_slot, TCollector>(std::forward<TCollector>(collector), std::forward<TEmitArgs>(args)...);
     }
 
     // callable object
