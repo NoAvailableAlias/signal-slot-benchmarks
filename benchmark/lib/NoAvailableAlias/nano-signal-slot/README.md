@@ -6,7 +6,7 @@ Pure C++17 Signals and Slots
 #### Include
 ```
 // #include "nano_function.hpp"         // Nano::Function, Nano::Delegate_Key
-// #include "nano_mutex.hpp"            // Nano::Spin_Mutex, Nano::Spin_Mutex_Recursive, all policies
+// #include "nano_mutex.hpp"            // Nano::Spin_Mutex, all threading policies
 // #include "nano_observer.hpp"         // Nano::Observer
 #include "nano_signal_slot.hpp"         // Nano::Signal
 ```
@@ -149,6 +149,6 @@ If the lifetimes of Signals vs Observers is unknown or if the slots could be hos
 
 #### Links
 
-| [Benchmark Results](https://github.com/NoAvailableAlias/signal-slot-benchmarks/tree/master/#signal-slot-benchmarks) | [Benchmark Algorithms](https://github.com/NoAvailableAlias/signal-slot-benchmarks/tree/master/#benchmark-algorithms) | [Unit Tests](https://github.com/NoAvailableAlias/nano-signal-slot/tree/master/tests/#unit-tests) |
-|:-------------------------------------------------------------------------------------------------------------------:|:--------------------------------------------------------------------------------------------------------------------:|:------------------------------------------------------------------------------------------------:|
+| [Benchmark Results](https://github.com/NoAvailableAlias/signal-slot-benchmarks/tree/master/#signal-slot-benchmarks) | [Benchmark Algorithms](https://github.com/NoAvailableAlias/signal-slot-benchmarks/tree/master/#benchmark-algorithms) | [Unit Tests](/tests/#unit-tests) |
+|:-------------------------------------------------------------------------------------------------------------------:|:--------------------------------------------------------------------------------------------------------------------:|:--------------------------------:|
 <br/>

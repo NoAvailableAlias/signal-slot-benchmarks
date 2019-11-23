@@ -1,7 +1,6 @@
+#include <filesystem>
 #include <fstream>
 #include <iomanip>
-
-#include <boost/filesystem.hpp>
 
 #include "benchmark/hpp/benchmark_aco.hpp"
 #include "benchmark/hpp/benchmark_asg.hpp"
@@ -212,7 +211,7 @@ void output_perf_report_header(ReportMethodResults const& first_result_row, T& o
 
 std::string get_object_file_size(const char* file_stem)
 {
-    namespace fs = boost::filesystem;
+    namespace fs = std::filesystem;
 
 #if defined(__GNUC__) || defined(__GNUG__)
 

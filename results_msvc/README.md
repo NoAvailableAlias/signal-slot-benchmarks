@@ -46,11 +46,11 @@ _Size results are the size of object files from release build with Visual Studio
 
 | Library | Build Size | Header Only | Data Structure | Thread Safe |
 | ------- |:----------:|:-----------:| -------------- |:-----------:|
-| [* nano-signal-slot ts](https://github.com/NoAvailableAlias/nano-signal-slot/tree/rework) | 756 kb | X | std::vector | X |
+| [* nano-signal-slot ts](https://github.com/NoAvailableAlias/nano-signal-slot) | 756 kb | X | std::vector | X |
 | [* CppFakeIt FastSignals](https://github.com/CppFakeIt/FastSignals) | 767 kb | - | std::vector | X |
 | [! Montellese cpp-signal](https://github.com/Montellese/cpp-signal) | 777 kb | X | std::forward_list | ! |
 | [! winglot Signals](https://github.com/winglot/Signals) | 806 kb | - | **std::list | ! |
-| [* nano-signal-slot tss](https://github.com/NoAvailableAlias/nano-signal-slot/tree/rework) | 813 kb | X | std::vector | X |
+| [* nano-signal-slot tss](https://github.com/NoAvailableAlias/nano-signal-slot) | 813 kb | X | std::vector | X |
 | [* palacaze sigslot](https://github.com/palacaze/sigslot) | 830 kb | X | singly linked list | X |
 | [* fr00b0 nod](https://github.com/fr00b0/nod) | 864 kb | X | std::vector | X |
 | [* Kosta signals-cpp](https://github.com/Kosta-Github/signals-cpp) | 873 kb | X | std::vector | X |
@@ -62,8 +62,8 @@ _Size results are the size of object files from release build with Visual Studio
 | Library | Build Size | Header Only | Data Structure | Thread Safe |
 | ------- |:----------:|:-----------:| -------------- |:-----------:|
 | [jeffomatic jl_signal](https://github.com/jeffomatic/jl_signal) | 167 kb | - | doubly linked list | - |
-| [nano-signal-slot st](https://github.com/NoAvailableAlias/nano-signal-slot/tree/rework) | 169 kb | X | std::vector | - |
-| [nano-signal-slot sts](https://github.com/NoAvailableAlias/nano-signal-slot/tree/rework) | 185 kb | X | std::vector | - |
+| [nano-signal-slot st](https://github.com/NoAvailableAlias/nano-signal-slot) | 169 kb | X | std::vector | - |
+| [nano-signal-slot sts](https://github.com/NoAvailableAlias/nano-signal-slot) | 185 kb | X | std::vector | - |
 | [Montellese cpp-signal](https://github.com/Montellese/cpp-signal) | 202 kb | X | std::forward_list | - |
 | [vdksoft signals](https://github.com/vdksoft/signals) | 211 kb | - | singly linked list | directive |
 | [supergrover sigslot](https://github.com/supergrover/sigslot) | 229 kb | - | std::list | - |
@@ -89,13 +89,13 @@ _The individual benchmark algorithms are completely generic through the use of t
 
 | Algorithm | Description |
 | --------- | ----------- |
-| [validation_assert](https://github.com/NoAvailableAlias/signal-slot-benchmarks/blob/master/benchmark.hpp#L19) | Make sure each signal implementation is functioning correctly. |
-| [construction](https://github.com/NoAvailableAlias/signal-slot-benchmarks/blob/master/benchmark.hpp#L48) | Time the construction of a Signal to an N number of Foo instances. |
-| [destruction](https://github.com/NoAvailableAlias/signal-slot-benchmarks/blob/master/benchmark.hpp#L69) | Time the destruction of a Signal followed by N number of Foo instances. |
-| [connection](https://github.com/NoAvailableAlias/signal-slot-benchmarks/blob/master/benchmark.hpp#L95) | Time Signal connections to a randomized N number of Foo instances. |
-| [disconnect](https://github.com/NoAvailableAlias/signal-slot-benchmarks/blob/master/benchmark.hpp#L118) | Time disconnecting N number of Foo instances from a single Signal. |
-| [reconnect](https://github.com/NoAvailableAlias/signal-slot-benchmarks/blob/master/benchmark.hpp#L145) | Time reconnecting N number of Foo instances to a global Signal. |
-| [emit](https://github.com/NoAvailableAlias/signal-slot-benchmarks/blob/master/benchmark.hpp#L169) | Time the duration of an N slot emission. |
-| [all](https://github.com/NoAvailableAlias/signal-slot-benchmarks/blob/master/benchmark.hpp#L194) | Time all previous benchmarks together in one combined benchmark. |
-| [threaded](https://github.com/NoAvailableAlias/signal-slot-benchmarks/blob/master/benchmark.hpp#L218) | Same as the previous benchmark but is now threaded. |
+| [validation_assert](benchmark.hpp#L19) | Make sure each signal implementation is functioning correctly. |
+| [construction](benchmark.hpp#L48) | Time the construction of a Signal to an N number of Foo instances. |
+| [destruction](benchmark.hpp#L69) | Time the destruction of a Signal followed by N number of Foo instances. |
+| [connection](benchmark.hpp#L91) | Time Signal connections to a randomized N number of Foo instances. |
+| [disconnect](benchmark.hpp#L114) | Time disconnecting N number of Foo instances from a single Signal. |
+| [reconnect](benchmark.hpp#L141) | Time reconnecting N number of Foo instances to a global Signal. |
+| [emit](benchmark.hpp#L165) | Time the duration of an N slot emission. |
+| [all](benchmark.hpp#L190) | Time all previous benchmarks together in one combined benchmark. |
+| [threaded](benchmark.hpp#L214) | Same as the previous benchmark but is now threaded. |
 <br/>

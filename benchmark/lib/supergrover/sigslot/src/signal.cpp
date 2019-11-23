@@ -29,6 +29,7 @@
 #include "signal.h"
 
 #include <cassert>
+#include <stdexcept>
 
 SigSlotBase::~SigSlotBase()
 {
