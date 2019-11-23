@@ -23,7 +23,7 @@
     <ProjectGuid>{AC15350A-7C96-4147-9E43-F3704433B527}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>Nano_Benchmarks</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.17134.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -42,13 +42,13 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
@@ -75,12 +75,14 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
+    <LibraryPath>C:\boost_1_71_0\stage\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
+    <LibraryPath>C:\boost_1_71_0\stage\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -130,7 +132,7 @@
       <EnableModules>false</EnableModules>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <OmitFramePointers>false</OmitFramePointers>
-      <AdditionalIncludeDirectories>C:\boost_1_67_0;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\boost_1_71_0;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>-D_SCL_SECURE_NO_WARNINGS -D_CRT_SECURE_NO_WARNINGS %(AdditionalOptions)</AdditionalOptions>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <BasicRuntimeChecks>Default</BasicRuntimeChecks>
@@ -199,7 +201,7 @@
       <EnableModules>false</EnableModules>
       <OmitFramePointers>true</OmitFramePointers>
       <WholeProgramOptimization>false</WholeProgramOptimization>
-      <AdditionalIncludeDirectories>C:\boost_1_67_0;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\boost_1_71_0;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>-D_SCL_SECURE_NO_WARNINGS -D_CRT_SECURE_NO_WARNINGS %(AdditionalOptions)</AdditionalOptions>
       <FloatingPointModel>Fast</FloatingPointModel>
       <EnableEnhancedInstructionSet>NoExtensions</EnableEnhancedInstructionSet>
@@ -220,25 +222,27 @@
     <ClInclude Include="..\benchmark.hpp" />
     <ClInclude Include="..\benchmark\hpp\benchmark_aco.hpp" />
     <ClInclude Include="..\benchmark\hpp\benchmark_asg.hpp" />
-    <ClInclude Include="..\benchmark\hpp\benchmark_bs1.hpp" />
     <ClInclude Include="..\benchmark\hpp\benchmark_bs2.hpp" />
     <ClInclude Include="..\benchmark\hpp\benchmark_cls.hpp" />
     <ClInclude Include="..\benchmark\hpp\benchmark_cps.hpp" />
     <ClInclude Include="..\benchmark\hpp\benchmark_cps_st.hpp" />
+    <ClInclude Include="..\benchmark\hpp\benchmark_css.hpp" />
     <ClInclude Include="..\benchmark\hpp\benchmark_dob.hpp" />
     <ClInclude Include="..\benchmark\hpp\benchmark_evl.hpp" />
     <ClInclude Include="..\benchmark\hpp\benchmark_jls.hpp" />
     <ClInclude Include="..\benchmark\hpp\benchmark_jos.hpp" />
     <ClInclude Include="..\benchmark\hpp\benchmark_ksc.hpp" />
+    <ClInclude Include="..\benchmark\hpp\benchmark_lfs.hpp" />
     <ClInclude Include="..\benchmark\hpp\benchmark_lss.hpp" />
     <ClInclude Include="..\benchmark\hpp\benchmark_mws.hpp" />
     <ClInclude Include="..\benchmark\hpp\benchmark_nls.hpp" />
     <ClInclude Include="..\benchmark\hpp\benchmark_nls_st.hpp" />
     <ClInclude Include="..\benchmark\hpp\benchmark_nod.hpp" />
     <ClInclude Include="..\benchmark\hpp\benchmark_nod_st.hpp" />
-    <ClInclude Include="..\benchmark\hpp\benchmark_nss.hpp" />
-    <ClInclude Include="..\benchmark\hpp\benchmark_nss_v2.hpp" />
-    <ClInclude Include="..\benchmark\hpp\benchmark_nss_v2_st.hpp" />
+    <ClInclude Include="..\benchmark\hpp\benchmark_nss_st.hpp" />
+    <ClInclude Include="..\benchmark\hpp\benchmark_nss_sts.hpp" />
+    <ClInclude Include="..\benchmark\hpp\benchmark_nss_ts.hpp" />
+    <ClInclude Include="..\benchmark\hpp\benchmark_nss_tss.hpp" />
     <ClInclude Include="..\benchmark\hpp\benchmark_psg.hpp" />
     <ClInclude Include="..\benchmark\hpp\benchmark_pss.hpp" />
     <ClInclude Include="..\benchmark\hpp\benchmark_pss_st.hpp" />
@@ -249,7 +253,23 @@
     <ClInclude Include="..\benchmark\hpp\benchmark_yas.hpp" />
     <ClInclude Include="..\benchmark\lib\amc522\signal11\Signal.h" />
     <ClInclude Include="..\benchmark\lib\Ansoulom\cpp-observe\cpp_observe.hpp" />
+    <ClInclude Include="..\benchmark\lib\copperspice\cs_signal\src\cs_internal.h" />
+    <ClInclude Include="..\benchmark\lib\copperspice\cs_signal\src\cs_macro.h" />
+    <ClInclude Include="..\benchmark\lib\copperspice\cs_signal\src\cs_signal.h" />
+    <ClInclude Include="..\benchmark\lib\copperspice\cs_signal\src\cs_slot.h" />
+    <ClInclude Include="..\benchmark\lib\copperspice\cs_signal\src\rcu_guarded.hpp" />
+    <ClInclude Include="..\benchmark\lib\copperspice\cs_signal\src\rcu_list.hpp" />
     <ClInclude Include="..\benchmark\lib\cpp11nullptr\lsignal\lsignal.h" />
+    <ClInclude Include="..\benchmark\lib\CppFakeIt\libfastsignals\include\bind_weak.h" />
+    <ClInclude Include="..\benchmark\lib\CppFakeIt\libfastsignals\include\combiners.h" />
+    <ClInclude Include="..\benchmark\lib\CppFakeIt\libfastsignals\include\function.h" />
+    <ClInclude Include="..\benchmark\lib\CppFakeIt\libfastsignals\include\function_detail.h" />
+    <ClInclude Include="..\benchmark\lib\CppFakeIt\libfastsignals\include\lfs_connection.h" />
+    <ClInclude Include="..\benchmark\lib\CppFakeIt\libfastsignals\include\msvc_autolink.h" />
+    <ClInclude Include="..\benchmark\lib\CppFakeIt\libfastsignals\include\signal.h" />
+    <ClInclude Include="..\benchmark\lib\CppFakeIt\libfastsignals\include\signal_impl.h" />
+    <ClInclude Include="..\benchmark\lib\CppFakeIt\libfastsignals\include\spin_mutex.h" />
+    <ClInclude Include="..\benchmark\lib\CppFakeIt\libfastsignals\include\type_traits.h" />
     <ClInclude Include="..\benchmark\lib\dacap\obs\dacap_connection.h" />
     <ClInclude Include="..\benchmark\lib\dacap\obs\dacap_signal.h" />
     <ClInclude Include="..\benchmark\lib\dacap\obs\observable.h" />
@@ -274,6 +294,7 @@
     <ClInclude Include="..\benchmark\lib\i42output\include\neolib\mutex.hpp" />
     <ClInclude Include="..\benchmark\lib\i42output\include\neolib\neolib.hpp" />
     <ClInclude Include="..\benchmark\lib\i42output\include\neolib\noncopyable.hpp" />
+    <ClInclude Include="..\benchmark\lib\i42output\include\neolib\raii.hpp" />
     <ClInclude Include="..\benchmark\lib\i42output\include\neolib\signal.hpp" />
     <ClInclude Include="..\benchmark\lib\i42output\include\neolib\singleton.hpp" />
     <ClInclude Include="..\benchmark\lib\i42output\include\neolib\slot.hpp" />
@@ -307,14 +328,11 @@
     <ClInclude Include="..\benchmark\lib\Montellese\cpp-signal\cpp-signal.h" />
     <ClInclude Include="..\benchmark\lib\mwthinker\Signal\src\mw\signal.h" />
     <ClInclude Include="..\benchmark\lib\mwthinker\Signal\src\mw\signals\connection.h" />
-    <ClInclude Include="..\benchmark\lib\NoAvailableAlias\nano-signal-slot-v2x\nano_function.hpp" />
-    <ClInclude Include="..\benchmark\lib\NoAvailableAlias\nano-signal-slot-v2x\nano_mutex.hpp" />
-    <ClInclude Include="..\benchmark\lib\NoAvailableAlias\nano-signal-slot-v2x\nano_observer.hpp" />
-    <ClInclude Include="..\benchmark\lib\NoAvailableAlias\nano-signal-slot-v2x\nano_signal_slot.hpp" />
     <ClInclude Include="..\benchmark\lib\NoAvailableAlias\nano-signal-slot\nano_function.hpp" />
+    <ClInclude Include="..\benchmark\lib\NoAvailableAlias\nano-signal-slot\nano_mutex.hpp" />
     <ClInclude Include="..\benchmark\lib\NoAvailableAlias\nano-signal-slot\nano_observer.hpp" />
     <ClInclude Include="..\benchmark\lib\NoAvailableAlias\nano-signal-slot\nano_signal_slot.hpp" />
-    <ClInclude Include="..\benchmark\lib\palacaze\sigslot\signal.hpp" />
+    <ClInclude Include="..\benchmark\lib\palacaze\sigslot\include\sigslot\signal.hpp" />
     <ClInclude Include="..\benchmark\lib\pbhogan\Signals\Delegate.h" />
     <ClInclude Include="..\benchmark\lib\pbhogan\Signals\Signal.h" />
     <ClInclude Include="..\benchmark\lib\supergrover\sigslot\src\signal.h" />
@@ -332,25 +350,27 @@
     <ClCompile Include="..\benchmark.cpp" />
     <ClCompile Include="..\benchmark\cpp\benchmark_aco.cpp" />
     <ClCompile Include="..\benchmark\cpp\benchmark_asg.cpp" />
-    <ClCompile Include="..\benchmark\cpp\benchmark_bs1.cpp" />
     <ClCompile Include="..\benchmark\cpp\benchmark_bs2.cpp" />
     <ClCompile Include="..\benchmark\cpp\benchmark_cls.cpp" />
     <ClCompile Include="..\benchmark\cpp\benchmark_cps.cpp" />
     <ClCompile Include="..\benchmark\cpp\benchmark_cps_st.cpp" />
+    <ClCompile Include="..\benchmark\cpp\benchmark_css.cpp" />
     <ClCompile Include="..\benchmark\cpp\benchmark_dob.cpp" />
     <ClCompile Include="..\benchmark\cpp\benchmark_evl.cpp" />
     <ClCompile Include="..\benchmark\cpp\benchmark_jls.cpp" />
     <ClCompile Include="..\benchmark\cpp\benchmark_jos.cpp" />
     <ClCompile Include="..\benchmark\cpp\benchmark_ksc.cpp" />
+    <ClCompile Include="..\benchmark\cpp\benchmark_lfs.cpp" />
     <ClCompile Include="..\benchmark\cpp\benchmark_lss.cpp" />
     <ClCompile Include="..\benchmark\cpp\benchmark_mws.cpp" />
     <ClCompile Include="..\benchmark\cpp\benchmark_nls.cpp" />
     <ClCompile Include="..\benchmark\cpp\benchmark_nls_st.cpp" />
     <ClCompile Include="..\benchmark\cpp\benchmark_nod.cpp" />
     <ClCompile Include="..\benchmark\cpp\benchmark_nod_st.cpp" />
-    <ClCompile Include="..\benchmark\cpp\benchmark_nss.cpp" />
-    <ClCompile Include="..\benchmark\cpp\benchmark_nss_v2.cpp" />
-    <ClCompile Include="..\benchmark\cpp\benchmark_nss_v2_st.cpp" />
+    <ClCompile Include="..\benchmark\cpp\benchmark_nss_st.cpp" />
+    <ClCompile Include="..\benchmark\cpp\benchmark_nss_sts.cpp" />
+    <ClCompile Include="..\benchmark\cpp\benchmark_nss_ts.cpp" />
+    <ClCompile Include="..\benchmark\cpp\benchmark_nss_tss.cpp" />
     <ClCompile Include="..\benchmark\cpp\benchmark_psg.cpp" />
     <ClCompile Include="..\benchmark\cpp\benchmark_pss.cpp" />
     <ClCompile Include="..\benchmark\cpp\benchmark_pss_st.cpp" />
@@ -359,6 +379,11 @@
     <ClCompile Include="..\benchmark\cpp\benchmark_wnk.cpp" />
     <ClCompile Include="..\benchmark\cpp\benchmark_wsg.cpp" />
     <ClCompile Include="..\benchmark\cpp\benchmark_yas.cpp" />
+    <ClCompile Include="..\benchmark\lib\copperspice\cs_signal\src\cs_signal.cpp" />
+    <ClCompile Include="..\benchmark\lib\copperspice\cs_signal\src\cs_slot.cpp" />
+    <ClCompile Include="..\benchmark\lib\CppFakeIt\libfastsignals\src\function_detail.cpp" />
+    <ClCompile Include="..\benchmark\lib\CppFakeIt\libfastsignals\src\lfs_connection.cpp" />
+    <ClCompile Include="..\benchmark\lib\CppFakeIt\libfastsignals\src\signal_impl.cpp" />
     <ClCompile Include="..\benchmark\lib\dacap\obs\dacap_connection.cpp" />
     <ClCompile Include="..\benchmark\lib\i42output\src\async_task.cpp" />
     <ClCompile Include="..\benchmark\lib\i42output\src\async_thread.cpp" />

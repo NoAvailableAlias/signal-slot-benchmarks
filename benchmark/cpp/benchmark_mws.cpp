@@ -20,6 +20,14 @@ NOINLINE(double Mws::connection(std::size_t N))
 {
     return Benchmark<Signal, Mws>::connection(N);
 }
+NOINLINE(double Mws::disconnect(std::size_t N))
+{
+    return Benchmark<Signal, Mws>::disconnect(N);
+}
+NOINLINE(double Mws::reconnect(std::size_t N))
+{
+    return Benchmark<Signal, Mws>::reconnect(N);
+}
 NOINLINE(double Mws::emission(std::size_t N))
 {
     return Benchmark<Signal, Mws>::emission(N);

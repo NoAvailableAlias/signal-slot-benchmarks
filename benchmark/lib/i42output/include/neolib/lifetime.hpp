@@ -40,6 +40,7 @@
 #include <unordered_set>
 #include <unordered_map>
 #include <mutex>
+#include <atomic>
 #include "allocator.hpp"
 #include <optional>
 #include "i_lifetime.hpp"
@@ -55,11 +56,11 @@ namespace neolib
 		typedef const i_lifetime* subject_pointer;
 		typedef Owner* owner_pointer;
 	public:
-		lifetime_flag(const i_lifetime& aSubject, owner_pointer aOwner = nullptr) : iSubject{ &aSubject }, iOwner{ aOwner }, iState { subject().object_state() }, iDebug{ false }
+		lifetime_flag(const i_lifetime& aSubject, owner_pointer aOwner = nullptr) : iSubject{ &aSubject }, iOwner{ aOwner }, iState { aSubject.object_state() }, iDebug{ false }
 		{
 			subject().add_flag(this);
 		}
-		lifetime_flag(const lifetime_flag& aOther) : iSubject{ aOther.iSubject }, iOwner{ aOther.iOwner }, iState { subject().object_state() }, iDebug{ false }
+		lifetime_flag(const lifetime_flag& aOther) : iSubject{ aOther.iSubject }, iOwner{ aOther.iOwner }, iState { aOther.iSubject->object_state() }, iDebug{ false }
 		{
 			subject().add_flag(this);
 		}
@@ -112,7 +113,6 @@ namespace neolib
 			if (debug())
 				std::cerr << "lifetime_flag::set_destroyed()" << std::endl;
 			iState = lifetime_state::Destroyed;
-			subject().remove_flag(this);
 		}
 	public:
 		bool debug() const override
@@ -131,7 +131,7 @@ namespace neolib
 	private:
 		subject_pointer iSubject;
 		owner_pointer iOwner;
-		lifetime_state iState;
+		std::atomic<lifetime_state> iState;
 		bool iDebug;
 	};
 
@@ -147,7 +147,7 @@ namespace neolib
 			void unlock() noexcept {}
 			bool try_lock() { return true; }
 		} mutex_type;
-		typedef std::unordered_set<i_lifetime_flag*, std::hash<i_lifetime_flag*>, std::equal_to<i_lifetime_flag*>, pool_allocator<i_lifetime_flag*>> flag_list;
+		typedef std::vector<i_lifetime_flag*> flag_list;
 	public:
 		static mutex_type& mutex()
 		{
@@ -169,9 +169,9 @@ namespace neolib
 	{
 	public:
 		typedef std::recursive_mutex mutex_type;
-		typedef std::unordered_set<i_lifetime_flag*, std::hash<i_lifetime_flag*>, std::equal_to<i_lifetime_flag*>, pool_allocator<i_lifetime_flag*>> flag_list;
+		typedef std::vector<i_lifetime_flag*> flag_list;
 	private:
-		typedef std::unordered_map<const i_lifetime*, flag_list, std::hash<const i_lifetime*>, std::equal_to<const i_lifetime*>, pool_allocator<std::pair<const i_lifetime* const, flag_list>>> flag_map;
+		typedef std::unordered_map<const i_lifetime*, flag_list, std::hash<const i_lifetime*>, std::equal_to<const i_lifetime*>, fast_pool_allocator<std::pair<const i_lifetime* const, flag_list>>> flag_map;
 	public:
 		static mutex_type& mutex()
 		{
@@ -280,7 +280,7 @@ namespace neolib
 		void add_flag(i_lifetime_flag* aFlag) const final
 		{
 			std::lock_guard<mutex_type> lk(iFlagListRep.mutex());
-			flags(this).insert(aFlag);
+			flags(this).push_back(aFlag);
 			switch (iState)
 			{
 			case lifetime_state::Creating:
@@ -299,7 +299,8 @@ namespace neolib
 		void remove_flag(i_lifetime_flag* aFlag) const final
 		{
 			std::lock_guard<mutex_type> lk(iFlagListRep.mutex());
-			flags(this).erase(aFlag);
+			std::swap(*std::find(flags(this).begin(), flags(this).end(), aFlag), *std::prev(flags(this).end()));
+			flags(this).pop_back();
 		}
 	private:
 		flag_list& flags(const i_lifetime* aLifetime) const
@@ -307,7 +308,7 @@ namespace neolib
 			return iFlagListRep.flags(aLifetime);
 		}
 	private:
-		lifetime_state iState;
+		std::atomic<lifetime_state> iState;
 		mutable flag_list_representation_type iFlagListRep;
 	};
 

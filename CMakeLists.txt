@@ -14,7 +14,6 @@ add_executable(bench
     benchmark.cpp
     benchmark/cpp/benchmark_aco.cpp
     benchmark/cpp/benchmark_asg.cpp
-    benchmark/cpp/benchmark_bs1.cpp
     benchmark/cpp/benchmark_bs2.cpp
     benchmark/cpp/benchmark_cls.cpp
     benchmark/cpp/benchmark_cps.cpp
@@ -30,9 +29,10 @@ add_executable(bench
     benchmark/cpp/benchmark_nls_st.cpp
     benchmark/cpp/benchmark_nod.cpp
     benchmark/cpp/benchmark_nod_st.cpp
-    benchmark/cpp/benchmark_nss.cpp
-    benchmark/cpp/benchmark_nss_v2.cpp
-    benchmark/cpp/benchmark_nss_v2_st.cpp
+    benchmark/cpp/benchmark_nss_st.cpp
+    benchmark/cpp/benchmark_nss_sts.cpp
+    benchmark/cpp/benchmark_nss_ts.cpp
+    benchmark/cpp/benchmark_nss_tss.cpp
     benchmark/cpp/benchmark_psg.cpp
     benchmark/cpp/benchmark_pss.cpp
     benchmark/cpp/benchmark_pss_st.cpp
@@ -53,6 +53,11 @@ add_executable(bench
     benchmark/lib/i42output/src/thread.cpp
     benchmark/lib/i42output/src/timer.cpp
     benchmark/lib/i42output/src/waitable_event.cpp
+    benchmark/lib/CppFakeIt/libfastsignals/src/lfs_connection.cpp
+    benchmark/lib/CppFakeIt/libfastsignals/src/function_detail.cpp
+    benchmark/lib/CppFakeIt/libfastsignals/src/signal_impl.cpp
+    benchmark/lib/copperspice/cs_signal/src/cs_signal.cpp
+    benchmark/lib/copperspice/cs_signal/src/cs_slot.cpp
 )
 
 set_target_properties(bench PROPERTIES CXX_EXTENSIONS NO)

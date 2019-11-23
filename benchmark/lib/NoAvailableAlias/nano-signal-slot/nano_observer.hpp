@@ -1,100 +1,140 @@
-#ifndef NANO_OBSERVER_HPP
-#define NANO_OBSERVER_HPP
+#pragma once
+
+#include <algorithm>
+#include <vector>
 
 #include "nano_function.hpp"
+#include "nano_mutex.hpp"
 
-namespace Nano_Deprecated
+namespace Nano
 {
 
-class Observer
+template <typename MT_Policy = ST_Policy>
+class Observer : private MT_Policy
 {
-    template <typename T> friend class Signal;
+    // Only Nano::Signal is allowed private access
+    template <typename, typename> friend class Signal;
 
-    struct DelegateKeyObserver { DelegateKey delegate; Observer* observer; };
-    struct Node { DelegateKeyObserver data; Node* next; } *head = nullptr;
-
-    //--------------------------------------------------------------------------
-
-    void insert(DelegateKey const& key, Observer* ptr)
+    struct Connection
     {
-        head = new Node { { key, ptr }, head };
-    }
-    void insert(DelegateKey const& key)
-    {
-        this->insert(key, this);
-    }
+        Delegate_Key delegate;
+        typename MT_Policy::Weak_Ptr observer;
 
-    //--------------------------------------------------------------------------
+        Connection() noexcept = default;
+        Connection(Delegate_Key const& key) : delegate(key), observer() {}
+        Connection(Delegate_Key const& key, Observer* obs) : delegate(key), observer(obs->weak_ptr()) {}
+    };
 
-    void remove(DelegateKey const& key)
+    struct Z_Order
     {
-        Node* node = head;
-        Node* prev = nullptr;
-        // Only delete the first occurrence
-        for ( ; node; prev = node, node = node->next)
+        inline bool operator()(Delegate_Key const& lhs, Delegate_Key const& rhs) const
         {
-            if (node->data.delegate == key)
+            std::size_t x = lhs[0] ^ rhs[0];
+            std::size_t y = lhs[1] ^ rhs[1];
+            auto k = (x < y) && x < (x ^ y);
+            return lhs[k] < rhs[k];
+        }
+
+        inline bool operator()(Connection const& lhs, Connection const& rhs) const
+        {
+            return operator()(lhs.delegate, rhs.delegate);
+        }
+    };
+
+    std::vector<Connection> connections;
+
+    //--------------------------------------------------------------------------
+
+    void insert(Delegate_Key const& key, Observer* obs)
+    {
+        auto lock = MT_Policy::lock_guard();
+
+        auto begin = std::begin(connections);
+        auto end = std::end(connections);
+
+        connections.emplace(std::upper_bound(begin, end, key, Z_Order()), key, obs);
+    }
+
+    void remove(Delegate_Key const& key) noexcept
+    {
+        auto lock = MT_Policy::lock_guard();
+
+        auto begin = std::begin(connections);
+        auto end = std::end(connections);
+
+        auto slots = std::equal_range(begin, end, key, Z_Order());
+        connections.erase(slots.first, slots.second);
+    }
+
+    //--------------------------------------------------------------------------
+
+    template <typename Function, typename... Uref>
+    void for_each(Uref&&... args)
+    {
+        auto lock = MT_Policy::lock_guard();
+
+        for (auto const& slot : MT_Policy::copy_or_ref(connections, lock))
+        {
+            if (auto observer = MT_Policy::observed(slot.observer))
             {
-                if (prev)
-                {
-                    prev->next = node->next;
-                }
-                else
-                {
-                    head = head->next;
-                }
-                delete node;
-                break;
+                Function::bind(slot.delegate)(std::forward<Uref>(args)...);
+            }
+        }
+    }
+
+    template <typename Function, typename Accumulate, typename... Uref>
+    void for_each_accumulate(Accumulate&& accumulate, Uref&&... args)
+    {
+        auto lock = MT_Policy::lock_guard();
+
+        for (auto const& slot : MT_Policy::copy_or_ref(connections, lock))
+        {
+            if (auto observer = MT_Policy::observed(slot.observer))
+            {
+                accumulate(Function::bind(slot.delegate)(std::forward<Uref>(args)...));
             }
         }
     }
 
     //--------------------------------------------------------------------------
 
-    template <typename Delegate, typename... Uref>
-    void onEach(Uref&&... args)
+    public:
+
+    void disconnect_all() noexcept
     {
-        for (auto node = head, next = head; node; node = next)
+        auto lock = MT_Policy::lock_guard();
+
+        for (auto const& slot : connections)
         {
-            next = node->next;
-            // Perfect forward and emit
-            Delegate(node->data.delegate)(std::forward<Uref>(args)...);
+            if (auto observer = MT_Policy::visiting(slot.observer))
+            {
+                MT_Policy::static_pointer_cast<Observer>(observer)->remove(slot.delegate);
+            }
         }
+        connections.clear();
     }
 
-    template <typename Delegate, typename Accumulate, typename... Uref>
-    void onEach_Accumulate(Accumulate&& accumulate, Uref&&... args)
+    bool is_empty() const noexcept
     {
-        for (auto node = head, next = head; node; node = next)
-        {
-            next = node->next;
-            // Perfect forward, emit, and accumulate the return value
-            accumulate(Delegate(node->data.delegate)(std::forward<Uref>(args)...));
-        }
-    }
+        auto lock = MT_Policy::lock_guard();
 
-    //--------------------------------------------------------------------------
+        return connections.empty();
+    }
 
     protected:
 
+    // Guideline #4: A base class destructor should be
+    // either public and virtual, or protected and non-virtual.
     ~Observer()
     {
-        for (auto node = head; node;)
-        {
-            auto temp = node;
-            // If this is us we only need to delete
-            if (this != node->data.observer)
-            {
-                // Remove this slot from this listening Observer
-                node->data.observer->remove(node->data.delegate);
-            }  
-            node = node->next;
-            delete temp;       
-        }
+        MT_Policy::before_disconnect_all();
+
+        disconnect_all();
     }
 
+    Observer() = default;
+    Observer(Observer const&) = delete;
+    Observer& operator= (Observer const&) = delete;
 };
 
 } // namespace Nano ------------------------------------------------------------
-
-#endif // NANO_OBSERVER_HPP

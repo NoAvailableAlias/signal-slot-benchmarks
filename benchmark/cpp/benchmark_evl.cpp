@@ -20,6 +20,14 @@ NOINLINE(double Evl::connection(std::size_t N))
 {
     return Benchmark<Signal, Evl>::connection(N);
 }
+NOINLINE(double Evl::disconnect(std::size_t N))
+{
+    return Benchmark<Signal, Evl>::disconnect(N);
+}
+NOINLINE(double Evl::reconnect(std::size_t N))
+{
+    return Benchmark<Signal, Evl>::reconnect(N);
+}
 NOINLINE(double Evl::emission(std::size_t N))
 {
     return Benchmark<Signal, Evl>::emission(N);

@@ -96,12 +96,6 @@
     <Filter Include="Header Files\lib\i42output">
       <UniqueIdentifier>{69581605-a8ae-41b1-af56-78cb5fe64a6e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\lib\NoAvailableAlias\nano-signal-slot-v1x">
-      <UniqueIdentifier>{caf79581-9833-4cb2-960d-d50e2b45ae5c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\lib\NoAvailableAlias\nano-signal-slot-v2x">
-      <UniqueIdentifier>{ff5d5f03-614c-481f-87bc-c71e5b0debf0}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\lib\larspensjo">
       <UniqueIdentifier>{ed5f2b2a-69b4-4d8d-b4f6-91cb6c9131ab}</UniqueIdentifier>
     </Filter>
@@ -116,6 +110,21 @@
     </Filter>
     <Filter Include="Source Files\lib\i42output">
       <UniqueIdentifier>{df805c2b-4296-4403-97ce-9201eaa212e1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\lib\CppFakeIt">
+      <UniqueIdentifier>{953945f2-4e40-4ed8-8bd2-70215ac118f9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\lib\CppFakeIt">
+      <UniqueIdentifier>{408ef3ff-0f4d-47a0-9622-59a2248a9b40}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\lib\copperspice">
+      <UniqueIdentifier>{334eb96f-b53d-46cf-aafd-e1a6027a8b4d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\lib\copperspice">
+      <UniqueIdentifier>{d2a37173-b19a-484a-8de5-147939f14671}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\lib\NoAvailableAlias\nano-signal-slot">
+      <UniqueIdentifier>{f34fa47b-d65c-44c8-88ca-c263e6b6f966}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -141,9 +150,6 @@
       <Filter>Header Files\benchmark</Filter>
     </ClInclude>
     <ClInclude Include="..\benchmark\hpp\benchmark_nod.hpp">
-      <Filter>Header Files\benchmark</Filter>
-    </ClInclude>
-    <ClInclude Include="..\benchmark\hpp\benchmark_nss.hpp">
       <Filter>Header Files\benchmark</Filter>
     </ClInclude>
     <ClInclude Include="..\benchmark\hpp\benchmark_psg.hpp">
@@ -251,9 +257,6 @@
     <ClInclude Include="..\benchmark\lib\mwthinker\Signal\src\mw\signal.h">
       <Filter>Header Files\lib\mwthinker</Filter>
     </ClInclude>
-    <ClInclude Include="..\benchmark\lib\palacaze\sigslot\signal.hpp">
-      <Filter>Header Files\lib\palacaze</Filter>
-    </ClInclude>
     <ClInclude Include="..\benchmark\lib\pbhogan\Signals\Delegate.h">
       <Filter>Header Files\lib\pbhogan</Filter>
     </ClInclude>
@@ -287,9 +290,6 @@
     <ClInclude Include="..\benchmark\lib\yassi\yassi.h">
       <Filter>Header Files\lib\yassi</Filter>
     </ClInclude>
-    <ClInclude Include="..\benchmark\hpp\benchmark_bs1.hpp">
-      <Filter>Header Files\benchmark</Filter>
-    </ClInclude>
     <ClInclude Include="..\benchmark\hpp\benchmark_bs2.hpp">
       <Filter>Header Files\benchmark</Filter>
     </ClInclude>
@@ -319,33 +319,6 @@
     </ClInclude>
     <ClInclude Include="..\benchmark\hpp\benchmark_nls_st.hpp">
       <Filter>Header Files\benchmark</Filter>
-    </ClInclude>
-    <ClInclude Include="..\benchmark\lib\NoAvailableAlias\nano-signal-slot\nano_signal_slot.hpp">
-      <Filter>Header Files\lib\NoAvailableAlias\nano-signal-slot-v1x</Filter>
-    </ClInclude>
-    <ClInclude Include="..\benchmark\lib\NoAvailableAlias\nano-signal-slot\nano_function.hpp">
-      <Filter>Header Files\lib\NoAvailableAlias\nano-signal-slot-v1x</Filter>
-    </ClInclude>
-    <ClInclude Include="..\benchmark\lib\NoAvailableAlias\nano-signal-slot\nano_observer.hpp">
-      <Filter>Header Files\lib\NoAvailableAlias\nano-signal-slot-v1x</Filter>
-    </ClInclude>
-    <ClInclude Include="..\benchmark\lib\NoAvailableAlias\nano-signal-slot-v2x\nano_function.hpp">
-      <Filter>Header Files\lib\NoAvailableAlias\nano-signal-slot-v2x</Filter>
-    </ClInclude>
-    <ClInclude Include="..\benchmark\lib\NoAvailableAlias\nano-signal-slot-v2x\nano_observer.hpp">
-      <Filter>Header Files\lib\NoAvailableAlias\nano-signal-slot-v2x</Filter>
-    </ClInclude>
-    <ClInclude Include="..\benchmark\lib\NoAvailableAlias\nano-signal-slot-v2x\nano_signal_slot.hpp">
-      <Filter>Header Files\lib\NoAvailableAlias\nano-signal-slot-v2x</Filter>
-    </ClInclude>
-    <ClInclude Include="..\benchmark\hpp\benchmark_nss_v2.hpp">
-      <Filter>Header Files\benchmark</Filter>
-    </ClInclude>
-    <ClInclude Include="..\benchmark\hpp\benchmark_nss_v2_st.hpp">
-      <Filter>Header Files\benchmark</Filter>
-    </ClInclude>
-    <ClInclude Include="..\benchmark\lib\NoAvailableAlias\nano-signal-slot-v2x\nano_mutex.hpp">
-      <Filter>Header Files\lib\NoAvailableAlias\nano-signal-slot-v2x</Filter>
     </ClInclude>
     <ClInclude Include="..\benchmark\hpp\benchmark_cps_st.hpp">
       <Filter>Header Files\benchmark</Filter>
@@ -449,6 +422,90 @@
     <ClInclude Include="..\benchmark\hpp\benchmark_nod_st.hpp">
       <Filter>Header Files\benchmark</Filter>
     </ClInclude>
+    <ClInclude Include="..\benchmark\lib\CppFakeIt\libfastsignals\include\bind_weak.h">
+      <Filter>Header Files\lib\CppFakeIt</Filter>
+    </ClInclude>
+    <ClInclude Include="..\benchmark\lib\CppFakeIt\libfastsignals\include\combiners.h">
+      <Filter>Header Files\lib\CppFakeIt</Filter>
+    </ClInclude>
+    <ClInclude Include="..\benchmark\lib\CppFakeIt\libfastsignals\include\function.h">
+      <Filter>Header Files\lib\CppFakeIt</Filter>
+    </ClInclude>
+    <ClInclude Include="..\benchmark\lib\CppFakeIt\libfastsignals\include\function_detail.h">
+      <Filter>Header Files\lib\CppFakeIt</Filter>
+    </ClInclude>
+    <ClInclude Include="..\benchmark\lib\CppFakeIt\libfastsignals\include\signal.h">
+      <Filter>Header Files\lib\CppFakeIt</Filter>
+    </ClInclude>
+    <ClInclude Include="..\benchmark\lib\CppFakeIt\libfastsignals\include\signal_impl.h">
+      <Filter>Header Files\lib\CppFakeIt</Filter>
+    </ClInclude>
+    <ClInclude Include="..\benchmark\lib\CppFakeIt\libfastsignals\include\spin_mutex.h">
+      <Filter>Header Files\lib\CppFakeIt</Filter>
+    </ClInclude>
+    <ClInclude Include="..\benchmark\lib\CppFakeIt\libfastsignals\include\type_traits.h">
+      <Filter>Header Files\lib\CppFakeIt</Filter>
+    </ClInclude>
+    <ClInclude Include="..\benchmark\hpp\benchmark_lfs.hpp">
+      <Filter>Header Files\benchmark</Filter>
+    </ClInclude>
+    <ClInclude Include="..\benchmark\lib\CppFakeIt\libfastsignals\include\lfs_connection.h">
+      <Filter>Header Files\lib\CppFakeIt</Filter>
+    </ClInclude>
+    <ClInclude Include="..\benchmark\lib\i42output\include\neolib\raii.hpp">
+      <Filter>Header Files\lib\i42output</Filter>
+    </ClInclude>
+    <ClInclude Include="..\benchmark\lib\copperspice\cs_signal\src\cs_internal.h">
+      <Filter>Header Files\lib\copperspice</Filter>
+    </ClInclude>
+    <ClInclude Include="..\benchmark\lib\copperspice\cs_signal\src\cs_macro.h">
+      <Filter>Header Files\lib\copperspice</Filter>
+    </ClInclude>
+    <ClInclude Include="..\benchmark\lib\copperspice\cs_signal\src\cs_signal.h">
+      <Filter>Header Files\lib\copperspice</Filter>
+    </ClInclude>
+    <ClInclude Include="..\benchmark\lib\copperspice\cs_signal\src\cs_slot.h">
+      <Filter>Header Files\lib\copperspice</Filter>
+    </ClInclude>
+    <ClInclude Include="..\benchmark\lib\copperspice\cs_signal\src\rcu_guarded.hpp">
+      <Filter>Header Files\lib\copperspice</Filter>
+    </ClInclude>
+    <ClInclude Include="..\benchmark\lib\copperspice\cs_signal\src\rcu_list.hpp">
+      <Filter>Header Files\lib\copperspice</Filter>
+    </ClInclude>
+    <ClInclude Include="..\benchmark\hpp\benchmark_css.hpp">
+      <Filter>Header Files\benchmark</Filter>
+    </ClInclude>
+    <ClInclude Include="..\benchmark\lib\CppFakeIt\libfastsignals\include\msvc_autolink.h">
+      <Filter>Header Files\lib\CppFakeIt</Filter>
+    </ClInclude>
+    <ClInclude Include="..\benchmark\lib\palacaze\sigslot\include\sigslot\signal.hpp">
+      <Filter>Header Files\lib\palacaze</Filter>
+    </ClInclude>
+    <ClInclude Include="..\benchmark\hpp\benchmark_nss_ts.hpp">
+      <Filter>Header Files\benchmark</Filter>
+    </ClInclude>
+    <ClInclude Include="..\benchmark\hpp\benchmark_nss_st.hpp">
+      <Filter>Header Files\benchmark</Filter>
+    </ClInclude>
+    <ClInclude Include="..\benchmark\hpp\benchmark_nss_tss.hpp">
+      <Filter>Header Files\benchmark</Filter>
+    </ClInclude>
+    <ClInclude Include="..\benchmark\lib\NoAvailableAlias\nano-signal-slot\nano_function.hpp">
+      <Filter>Header Files\lib\NoAvailableAlias\nano-signal-slot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\benchmark\lib\NoAvailableAlias\nano-signal-slot\nano_mutex.hpp">
+      <Filter>Header Files\lib\NoAvailableAlias\nano-signal-slot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\benchmark\lib\NoAvailableAlias\nano-signal-slot\nano_observer.hpp">
+      <Filter>Header Files\lib\NoAvailableAlias\nano-signal-slot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\benchmark\lib\NoAvailableAlias\nano-signal-slot\nano_signal_slot.hpp">
+      <Filter>Header Files\lib\NoAvailableAlias\nano-signal-slot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\benchmark\hpp\benchmark_nss_sts.hpp">
+      <Filter>Header Files\benchmark</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\benchmark\cpp\benchmark_asg.cpp">
@@ -473,9 +530,6 @@
       <Filter>Source Files\benchmark</Filter>
     </ClCompile>
     <ClCompile Include="..\benchmark\cpp\benchmark_nod.cpp">
-      <Filter>Source Files\benchmark</Filter>
-    </ClCompile>
-    <ClCompile Include="..\benchmark\cpp\benchmark_nss.cpp">
       <Filter>Source Files\benchmark</Filter>
     </ClCompile>
     <ClCompile Include="..\benchmark\cpp\benchmark_psg.cpp">
@@ -520,9 +574,6 @@
     <ClCompile Include="..\benchmark\lib\winglot\Signals\W_Slot.cpp">
       <Filter>Source Files\lib\winglot</Filter>
     </ClCompile>
-    <ClCompile Include="..\benchmark\cpp\benchmark_bs1.cpp">
-      <Filter>Source Files\benchmark</Filter>
-    </ClCompile>
     <ClCompile Include="..\benchmark\cpp\benchmark_bs2.cpp">
       <Filter>Source Files\benchmark</Filter>
     </ClCompile>
@@ -533,12 +584,6 @@
       <Filter>Source Files\benchmark</Filter>
     </ClCompile>
     <ClCompile Include="..\benchmark\cpp\benchmark_nls_st.cpp">
-      <Filter>Source Files\benchmark</Filter>
-    </ClCompile>
-    <ClCompile Include="..\benchmark\cpp\benchmark_nss_v2.cpp">
-      <Filter>Source Files\benchmark</Filter>
-    </ClCompile>
-    <ClCompile Include="..\benchmark\cpp\benchmark_nss_v2_st.cpp">
       <Filter>Source Files\benchmark</Filter>
     </ClCompile>
     <ClCompile Include="..\benchmark\cpp\benchmark_cps_st.cpp">
@@ -578,6 +623,39 @@
       <Filter>Source Files\lib\i42output</Filter>
     </ClCompile>
     <ClCompile Include="..\benchmark\cpp\benchmark_nod_st.cpp">
+      <Filter>Source Files\benchmark</Filter>
+    </ClCompile>
+    <ClCompile Include="..\benchmark\lib\CppFakeIt\libfastsignals\src\function_detail.cpp">
+      <Filter>Source Files\lib\CppFakeIt</Filter>
+    </ClCompile>
+    <ClCompile Include="..\benchmark\lib\CppFakeIt\libfastsignals\src\signal_impl.cpp">
+      <Filter>Source Files\lib\CppFakeIt</Filter>
+    </ClCompile>
+    <ClCompile Include="..\benchmark\cpp\benchmark_lfs.cpp">
+      <Filter>Source Files\benchmark</Filter>
+    </ClCompile>
+    <ClCompile Include="..\benchmark\lib\CppFakeIt\libfastsignals\src\lfs_connection.cpp">
+      <Filter>Source Files\lib\CppFakeIt</Filter>
+    </ClCompile>
+    <ClCompile Include="..\benchmark\lib\copperspice\cs_signal\src\cs_signal.cpp">
+      <Filter>Source Files\lib\copperspice</Filter>
+    </ClCompile>
+    <ClCompile Include="..\benchmark\lib\copperspice\cs_signal\src\cs_slot.cpp">
+      <Filter>Source Files\lib\copperspice</Filter>
+    </ClCompile>
+    <ClCompile Include="..\benchmark\cpp\benchmark_css.cpp">
+      <Filter>Source Files\benchmark</Filter>
+    </ClCompile>
+    <ClCompile Include="..\benchmark\cpp\benchmark_nss_ts.cpp">
+      <Filter>Source Files\benchmark</Filter>
+    </ClCompile>
+    <ClCompile Include="..\benchmark\cpp\benchmark_nss_st.cpp">
+      <Filter>Source Files\benchmark</Filter>
+    </ClCompile>
+    <ClCompile Include="..\benchmark\cpp\benchmark_nss_tss.cpp">
+      <Filter>Source Files\benchmark</Filter>
+    </ClCompile>
+    <ClCompile Include="..\benchmark\cpp\benchmark_nss_sts.cpp">
       <Filter>Source Files\benchmark</Filter>
     </ClCompile>
   </ItemGroup>

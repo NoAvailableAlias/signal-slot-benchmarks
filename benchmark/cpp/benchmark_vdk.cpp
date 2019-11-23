@@ -20,6 +20,14 @@ NOINLINE(double Vdk::connection(std::size_t N))
 {
     return Benchmark<Signal, Vdk>::connection(N);
 }
+NOINLINE(double Vdk::disconnect(std::size_t N))
+{
+    return Benchmark<Signal, Vdk>::disconnect(N);
+}
+NOINLINE(double Vdk::reconnect(std::size_t N))
+{
+    return Benchmark<Signal, Vdk>::reconnect(N);
+}
 NOINLINE(double Vdk::emission(std::size_t N))
 {
     return Benchmark<Signal, Vdk>::emission(N);

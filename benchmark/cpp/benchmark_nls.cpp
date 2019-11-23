@@ -20,6 +20,14 @@ NOINLINE(double Nls::connection(std::size_t N))
 {
     return Benchmark<Signal, Nls>::connection(N);
 }
+NOINLINE(double Nls::disconnect(std::size_t N))
+{
+    return Benchmark<Signal, Nls>::disconnect(N);
+}
+NOINLINE(double Nls::reconnect(std::size_t N))
+{
+    return Benchmark<Signal, Nls>::reconnect(N);
+}
 NOINLINE(double Nls::emission(std::size_t N))
 {
     return Benchmark<Signal, Nls>::emission(N);

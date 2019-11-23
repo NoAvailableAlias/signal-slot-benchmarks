@@ -5,7 +5,6 @@
 template <typename Subject, typename Foo>
 class Benchmark
 {
-    static std::vector<std::size_t> s_indices;
     static ChronoTimer s_timer;
     static Rng s_rng;
 
@@ -13,13 +12,6 @@ class Benchmark
     {
         // Return the test size N divided by (the sample size / number of samples)
         return N / std::chrono::duration_cast<Delta_u>(Timer_u(limit / count)).count();
-    }
-
-    static void randomize_indices(std::size_t N)
-    {
-        s_indices.resize(N);
-        std::generate(s_indices.begin(), s_indices.end(), IncrementFill());
-        std::shuffle(s_indices.begin(), s_indices.end(), s_rng);
     }
 
     public:
@@ -76,24 +68,18 @@ class Benchmark
 
     static double destruction(std::size_t N)
     {
-        randomize_indices(N);
-
         std::size_t count = 1;
         std::size_t elapsed = 0;
 
         for (; elapsed < g_timer_limit; ++count)
         {
             {
-                Subject subject;
+                volatile Subject* subject = new Subject;
                 std::vector<Foo> foo(N);
 
-                for (auto index : s_indices)
-                {
-                    Foo::connect_method(subject, foo[index]);
-                }
                 s_timer.reset();
                 
-                // Destruction
+                delete subject;
             }
             elapsed += s_timer.count<Timer_u>();
         }
@@ -104,8 +90,6 @@ class Benchmark
 
     static double connection(std::size_t N)
     {
-        randomize_indices(N);
-
         std::size_t count = 1;
         std::size_t elapsed = 0;
 
@@ -116,9 +100,60 @@ class Benchmark
 
             s_timer.reset();
 
-            for (auto index : s_indices)
+            for (auto& foo_instance : foo)
             {
-                Foo::connect_method(subject, foo[index]);
+                Foo::connect_method(subject, foo_instance);
+            }
+            elapsed += s_timer.count<Timer_u>();
+        }
+        return calculate_score(N, elapsed, count);
+    }
+
+    //--------------------------------------------------------------------------
+
+    static double disconnect(std::size_t N)
+    {
+        std::size_t count = 1;
+        std::size_t elapsed = 0;
+
+        for (; elapsed < g_timer_limit; ++count)
+        {
+            Subject subject;
+            {
+                std::vector<Foo> foo(N);
+
+                for (auto& foo_instance : foo)
+                {
+                    Foo::connect_method(subject, foo_instance);
+                }
+                s_timer.reset();
+
+                // Disconnect N Foo from Subject
+            }
+            elapsed += s_timer.count<Timer_u>();
+        }
+        return calculate_score(N, elapsed, count);
+    }
+
+
+    //--------------------------------------------------------------------------
+
+    static double reconnect(std::size_t N)
+    {
+        std::size_t count = 1;
+        std::size_t elapsed = 0;
+
+        Subject subject;
+
+        for (; elapsed < g_timer_limit; ++count)
+        {
+            std::vector<Foo> foo(N);
+
+            s_timer.reset();
+
+            for (auto& foo_instance : foo)
+            {
+                Foo::connect_method(subject, foo_instance);
             }
             elapsed += s_timer.count<Timer_u>();
         }
@@ -129,8 +164,6 @@ class Benchmark
 
     static double emission(std::size_t N)
     {
-        randomize_indices(N);
-
         std::size_t count = 1;
         std::size_t elapsed = 0;
 
@@ -139,9 +172,9 @@ class Benchmark
             Subject subject;
             std::vector<Foo> foo(N);
 
-            for (auto index : s_indices)
+            for (auto& foo_instance : foo)
             {
-                Foo::connect_method(subject, foo[index]);
+                Foo::connect_method(subject, foo_instance);
             }
             s_timer.reset();
 
@@ -156,21 +189,20 @@ class Benchmark
 
     static double combined(std::size_t N)
     {
-        randomize_indices(N);
-
         std::size_t count = 1;
         std::size_t elapsed = 0;
 
         s_timer.reset();
 
+        Subject subject;
+
         for (; elapsed < g_timer_limit; ++count, elapsed = s_timer.count<Timer_u>())
         {
-            Subject subject;
             std::vector<Foo> foo(N);
 
-            for (auto index : s_indices)
+            for (auto& foo_instance : foo)
             {
-                Foo::connect_method(subject, foo[index]);
+                Foo::connect_method(subject, foo_instance);
             }
             Foo::emit_method(subject, s_rng);
         }
@@ -219,9 +251,6 @@ class Benchmark
 };
 
 //------------------------------------------------------------------------------
-
-template <typename Subject, typename Foo>
-std::vector<std::size_t> Benchmark<Subject, Foo>::s_indices;
 
 template <typename Subject, typename Foo>
 ChronoTimer Benchmark<Subject, Foo>::s_timer;

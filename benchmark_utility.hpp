@@ -29,30 +29,37 @@ typedef std::chrono::milliseconds Limit_u;
 typedef std::chrono::duration<double, std::milli> Delta_u;
 
 // Used for gathering raw lib benchmark scores
-typedef std::map<const char*, std::vector<double>> ImmediateResults;
-typedef std::map<const char*, ImmediateResults> ImmediateData;
+typedef std::pair<std::size_t, double> BenchmarkRawResult;
+typedef std::map<const char*, std::vector<BenchmarkRawResult>> BenchmarkMethodResults;
+typedef std::map<const char*, BenchmarkMethodResults> BenchmarkClassResults;
 
 // Used for post-benchmark processing and report output
-typedef std::map<const char*, double> RelativeResults;
-typedef std::map<const char*, RelativeResults> RelativeData;
-typedef std::pair<const char*, RelativeResults*> OrderedResults;
-typedef std::map<double, OrderedResults> OrderedData;
+typedef std::map<const char*, double> ReportMethodResults;
+typedef std::map<const char*, ReportMethodResults> ReportClassResults;
+typedef std::pair<const char*, ReportMethodResults*> ReportOrderedResult;
+typedef std::map<double, ReportOrderedResult> ReportOrderedResults;
 
 // Used for the initialization of jlsignal
-constexpr const std::size_t C_JLSIGNAL_MAX = 1024;
+constexpr const std::size_t C_JLSIGNAL_MAX = 2048;
 
-// Constants used to map to a particular benchmark algorithm
-constexpr const char* C_CONSTRUCTION = "construct";
-constexpr const char* C_DESTRUCTION = "destruct";
-constexpr const char* C_CONNECTION = "connect";
-constexpr const char* C_EMISSION = "emission";
-constexpr const char* C_COMBINED = "combined";
+// Constants used to map to a particular benchmark method
+constexpr const char* C_CONSTRUCTION = "[constr]";
+constexpr const char* C_DESTRUCTION = "[destr]";
+constexpr const char* C_CONNECTION = "conn";
+constexpr const char* C_DISCONNECT = "disconn";
+constexpr const char* C_RECONNECT = "reconn";
+constexpr const char* C_EMISSION = "emit";
+constexpr const char* C_COMBINED = "all";
 constexpr const char* C_THREADED = "threaded";
 
 // The milliseconds per benchmark sample
 extern std::size_t g_timer_limit;
 // The number of rounds of "best of N"
-extern std::size_t g_number_of_rounds;
+extern std::size_t g_best_of_limit;
+// The starting "N" size (must be a power of two)
+extern std::size_t g_start_test_size;
+// The ending "N" size (must be a power of two)
+extern std::size_t g_ending_test_size;
 
 //------------------------------------------------------------------------------
 
@@ -61,7 +68,7 @@ typedef std::shared_ptr<void> SlotScope;
 template <typename Deleter>
 SlotScope make_slot_scope(Deleter&& deleter)
 {
-    return SlotScope(reinterpret_cast<void*>(0xDEADC0DE), deleter);
+    return SlotScope(nullptr, deleter);
 }
 
 //------------------------------------------------------------------------------

@@ -20,14 +20,14 @@ Tested Environments
 <div style="text-align:center; margin-bottom:1em;">click to view results</div>
 <div style="text-align:center; display:flex;">
 	<div style="flex:1;">
-    	<a href="https://github.com/NoAvailableAlias/signal-slot-benchmarks/blob/master/results_msvc/README.md">
+    	<a href="/results_msvc/README.md">
         	<button type="button" style="padding:2em; cursor:pointer;  font-size:2em; width:90%;">
             	MSVC (Windows)
             </button>
         </a>
 	</div>
 	<div style="flex:1;">
-        <a href="https://github.com/NoAvailableAlias/signal-slot-benchmarks/blob/master/results_gcc/README.md">
+        <a href="/results_gcc/README.md">
             <button type="button" style="padding:2em; cursor:pointer; font-size:2em; width:90%;">
             	GCC (Linux)
             </button>
@@ -44,15 +44,17 @@ If you are a maintainer of a referenced library, I encourage you to fork this pr
 Benchmark Algorithms
 --------------------
 
-_The individual benchmark algorithms are completely generic through templates._
+_The individual benchmark algorithms are completely generic through the use of templates._
 
 | Algorithm | Description |
 | --------- | ----------- |
-| [validation_assert](https://github.com/NoAvailableAlias/signal-slot-benchmarks/blob/master/benchmark.hpp#L27) | Make sure each signal implementation is functioning correctly. |
-| [construction](https://github.com/NoAvailableAlias/signal-slot-benchmarks/blob/master/benchmark.hpp#L56) | Time the construction of a Signal to an N number of Foo instances. |
-| [destruction](https://github.com/NoAvailableAlias/signal-slot-benchmarks/blob/master/benchmark.hpp#L77) | Time the destruction of a Signal and associated Connections to N number of Foo instances. |
-| [connection](https://github.com/NoAvailableAlias/signal-slot-benchmarks/blob/master/benchmark.hpp#L105) | Time Signal connections to a randomized N number of Foo instances. |
-| [emission](https://github.com/NoAvailableAlias/signal-slot-benchmarks/blob/master/benchmark.hpp#L130) | Time the duration of an N slot emission. |
-| [combined](https://github.com/NoAvailableAlias/signal-slot-benchmarks/blob/master/benchmark.hpp#L157) | Time construction, destruction, connection, and emission together. |
-| [threaded](https://github.com/NoAvailableAlias/signal-slot-benchmarks/blob/master/benchmark.hpp#L182) | Same as the "combined" test except threaded using a shared Signal. |
+| [validation_assert](benchmark.hpp#L19) | Make sure each signal implementation is functioning correctly. |
+| [construction](benchmark.hpp#L48) | Time the construction of a Signal to an N number of Foo instances. |
+| [destruction](benchmark.hpp#L69) | Time the destruction of a Signal followed by N number of Foo instances. |
+| [connection](benchmark.hpp#L91) | Time Signal connections to a randomized N number of Foo instances. |
+| [disconnect](benchmark.hpp#L114) | Time disconnecting N number of Foo instances from a single Signal. |
+| [reconnect](benchmark.hpp#L141) | Time reconnecting N number of Foo instances to a global Signal. |
+| [emit](benchmark.hpp#L165) | Time the duration of an N slot emission. |
+| [all](benchmark.hpp#L190) | Time all previous benchmarks together in one combined benchmark. |
+| [threaded](benchmark.hpp#L214) | Same as the previous benchmark but is now threaded. |
 <br/>

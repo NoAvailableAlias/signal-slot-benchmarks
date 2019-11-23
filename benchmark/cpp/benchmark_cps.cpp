@@ -20,6 +20,14 @@ NOINLINE(double Cps::connection(std::size_t N))
 {
     return Benchmark<Signal, Cps>::connection(N);
 }
+NOINLINE(double Cps::disconnect(std::size_t N))
+{
+    return Benchmark<Signal, Cps>::disconnect(N);
+}
+NOINLINE(double Cps::reconnect(std::size_t N))
+{
+    return Benchmark<Signal, Cps>::reconnect(N);
+}
 NOINLINE(double Cps::emission(std::size_t N))
 {
     return Benchmark<Signal, Cps>::emission(N);

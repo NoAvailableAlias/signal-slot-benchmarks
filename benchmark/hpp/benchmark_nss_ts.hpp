@@ -1,22 +1,11 @@
 #pragma once
 
-#include <mutex>
-
-#include "../lib/NoAvailableAlias/nano-signal-slot-v2x/nano_signal_slot.hpp"
-#include "../lib/NoAvailableAlias/nano-signal-slot-v2x/nano_mutex.hpp"
+#include "../lib/NoAvailableAlias/nano-signal-slot/nano_signal_slot.hpp"
+#include "../lib/NoAvailableAlias/nano-signal-slot/nano_mutex.hpp"
 
 #include "../../benchmark.hpp"
 
-namespace
-{
-    //using Mutex = Nano::Spin_Mutex;
-    //using Mutex = Nano::Recursive_Spin_Mutex;
-    //using Policy = Nano::TS_Policy<Mutex>;
-
-    using Mutex = Nano::Recursive_Mutex;
-}
-
-class Nss_v2 : public Nano::Observer<Mutex>
+class Nss_ts : public Nano::Observer<Nano::TS_Policy<>>
 {
     NOINLINE(void handler(Rng& rng))
     {
@@ -25,7 +14,7 @@ class Nss_v2 : public Nano::Observer<Mutex>
 
     public:
 
-    using Signal = Nano::Signal<void(Rng&), Mutex>;
+    using Signal = Nano::Signal<void(Rng&), Nano::TS_Policy<>>;
 
     template <typename Subject, typename Foo>
     static void connect_method(Subject& subject, Foo& foo)
@@ -45,14 +34,16 @@ class Nss_v2 : public Nano::Observer<Mutex>
     static double construction(std::size_t);
     static double destruction(std::size_t);
     static double connection(std::size_t);
+    static double disconnect(std::size_t);
+    static double reconnect(std::size_t);
     static double emission(std::size_t);
     static double combined(std::size_t);
     static double threaded(std::size_t);
 
-    static constexpr const char* C_LIB_NAME = "* nano-signal-slot v2x";
-    static constexpr const char* C_LIB_SOURCE_URL = "https://github.com/NoAvailableAlias/nano-signal-slot";
-    static constexpr const char* C_LIB_FILE = "benchmark_nss_v2";
+    static constexpr const char* C_LIB_NAME = "* nano-signal-slot ts";
+    static constexpr const char* C_LIB_SOURCE_URL = "https://github.com/NoAvailableAlias/nano-signal-slot/tree/rework";
+    static constexpr const char* C_LIB_FILE = "benchmark_nss_ts";
     static constexpr const char* C_LIB_IS_HEADER_ONLY = "X";
-    static constexpr const char* C_LIB_DATA_STRUCTURE = "std::forward_list";
+    static constexpr const char* C_LIB_DATA_STRUCTURE = "std::vector";
     static constexpr const char* C_LIB_IS_THREAD_SAFE = "X";
 };

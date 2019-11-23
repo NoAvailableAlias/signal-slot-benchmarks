@@ -1,11 +1,11 @@
 
 # GCC (Linux)
 
-**_Higher score is better._** _N / (sample size / count)._
+**_Higher score is better._** _[2, 64] / (sample size / count)._
 
 ### Performance of Thread Safe Libraries
 
-| Library | threaded | combined | emission | connect | destruct | construct | total |
+| Library | threaded | combined | emission | connect | destruct | construct | score |
 |---------|----------|----------|----------|---------|----------|-----------|-------|
 | ! Pal Sigslot | 1166 | 5440 | 70240 | 10716 | 12937 | 163314 | 263813 |
 | * fr00b0 nod | 994 | 3847 | 73628 | 7021 | 9962 | 164957 | 260409 |
@@ -17,7 +17,7 @@
 
 ### Performance of Thread Unsafe Libraries
 
-| Library | threaded | combined | emission | connect | destruct | construct | total |
+| Library | threaded | combined | emission | connect | destruct | construct | score |
 |---------|----------|----------|----------|---------|----------|-----------|-------|
 | jeffomatic jl_signal | - | 14402 | 83513 | 66056 | 20536 | 124488 | 308996 |
 | Pal Sigslot ST | - | 6131 | 79574 | 13636 | 12923 | 174087 | 286351 |
@@ -29,7 +29,6 @@
 | joanrieu signal11 | - | 3978 | 15947 | 10148 | 12002 | 187540 | 229615 |
 | supergrover sigslot | - | 1330 | 79462 | 4164 | 2092 | 138097 | 225145 |
 | EvilTwin Observer | - | 1717 | 47223 | 2741 | 5406 | 141403 | 198489 |
-| Boost Signals | - | 1279 | 32548 | 1973 | 5992 | 37808 | 79601 |
 
 ___
 _Size results are the size of object files from release build with Gcc 6.3._
@@ -60,24 +59,25 @@ _Size results are the size of object files from release build with Gcc 6.3._
 | [Pal Sigslot ST](https://github.com/palacaze/sigslot) | 59 kb | X | singly linked list | - |
 | [EvilTwin Observer](http://eviltwingames.com/blog/the-observer-pattern-revisited/) | 69 kb | X | std::vector | - |
 | [amc522 Signal11](https://github.com/amc522/Signal11) | 72 kb | X | std::vector | - |
-| [Boost Signals](http://www.boost.org/doc/libs/1_56_0/doc/html/signals.html) | 96 kb | - | ? | - |
 
-| * | ** | ! |
-|:-:|:--:|:-:|
-| _Library is designed to be thread safe_ | _Uses additional data structures_ | **Library has potential thread safety issues** |
+| * | ** | ! | [] |
+|:-:|:--:|:-:|:--:|
+| _Supports thread-safety_ | _Uses other containers_ | **Has thread-safety issues** | Excluded from final score |
 
 Benchmark Algorithms
 --------------------
 
-_The individual benchmark algorithms are completely generic through templates._
+_The individual benchmark algorithms are completely generic through the use of templates._
 
 | Algorithm | Description |
 | --------- | ----------- |
-| [validation_assert](https://github.com/NoAvailableAlias/signal-slot-benchmarks/blob/master/benchmark.hpp#L27) | Make sure each signal implementation is functioning correctly. |
-| [construction](https://github.com/NoAvailableAlias/signal-slot-benchmarks/blob/master/benchmark.hpp#L56) | Time the construction of a Signal to an N number of Foo instances. |
-| [destruction](https://github.com/NoAvailableAlias/signal-slot-benchmarks/blob/master/benchmark.hpp#L77) | Time the destruction of a Signal and associated Connections to N number of Foo instances. |
-| [connection](https://github.com/NoAvailableAlias/signal-slot-benchmarks/blob/master/benchmark.hpp#L105) | Time Signal connections to a randomized N number of Foo instances. |
-| [emission](https://github.com/NoAvailableAlias/signal-slot-benchmarks/blob/master/benchmark.hpp#L130) | Time the duration of an N slot emission. |
-| [combined](https://github.com/NoAvailableAlias/signal-slot-benchmarks/blob/master/benchmark.hpp#L157) | Time construction, destruction, connection, and emission together. |
-| [threaded](https://github.com/NoAvailableAlias/signal-slot-benchmarks/blob/master/benchmark.hpp#L182) | Same as the "combined" test except threaded using a shared Signal. |
+| [validation_assert](benchmark.hpp#L19) | Make sure each signal implementation is functioning correctly. |
+| [construction](benchmark.hpp#L48) | Time the construction of a Signal to an N number of Foo instances. |
+| [destruction](benchmark.hpp#L69) | Time the destruction of a Signal followed by N number of Foo instances. |
+| [connection](benchmark.hpp#L91) | Time Signal connections to a randomized N number of Foo instances. |
+| [disconnect](benchmark.hpp#L114) | Time disconnecting N number of Foo instances from a single Signal. |
+| [reconnect](benchmark.hpp#L141) | Time reconnecting N number of Foo instances to a global Signal. |
+| [emit](benchmark.hpp#L165) | Time the duration of an N slot emission. |
+| [all](benchmark.hpp#L190) | Time all previous benchmarks together in one combined benchmark. |
+| [threaded](benchmark.hpp#L214) | Same as the previous benchmark but is now threaded. |
 <br/>

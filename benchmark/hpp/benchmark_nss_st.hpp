@@ -1,10 +1,11 @@
 #pragma once
 
 #include "../lib/NoAvailableAlias/nano-signal-slot/nano_signal_slot.hpp"
+#include "../lib/NoAvailableAlias/nano-signal-slot/nano_mutex.hpp"
 
 #include "../../benchmark.hpp"
 
-class Nss : public Nano_Deprecated::Observer
+class Nss_st : public Nano::Observer<Nano::ST_Policy>
 {
     NOINLINE(void handler(Rng& rng))
     {
@@ -13,17 +14,17 @@ class Nss : public Nano_Deprecated::Observer
 
     public:
 
-    using Signal = Nano_Deprecated::Signal<void(Rng&)>;
+    using Signal = Nano::Signal<void(Rng&), Nano::ST_Policy>;
 
     template <typename Subject, typename Foo>
     static void connect_method(Subject& subject, Foo& foo)
     {
-        subject.template connect<Foo, &Foo::handler>(foo);
+        subject.template connect<&Foo::handler>(foo);
     }
     template <typename Subject>
     static void emit_method(Subject& subject, Rng& rng)
     {
-        subject.emit(rng);
+        subject.fire(rng);
     }
 
     // Used for switching policies at runtime
@@ -33,16 +34,18 @@ class Nss : public Nano_Deprecated::Observer
     static double construction(std::size_t);
     static double destruction(std::size_t);
     static double connection(std::size_t);
+    static double disconnect(std::size_t);
+    static double reconnect(std::size_t);
     static double emission(std::size_t);
     static double combined(std::size_t);
 
     // NOT IMPLEMENTED FOR THIS LIB
     static double threaded(std::size_t);
 
-    static constexpr const char* C_LIB_NAME = "nano-signal-slot v1x";
-    static constexpr const char* C_LIB_SOURCE_URL = "https://github.com/NoAvailableAlias/nano-signal-slot/releases/tag/v1.x";
-    static constexpr const char* C_LIB_FILE = "benchmark_nss";
+    static constexpr const char* C_LIB_NAME = "nano-signal-slot st";
+    static constexpr const char* C_LIB_SOURCE_URL = "https://github.com/NoAvailableAlias/nano-signal-slot/tree/rework";
+    static constexpr const char* C_LIB_FILE = "benchmark_nss_st";
     static constexpr const char* C_LIB_IS_HEADER_ONLY = "X";
-    static constexpr const char* C_LIB_DATA_STRUCTURE = "singly linked list";
+    static constexpr const char* C_LIB_DATA_STRUCTURE = "std::vector";
     static constexpr const char* C_LIB_IS_THREAD_SAFE = "-";
 };
