@@ -202,7 +202,7 @@
       <OmitFramePointers>true</OmitFramePointers>
       <WholeProgramOptimization>false</WholeProgramOptimization>
       <AdditionalIncludeDirectories>C:\boost_1_71_0;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <AdditionalOptions>-D_SCL_SECURE_NO_WARNINGS -D_CRT_SECURE_NO_WARNINGS %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>-D_SCL_SECURE_NO_WARNINGS -D_CRT_SECURE_NO_WARNINGS /TP /fp:fast /Ox %(AdditionalOptions)</AdditionalOptions>
       <FloatingPointModel>Fast</FloatingPointModel>
       <EnableEnhancedInstructionSet>NoExtensions</EnableEnhancedInstructionSet>
       <ExceptionHandling>Sync</ExceptionHandling>
@@ -235,6 +235,7 @@
     <ClInclude Include="..\benchmark\hpp\benchmark_lfs.hpp" />
     <ClInclude Include="..\benchmark\hpp\benchmark_lss.hpp" />
     <ClInclude Include="..\benchmark\hpp\benchmark_mws.hpp" />
+    <ClInclude Include="..\benchmark\hpp\benchmark_nes.hpp" />
     <ClInclude Include="..\benchmark\hpp\benchmark_nls.hpp" />
     <ClInclude Include="..\benchmark\hpp\benchmark_nls_st.hpp" />
     <ClInclude Include="..\benchmark\hpp\benchmark_nod.hpp" />
@@ -332,6 +333,10 @@
     <ClInclude Include="..\benchmark\lib\NoAvailableAlias\nano-signal-slot\nano_mutex.hpp" />
     <ClInclude Include="..\benchmark\lib\NoAvailableAlias\nano-signal-slot\nano_observer.hpp" />
     <ClInclude Include="..\benchmark\lib\NoAvailableAlias\nano-signal-slot\nano_signal_slot.hpp" />
+    <ClInclude Include="..\benchmark\lib\Nuclex\Config.h" />
+    <ClInclude Include="..\benchmark\lib\Nuclex\Events\Delegate.h" />
+    <ClInclude Include="..\benchmark\lib\Nuclex\Events\EmptyDelegateCallError.h" />
+    <ClInclude Include="..\benchmark\lib\Nuclex\Events\Event.h" />
     <ClInclude Include="..\benchmark\lib\palacaze\sigslot\include\sigslot\signal.hpp" />
     <ClInclude Include="..\benchmark\lib\pbhogan\Signals\Delegate.h" />
     <ClInclude Include="..\benchmark\lib\pbhogan\Signals\Signal.h" />
@@ -363,6 +368,7 @@
     <ClCompile Include="..\benchmark\cpp\benchmark_lfs.cpp" />
     <ClCompile Include="..\benchmark\cpp\benchmark_lss.cpp" />
     <ClCompile Include="..\benchmark\cpp\benchmark_mws.cpp" />
+    <ClCompile Include="..\benchmark\cpp\benchmark_nes.cpp" />
     <ClCompile Include="..\benchmark\cpp\benchmark_nls.cpp" />
     <ClCompile Include="..\benchmark\cpp\benchmark_nls_st.cpp" />
     <ClCompile Include="..\benchmark\cpp\benchmark_nod.cpp" />

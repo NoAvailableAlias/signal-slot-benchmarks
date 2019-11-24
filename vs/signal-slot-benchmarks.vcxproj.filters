@@ -126,6 +126,9 @@
     <Filter Include="Header Files\lib\NoAvailableAlias\nano-signal-slot">
       <UniqueIdentifier>{f34fa47b-d65c-44c8-88ca-c263e6b6f966}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\lib\Nuclex">
+      <UniqueIdentifier>{ba195d59-4f67-430e-b9aa-d4f331e9cc95}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\benchmark\hpp\benchmark_asg.hpp">
@@ -506,6 +509,21 @@
     <ClInclude Include="..\benchmark\hpp\benchmark_nss_sts.hpp">
       <Filter>Header Files\benchmark</Filter>
     </ClInclude>
+    <ClInclude Include="..\benchmark\lib\Nuclex\Config.h">
+      <Filter>Header Files\lib\Nuclex</Filter>
+    </ClInclude>
+    <ClInclude Include="..\benchmark\lib\Nuclex\Events\Delegate.h">
+      <Filter>Header Files\lib\Nuclex</Filter>
+    </ClInclude>
+    <ClInclude Include="..\benchmark\lib\Nuclex\Events\EmptyDelegateCallError.h">
+      <Filter>Header Files\lib\Nuclex</Filter>
+    </ClInclude>
+    <ClInclude Include="..\benchmark\lib\Nuclex\Events\Event.h">
+      <Filter>Header Files\lib\Nuclex</Filter>
+    </ClInclude>
+    <ClInclude Include="..\benchmark\hpp\benchmark_nes.hpp">
+      <Filter>Header Files\benchmark</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\benchmark\cpp\benchmark_asg.cpp">
@@ -656,6 +674,9 @@
       <Filter>Source Files\benchmark</Filter>
     </ClCompile>
     <ClCompile Include="..\benchmark\cpp\benchmark_nss_sts.cpp">
+      <Filter>Source Files\benchmark</Filter>
+    </ClCompile>
+    <ClCompile Include="..\benchmark\cpp\benchmark_nes.cpp">
       <Filter>Source Files\benchmark</Filter>
     </ClCompile>
   </ItemGroup>

@@ -17,6 +17,7 @@
 #include "benchmark/hpp/benchmark_lfs.hpp"
 #include "benchmark/hpp/benchmark_lss.hpp"
 #include "benchmark/hpp/benchmark_mws.hpp"
+#include "benchmark/hpp/benchmark_nes.hpp"
 #include "benchmark/hpp/benchmark_nls.hpp"
 #include "benchmark/hpp/benchmark_nls_st.hpp"
 #include "benchmark/hpp/benchmark_nod.hpp"
@@ -110,37 +111,38 @@ BenchmarkClassResults run_all_benchmarks(std::size_t begin, std::size_t end)
     {
         std::cout << "[BEGIN: Test Size: " << N << "]\n" << std::endl;
 
-        run_benchmark_class<Aco>(records, N);
-        run_benchmark_class<Asg>(records, N);
-        run_benchmark_class<Bs2>(records, N);
-        run_benchmark_class<Cls>(records, N); // Must make sure Subject lives longer than Foo
-        run_benchmark_class<Cps>(records, N);
-        run_benchmark_class<Cps_st>(records, N);
-        run_benchmark_class<Css>(records, N);
-        run_benchmark_class<Dob>(records, N); // Must make sure Subject lives longer than Foo
-        run_benchmark_class<Evl>(records, N);
-        run_benchmark_class<Jls>(records, N);
-        run_benchmark_class<Jos>(records, N); // Must make sure Subject lives longer than Foo
-        run_benchmark_class<Ksc>(records, N);
-        run_benchmark_class<Lfs>(records, N);
-        run_benchmark_class<Lss>(records, N); // Must make sure Subject lives longer than Foo
-        run_benchmark_class<Mws>(records, N);
-        run_benchmark_class<Nls>(records, N);
-        run_benchmark_class<Nls_st>(records, N);
-        run_benchmark_class<Nod>(records, N);
-        run_benchmark_class<Nod_st>(records, N);
-        run_benchmark_class<Nss_st>(records, N);
-        run_benchmark_class<Nss_sts>(records, N);
-        run_benchmark_class<Nss_ts>(records, N);
-        run_benchmark_class<Nss_tss>(records, N);
-        run_benchmark_class<Psg>(records, N);
-        run_benchmark_class<Pss>(records, N);
-        run_benchmark_class<Pss_st>(records, N);
-        run_benchmark_class<Sss>(records, N);
-        run_benchmark_class<Wnk>(records, N); // Must make sure Subject lives longer than Foo
-        run_benchmark_class<Wsg>(records, N);
-        run_benchmark_class<Yas>(records, N);
-        run_benchmark_class<Vdk>(records, N);
+        //run_benchmark_class<Aco>(records, N);
+        //run_benchmark_class<Asg>(records, N);
+        //run_benchmark_class<Bs2>(records, N);
+        //run_benchmark_class<Cls>(records, N); // Must make sure Subject lives longer than Foo
+        //run_benchmark_class<Cps>(records, N);
+        //run_benchmark_class<Cps_st>(records, N);
+        //run_benchmark_class<Css>(records, N);
+        //run_benchmark_class<Dob>(records, N); // Must make sure Subject lives longer than Foo
+        //run_benchmark_class<Evl>(records, N);
+        //run_benchmark_class<Jls>(records, N);
+        //run_benchmark_class<Jos>(records, N); // Must make sure Subject lives longer than Foo
+        //run_benchmark_class<Ksc>(records, N);
+        //run_benchmark_class<Lfs>(records, N);
+        //run_benchmark_class<Lss>(records, N); // Must make sure Subject lives longer than Foo
+        //run_benchmark_class<Mws>(records, N);
+        run_benchmark_class<Nes>(records, N);
+        //run_benchmark_class<Nls>(records, N);
+        //run_benchmark_class<Nls_st>(records, N);
+        //run_benchmark_class<Nod>(records, N);
+        //run_benchmark_class<Nod_st>(records, N);
+        //run_benchmark_class<Nss_st>(records, N);
+        //run_benchmark_class<Nss_sts>(records, N);
+        //run_benchmark_class<Nss_ts>(records, N);
+        //run_benchmark_class<Nss_tss>(records, N);
+        //run_benchmark_class<Psg>(records, N);
+        //run_benchmark_class<Pss>(records, N);
+        //run_benchmark_class<Pss_st>(records, N);
+        //run_benchmark_class<Sss>(records, N);
+        //run_benchmark_class<Wnk>(records, N); // Must make sure Subject lives longer than Foo
+        //run_benchmark_class<Wsg>(records, N);
+        //run_benchmark_class<Yas>(records, N);
+        //run_benchmark_class<Vdk>(records, N);
 
         std::cout << "\n[END: Test Size: " << N << "]" << std::endl;
     }
@@ -166,6 +168,7 @@ void run_all_validation_tests(std::size_t N)
     Lfs::validate_assert(N);
     Lss::validate_assert(N);
     Mws::validate_assert(N);
+    Nes::validate_assert(N);
     Nls::validate_assert(N);
     Nls_st::validate_assert(N);
     Nod::validate_assert(N);
@@ -271,6 +274,7 @@ void output_metrics_report(T& ost)
     output_metrics_report_row<Lfs>(ost);
     output_metrics_report_row<Lss>(ost);
     output_metrics_report_row<Mws>(ost);
+    output_metrics_report_row<Nes>(ost);
     output_metrics_report_row<Nls>(ost);
     output_metrics_report_row<Nls_st>(ost);
     output_metrics_report_row<Nod>(ost);

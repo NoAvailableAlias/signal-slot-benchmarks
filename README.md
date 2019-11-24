@@ -49,12 +49,12 @@ _The individual benchmark algorithms are completely generic through the use of t
 | Algorithm | Description |
 | --------- | ----------- |
 | [validation_assert](benchmark.hpp#L19) | Make sure each signal implementation is functioning correctly. |
-| [construction](benchmark.hpp#L48) | Time the construction of a Signal to an N number of Foo instances. |
-| [destruction](benchmark.hpp#L69) | Time the destruction of a Signal followed by N number of Foo instances. |
-| [connection](benchmark.hpp#L91) | Time Signal connections to a randomized N number of Foo instances. |
-| [disconnect](benchmark.hpp#L114) | Time disconnecting N number of Foo instances from a single Signal. |
-| [reconnect](benchmark.hpp#L141) | Time reconnecting N number of Foo instances to a global Signal. |
-| [emit](benchmark.hpp#L165) | Time the duration of an N slot emission. |
-| [all](benchmark.hpp#L190) | Time all previous benchmarks together in one combined benchmark. |
-| [threaded](benchmark.hpp#L214) | Same as the previous benchmark but is now threaded. |
+| [construction](benchmark.hpp#L48) | Time the construction of N * N number of Signal instances. |
+| [destruction](benchmark.hpp#L66) | Time the destruction of a Signal followed by N number of Foo instances. |
+| [connection](benchmark.hpp#L88) | Time Signal connections to a randomized N number of Foo instances. |
+| [disconnect](benchmark.hpp#L111) | Time disconnecting N number of Foo instances from a single Signal. |
+| [reconnect](benchmark.hpp#L138) | Time reconnecting N number of Foo instances to a global Signal. |
+| [emit](benchmark.hpp#L162) | Time the duration of an N slot emission. |
+| [all](benchmark.hpp#L187) | Time all previous benchmarks together in one combined benchmark. |
+| [threaded](benchmark.hpp#L211) | Same as the previous benchmark but is now threaded. |
 <br/>
