@@ -1,7 +1,7 @@
 
 # MSVC (Windows)
 
-**_Higher score is better._** _[2, 64] / [(sample size / count)](benchmark.hpp#L11)._
+**_Higher score is better._** _[2, 64] / [(sample size / count)](../benchmark.hpp#L11)._
 
 ### Performance of Thread Safe Libraries
 
@@ -101,13 +101,13 @@ _The individual benchmark algorithms are completely generic through the use of t
 
 | Algorithm | Description |
 | --------- | ----------- |
-| [validation_assert](benchmark.hpp#L19) | Make sure each signal implementation is functioning correctly. |
-| [construction](benchmark.hpp#L48) | Sample the default construction of N * N number of Signal instances. |
-| [destruction](benchmark.hpp#L66) | Sample the destruction of N * N number of Signal instances. |
-| [connection](benchmark.hpp#L85) | Sample Signal connections to N number of Foo instances. |
-| [disconnect](benchmark.hpp#L108) | Sample disconnecting N number of Foo instances from a single Signal. |
-| [reconnect](benchmark.hpp#L135) | Sample reconnecting N number of Foo instances to a global Signal. |
-| [emit](benchmark.hpp#L159) | Sample the duration of an N slot emission. |
-| [all](benchmark.hpp#L184) | Sample all previous benchmarks together in one combined benchmark. |
-| [threaded](benchmark.hpp#L208) | Same as the previous benchmark but is now threaded. |
+| [validation_assert](../benchmark.hpp#L19) | Make sure each signal implementation is functioning correctly. |
+| [construction](../benchmark.hpp#L48) | Sample the default construction of N * N number of Signal instances. |
+| [destruction](../benchmark.hpp#L66) | Sample the destruction of N * N number of Signal instances. |
+| [connection](../benchmark.hpp#L85) | Sample Signal connections to N number of Foo instances. |
+| [disconnect](../benchmark.hpp#L108) | Sample disconnecting N number of Foo instances from a single Signal. |
+| [reconnect](../benchmark.hpp#L135) | Sample reconnecting N number of Foo instances to a global Signal. |
+| [emit](../benchmark.hpp#L159) | Sample the duration of an N slot emission. |
+| [all](../benchmark.hpp#L184) | Sample all previous benchmarks together in one combined benchmark. |
+| [threaded](../benchmark.hpp#L208) | Same as the previous benchmark but is now threaded. |
 <br/>
