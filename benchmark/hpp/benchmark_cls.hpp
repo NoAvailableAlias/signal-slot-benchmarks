@@ -16,7 +16,7 @@ class Cls
     public:
     
     // Had to add namespace, always namespace
-    using SignalType = lsignal::signal<void(Rng&)>;
+    using Signal = lsignal::signal<void(Rng&)>;
 
     template <typename Subject, typename Foo>
     static void connect_method(Subject& subject, Foo& foo)
@@ -55,4 +55,6 @@ class Cls
     static constexpr const char* C_LIB_IS_HEADER_ONLY = "X";
     static constexpr const char* C_LIB_DATA_STRUCTURE = "**std::list";
     static constexpr const char* C_LIB_IS_THREAD_SAFE = "X";
+
+    static constexpr const std::size_t C_LIB_SIZEOF_SIGNAL = sizeof(Signal);
 };

@@ -44,8 +44,9 @@
 // Externs defined in benchmark_utility.hpp
 std::size_t g_timer_limit = Timer_u(Limit_u(100)).count();
 std::size_t g_best_of_limit = 2;
-std::size_t g_start_test_size = 8;
-std::size_t g_ending_test_size = 256;
+std::size_t g_start_test_size = 2;
+// Do not go above 64 unless you have > 16gb of RAM
+std::size_t g_ending_test_size = 64;
 
 //------------------------------------------------------------------------------
 
@@ -111,38 +112,38 @@ BenchmarkClassResults run_all_benchmarks(std::size_t begin, std::size_t end)
     {
         std::cout << "[BEGIN: Test Size: " << N << "]\n" << std::endl;
 
-        //run_benchmark_class<Aco>(records, N);
-        //run_benchmark_class<Asg>(records, N);
-        //run_benchmark_class<Bs2>(records, N);
-        //run_benchmark_class<Cls>(records, N); // Must make sure Subject lives longer than Foo
-        //run_benchmark_class<Cps>(records, N);
-        //run_benchmark_class<Cps_st>(records, N);
-        //run_benchmark_class<Css>(records, N);
-        //run_benchmark_class<Dob>(records, N); // Must make sure Subject lives longer than Foo
-        //run_benchmark_class<Evl>(records, N);
-        //run_benchmark_class<Jls>(records, N);
-        //run_benchmark_class<Jos>(records, N); // Must make sure Subject lives longer than Foo
-        //run_benchmark_class<Ksc>(records, N);
-        //run_benchmark_class<Lfs>(records, N);
-        //run_benchmark_class<Lss>(records, N); // Must make sure Subject lives longer than Foo
-        //run_benchmark_class<Mws>(records, N);
+        run_benchmark_class<Aco>(records, N);
+        run_benchmark_class<Asg>(records, N);
+        run_benchmark_class<Bs2>(records, N);
+        run_benchmark_class<Cls>(records, N); // Must make sure Subject lives longer than Foo
+        run_benchmark_class<Cps>(records, N);
+        run_benchmark_class<Cps_st>(records, N);
+        run_benchmark_class<Css>(records, N);
+        run_benchmark_class<Dob>(records, N); // Must make sure Subject lives longer than Foo
+        run_benchmark_class<Evl>(records, N);
+        run_benchmark_class<Jls>(records, N);
+        run_benchmark_class<Jos>(records, N); // Must make sure Subject lives longer than Foo
+        run_benchmark_class<Ksc>(records, N);
+        run_benchmark_class<Lfs>(records, N);
+        run_benchmark_class<Lss>(records, N); // Must make sure Subject lives longer than Foo
+        run_benchmark_class<Mws>(records, N);
         run_benchmark_class<Nes>(records, N);
-        //run_benchmark_class<Nls>(records, N);
-        //run_benchmark_class<Nls_st>(records, N);
-        //run_benchmark_class<Nod>(records, N);
-        //run_benchmark_class<Nod_st>(records, N);
-        //run_benchmark_class<Nss_st>(records, N);
-        //run_benchmark_class<Nss_sts>(records, N);
-        //run_benchmark_class<Nss_ts>(records, N);
-        //run_benchmark_class<Nss_tss>(records, N);
-        //run_benchmark_class<Psg>(records, N);
-        //run_benchmark_class<Pss>(records, N);
-        //run_benchmark_class<Pss_st>(records, N);
-        //run_benchmark_class<Sss>(records, N);
-        //run_benchmark_class<Wnk>(records, N); // Must make sure Subject lives longer than Foo
-        //run_benchmark_class<Wsg>(records, N);
-        //run_benchmark_class<Yas>(records, N);
-        //run_benchmark_class<Vdk>(records, N);
+        run_benchmark_class<Nls>(records, N);
+        run_benchmark_class<Nls_st>(records, N);
+        run_benchmark_class<Nod>(records, N);
+        run_benchmark_class<Nod_st>(records, N);
+        run_benchmark_class<Nss_st>(records, N);
+        run_benchmark_class<Nss_sts>(records, N);
+        run_benchmark_class<Nss_ts>(records, N);
+        run_benchmark_class<Nss_tss>(records, N);
+        run_benchmark_class<Psg>(records, N);
+        run_benchmark_class<Pss>(records, N);
+        run_benchmark_class<Pss_st>(records, N);
+        run_benchmark_class<Sss>(records, N);
+        run_benchmark_class<Wnk>(records, N); // Must make sure Subject lives longer than Foo
+        run_benchmark_class<Wsg>(records, N);
+        run_benchmark_class<Yas>(records, N);
+        run_benchmark_class<Vdk>(records, N);
 
         std::cout << "\n[END: Test Size: " << N << "]" << std::endl;
     }
@@ -242,8 +243,9 @@ void output_metrics_report_row(T& ost)
     {
         ost << "| [" << Benchmark::C_LIB_NAME << "]("
             << Benchmark::C_LIB_SOURCE_URL << ") | "
-            << get_object_file_size(Benchmark::C_LIB_FILE) << " | "
-            << Benchmark::C_LIB_IS_HEADER_ONLY
+            << get_object_file_size(Benchmark::C_LIB_FILE)
+            << " | " << Benchmark::C_LIB_SIZEOF_SIGNAL << " b"
+            << " | " << Benchmark::C_LIB_IS_HEADER_ONLY
             << " | " << Benchmark::C_LIB_DATA_STRUCTURE
             << " | " << Benchmark::C_LIB_IS_THREAD_SAFE << " |\n";
     }
@@ -256,8 +258,8 @@ void output_metrics_report_row(T& ost)
 template <typename T>
 void output_metrics_report(T& ost)
 {
-    ost << "| Library | Build Size | Header Only | Data Structure | Thread Safe |\n"
-        << "| ------- |:----------:|:-----------:| -------------- |:-----------:|\n";
+    ost << "| Library | Build Size | Signal Size | Header Only | Data Structure | Thread Safe |\n"
+        << "| ------- |:----------:|:-----------:|:-----------:| -------------- |:-----------:|\n";
 
     output_metrics_report_row<Aco>(ost);
     output_metrics_report_row<Asg>(ost);
@@ -414,7 +416,7 @@ int main(int argc, char* argv[])
     std::size_t start_test_size = g_start_test_size;
     std::size_t maximum_test_size = g_ending_test_size;
 
-    std::cout << "Enter the milliseconds per sample (4000 takes several hours): ";
+    std::cout << "Enter the milliseconds per sample (1000 takes several hours): ";
 
     if (!(std::cin >> user_limit))
     {
@@ -424,7 +426,7 @@ int main(int argc, char* argv[])
     g_timer_limit = Timer_u(Limit_u(user_limit)).count();
     std::cin.ignore();
 
-    std::cout << "Enter the number of rounds per benchmark (best of N runs): ";
+    std::cout << "Enter the number of rounds per benchmark (default is 2): ";
 
     if (!(std::cin >> user_limit))
     {

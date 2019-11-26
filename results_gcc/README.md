@@ -1,7 +1,10 @@
 
-# GCC (Linux)
+# GCC (Linux) HELP NEEDED
 
-**_Higher score is better._** _[2, 64] / (sample size / count)._
+~~**_Higher score is better._** _[2, 64] / [(sample size / count)](benchmark.hpp#L11)._~~
+
+_Running the benchmark outputs all the necessary markdown used to update these results.
+All that is required is a proper GCC environment! _(wait does the cmake file even work?)_
 
 ### Performance of Thread Safe Libraries
 
@@ -31,34 +34,34 @@
 | EvilTwin Observer | - | 1717 | 47223 | 2741 | 5406 | 141403 | 198489 |
 
 ___
-_Size results are the size of object files from release build with Gcc 6.3._
+_Size results are the size of object files from [architecture] release build with Gcc 6.3._
 
 ### Metrics of Thread Safe Libraries
 
-| Library | Build Size | Header Only | Data Structure | Thread Safe |
-| ------- |:----------:|:-----------:| -------------- |:-----------:|
-| [winglot Signals](https://github.com/winglot/Signals) | 122 kb | - | **std::list | ! |
-| [Pal Sigslot](https://github.com/palacaze/sigslot) | 132 kb | X | singly linked list | ! |
-| [Kosta-Github signals-cpp](https://github.com/Kosta-Github/signals-cpp) | 140 kb | X | std::vector | ! |
-| [fr00b0 nod](https://github.com/fr00b0/nod) | 148 kb | X | std::vector | X |
-| [cpp11nullptr lsignal](https://github.com/cpp11nullptr/lsignal) | 155 kb | X | **std::list | ! |
-| [neosigslot](http://www.i42.co.uk/stuff/neosigslot.htm) | 224 kb | - | **std::map | X |
-| [Boost Signals2](http://www.boost.org/doc/libs/1_58_0/doc/html/signals2.html) | 298 kb | ? | ? | X |
+| Library | Build Size | Signal Size | Header Only | Data Structure | Thread Safe |
+| ------- |:----------:|:-----------:|:-----------:| -------------- |:-----------:|
+| [winglot Signals](https://github.com/winglot/Signals) | 122 kb | ? | - | **std::list | ! |
+| [Pal Sigslot](https://github.com/palacaze/sigslot) | 132 kb | ? | X | singly linked list | ! |
+| [Kosta-Github signals-cpp](https://github.com/Kosta-Github/signals-cpp) | 140 kb | ? | X | std::vector | ! |
+| [fr00b0 nod](https://github.com/fr00b0/nod) | 148 kb | ? | X | std::vector | X |
+| [cpp11nullptr lsignal](https://github.com/cpp11nullptr/lsignal) | 155 kb | ? | X | **std::list | ! |
+| [neosigslot](http://www.i42.co.uk/stuff/neosigslot.htm) | 224 kb | ? | - | **std::map | X |
+| [Boost Signals2](http://www.boost.org/doc/libs/1_58_0/doc/html/signals2.html) | 298 kb | ? | ? | ? | X |
 
 ### Metrics of Thread Unsafe Libraries
 
-| Library | Build Size | Header Only | Data Structure | Thread Safe |
-| ------- |:----------:|:-----------:| -------------- |:-----------:|
-| [jeffomatic jl_signal](https://github.com/jeffomatic/jl_signal) | 37 kb | - | doubly linked list | - |
-| [Wink-Signals](https://github.com/miguelmartin75/Wink-Signals) | 40 kb | X | std::vector | - |
-| [supergrover sigslot](https://github.com/supergrover/sigslot) | 42 kb | - | std::list | - |
-| [pbhogan Signals](https://github.com/pbhogan/Signals) | 43 kb | X | std::set | - |
-| [joanrieu signal11](https://github.com/joanrieu/signal11) | 48 kb | X | std::list | - |
-| [Yassi](http://www.codeproject.com/Articles/867044/Yassi-Yet-Another-Signal-Slot-Implementation) | 51 kb | X | std::vector | - |
-| [mwthinker Signal](https://github.com/mwthinker/Signal) | 54 kb | - | std::list | - |
-| [Pal Sigslot ST](https://github.com/palacaze/sigslot) | 59 kb | X | singly linked list | - |
-| [EvilTwin Observer](http://eviltwingames.com/blog/the-observer-pattern-revisited/) | 69 kb | X | std::vector | - |
-| [amc522 Signal11](https://github.com/amc522/Signal11) | 72 kb | X | std::vector | - |
+| Library | Build Size | Signal Size | Header Only | Data Structure | Thread Safe |
+| ------- |:----------:|:-----------:|:-----------:| -------------- |:-----------:|
+| [jeffomatic jl_signal](https://github.com/jeffomatic/jl_signal) | 37 kb | ? | - | doubly linked list | - |
+| [Wink-Signals](https://github.com/miguelmartin75/Wink-Signals) | 40 kb | ? | X | std::vector | - |
+| [supergrover sigslot](https://github.com/supergrover/sigslot) | 42 kb | ? | - | std::list | - |
+| [pbhogan Signals](https://github.com/pbhogan/Signals) | 43 kb | ? | X | std::set | - |
+| [joanrieu signal11](https://github.com/joanrieu/signal11) | 48 kb | ? | X | std::list | - |
+| [Yassi](http://www.codeproject.com/Articles/867044/Yassi-Yet-Another-Signal-Slot-Implementation) | 51 kb | ? | X | std::vector | - |
+| [mwthinker Signal](https://github.com/mwthinker/Signal) | 54 kb | ? | - | std::list | - |
+| [Pal Sigslot ST](https://github.com/palacaze/sigslot) | 59 kb | ? | X | singly linked list | - |
+| [EvilTwin Observer](http://eviltwingames.com/blog/the-observer-pattern-revisited/) | 69 kb | ? | X | std::vector | - |
+| [amc522 Signal11](https://github.com/amc522/Signal11) | 72 kb | ? | X | std::vector | - |
 
 | * | ** | ! | [] |
 |:-:|:--:|:-:|:--:|
@@ -72,12 +75,12 @@ _The individual benchmark algorithms are completely generic through the use of t
 | Algorithm | Description |
 | --------- | ----------- |
 | [validation_assert](benchmark.hpp#L19) | Make sure each signal implementation is functioning correctly. |
-| [construction](benchmark.hpp#L48) | Time the construction of N * N number of Signal instances. |
-| [destruction](benchmark.hpp#L66) | Time the destruction of a Signal followed by N number of Foo instances. |
-| [connection](benchmark.hpp#L88) | Time Signal connections to a randomized N number of Foo instances. |
-| [disconnect](benchmark.hpp#L111) | Time disconnecting N number of Foo instances from a single Signal. |
-| [reconnect](benchmark.hpp#L138) | Time reconnecting N number of Foo instances to a global Signal. |
-| [emit](benchmark.hpp#L162) | Time the duration of an N slot emission. |
-| [all](benchmark.hpp#L187) | Time all previous benchmarks together in one combined benchmark. |
-| [threaded](benchmark.hpp#L211) | Same as the previous benchmark but is now threaded. |
+| [construction](benchmark.hpp#L48) | Sample the default construction of N * N number of Signal instances. |
+| [destruction](benchmark.hpp#L66) | Sample the destruction of N * N number of Signal instances. |
+| [connection](benchmark.hpp#L85) | Sample Signal connections to N number of Foo instances. |
+| [disconnect](benchmark.hpp#L108) | Sample disconnecting N number of Foo instances from a single Signal. |
+| [reconnect](benchmark.hpp#L135) | Sample reconnecting N number of Foo instances to a global Signal. |
+| [emit](benchmark.hpp#L159) | Sample the duration of an N slot emission. |
+| [all](benchmark.hpp#L184) | Sample all previous benchmarks together in one combined benchmark. |
+| [threaded](benchmark.hpp#L208) | Same as the previous benchmark but is now threaded. |
 <br/>

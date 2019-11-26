@@ -49,4 +49,6 @@ class Pss_st
     static constexpr const char* C_LIB_IS_HEADER_ONLY = "X";
     static constexpr const char* C_LIB_DATA_STRUCTURE = "std::vector";
     static constexpr const char* C_LIB_IS_THREAD_SAFE = "-";
+
+    static constexpr const std::size_t C_LIB_SIZEOF_SIGNAL = sizeof(Signal);
 };

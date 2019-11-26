@@ -46,4 +46,6 @@ class Bs2 : public boost::signals2::trackable
     static constexpr const char* C_LIB_IS_HEADER_ONLY = "-";
     static constexpr const char* C_LIB_DATA_STRUCTURE = "?";
     static constexpr const char* C_LIB_IS_THREAD_SAFE = "X";
+
+    static constexpr const std::size_t C_LIB_SIZEOF_SIGNAL = sizeof(Signal);
 };

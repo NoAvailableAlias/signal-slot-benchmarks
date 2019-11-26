@@ -6,37 +6,37 @@ NOINLINE(void Cls::initialize())
 }
 NOINLINE(void Cls::validate_assert(std::size_t N))
 {
-    return Benchmark<SignalType, Cls>::validation_assert(N);
+    return Benchmark<Signal, Cls>::validation_assert(N);
 }    
 NOINLINE(double Cls::construction(std::size_t N))
 {
-    return Benchmark<SignalType, Cls>::construction(N);
+    return Benchmark<Signal, Cls>::construction(N);
 }
 NOINLINE(double Cls::destruction(std::size_t N))
 {
-    return Benchmark<SignalType, Cls>::destruction(N);
+    return Benchmark<Signal, Cls>::destruction(N);
 }
 NOINLINE(double Cls::connection(std::size_t N))
 {
-    return Benchmark<SignalType, Cls>::connection(N);
+    return Benchmark<Signal, Cls>::connection(N);
 }
 NOINLINE(double Cls::disconnect(std::size_t N))
 {
-    return Benchmark<SignalType, Cls>::disconnect(N);
+    return Benchmark<Signal, Cls>::disconnect(N);
 }
 NOINLINE(double Cls::reconnect(std::size_t N))
 {
-    return Benchmark<SignalType, Cls>::reconnect(N);
+    return Benchmark<Signal, Cls>::reconnect(N);
 }
 NOINLINE(double Cls::emission(std::size_t N))
 {
-    return Benchmark<SignalType, Cls>::emission(N);
+    return Benchmark<Signal, Cls>::emission(N);
 }
 NOINLINE(double Cls::combined(std::size_t N))
 {
-    return Benchmark<SignalType, Cls>::combined(N);
+    return Benchmark<Signal, Cls>::combined(N);
 }
 NOINLINE(double Cls::threaded(std::size_t N))
 {
-    return Benchmark<SignalType, Cls>::threaded(N);
+    return Benchmark<Signal, Cls>::threaded(N);
 }

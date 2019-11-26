@@ -47,4 +47,6 @@ class Sss : public SigSlotBase
     static constexpr const char* C_LIB_IS_HEADER_ONLY = "-";
     static constexpr const char* C_LIB_DATA_STRUCTURE = "std::list";
     static constexpr const char* C_LIB_IS_THREAD_SAFE = "-";
+
+    static constexpr const std::size_t C_LIB_SIZEOF_SIGNAL = sizeof(Signal);
 };

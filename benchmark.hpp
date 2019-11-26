@@ -71,12 +71,9 @@ class Benchmark
         for (; elapsed < g_timer_limit; ++count)
         {
             {
-                volatile Subject* subject = new Subject;
-                std::vector<Foo> foo(N);
+                std::vector<Subject> subjects(N * N);
 
                 s_timer.reset();
-                
-                delete subject;
             }
             elapsed += s_timer.count<Timer_u>();
         }

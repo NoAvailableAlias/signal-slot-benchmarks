@@ -43,9 +43,11 @@ class Nss_st : public Nano::Observer<Nano::ST_Policy>
     static double threaded(std::size_t);
 
     static constexpr const char* C_LIB_NAME = "nano-signal-slot st";
-    static constexpr const char* C_LIB_SOURCE_URL = "https://github.com/NoAvailableAlias/nano-signal-slot/tree/rework";
+    static constexpr const char* C_LIB_SOURCE_URL = "https://github.com/NoAvailableAlias/nano-signal-slot";
     static constexpr const char* C_LIB_FILE = "benchmark_nss_st";
     static constexpr const char* C_LIB_IS_HEADER_ONLY = "X";
     static constexpr const char* C_LIB_DATA_STRUCTURE = "std::vector";
     static constexpr const char* C_LIB_IS_THREAD_SAFE = "-";
+
+    static constexpr const std::size_t C_LIB_SIZEOF_SIGNAL = sizeof(Signal);
 };
