@@ -69,7 +69,6 @@ _Size results are the size of object files from x64 release build with Visual St
 
 | Library | Build Size | Signal Size | Header Only | Data Structure | Thread Safe |
 | ------- |:----------:|:-----------:|:-----------:| -------------- |:-----------:|
-
 | [jeffomatic jl_signal](https://github.com/jeffomatic/jl_signal) | 199 kb | 40 b | - | doubly linked list | - |
 | [Montellese cpp-signal](https://github.com/Montellese/cpp-signal) | 226 kb | 16 b | X | std::forward_list | - |
 | [nano-signal-slot st](https://github.com/NoAvailableAlias/nano-signal-slot) | 230 kb | 24 b | X | std::vector | - |
