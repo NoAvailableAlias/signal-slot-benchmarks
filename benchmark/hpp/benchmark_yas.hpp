@@ -37,16 +37,16 @@ class Yas
     static void initialize();
 
     static void validate_assert(std::size_t);
-    static double construction(std::size_t);
-    static double destruction(std::size_t);
-    static double connection(std::size_t);
-    static double disconnect(std::size_t);
-    static double reconnect(std::size_t);
-    static double emission(std::size_t);
-    static double combined(std::size_t);
+    static double construction(std::size_t, std::size_t);
+    static double destruction(std::size_t, std::size_t);
+    static double connection(std::size_t, std::size_t);
+    static double disconnect(std::size_t, std::size_t);
+    static double reconnect(std::size_t, std::size_t);
+    static double emission(std::size_t, std::size_t);
+    static double combined(std::size_t, std::size_t);
 
     // NOT IMPLEMENTED FOR THIS LIB
-    static double threaded(std::size_t);
+    static double threaded(std::size_t, std::size_t);
 
     static constexpr const char* C_LIB_NAME = "Yassi";
     static constexpr const char* C_LIB_SOURCE_URL = "http://www.codeproject.com/Articles/867044/Yassi-Yet-Another-Signal-Slot-Implementation";

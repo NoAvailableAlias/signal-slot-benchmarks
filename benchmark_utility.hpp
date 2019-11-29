@@ -8,7 +8,6 @@
 #include <future>
 #include <memory>
 #include <random>
-#include <thread>
 #include <vector>
 #include <tuple>
 #include <map>
@@ -40,7 +39,7 @@ typedef std::pair<const char*, ReportMethodResults*> ReportOrderedResult;
 typedef std::map<double, ReportOrderedResult> ReportOrderedResults;
 
 // Used for the initialization of jlsignal
-constexpr const std::size_t C_JLSIGNAL_MAX = 2048;
+constexpr const std::size_t C_JLSIGNAL_MAX = 256;
 
 // Constants used to map to a particular benchmark method
 constexpr const char* C_CONSTRUCTION = "[constr]";
@@ -51,15 +50,6 @@ constexpr const char* C_RECONNECT = "reconn";
 constexpr const char* C_EMISSION = "emit";
 constexpr const char* C_COMBINED = "all";
 constexpr const char* C_THREADED = "threaded";
-
-// The milliseconds per benchmark sample
-extern std::size_t g_timer_limit;
-// The number of rounds of "best of N"
-extern std::size_t g_best_of_limit;
-// The starting "N" size (must be a power of two)
-extern std::size_t g_start_test_size;
-// The ending "N" size (must be a power of two)
-extern std::size_t g_ending_test_size;
 
 //------------------------------------------------------------------------------
 

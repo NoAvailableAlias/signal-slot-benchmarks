@@ -8,35 +8,35 @@ NOINLINE(void Nod::validate_assert(std::size_t N))
 {
     return Benchmark<Signal, Nod>::validation_assert(N);
 }    
-NOINLINE(double Nod::construction(std::size_t N))
+NOINLINE(double Nod::construction(std::size_t N, std::size_t limit))
 {
-    return Benchmark<Signal, Nod>::construction(N);
+    return Benchmark<Signal, Nod>::construction(N, limit);
 }
-NOINLINE(double Nod::destruction(std::size_t N))
+NOINLINE(double Nod::destruction(std::size_t N, std::size_t limit))
 {
-    return Benchmark<Signal, Nod>::destruction(N);
+    return Benchmark<Signal, Nod>::destruction(N, limit);
 }
-NOINLINE(double Nod::connection(std::size_t N))
+NOINLINE(double Nod::connection(std::size_t N, std::size_t limit))
 {
-    return Benchmark<Signal, Nod>::connection(N);
+    return Benchmark<Signal, Nod>::connection(N, limit);
 }
-NOINLINE(double Nod::disconnect(std::size_t N))
+NOINLINE(double Nod::disconnect(std::size_t N, std::size_t limit))
 {
-    return Benchmark<Signal, Nod>::disconnect(N);
+    return Benchmark<Signal, Nod>::disconnect(N, limit);
 }
-NOINLINE(double Nod::reconnect(std::size_t N))
+NOINLINE(double Nod::reconnect(std::size_t N, std::size_t limit))
 {
-    return Benchmark<Signal, Nod>::reconnect(N);
+    return Benchmark<Signal, Nod>::reconnect(N, limit);
 }
-NOINLINE(double Nod::emission(std::size_t N))
+NOINLINE(double Nod::emission(std::size_t N, std::size_t limit))
 {
-    return Benchmark<Signal, Nod>::emission(N);
+    return Benchmark<Signal, Nod>::emission(N, limit);
 }
-NOINLINE(double Nod::combined(std::size_t N))
+NOINLINE(double Nod::combined(std::size_t N, std::size_t limit))
 {
-    return Benchmark<Signal, Nod>::combined(N);
+    return Benchmark<Signal, Nod>::combined(N, limit);
 }
-NOINLINE(double Nod::threaded(std::size_t N))
+NOINLINE(double Nod::threaded(std::size_t N, std::size_t limit))
 {
-    return Benchmark<Signal, Nod>::threaded(N);
+    return Benchmark<Signal, Nod>::threaded(N, limit);
 }
