@@ -139,6 +139,8 @@
       <FloatingPointModel>Strict</FloatingPointModel>
       <EnableEnhancedInstructionSet>NoExtensions</EnableEnhancedInstructionSet>
       <ExceptionHandling>Async</ExceptionHandling>
+      <MultiProcessorCompilation>
+      </MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -211,6 +213,7 @@
       <FloatingPointExceptions>false</FloatingPointExceptions>
       <BufferSecurityCheck>false</BufferSecurityCheck>
       <ControlFlowGuard>false</ControlFlowGuard>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -255,7 +258,6 @@
     <ClInclude Include="..\benchmark\hpp\benchmark_sss.hpp" />
     <ClInclude Include="..\benchmark\hpp\benchmark_vdk.hpp" />
     <ClInclude Include="..\benchmark\hpp\benchmark_wnk.hpp" />
-    <ClInclude Include="..\benchmark\hpp\benchmark_wsg.hpp" />
     <ClInclude Include="..\benchmark\hpp\benchmark_yas.hpp" />
     <ClInclude Include="..\benchmark\lib\amc522\signal11\Signal.h" />
     <ClInclude Include="..\benchmark\lib\Ansoulom\cpp-observe\cpp_observe.hpp" />
@@ -347,12 +349,6 @@
     <ClInclude Include="..\benchmark\lib\pbhogan\Signals\Signal.h" />
     <ClInclude Include="..\benchmark\lib\supergrover\sigslot\src\signal.h" />
     <ClInclude Include="..\benchmark\lib\vdksoft\signals\include\signals.h" />
-    <ClInclude Include="..\benchmark\lib\winglot\Signals\W_Connection.h" />
-    <ClInclude Include="..\benchmark\lib\winglot\Signals\W_ConnectionBase.h" />
-    <ClInclude Include="..\benchmark\lib\winglot\Signals\W_Mutex.h" />
-    <ClInclude Include="..\benchmark\lib\winglot\Signals\W_Signal.h" />
-    <ClInclude Include="..\benchmark\lib\winglot\Signals\W_SignalBase.h" />
-    <ClInclude Include="..\benchmark\lib\winglot\Signals\W_Slot.h" />
     <ClInclude Include="..\benchmark\lib\yassi\yassi.h" />
     <ClInclude Include="..\benchmark_utility.hpp" />
   </ItemGroup>
@@ -388,7 +384,6 @@
     <ClCompile Include="..\benchmark\cpp\benchmark_sss.cpp" />
     <ClCompile Include="..\benchmark\cpp\benchmark_vdk.cpp" />
     <ClCompile Include="..\benchmark\cpp\benchmark_wnk.cpp" />
-    <ClCompile Include="..\benchmark\cpp\benchmark_wsg.cpp" />
     <ClCompile Include="..\benchmark\cpp\benchmark_yas.cpp" />
     <ClCompile Include="..\benchmark\lib\copperspice\cs_signal\src\cs_signal.cpp" />
     <ClCompile Include="..\benchmark\lib\copperspice\cs_signal\src\cs_slot.cpp" />
@@ -407,7 +402,6 @@
     <ClCompile Include="..\benchmark\lib\jeffomatic\jl_signal\src\SignalBase.cpp" />
     <ClCompile Include="..\benchmark\lib\mwthinker\Signal\src\mw\signals\connection.cpp" />
     <ClCompile Include="..\benchmark\lib\supergrover\sigslot\src\signal.cpp" />
-    <ClCompile Include="..\benchmark\lib\winglot\Signals\W_Slot.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="..\CMakeLists.txt" />

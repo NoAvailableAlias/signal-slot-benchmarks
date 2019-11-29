@@ -31,7 +31,6 @@
 #include "benchmark/hpp/benchmark_pss_st.hpp"
 #include "benchmark/hpp/benchmark_sss.hpp"
 #include "benchmark/hpp/benchmark_wnk.hpp"
-#include "benchmark/hpp/benchmark_wsg.hpp"
 #include "benchmark/hpp/benchmark_yas.hpp"
 #include "benchmark/hpp/benchmark_vdk.hpp"
 
@@ -90,7 +89,6 @@ bool post_benchmark_method_update(BenchmarkClassResults const& results)
 template <typename Benchmark>
 bool run_benchmark_class(BenchmarkClassResults& results, std::size_t N)
 {
-    // HELLO DARKNESS MY OLD FRIEND
 #define POST_BENCHMARK_METHOD_UPDATE(...) if (post_benchmark_method_update(results)) return true
 
     try
@@ -121,13 +119,14 @@ bool run_benchmark_class(BenchmarkClassResults& results, std::size_t N)
         std::cerr << "Exception: " << error.what() << std::endl;
     }
     return false;
+
+#undef POST_BENCHMARK_METHOD_UPDATE
 }
 
 //------------------------------------------------------------------------------
 
 void run_all_benchmarks()
 {
-    // IVE COME TO TALK WITH YOU AGAIN
 #define RUN_BENCHMARK_CLASS(FOO) if (run_benchmark_class<FOO>(results, N)) return
 
     BenchmarkClassResults results;
@@ -168,10 +167,11 @@ void run_all_benchmarks()
         RUN_BENCHMARK_CLASS(Pss_st);
         RUN_BENCHMARK_CLASS(Sss);
         RUN_BENCHMARK_CLASS(Wnk); // Must make sure Subject lives longer than Foo
-        RUN_BENCHMARK_CLASS(Wsg);
         RUN_BENCHMARK_CLASS(Yas);
         RUN_BENCHMARK_CLASS(Vdk);
     }
+
+#undef RUN_BENCHMARK_CLASS
 }
 
 //------------------------------------------------------------------------------
@@ -209,7 +209,6 @@ void run_all_validation_tests()
     Pss_st::validate_assert(N);
     Sss::validate_assert(N);
     Wnk::validate_assert(N);
-    Wsg::validate_assert(N);
     Yas::validate_assert(N);
     Vdk::validate_assert(N);
 }
@@ -289,7 +288,6 @@ void output_metrics_report(T& ost)
     output_metrics_report_row<Pss_st>(ost);
     output_metrics_report_row<Sss>(ost);
     output_metrics_report_row<Wnk>(ost);
-    output_metrics_report_row<Wsg>(ost);
     output_metrics_report_row<Yas>(ost);
     output_metrics_report_row<Vdk>(ost);
 }
@@ -394,8 +392,6 @@ void output_reports(BenchmarkClassResults const& records, T& ost)
         result_order[score] = ReportOrderedResult { lib_name, &result_average[lib_name] };
     }
 
-    // Output in markdown format
-
     bool show_header = true;
 
     for (auto const& row : Range(result_order.rbegin(), result_order.rend()))
@@ -480,7 +476,6 @@ int main(int argc, char* argv[])
     {
         run_all_benchmarks();
     }
-
     a1.get();
 
     if (std::ofstream ofs{ "report.txt", std::ios::app })
@@ -500,8 +495,5 @@ int main(int argc, char* argv[])
 
         ofs << std::endl;
     }
-
     std::cin.get();
-
-    return EXIT_SUCCESS;
 }

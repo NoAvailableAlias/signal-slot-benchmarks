@@ -60,9 +60,6 @@
     <Filter Include="Header Files\lib\palacaze">
       <UniqueIdentifier>{351e7377-55df-4fb1-a2bf-4e3efee924e2}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\lib\winglot">
-      <UniqueIdentifier>{fe5153bb-1f0a-4232-a641-65e782f73eed}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\lib\pbhogan">
       <UniqueIdentifier>{82de5016-a5a3-430d-9585-8785661b5e4f}</UniqueIdentifier>
     </Filter>
@@ -77,9 +74,6 @@
     </Filter>
     <Filter Include="Source Files\lib\mwthinker">
       <UniqueIdentifier>{5b659186-a028-4965-b686-748f3ea0cf05}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\lib\winglot">
-      <UniqueIdentifier>{f31717b2-67c1-47e4-a1d9-f88666265f56}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\lib\supergrover">
       <UniqueIdentifier>{a4d79bc9-33f9-4a93-87eb-3cc37f31d235}</UniqueIdentifier>
@@ -171,9 +165,6 @@
       <Filter>Header Files\benchmark</Filter>
     </ClInclude>
     <ClInclude Include="..\benchmark\hpp\benchmark_wnk.hpp">
-      <Filter>Header Files\benchmark</Filter>
-    </ClInclude>
-    <ClInclude Include="..\benchmark\hpp\benchmark_wsg.hpp">
       <Filter>Header Files\benchmark</Filter>
     </ClInclude>
     <ClInclude Include="..\benchmark\hpp\benchmark_yas.hpp">
@@ -271,24 +262,6 @@
     </ClInclude>
     <ClInclude Include="..\benchmark\lib\vdksoft\signals\include\signals.h">
       <Filter>Header Files\lib\vdksoft</Filter>
-    </ClInclude>
-    <ClInclude Include="..\benchmark\lib\winglot\Signals\W_Connection.h">
-      <Filter>Header Files\lib\winglot</Filter>
-    </ClInclude>
-    <ClInclude Include="..\benchmark\lib\winglot\Signals\W_ConnectionBase.h">
-      <Filter>Header Files\lib\winglot</Filter>
-    </ClInclude>
-    <ClInclude Include="..\benchmark\lib\winglot\Signals\W_Mutex.h">
-      <Filter>Header Files\lib\winglot</Filter>
-    </ClInclude>
-    <ClInclude Include="..\benchmark\lib\winglot\Signals\W_Signal.h">
-      <Filter>Header Files\lib\winglot</Filter>
-    </ClInclude>
-    <ClInclude Include="..\benchmark\lib\winglot\Signals\W_SignalBase.h">
-      <Filter>Header Files\lib\winglot</Filter>
-    </ClInclude>
-    <ClInclude Include="..\benchmark\lib\winglot\Signals\W_Slot.h">
-      <Filter>Header Files\lib\winglot</Filter>
     </ClInclude>
     <ClInclude Include="..\benchmark\lib\yassi\yassi.h">
       <Filter>Header Files\lib\yassi</Filter>
@@ -568,9 +541,6 @@
     <ClCompile Include="..\benchmark\cpp\benchmark_wnk.cpp">
       <Filter>Source Files\benchmark</Filter>
     </ClCompile>
-    <ClCompile Include="..\benchmark\cpp\benchmark_wsg.cpp">
-      <Filter>Source Files\benchmark</Filter>
-    </ClCompile>
     <ClCompile Include="..\benchmark\cpp\benchmark_yas.cpp">
       <Filter>Source Files\benchmark</Filter>
     </ClCompile>
@@ -588,9 +558,6 @@
     </ClCompile>
     <ClCompile Include="..\benchmark\lib\supergrover\sigslot\src\signal.cpp">
       <Filter>Source Files\lib\supergrover</Filter>
-    </ClCompile>
-    <ClCompile Include="..\benchmark\lib\winglot\Signals\W_Slot.cpp">
-      <Filter>Source Files\lib\winglot</Filter>
     </ClCompile>
     <ClCompile Include="..\benchmark\cpp\benchmark_bs2.cpp">
       <Filter>Source Files\benchmark</Filter>
