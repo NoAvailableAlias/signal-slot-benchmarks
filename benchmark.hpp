@@ -45,12 +45,12 @@ class Benchmark
 
     //--------------------------------------------------------------------------
 
-    static double construction(std::size_t N)
+    static double construction(std::size_t N, std::size_t limit)
     {
         std::size_t count = 1;
         std::size_t elapsed = 0;
 
-        for (; elapsed < g_timer_limit; ++count)
+        for (; elapsed < limit; ++count)
         {
             s_timer.reset();
 
@@ -63,12 +63,12 @@ class Benchmark
 
     //--------------------------------------------------------------------------
 
-    static double destruction(std::size_t N)
+    static double destruction(std::size_t N, std::size_t limit)
     {
         std::size_t count = 1;
         std::size_t elapsed = 0;
 
-        for (; elapsed < g_timer_limit; ++count)
+        for (; elapsed < limit; ++count)
         {
             {
                 std::vector<Subject> subjects(N * N);
@@ -82,12 +82,12 @@ class Benchmark
 
     //--------------------------------------------------------------------------
 
-    static double connection(std::size_t N)
+    static double connection(std::size_t N, std::size_t limit)
     {
         std::size_t count = 1;
         std::size_t elapsed = 0;
 
-        for (; elapsed < g_timer_limit; ++count)
+        for (; elapsed < limit; ++count)
         {
             Subject subject;
             std::vector<Foo> foo(N);
@@ -105,12 +105,12 @@ class Benchmark
 
     //--------------------------------------------------------------------------
 
-    static double disconnect(std::size_t N)
+    static double disconnect(std::size_t N, std::size_t limit)
     {
         std::size_t count = 1;
         std::size_t elapsed = 0;
 
-        for (; elapsed < g_timer_limit; ++count)
+        for (; elapsed < limit; ++count)
         {
             Subject subject;
             {
@@ -132,14 +132,14 @@ class Benchmark
 
     //--------------------------------------------------------------------------
 
-    static double reconnect(std::size_t N)
+    static double reconnect(std::size_t N, std::size_t limit)
     {
         std::size_t count = 1;
         std::size_t elapsed = 0;
 
         Subject subject;
 
-        for (; elapsed < g_timer_limit; ++count)
+        for (; elapsed < limit; ++count)
         {
             std::vector<Foo> foo(N);
 
@@ -156,12 +156,12 @@ class Benchmark
 
     //--------------------------------------------------------------------------
 
-    static double emission(std::size_t N)
+    static double emission(std::size_t N, std::size_t limit)
     {
         std::size_t count = 1;
         std::size_t elapsed = 0;
 
-        for (; elapsed < g_timer_limit; ++count)
+        for (; elapsed < limit; ++count)
         {
             Subject subject;
             std::vector<Foo> foo(N);
@@ -181,7 +181,7 @@ class Benchmark
 
     //--------------------------------------------------------------------------
 
-    static double combined(std::size_t N)
+    static double combined(std::size_t N, std::size_t limit)
     {
         std::size_t count = 1;
         std::size_t elapsed = 0;
@@ -190,7 +190,7 @@ class Benchmark
 
         Subject subject;
 
-        for (; elapsed < g_timer_limit; ++count, elapsed = s_timer.count<Timer_u>())
+        for (; elapsed < limit; ++count, elapsed = s_timer.count<Timer_u>())
         {
             std::vector<Foo> foo(N);
 
@@ -205,7 +205,7 @@ class Benchmark
 
     //--------------------------------------------------------------------------
 
-    static double threaded(std::size_t N)
+    static double threaded(std::size_t N, std::size_t limit)
     {
         Subject subject;
 
@@ -217,7 +217,7 @@ class Benchmark
             Rng rng(s_rng);
             ChronoTimer timer;
 
-            for (; elapsed < g_timer_limit; ++count, elapsed = timer.count<Timer_u>())
+            for (; elapsed < limit; ++count, elapsed = timer.count<Timer_u>())
             {
                 std::vector<Foo> foo(N);
 

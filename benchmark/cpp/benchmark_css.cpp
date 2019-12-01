@@ -8,37 +8,37 @@ NOINLINE(void Css::validate_assert(std::size_t N))
 {
     return Benchmark<Signal, Css>::validation_assert(N);
 }
-NOINLINE(double Css::construction(std::size_t N))
+NOINLINE(double Css::construction(std::size_t N, std::size_t limit))
 {
-    return Benchmark<Signal, Css>::construction(N);
+    return Benchmark<Signal, Css>::construction(N, limit);
 }
-NOINLINE(double Css::destruction(std::size_t N))
+NOINLINE(double Css::destruction(std::size_t N, std::size_t limit))
 {
-    return Benchmark<Signal, Css>::destruction(N);
+    return Benchmark<Signal, Css>::destruction(N, limit);
 }
-NOINLINE(double Css::connection(std::size_t N))
+NOINLINE(double Css::connection(std::size_t N, std::size_t limit))
 {
-    return Benchmark<Signal, Css>::connection(N);
+    return Benchmark<Signal, Css>::connection(N, limit);
 }
-NOINLINE(double Css::disconnect(std::size_t N))
+NOINLINE(double Css::disconnect(std::size_t N, std::size_t limit))
 {
-    return Benchmark<Signal, Css>::disconnect(N);
+    return Benchmark<Signal, Css>::disconnect(N, limit);
 }
-NOINLINE(double Css::reconnect(std::size_t N))
+NOINLINE(double Css::reconnect(std::size_t N, std::size_t limit))
 {
-    return Benchmark<Signal, Css>::reconnect(N);
+    return Benchmark<Signal, Css>::reconnect(N, limit);
 }
-NOINLINE(double Css::emission(std::size_t N))
+NOINLINE(double Css::emission(std::size_t N, std::size_t limit))
 {
-    return Benchmark<Signal, Css>::emission(N);
+    return Benchmark<Signal, Css>::emission(N, limit);
 }
-NOINLINE(double Css::combined(std::size_t N))
+NOINLINE(double Css::combined(std::size_t N, std::size_t limit))
 {
-    return Benchmark<Signal, Css>::combined(N);
+    return Benchmark<Signal, Css>::combined(N, limit);
 }
-NOINLINE(double Css::threaded(std::size_t N))
+NOINLINE(double Css::threaded(std::size_t N, std::size_t limit))
 {
-    //return Benchmark<Signal, Css>::threaded(N);
+    //return Benchmark<Signal, Css>::threaded(N, limit);
     return 0.0;
 }
 

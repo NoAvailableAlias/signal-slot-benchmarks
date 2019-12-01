@@ -39,10 +39,8 @@ add_executable(bench
     benchmark/cpp/benchmark_sss.cpp
     benchmark/cpp/benchmark_vdk.cpp
     benchmark/cpp/benchmark_wnk.cpp
-    benchmark/cpp/benchmark_wsg.cpp
     benchmark/cpp/benchmark_yas.cpp
     benchmark/lib/supergrover/sigslot/src/signal.cpp
-    benchmark/lib/winglot/Signals/W_Slot.cpp
     benchmark/lib/jeffomatic/jl_signal/src/SignalBase.cpp
     benchmark/lib/jeffomatic/jl_signal/src/ObjectPool.cpp
     benchmark/lib/mwthinker/Signal/src/mw/signals/connection.cpp

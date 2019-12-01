@@ -4,7 +4,7 @@
 ~~**_Higher score is better._** _[2, 64] / [(sample size / count)](../benchmark.hpp#L11)._~~
 
 _Running the benchmark outputs all the necessary markdown used to update these results.
-All that is required is a proper GCC environment! _(wait does the cmake file even work?)_
+All that is required is a proper GCC environment! (wait does the cmake file even work?)_
 
 ### Performance of Thread Safe Libraries
 
@@ -14,7 +14,6 @@ All that is required is a proper GCC environment! _(wait does the cmake file eve
 | * fr00b0 nod | 994 | 3847 | 73628 | 7021 | 9962 | 164957 | 260409 |
 | ! Kosta signals-cpp | 12 | 911 | 27394 | 1279 | 7448 | 192119 | 229164 |
 | ! lsignal | 883 | 1932 | 72456 | 3114 | 5665 | 142482 | 226531 |
-| ! winglot Signals | 562 | 2868 | 69693 | 6765 | 5610 | 54596 | 140094 |
 | * neosigslot | 410 | 1687 | 13345 | 3871 | 4309 | 90011 | 113634 |
 | * Boost Signals2 | 56 | 1572 | 17062 | 3668 | 4462 | 15082 | 41902 |
 
@@ -40,7 +39,6 @@ _Size results are the size of object files from [architecture] release build wit
 
 | Library | Build Size | Signal Size | Header Only | Data Structure | Thread Safe |
 | ------- |:----------:|:-----------:|:-----------:| -------------- |:-----------:|
-| [winglot Signals](https://github.com/winglot/Signals) | 122 kb | ? | - | **std::list | ! |
 | [Pal Sigslot](https://github.com/palacaze/sigslot) | 132 kb | ? | X | singly linked list | ! |
 | [Kosta-Github signals-cpp](https://github.com/Kosta-Github/signals-cpp) | 140 kb | ? | X | std::vector | ! |
 | [fr00b0 nod](https://github.com/fr00b0/nod) | 148 kb | ? | X | std::vector | X |
@@ -65,7 +63,7 @@ _Size results are the size of object files from [architecture] release build wit
 
 | * | ** | ! | [] |
 |:-:|:--:|:-:|:--:|
-| _Supports thread-safety_ | _Uses other containers_ | **Has thread-safety issues** | Excluded from final score |
+| _Supports thread-safety_ | _Uses other containers_ | **Has thread-safety issues** | Excluded from scoring |
 
 Benchmark Algorithms
 --------------------
