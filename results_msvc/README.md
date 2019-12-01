@@ -11,7 +11,6 @@
 | * palacaze sigslot | 3942 | 2929 | 9762 | 12415 | 14554 | 113508 | 6389 | 499 | 157127 |
 | * Montellese cpp-signal | 17298 | 5237 | 9736 | 9762 | 9691 | 121895 | 4565 | 488 | 156138 |
 | * cpp11nullptr lsignal | 2017 | 2314 | 4491 | 7966 | 4440 | 119715 | 2790 | 380 | 139783 |
-| ! winglot Signals | 3908 | 3271 | 6116 | 6050 | 5362 | 115837 | 2512 | 360 | 136238 |
 | * fr00b0 nod | 16840 | 13955 | 10996 | 20589 | 25688 | 53478 | 9496 | 219 | 120466 |
 | * CppFakeIt FastSignals | 3307 | 4200 | 7467 | 16102 | 17234 | 44998 | 6968 | 115 | 92884 |
 | * Kosta signals-cpp | 18152 | 5581 | 3553 | 43849 | 3016 | 36380 | 2568 | 297 | 89662 |
@@ -56,7 +55,6 @@ _Size results are the size of object files from x64 release build with Visual St
 | [* CppFakeIt FastSignals](https://github.com/CppFakeIt/FastSignals) | 854 kb | 16 b | - | std::vector | X |
 | [* dacap observable](https://github.com/dacap/observable) | 854 kb | 184 b | - | std::vector | X |
 | [* Montellese cpp-signal](https://github.com/Montellese/cpp-signal) | 856 kb | 96 b | X | std::forward_list | X |
-| [! winglot Signals](https://github.com/winglot/Signals) | 867 kb | 104 b | - | **std::list | ! |
 | [* nano-signal-slot tss](https://github.com/NoAvailableAlias/nano-signal-slot) | 900 kb | 48 b | X | std::vector | X |
 | [* palacaze sigslot](https://github.com/palacaze/sigslot) | 921 kb | 104 b | X | std::vector | X |
 | [* fr00b0 nod](https://github.com/fr00b0/nod) | 924 kb | 144 b | X | std::vector | X |
@@ -90,9 +88,9 @@ _Size results are the size of object files from x64 release build with Visual St
 | [copperspice cs_signal](https://github.com/copperspice/cs_signal) | 463 kb | 128 b | - | **RCU List | DIY |
 | [neolib event](https://github.com/i42output/neolib) | 2084 kb | 136 b | - | **std::unordered_map | - |
 
-| * | ** | ! | [] |
+| * | ** | [] |
 |:-:|:--:|:-:|:--:|
-| _Supports thread-safety_ | _Uses other containers_ | **Has thread-safety issues** | Excluded from final score |
+| _Supports thread-safety_ | _Uses additional containers_ | Excluded from scoring |
 
 Benchmark Algorithms
 --------------------

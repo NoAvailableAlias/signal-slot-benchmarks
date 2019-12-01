@@ -59,9 +59,9 @@ static std::size_t s_start_test_size = 2;
 static std::size_t s_ending_test_size = 64;
 // Store the previous full results of a particular converging run
 static BenchmarkClassResults s_current_results;
-// Main synchronization for IO is for copying s_current_results to the IO thread
+// Main synchronization for copying s_current_results to the IO thread
 static Mutex s_io_mutex;
-// Used to early exit out of a currently running benchmark run
+// Used to early exit out of a currently running benchmark
 static std::atomic_bool s_esc_pressed { false };
 
 //------------------------------------------------------------------------------
@@ -431,7 +431,7 @@ int main(int argc, char* argv[])
     std::cout << "Change the CPU priority now: [paused]" << std::endl;
     std::cin.get();
 
-    // Time the entire duration of the entire benchmark process
+    // Time the entire duration of the benchmark process
     auto start = std::chrono::system_clock::now();
 
     // Validate that all implementations are functioning correctly
