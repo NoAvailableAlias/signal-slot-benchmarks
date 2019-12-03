@@ -89,7 +89,7 @@ _Size results are the size of object files from x64 release build with Visual St
 | [neolib event](https://github.com/i42output/neolib) | 2084 kb | 136 b | - | **std::unordered_map | - |
 
 | * | ** | [] |
-|:-:|:--:|:-:|:--:|
+|:-:|:--:|:--:|
 | _Supports thread-safety_ | _Uses additional containers_ | Excluded from scoring |
 
 Benchmark Algorithms
