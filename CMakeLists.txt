@@ -6,7 +6,7 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED YES)
 
 # dependencies
-find_package(Boost COMPONENTS signals system chrono filesystem thread REQUIRED)
+find_package(Boost COMPONENTS system chrono thread REQUIRED)
 find_package(Threads)
 
 # project definition
@@ -61,5 +61,5 @@ add_executable(bench
 set_target_properties(bench PROPERTIES CXX_EXTENSIONS NO)
 target_include_directories(bench PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
 target_compile_options(bench PRIVATE  "-fdiagnostics-color=always")
-target_link_libraries(bench Boost::system Boost::signals Boost::chrono Boost::filesystem Threads::Threads)
+target_link_libraries(bench Boost::system Boost::chrono Threads::Threads)
 
