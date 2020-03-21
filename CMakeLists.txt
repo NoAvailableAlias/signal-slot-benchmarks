@@ -9,6 +9,27 @@ set(CMAKE_CXX_STANDARD_REQUIRED YES)
 find_package(Boost COMPONENTS system chrono thread REQUIRED)
 find_package(Threads)
 
+add_library(signal_libraries
+  benchmark/lib/supergrover/sigslot/src/signal.cpp
+  benchmark/lib/jeffomatic/jl_signal/src/SignalBase.cpp
+  benchmark/lib/jeffomatic/jl_signal/src/ObjectPool.cpp
+  benchmark/lib/mwthinker/Signal/src/mw/signals/connection.cpp
+  benchmark/lib/dacap/obs/dacap_connection.cpp
+  benchmark/lib/i42output/src/async_task.cpp
+  benchmark/lib/i42output/src/async_thread.cpp
+  benchmark/lib/i42output/src/event.cpp
+  benchmark/lib/i42output/src/thread.cpp
+  benchmark/lib/i42output/src/timer.cpp
+  benchmark/lib/i42output/src/waitable_event.cpp
+  benchmark/lib/CppFakeIt/libfastsignals/src/lfs_connection.cpp
+  benchmark/lib/CppFakeIt/libfastsignals/src/function_detail.cpp
+  benchmark/lib/CppFakeIt/libfastsignals/src/signal_impl.cpp
+  benchmark/lib/copperspice/cs_signal/src/cs_signal.cpp
+  benchmark/lib/copperspice/cs_signal/src/cs_slot.cpp
+  )
+
+target_link_libraries(signal_libraries iscool_signals)
+
 # project definition
 add_executable(bench
     benchmark.cpp
@@ -45,22 +66,6 @@ add_executable(bench
     benchmark/cpp/benchmark_vdk.cpp
     benchmark/cpp/benchmark_wnk.cpp
     benchmark/cpp/benchmark_yas.cpp
-    benchmark/lib/supergrover/sigslot/src/signal.cpp
-    benchmark/lib/jeffomatic/jl_signal/src/SignalBase.cpp
-    benchmark/lib/jeffomatic/jl_signal/src/ObjectPool.cpp
-    benchmark/lib/mwthinker/Signal/src/mw/signals/connection.cpp
-    benchmark/lib/dacap/obs/dacap_connection.cpp
-    benchmark/lib/i42output/src/async_task.cpp
-    benchmark/lib/i42output/src/async_thread.cpp
-    benchmark/lib/i42output/src/event.cpp
-    benchmark/lib/i42output/src/thread.cpp
-    benchmark/lib/i42output/src/timer.cpp
-    benchmark/lib/i42output/src/waitable_event.cpp
-    benchmark/lib/CppFakeIt/libfastsignals/src/lfs_connection.cpp
-    benchmark/lib/CppFakeIt/libfastsignals/src/function_detail.cpp
-    benchmark/lib/CppFakeIt/libfastsignals/src/signal_impl.cpp
-    benchmark/lib/copperspice/cs_signal/src/cs_signal.cpp
-    benchmark/lib/copperspice/cs_signal/src/cs_slot.cpp
 )
 
 add_subdirectory(benchmark/lib/iscool)
@@ -69,5 +74,15 @@ set_target_properties(bench PROPERTIES CXX_EXTENSIONS NO)
 target_include_directories(bench PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
 target_compile_options(bench PRIVATE  "-fdiagnostics-color=always")
 target_link_libraries(bench
-  iscool_signals Boost::system Boost::chrono Threads::Threads)
+  signal_libraries Boost::system Boost::chrono Threads::Threads)
 
+#-------------------------------------------------------------------------------
+# Tests
+
+find_package(GTest REQUIRED)
+add_executable(tests tests.cpp)
+target_include_directories(tests
+  PRIVATE ${CMAKE_CURRENT_SOURCE_DIR} benchmark/lib/)
+target_compile_options(tests PRIVATE  "-fdiagnostics-color=always")
+target_link_libraries(tests
+  signal_libraries Boost::system Boost::chrono Threads::Threads GTest::GTest)
