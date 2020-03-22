@@ -1,3 +1,4 @@
+#include "tests/hpp/signal_traits_aco.hpp"
 #include "tests/hpp/signal_traits_bs2.hpp"
 #include "tests/hpp/signal_traits_ics.hpp"
 #include "tests/hpp/signal_traits_jls.hpp"
@@ -31,6 +32,7 @@ class signal_test:
 using all_traits =
   testing::Types
   <
+    signal_traits_aco,
     signal_traits_bs2,
     signal_traits_ics,
     signal_traits_jls
@@ -46,11 +48,23 @@ SAFE_TYPED_TEST(signal_test, initially_empty,
   EXPECT_TRUE(traits::empty(signal));
 })
 
-SAFE_TYPED_TEST(signal_test, connect,
+SAFE_TYPED_TEST(signal_test, not_empty_when_connected,
 {
   using traits = TypeParam;
   typename traits::template signal<void()> signal;
 
+  traits::connect(signal, []() -> void { });
+
+  EXPECT_FALSE(traits::empty(signal));
+ })
+
+SAFE_TYPED_TEST(signal_test, trigger,
+{
+  using traits = TypeParam;
+  typename traits::template signal<void()> signal;
+
+  traits::trigger(signal);
+  
   bool called(false);
 
   traits::connect
@@ -60,8 +74,6 @@ SAFE_TYPED_TEST(signal_test, connect,
        called = true;
      });
 
-  EXPECT_FALSE(traits::empty(signal));
-    
   traits::trigger(signal);
   EXPECT_TRUE(called);
  })
@@ -81,7 +93,7 @@ SAFE_TYPED_TEST(signal_test, disconnect,
         called = true;
       }));
 
-  traits::disconnect(connection);
+  traits::disconnect(signal, connection);
   traits::trigger(signal);
   EXPECT_FALSE(called);
 })
@@ -176,10 +188,10 @@ SAFE_TYPED_TEST(signal_test, disconnect_while_triggered_does_not_trigger,
     
   traits::connect
     (signal,
-     [ &called_1, &connection ]() -> void
+     [ &called_1, &signal, &connection ]() -> void
      {
        called_1 = true;
-       traits::disconnect(connection);
+       traits::disconnect(signal, connection);
      });
 
   bool called_2(false);
@@ -208,7 +220,7 @@ SAFE_TYPED_TEST(signal_test, swap_0_0,
 
   EXPECT_TRUE(traits::empty(signal));
   EXPECT_TRUE(traits::empty(signal_alt));
- })
+})
 
 SAFE_TYPED_TEST(signal_test, swap_0_1,
 {
@@ -231,7 +243,7 @@ SAFE_TYPED_TEST(signal_test, swap_0_1,
 
   traits::trigger(signal_alt);
   EXPECT_TRUE(called);
- })
+})
 
 SAFE_TYPED_TEST(signal_test, swap_0_n,
 {
@@ -497,12 +509,14 @@ SAFE_TYPED_TEST(signal_test, connections_of_swapped_signals,
   traits::swap(signal_1, signal_2);
   traits::disconnect_all_slots(signal_1);
 
-  EXPECT_TRUE(traits::empty(signal_1));
-  EXPECT_FALSE(traits::empty(signal_2));
-
   EXPECT_TRUE(traits::connected(connection_1));
   EXPECT_FALSE(traits::connected(connection_2));
 
+  traits::trigger(signal_1);
+  
+  EXPECT_FALSE(called_1);
+  EXPECT_FALSE(called_2);
+  
   traits::trigger(signal_2);
 
   EXPECT_TRUE(called_1);
@@ -567,7 +581,7 @@ SAFE_TYPED_TEST(signal_test, same_function_connected_twice,
 
   EXPECT_EQ(2, calls);
 
-  traits::disconnect(connection_1);
+  traits::disconnect(signal, connection_1);
 
   traits::trigger(signal);
   EXPECT_EQ(3, calls);

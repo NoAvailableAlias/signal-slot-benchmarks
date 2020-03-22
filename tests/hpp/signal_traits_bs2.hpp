@@ -31,8 +31,9 @@ struct signal_traits_bs2
   {
     return c.connected();
   }
-  
-  static void disconnect(connection& c)
+
+  template<typename Signal>
+  static void disconnect(Signal& s, connection& c)
   {
     c.disconnect();
   }

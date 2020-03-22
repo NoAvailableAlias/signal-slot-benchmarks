@@ -9,10 +9,7 @@ struct signal_traits_jls
   template<typename Signature>
   using signal = jl::Signal<Signature>;
 
-  struct connection
-  {
-    jl::SignalObserver* observer;
-  };
+  using connection = jl::SignalObserver*;
   
   template<typename Signal>
   static bool empty(Signal& s)
@@ -43,7 +40,7 @@ struct signal_traits_jls
     
     s.Connect(observer, &result_type::call);
 
-    return connection{observer};
+    return observer;
   }
 
   template<typename Signal, typename... Args>
@@ -54,13 +51,13 @@ struct signal_traits_jls
 
   static bool connected(const connection& c)
   {
-    return c.observer->CountSignalConnections() == 0;
+    return c->CountSignalConnections() == 0;
   }
 
-  static void disconnect(connection& c)
+  template<typename Signal>
+  static void disconnect(Signal& s, connection& c)
   {
-    delete c.observer;
-    c.observer = nullptr;
+    s.Disconnect(c);
   }
 
   template<typename Signal>
