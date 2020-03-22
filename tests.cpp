@@ -1,7 +1,35 @@
 #include "tests/hpp/signal_traits_aco.hpp"
+#include "tests/hpp/signal_traits_asg.hpp"
 #include "tests/hpp/signal_traits_bs2.hpp"
+//#include "tests/hpp/signal_traits_cls.hpp"
+//#include "tests/hpp/signal_traits_cps.hpp"
+//#include "tests/hpp/signal_traits_cps_st.hpp"
+//#include "tests/hpp/signal_traits_css.hpp"
+//#include "tests/hpp/signal_traits_dob.hpp"
+//#include "tests/hpp/signal_traits_evl.hpp"
 #include "tests/hpp/signal_traits_ics.hpp"
 #include "tests/hpp/signal_traits_jls.hpp"
+//#include "tests/hpp/signal_traits_jos.hpp"
+//#include "tests/hpp/signal_traits_ksc.hpp"
+//#include "tests/hpp/signal_traits_lfs.hpp"
+//#include "tests/hpp/signal_traits_lss.hpp"
+//#include "tests/hpp/signal_traits_mws.hpp"
+//#include "tests/hpp/signal_traits_nes.hpp"
+//#include "tests/hpp/signal_traits_nls.hpp"
+//#include "tests/hpp/signal_traits_nls_st.hpp"
+//#include "tests/hpp/signal_traits_nod.hpp"
+//#include "tests/hpp/signal_traits_nod_st.hpp"
+//#include "tests/hpp/signal_traits_nss_st.hpp"
+//#include "tests/hpp/signal_traits_nss_sts.hpp"
+//#include "tests/hpp/signal_traits_nss_ts.hpp"
+//#include "tests/hpp/signal_traits_nss_tss.hpp"
+//#include "tests/hpp/signal_traits_psg.hpp"
+//#include "tests/hpp/signal_traits_pss.hpp"
+//#include "tests/hpp/signal_traits_pss_st.hpp"
+//#include "tests/hpp/signal_traits_sss.hpp"
+//#include "tests/hpp/signal_traits_wnk.hpp"
+//#include "tests/hpp/signal_traits_yas.hpp"
+//#include "tests/hpp/signal_traits_vdk.hpp"
 
 // These are required in Main to initialize the jlsignal allocator
 #include "jeffomatic/jl_signal/src/Signal.h"
@@ -33,6 +61,7 @@ using all_traits =
   testing::Types
   <
     signal_traits_aco,
+    signal_traits_asg,
     signal_traits_bs2,
     signal_traits_ics,
     signal_traits_jls
@@ -554,7 +583,7 @@ SAFE_TYPED_TEST(signal_test, recursive,
        ++calls;
 
        if (v > 0)
-         signal(v - 1);
+         traits::trigger(signal, v - 1);
      });
 
   traits::trigger(signal, 3);
