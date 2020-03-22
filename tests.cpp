@@ -1,3 +1,4 @@
+#include "tests/hpp/signal_traits_bs2.hpp"
 #include "tests/hpp/signal_traits_ics.hpp"
 #include "tests/hpp/signal_traits_jls.hpp"
 
@@ -27,7 +28,13 @@ class signal_test:
 
 };
 
-using all_traits = testing::Types<signal_traits_ics, signal_traits_jls>;
+using all_traits =
+  testing::Types
+  <
+    signal_traits_bs2,
+    signal_traits_ics,
+    signal_traits_jls
+  >;
 
 TYPED_TEST_CASE(signal_test, all_traits);
 
