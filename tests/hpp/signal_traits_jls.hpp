@@ -6,6 +6,9 @@
 
 struct signal_traits_jls
 {
+  static constexpr bool has_signal_empty_test = true;
+  static constexpr bool has_connection_connected_test = true;
+  
   template<typename Signature>
   using signal = jl::Signal<Signature>;
 

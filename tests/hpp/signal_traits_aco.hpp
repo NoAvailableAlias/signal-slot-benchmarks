@@ -2,10 +2,11 @@
 
 #include <Ansoulom/cpp-observe/cpp_observe.hpp>
 
-#include <cstdlib>
-
 struct signal_traits_aco
 {
+  static constexpr bool has_signal_empty_test = false;
+  static constexpr bool has_connection_connected_test = true;
+  
   template<typename Signature>
   struct resolve_signal;
   
@@ -45,13 +46,6 @@ struct signal_traits_aco
 
   using connection = connection_base*;
   
-  template<typename Signal>
-  static bool empty(Signal& s)
-  {
-    std::abort();
-    return false;
-  }
-
   template<typename F, typename... Args>
   static connection connect(observe::subject<Args...>& s, F&& f)
   {

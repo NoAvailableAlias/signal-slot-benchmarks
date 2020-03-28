@@ -1,7 +1,7 @@
 #include "tests/hpp/signal_traits_aco.hpp"
 #include "tests/hpp/signal_traits_asg.hpp"
 #include "tests/hpp/signal_traits_bs2.hpp"
-//#include "tests/hpp/signal_traits_cls.hpp"
+#include "tests/hpp/signal_traits_cls.hpp"
 //#include "tests/hpp/signal_traits_cps.hpp"
 //#include "tests/hpp/signal_traits_cps_st.hpp"
 //#include "tests/hpp/signal_traits_css.hpp"
@@ -35,26 +35,46 @@
 #include "jeffomatic/jl_signal/src/Signal.h"
 #include "jeffomatic/jl_signal/src/StaticSignalConnectionAllocators.h"
 
+#include <typeinfo>
+
 #include <gtest/gtest.h>
+
+std::map<std::string, std::map<std::string, std::string>> g_results;
 
 #define SAFE_TYPED_TEST(test_suite, test_name, body)                    \
   TYPED_TEST(test_suite, test_name)                                     \
   {                                                                     \
     const auto test_runner                                              \
-      ([]() -> void                                                     \
+      ([this]() -> void                                                 \
        {                                                                \
          body                                                           \
-           });                                                          \
+       });                                                              \
                                                                         \
-    ASSERT_EXIT(test_runner(); exit(0), testing::ExitedWithCode(0), ""); \
-    test_runner();                                                      \
+    EXPECT_EXIT(test_runner(); exit(0), testing::ExitedWithCode(0), ""); \
+                                                                        \
+    if (!this->HasFailure())                                            \
+      test_runner();                                                    \
+                                                                        \
+    this->store_test_result(this->HasFailure() ? "no" : "yes"); \
   }
 
 template<typename Traits>
 class signal_test:
   public testing::Test
 {
+protected:
+  void store_test_result(const std::string& result)
+  {
+    std::map<std::string, std::string>& test_results
+      (g_results
+       [testing::UnitTest::GetInstance()->current_test_info()->name()]);
+    std::string tag(std::strrchr(typeid(Traits).name(), '_') + 1);
+    
+    const auto it(test_results.find(tag));
 
+    if (it == test_results.end())
+      test_results[tag] = result;
+  }
 };
 
 using all_traits =
@@ -63,6 +83,7 @@ using all_traits =
     signal_traits_aco,
     signal_traits_asg,
     signal_traits_bs2,
+    signal_traits_cls,
     signal_traits_ics,
     signal_traits_jls
   >;
@@ -73,8 +94,11 @@ SAFE_TYPED_TEST(signal_test, initially_empty,
 {
   using traits = TypeParam;
   typename traits::template signal<void()> signal;
-  
-  EXPECT_TRUE(traits::empty(signal));
+
+  if constexpr (traits::has_signal_empty_test)
+    EXPECT_TRUE(traits::empty(signal));
+  else
+    this->store_test_result("?");
 })
 
 SAFE_TYPED_TEST(signal_test, not_empty_when_connected,
@@ -84,8 +108,11 @@ SAFE_TYPED_TEST(signal_test, not_empty_when_connected,
 
   traits::connect(signal, []() -> void { });
 
-  EXPECT_FALSE(traits::empty(signal));
- })
+  if constexpr (traits::has_signal_empty_test)
+    EXPECT_FALSE(traits::empty(signal));
+  else
+    this->store_test_result("?");
+})
 
 SAFE_TYPED_TEST(signal_test, trigger,
 {
@@ -247,8 +274,13 @@ SAFE_TYPED_TEST(signal_test, swap_0_0,
 
   traits::swap(signal, signal_alt);
 
-  EXPECT_TRUE(traits::empty(signal));
-  EXPECT_TRUE(traits::empty(signal_alt));
+  // Emptyness is the sole characteristic to test here. If it is not available
+  // then we'll let the other tests validate the swap.
+  if constexpr (traits::has_signal_empty_test)
+    {
+      EXPECT_TRUE(traits::empty(signal));
+      EXPECT_TRUE(traits::empty(signal_alt));
+    }
 })
 
 SAFE_TYPED_TEST(signal_test, swap_0_1,
@@ -538,9 +570,12 @@ SAFE_TYPED_TEST(signal_test, connections_of_swapped_signals,
   traits::swap(signal_1, signal_2);
   traits::disconnect_all_slots(signal_1);
 
-  EXPECT_TRUE(traits::connected(connection_1));
-  EXPECT_FALSE(traits::connected(connection_2));
-
+  if constexpr (traits::has_connection_connected_test)
+    {
+      EXPECT_TRUE(traits::connected(connection_1));
+      EXPECT_FALSE(traits::connected(connection_2));
+    }
+  
   traits::trigger(signal_1);
   
   EXPECT_FALSE(called_1);
@@ -616,6 +651,42 @@ SAFE_TYPED_TEST(signal_test, same_function_connected_twice,
   EXPECT_EQ(3, calls);
 })
 
+static void output_padded
+(std::ostream& output, const std::string& label, int left, int right)
+{
+  for (int i(0); i <= left; ++i)
+    output << ' ';
+
+  output << label;
+
+  for (int i(0); i <= right; ++i)
+    output << ' ';
+}
+
+static void output_centered
+(std::ostream& output, const std::string& label, int width)
+{
+  const int label_size(label.size());
+  assert(width >= label.size());
+
+  const int left((width - label_size) / 2);
+  const int right(width - label_size - left);
+
+  output_padded(output, label, left, right);
+}
+
+static void output_left
+(std::ostream& output, const std::string& label, int width)
+{
+  const int label_size(label.size());
+  assert(width >= label.size());
+
+  const int left(0);
+  const int right(width - label_size);
+
+  output_padded(output, label, left, right);
+}
+
 int main(int argc, char* argv[])
 {
   // Jl_signal uses a static allocator for maximum performance
@@ -626,5 +697,58 @@ int main(int argc, char* argv[])
   jl::SignalObserver::SetCommonConnectionAllocator(&observer_con_allocator);
 
   testing::InitGoogleTest(&argc, argv);
-  return RUN_ALL_TESTS();
+  const int result(RUN_ALL_TESTS());
+
+  const auto& first_row(*g_results.begin());
+  std::vector<int> widths;
+  widths.reserve(first_row.second.size() + 1);
+  widths.emplace_back(first_row.first.size());
+  
+  for (const auto& entry : first_row.second)
+    widths.emplace_back(entry.first.size());
+
+  for (const auto& row : g_results)
+    {
+      widths[0] = std::max<int>(widths[0], row.first.size());
+
+      int i(1);
+      for (const auto& entry : row.second)
+        {
+          widths[i] = std::max<int>(widths[i], entry.second.size());
+          ++i;
+        }
+    }
+
+  std::cout << '|';
+  output_left(std::cout, "", widths[0]);
+  std::cout << '|';
+
+  int i(1);
+  for (const auto& entry : first_row.second)
+    {
+      output_centered(std::cout, entry.first, widths[i]);
+      std::cout << '|';
+      ++i;
+    }
+
+  std::cout << '\n';
+
+  for (const auto& row : g_results)
+    {
+      std::cout << '|';
+      output_left(std::cout, row.first, widths[0]);
+      std::cout << '|';
+      
+      i = 1;
+      for (const auto& entry : row.second)
+        {
+          output_centered(std::cout, entry.second, widths[i]);
+          std::cout << '|';
+          ++i;
+        }
+
+      std::cout << '\n';
+    }
+  
+  return result;
 }

@@ -1,34 +1,33 @@
 #pragma once
 
-#include <amc522/signal11/Signal.h>
+#include <cpp11nullptr/lsignal/lsignal.h>
+#include <algorithm>
 
-struct signal_traits_asg
+struct signal_traits_cls
 {
   static constexpr bool has_signal_empty_test = false;
-  static constexpr bool has_connection_connected_test = true;
+  static constexpr bool has_connection_connected_test = false;
   
   template<typename Signature>
-  using signal = Signal11::Signal<Signature>;
+  using signal = lsignal::signal<Signature>;
 
-  using connection = Signal11::ConnectionRef;
+  using connection = lsignal::slot;
   
   template<typename Signal, typename F>
   static connection connect(Signal& s, F&& f)
   {
-    return s.connect(std::forward<F>(f));
+    connection result;
+    s.connect(std::forward<F>(f), &result);
+
+    return result;
   }
 
   template<typename Signal, typename... Args>
   static void trigger(Signal& s, Args&&... args)
   {
-    s.emit(std::forward<Args>(args)...);
+    s(std::forward<Args>(args)...);
   }
 
-  static bool connected(const connection& c)
-  {
-    return c.isValid();
-  }
-  
   template<typename Signal>
   static void disconnect(Signal& s, connection& c)
   {
@@ -38,7 +37,7 @@ struct signal_traits_asg
   template<typename Signal>
   static void disconnect_all_slots(Signal& s)
   {
-    s = Signal();
+    s.disconnect_all();
   }
   
   template<typename Signal>
