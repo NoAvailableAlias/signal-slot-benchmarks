@@ -152,7 +152,7 @@ SAFE_TYPED_TEST(signal_test, not_empty_when_connected,
     this->store_test_result_cant_tell();
 })
 
-SAFE_TYPED_TEST(signal_test, trigger,
+SAFE_TYPED_TEST(signal_test, trigger_connection_kept,
 {
   using traits = TypeParam;
   typename traits::template signal<void()> signal;
@@ -171,7 +171,28 @@ SAFE_TYPED_TEST(signal_test, trigger,
 
   traits::trigger(signal);
   EXPECT_TRUE(called);
- })
+})
+
+
+SAFE_TYPED_TEST(signal_test, trigger_connection_discarded,
+{
+  using traits = TypeParam;
+  typename traits::template signal<void()> signal;
+
+  traits::trigger(signal);
+  
+  bool called(false);
+
+  traits::connect
+    (signal,
+     [ &called ]() -> void
+     {
+       called = true;
+     });
+
+  traits::trigger(signal);
+  EXPECT_TRUE(called);
+})
 
 SAFE_TYPED_TEST(signal_test, disconnect,
 {
