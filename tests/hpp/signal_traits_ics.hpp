@@ -7,6 +7,7 @@ struct signal_traits_ics
 {
   static constexpr bool has_signal_empty_test = true;
   static constexpr bool has_connection_connected_test = true;
+  static constexpr bool will_deadlock_if_recursively_modified = false;
   
   template<typename Signature>
   using signal = iscool::signals::signal<Signature>;

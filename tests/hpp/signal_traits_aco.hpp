@@ -5,7 +5,8 @@
 struct signal_traits_aco
 {
   static constexpr bool has_signal_empty_test = false;
-  static constexpr bool has_connection_connected_test = true;
+  static constexpr bool has_connection_connected_test = false;
+  static constexpr bool will_deadlock_if_recursively_modified = false;
   
   template<typename Signature>
   struct resolve_signal;
@@ -60,11 +61,6 @@ struct signal_traits_aco
   static void trigger(Signal& s, Args&&... args)
   {
     s(std::forward<Args>(args)...);
-  }
-
-  static bool connected(const connection& c)
-  {
-    return false;
   }
 
   template<typename Signal>

@@ -1,30 +1,29 @@
 #pragma once
 
-#include "jeffomatic/jl_signal/src/Signal.h"
+#include <Montellese/cpp-signal/cpp-signal.h>
 
 #include <algorithm>
+#include <memory>
 
-struct signal_traits_jls
+struct signal_traits_cps
 {
-  static constexpr bool has_signal_empty_test = true;
-  static constexpr bool has_connection_connected_test = true;
-  static constexpr bool will_deadlock_if_recursively_modified = false;
+private:
+  using cppsignal = cpp_signal<cpp_signal_local_locking>;
+
+public:
+  static constexpr bool has_signal_empty_test = false;
+  static constexpr bool has_connection_connected_test = false;
+  static constexpr bool will_deadlock_if_recursively_modified = true;
   
   template<typename Signature>
-  using signal = jl::Signal<Signature>;
+  using signal = cppsignal::signal<Signature>;
 
-  using connection = jl::SignalObserver*;
+  using connection = std::shared_ptr<cppsignal::slot_tracker>;
   
-  template<typename Signal>
-  static bool empty(Signal& s)
-  {
-    return s.CountConnections() == 0;
-  }
-
   template<typename F, typename... Args>
   static connection connect(signal<void(Args...)>& s, F&& f)
   {
-    struct result_type: public jl::SignalObserver
+    struct result_type: public cppsignal::slot_tracker
     {
       explicit result_type(F&& f)
         : m_f(std::forward<F>(f))
@@ -40,9 +39,10 @@ struct signal_traits_jls
       F m_f;
     };
 
-    result_type* const observer(new result_type(std::forward<F>(f)));
-    
-    s.Connect(observer, &result_type::call);
+    std::shared_ptr<result_type> const observer
+      (std::make_shared<result_type>(std::forward<F>(f)));
+
+    s.template connect<result_type, &result_type::call>(*observer);
 
     return observer;
   }
@@ -53,21 +53,16 @@ struct signal_traits_jls
     s(std::forward<Args>(args)...);
   }
 
-  static bool connected(const connection& c)
-  {
-    return c->CountSignalConnections() == 0;
-  }
-
   template<typename Signal>
   static void disconnect(Signal& s, connection& c)
   {
-    s.Disconnect(c);
+    c.reset();
   }
-
+  
   template<typename Signal>
   static void disconnect_all_slots(Signal& s)
   {
-    s.DisconnectAll();
+    s = Signal();
   }
   
   template<typename Signal>
@@ -76,3 +71,4 @@ struct signal_traits_jls
     std::swap(s1, s2);
   }
 };
+

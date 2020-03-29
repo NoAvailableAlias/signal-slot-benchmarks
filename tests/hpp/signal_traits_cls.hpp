@@ -7,7 +7,8 @@ struct signal_traits_cls
 {
   static constexpr bool has_signal_empty_test = false;
   static constexpr bool has_connection_connected_test = false;
-  
+  static constexpr bool will_deadlock_if_recursively_modified = true;
+
   template<typename Signature>
   using signal = lsignal::signal<Signature>;
 
