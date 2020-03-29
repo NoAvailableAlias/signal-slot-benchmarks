@@ -3,6 +3,7 @@
 #include "jeffomatic/jl_signal/src/Signal.h"
 
 #include <algorithm>
+#include <memory>
 
 struct signal_traits_jls
 {
@@ -13,7 +14,7 @@ struct signal_traits_jls
   template<typename Signature>
   using signal = jl::Signal<Signature>;
 
-  using connection = jl::SignalObserver*;
+  using connection = std::shared_ptr<jl::SignalObserver>;
   
   template<typename Signal>
   static bool empty(Signal& s)
@@ -40,9 +41,10 @@ struct signal_traits_jls
       F m_f;
     };
 
-    result_type* const observer(new result_type(std::forward<F>(f)));
+    std::shared_ptr<result_type> observer
+      (std::make_shared<result_type>(std::forward<F>(f)));
     
-    s.Connect(observer, &result_type::call);
+    s.Connect(observer.get(), &result_type::call);
 
     return observer;
   }
@@ -61,7 +63,7 @@ struct signal_traits_jls
   template<typename Signal>
   static void disconnect(Signal& s, connection& c)
   {
-    s.Disconnect(c);
+    s.Disconnect(c.get());
   }
 
   template<typename Signal>

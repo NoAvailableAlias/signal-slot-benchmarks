@@ -2,6 +2,8 @@
 
 #include <Ansoulom/cpp-observe/cpp_observe.hpp>
 
+#include <memory>
+
 struct signal_traits_aco
 {
   static constexpr bool has_signal_empty_test = false;
@@ -45,12 +47,13 @@ struct signal_traits_aco
     observe::observer<Args...> observer;
   };
 
-  using connection = connection_base*;
+  using connection = std::shared_ptr<connection_base>;
   
   template<typename F, typename... Args>
   static connection connect(observe::subject<Args...>& s, F&& f)
   {
-    connection_impl<Args...>* const result(new connection_impl<Args...>(f));
+    std::shared_ptr<connection_impl<Args...>> result
+      (std::make_shared<connection_impl<Args...>>(f));
 
     s.add_observer(result->observer);
     
