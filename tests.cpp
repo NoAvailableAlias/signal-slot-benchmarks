@@ -6,6 +6,8 @@
   - intrusive connection management.
   - clear() is not implemented.
   - swap is not supported.
+
+  dob: connection operator bool() is not const.
  */
 
 #include "tests/hpp/signal_traits_aco.hpp"
@@ -15,7 +17,7 @@
 #include "tests/hpp/signal_traits_cps.hpp"
 #include "tests/hpp/signal_traits_cps_st.hpp"
 #include "tests/hpp/signal_traits_css.hpp"
-//#include "tests/hpp/signal_traits_dob.hpp"
+#include "tests/hpp/signal_traits_dob.hpp"
 //#include "tests/hpp/signal_traits_evl.hpp"
 #include "tests/hpp/signal_traits_ics.hpp"
 #include "tests/hpp/signal_traits_jls.hpp"
@@ -145,6 +147,7 @@ using all_traits =
     signal_traits_cps,
     signal_traits_cps_st,
     signal_traits_css,
+    signal_traits_dob,
     signal_traits_ics,
     signal_traits_jls
   >;
@@ -718,7 +721,7 @@ SAFE_TYPED_TEST(signal_test, connections_of_swapped_signals,
     {
       bool called_1(false);
 
-      const typename traits::connection connection_1
+      typename traits::connection connection_1
         (traits::connect
          (signal_1,
           [ &called_1 ]() -> void
@@ -730,7 +733,7 @@ SAFE_TYPED_TEST(signal_test, connections_of_swapped_signals,
 
       bool called_2(false);
 
-      const typename traits::connection connection_2
+      typename traits::connection connection_2
         (traits::connect
          (signal_2,
           [ &called_2 ]() -> void
