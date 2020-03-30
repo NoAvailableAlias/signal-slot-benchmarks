@@ -4,6 +4,8 @@
   - connection.connect() is not implemented.
   - recursive access (e.g. connection management during signal execution) hangs.
   - intrusive connection management.
+  - clear() is not implemented.
+  - swap is not supported.
  */
 
 #include "tests/hpp/signal_traits_aco.hpp"
@@ -12,7 +14,7 @@
 #include "tests/hpp/signal_traits_cls.hpp"
 #include "tests/hpp/signal_traits_cps.hpp"
 #include "tests/hpp/signal_traits_cps_st.hpp"
-//#include "tests/hpp/signal_traits_css.hpp"
+#include "tests/hpp/signal_traits_css.hpp"
 //#include "tests/hpp/signal_traits_dob.hpp"
 //#include "tests/hpp/signal_traits_evl.hpp"
 #include "tests/hpp/signal_traits_ics.hpp"
@@ -84,6 +86,11 @@ protected:
     store_test_result("no");
   }
 
+  void store_test_result_not_available()
+  {
+    store_test_result("n/a");
+  }
+
   void store_test_result_other_failure()
   {
     store_test_result("x");
@@ -121,6 +128,7 @@ using all_traits =
     signal_traits_cls,
     signal_traits_cps,
     signal_traits_cps_st,
+    signal_traits_css,
     signal_traits_ics,
     signal_traits_jls
   >;
@@ -229,11 +237,16 @@ SAFE_TYPED_TEST(signal_test, disconnect_all_slots,
         called = true;
       }));
 
-  traits::disconnect_all_slots(signal);
-  traits::trigger(signal);
+  if constexpr (traits::has_disconnect_all)
+    {
+      traits::disconnect_all_slots(signal);
+      traits::trigger(signal);
   
-  EXPECT_FALSE(called);
- })
+      EXPECT_FALSE(called);
+    }
+  else
+    this->store_test_result_not_available();
+})
 
 SAFE_TYPED_TEST(signal_test, call_order,
 {
@@ -350,7 +363,13 @@ SAFE_TYPED_TEST(signal_test, swap_0_0,
   typename traits::template signal<void()> signal;
   typename traits::template signal<void()> signal_alt;
 
-  traits::swap(signal, signal_alt);
+  if constexpr (traits::has_swap)
+    traits::swap(signal, signal_alt);
+  else
+    {
+      this->store_test_result_not_available();
+      return;
+    }
 
   // Emptyness is the sole characteristic to test here. If it is not available
   // then we'll let the other tests validate the swap.
@@ -366,23 +385,28 @@ SAFE_TYPED_TEST(signal_test, swap_0_1,
   using traits = TypeParam;
   typename traits::template signal<void()> signal;
 
-  bool called(false);
-  const typename traits::connection connection
-    (traits::connect
-     (signal,
-      [ &called ]() -> void
-      {
-        called = true;
-      }));
+  if constexpr (!traits::has_swap)
+    this->store_test_result_not_available();
+  else
+    {
+      bool called(false);
+      const typename traits::connection connection
+        (traits::connect
+         (signal,
+          [ &called ]() -> void
+          {
+            called = true;
+          }));
 
-  typename traits::template signal<void()> signal_alt;
-  traits::swap(signal_alt, signal);
+      typename traits::template signal<void()> signal_alt;
+      traits::swap(signal_alt, signal);
     
-  traits::trigger(signal);
-  EXPECT_FALSE(called);
+      traits::trigger(signal);
+      EXPECT_FALSE(called);
 
-  traits::trigger(signal_alt);
-  EXPECT_TRUE(called);
+      traits::trigger(signal_alt);
+      EXPECT_TRUE(called);
+    }
 })
 
 SAFE_TYPED_TEST(signal_test, swap_0_n,
@@ -390,76 +414,86 @@ SAFE_TYPED_TEST(signal_test, swap_0_n,
   using traits = TypeParam;
   typename traits::template signal<void()> signal;
 
-  bool called_1(false);
-  const typename traits::connection connection_1
-    (traits::connect
-     (signal,
-      [ &called_1 ]() -> void
-      {
-        called_1 = true;
-      }));
+  if constexpr (!traits::has_swap)
+    this->store_test_result_not_available();
+  else
+    {
+      bool called_1(false);
+      const typename traits::connection connection_1
+        (traits::connect
+         (signal,
+          [ &called_1 ]() -> void
+          {
+            called_1 = true;
+          }));
 
-  bool called_2(false);
-  const typename traits::connection connection
-    (traits::connect
-     (signal,
-      [ &called_2 ]() -> void
-      {
-        called_2 = true;
-      }));
+      bool called_2(false);
+      const typename traits::connection connection
+        (traits::connect
+         (signal,
+          [ &called_2 ]() -> void
+          {
+            called_2 = true;
+          }));
 
-  typename traits::template signal<void()> signal_alt;
-  traits::swap(signal_alt, signal);
+      typename traits::template signal<void()> signal_alt;
+      traits::swap(signal_alt, signal);
     
-  traits::trigger(signal);
+      traits::trigger(signal);
 
-  EXPECT_FALSE(called_1);
-  EXPECT_FALSE(called_2);
+      EXPECT_FALSE(called_1);
+      EXPECT_FALSE(called_2);
 
-  traits::trigger(signal_alt);
+      traits::trigger(signal_alt);
   
-  EXPECT_TRUE(called_1);
-  EXPECT_TRUE(called_2);
- })
+      EXPECT_TRUE(called_1);
+      EXPECT_TRUE(called_2);
+    }
+})
 
 SAFE_TYPED_TEST(signal_test, swap_1_1,
 {
   using traits = TypeParam;
   typename traits::template signal<void()> signal;
 
-  bool called(false);
-  const typename traits::connection connection
-    (traits::connect
-     (signal,
-      [ &called ]() -> void
-      {
-        called = true;
-      }));
+  if constexpr (!traits::has_swap)
+    this->store_test_result_not_available();
+  else
+    {
+      bool called(false);
+      const typename traits::connection connection
+        (traits::connect
+         (signal,
+          [ &called ]() -> void
+          {
+            called = true;
+          }));
 
-  typename traits::template signal<void()> signal_alt;
+      typename traits::template signal<void()> signal_alt;
 
-  bool called_alt(false);
+      bool called_alt(false);
   
-  const typename traits::connection connection_alt
-    (traits::connect
-     (signal_alt,
-      [ &called_alt ]() -> void
-      {
-        called_alt = true;
-      }));
+      const typename traits::connection connection_alt
+        (traits::connect
+         (signal_alt,
+          [ &called_alt ]() -> void
+          {
+            called_alt = true;
+          }));
 
-  traits::swap(signal_alt, signal);
+      traits::swap(signal_alt, signal);
     
-  traits::trigger(signal);
+      traits::trigger(signal);
   
-  EXPECT_FALSE(called);
-  EXPECT_TRUE(called_alt);
+      EXPECT_FALSE(called);
+      EXPECT_TRUE(called_alt);
 
-  called_alt = false;
-  traits::trigger(signal_alt);
+      called_alt = false;
+      traits::trigger(signal_alt);
     
-  EXPECT_TRUE(called);
-  EXPECT_FALSE(called_alt);
+      EXPECT_TRUE(called);
+      EXPECT_FALSE(called_alt);
+    }
 })
 
 SAFE_TYPED_TEST(signal_test, swap_1_n,
@@ -467,117 +501,127 @@ SAFE_TYPED_TEST(signal_test, swap_1_n,
   using traits = TypeParam;
   typename traits::template signal<void()> signal;
 
-  bool called(false);
+  if constexpr (!traits::has_swap)
+    this->store_test_result_not_available();
+  else
+    {
+      bool called(false);
 
-  const typename traits::connection connection
-    (traits::connect
-     (signal,
-      [ &called ]() -> void
-      {
-        called = true;
-      }));
+      const typename traits::connection connection
+        (traits::connect
+         (signal,
+          [ &called ]() -> void
+          {
+            called = true;
+          }));
 
-  typename traits::template signal<void()> signal_alt;
+      typename traits::template signal<void()> signal_alt;
 
-  bool called_alt_1(false);
+      bool called_alt_1(false);
   
-  const typename traits::connection connection_alt_1
-    (traits::connect
-     (signal_alt,
-      [ &called_alt_1 ]() -> void
-      {
-        called_alt_1 = true;
-      }));
+      const typename traits::connection connection_alt_1
+        (traits::connect
+         (signal_alt,
+          [ &called_alt_1 ]() -> void
+          {
+            called_alt_1 = true;
+          }));
 
-  bool called_alt_2(false);
+      bool called_alt_2(false);
   
-  const typename traits::connection connection_alt_2
-    (traits::connect
-     (signal_alt,
-      [ &called_alt_2 ]() -> void
-      {
-        called_alt_2 = true;
-      }));
+      const typename traits::connection connection_alt_2
+        (traits::connect
+         (signal_alt,
+          [ &called_alt_2 ]() -> void
+          {
+            called_alt_2 = true;
+          }));
 
-  traits::swap(signal_alt, signal);
+      traits::swap(signal_alt, signal);
     
-  traits::trigger(signal);
-  EXPECT_FALSE(called);
-  EXPECT_TRUE(called_alt_1);
-  EXPECT_TRUE(called_alt_2);
+      traits::trigger(signal);
+      EXPECT_FALSE(called);
+      EXPECT_TRUE(called_alt_1);
+      EXPECT_TRUE(called_alt_2);
 
-  called_alt_1 = false;
-  called_alt_2 = false;
-  traits::trigger(signal_alt);
+      called_alt_1 = false;
+      called_alt_2 = false;
+      traits::trigger(signal_alt);
     
-  EXPECT_TRUE(called);
-  EXPECT_FALSE(called_alt_1);
-  EXPECT_FALSE(called_alt_2);
- })
+      EXPECT_TRUE(called);
+      EXPECT_FALSE(called_alt_1);
+      EXPECT_FALSE(called_alt_2);
+    }
+})
 
 SAFE_TYPED_TEST(signal_test, swap_n_n,
 {
   using traits = TypeParam;
   typename traits::template signal<void()> signal;
 
-  bool called_1(false);
+  if constexpr (!traits::has_swap)
+    this->store_test_result_not_available();
+  else
+    {
+      bool called_1(false);
 
-  const typename traits::connection connection_1
-    (traits::connect
-     (signal,
-      [ &called_1 ]() -> void
-      {
-        called_1 = true;
-      }));
+      const typename traits::connection connection_1
+        (traits::connect
+         (signal,
+          [ &called_1 ]() -> void
+          {
+            called_1 = true;
+          }));
 
-  bool called_2(false);
+      bool called_2(false);
 
-  const typename traits::connection connection_2
-    (traits::connect
-     (signal,
-      [ &called_2 ]() -> void
-      {
-        called_2 = true;
-      }));
+      const typename traits::connection connection_2
+        (traits::connect
+         (signal,
+          [ &called_2 ]() -> void
+          {
+            called_2 = true;
+          }));
 
-  typename traits::template signal<void()> signal_alt;
+      typename traits::template signal<void()> signal_alt;
 
-  bool called_alt_1(false);
+      bool called_alt_1(false);
 
-  const typename traits::connection connection_alt_1
-    (traits::connect
-     (signal_alt,
-      [ &called_alt_1 ]() -> void
-      {
-        called_alt_1 = true;
-      }));
+      const typename traits::connection connection_alt_1
+        (traits::connect
+         (signal_alt,
+          [ &called_alt_1 ]() -> void
+          {
+            called_alt_1 = true;
+          }));
 
-  bool called_alt_2(false);
+      bool called_alt_2(false);
 
-  const typename traits::connection connection_alt_2
-    (traits::connect
-     (signal_alt,
-      [ &called_alt_2 ]() -> void
-      {
-        called_alt_2 = true;
-      }));
+      const typename traits::connection connection_alt_2
+        (traits::connect
+         (signal_alt,
+          [ &called_alt_2 ]() -> void
+          {
+            called_alt_2 = true;
+          }));
 
-  traits::swap(signal_alt, signal);
+      traits::swap(signal_alt, signal);
     
-  traits::trigger(signal);
-  EXPECT_FALSE(called_1);
-  EXPECT_FALSE(called_2);
-  EXPECT_TRUE(called_alt_1);
-  EXPECT_TRUE(called_alt_2);
+      traits::trigger(signal);
+      EXPECT_FALSE(called_1);
+      EXPECT_FALSE(called_2);
+      EXPECT_TRUE(called_alt_1);
+      EXPECT_TRUE(called_alt_2);
 
-  called_alt_1 = false;
-  called_alt_2 = false;
-  traits::trigger(signal_alt);
+      called_alt_1 = false;
+      called_alt_2 = false;
+      traits::trigger(signal_alt);
     
-  EXPECT_TRUE(called_1);
-  EXPECT_TRUE(called_2);
-  EXPECT_FALSE(called_alt_1);
-  EXPECT_FALSE(called_alt_2);
+      EXPECT_TRUE(called_1);
+      EXPECT_TRUE(called_2);
+      EXPECT_FALSE(called_alt_1);
+      EXPECT_FALSE(called_alt_2);
+    }
 })
 
 SAFE_TYPED_TEST(signal_test, swap_while_triggered,
@@ -591,55 +635,60 @@ SAFE_TYPED_TEST(signal_test, swap_while_triggered,
       FAIL() << "This signal can't be accessed while triggered.";
     }
 
-  int calls_1(0);
+  if constexpr (!traits::has_swap)
+    this->store_test_result_not_available();
+  else
+    {
+      int calls_1(0);
 
-  const typename traits::connection connection_1
-    (traits::connect
-     (signal,
-      [ &calls_1 ]() -> void
-      {
-        ++calls_1;
-      }));
+      const typename traits::connection connection_1
+        (traits::connect
+         (signal,
+          [ &calls_1 ]() -> void
+          {
+            ++calls_1;
+          }));
 
-  int calls_2(0);
+      int calls_2(0);
 
-  const typename traits::connection connection_2
-    (traits::connect
-     (signal,
-      [ &calls_2 ]() -> void
-      {
-        ++calls_2;
-      }));
+      const typename traits::connection connection_2
+        (traits::connect
+         (signal,
+          [ &calls_2 ]() -> void
+          {
+            ++calls_2;
+          }));
 
-  typename traits::template signal<void()> signal_alt;
+      typename traits::template signal<void()> signal_alt;
 
-  const typename traits::connection connection_alt_1
-    (traits::connect
-     (signal_alt,
-      [ &signal_alt, &signal ]() -> void
-      {
-        traits::swap(signal_alt, signal);
-      }));
+      const typename traits::connection connection_alt_1
+        (traits::connect
+         (signal_alt,
+          [ &signal_alt, &signal ]() -> void
+          {
+            traits::swap(signal_alt, signal);
+          }));
     
-  int calls_alt(0);
+      int calls_alt(0);
 
-  const typename traits::connection connection_alt_2
-    (traits::connect
-     (signal_alt,
-      [ &calls_alt ]() -> void
-      {
-        ++calls_alt;
-      }));
+      const typename traits::connection connection_alt_2
+        (traits::connect
+         (signal_alt,
+          [ &calls_alt ]() -> void
+          {
+            ++calls_alt;
+          }));
     
-  traits::trigger(signal_alt);
-  EXPECT_EQ(0, calls_1);
-  EXPECT_EQ(0, calls_2);
-  EXPECT_EQ(1, calls_alt);
+      traits::trigger(signal_alt);
+      EXPECT_EQ(0, calls_1);
+      EXPECT_EQ(0, calls_2);
+      EXPECT_EQ(1, calls_alt);
   
-  traits::trigger(signal_alt);
-  EXPECT_EQ(1, calls_1);
-  EXPECT_EQ(1, calls_2);
-  EXPECT_EQ(1, calls_alt);
+      traits::trigger(signal_alt);
+      EXPECT_EQ(1, calls_1);
+      EXPECT_EQ(1, calls_2);
+      EXPECT_EQ(1, calls_alt);
+    }
 })
 
 SAFE_TYPED_TEST(signal_test, connections_of_swapped_signals,
@@ -647,46 +696,51 @@ SAFE_TYPED_TEST(signal_test, connections_of_swapped_signals,
   using traits = TypeParam;
   typename traits::template signal<void()> signal_1;
 
-  bool called_1(false);
-
-  const typename traits::connection connection_1
-    (traits::connect
-     (signal_1,
-      [ &called_1 ]() -> void
-      {
-        called_1 = true;
-      }));
-
-  typename traits::template signal<void()> signal_2;
-
-  bool called_2(false);
-
-  const typename traits::connection connection_2
-    (traits::connect
-     (signal_2,
-      [ &called_2 ]() -> void
-      {
-        called_2 = true;
-      }));
-
-  traits::swap(signal_1, signal_2);
-  traits::disconnect_all_slots(signal_1);
-
-  if constexpr (traits::has_connection_connected_test)
+  if constexpr (!traits::has_swap)
+    this->store_test_result_not_available();
+  else
     {
-      EXPECT_TRUE(traits::connected(connection_1));
-      EXPECT_FALSE(traits::connected(connection_2));
-    }
-  
-  traits::trigger(signal_1);
-  
-  EXPECT_FALSE(called_1);
-  EXPECT_FALSE(called_2);
-  
-  traits::trigger(signal_2);
+      bool called_1(false);
 
-  EXPECT_TRUE(called_1);
-  EXPECT_FALSE(called_2);
+      const typename traits::connection connection_1
+        (traits::connect
+         (signal_1,
+          [ &called_1 ]() -> void
+          {
+            called_1 = true;
+          }));
+
+      typename traits::template signal<void()> signal_2;
+
+      bool called_2(false);
+
+      const typename traits::connection connection_2
+        (traits::connect
+         (signal_2,
+          [ &called_2 ]() -> void
+          {
+            called_2 = true;
+          }));
+
+      traits::swap(signal_1, signal_2);
+      traits::disconnect_all_slots(signal_1);
+
+      if constexpr (traits::has_connection_connected_test)
+                     {
+                       EXPECT_TRUE(traits::connected(connection_1));
+                       EXPECT_FALSE(traits::connected(connection_2));
+                     }
+  
+      traits::trigger(signal_1);
+  
+      EXPECT_FALSE(called_1);
+      EXPECT_FALSE(called_2);
+  
+      traits::trigger(signal_2);
+
+      EXPECT_TRUE(called_1);
+      EXPECT_FALSE(called_2);
+    }
 })
 
 SAFE_TYPED_TEST(signal_test, argument,
