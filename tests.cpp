@@ -49,7 +49,23 @@
 
 #include <gtest/gtest.h>
 
-std::map<std::string, std::map<std::string, std::string>> g_results;
+enum class color_t
+  {
+   red,
+   magenta,
+   green,
+   blue,
+   yellow,
+   gray
+  };
+  
+struct result_label
+{
+  color_t color;
+  std::string text;
+};
+  
+std::map<std::string, std::map<std::string, result_label>> g_results;
 
 #define SAFE_TYPED_TEST(test_suite, test_name, body)                    \
   TYPED_TEST(test_suite, test_name)                                     \
@@ -78,33 +94,33 @@ class signal_test:
 protected:
   void store_test_result_success()
   {
-    store_test_result("yes");
+    store_test_result(color_t::green, "yes");
   }
 
   void store_test_result_failure()
   {
-    store_test_result("no");
+    store_test_result(color_t::red, "no");
   }
 
   void store_test_result_not_available()
   {
-    store_test_result("n/a");
+    store_test_result(color_t::gray, "n/a");
   }
 
   void store_test_result_other_failure()
   {
-    store_test_result("x");
+    store_test_result(color_t::magenta, "X");
   }
 
   void store_test_result_cant_tell()
   {
-    store_test_result("?");
+    store_test_result(color_t::yellow, "?");
   }
   
 private:
-  void store_test_result(const std::string& result)
+  void store_test_result(color_t color, const std::string& result)
   {
-    std::map<std::string, std::string>& test_results
+    std::map<std::string, result_label>& test_results
       (g_results
        [testing::UnitTest::GetInstance()->current_test_info()->name()]);
 
@@ -115,7 +131,7 @@ private:
     const auto it(test_results.find(tag));
 
     if (it == test_results.end())
-      test_results[tag] = result;
+      test_results[tag] = result_label{color, result};
   }
 };
 
@@ -852,6 +868,28 @@ static void output_left
   output_padded(output, label, left, right);
 }
 
+static const char* color_to_term(color_t color)
+{
+  switch (color)
+    {
+    case color_t::red:
+      return "\033[31m";
+    case color_t::magenta:
+      return "\033[35m";
+    case color_t::green:
+      return "\033[32m";
+    case color_t::yellow:
+      return "\033[33m";
+    case color_t::gray:
+      return "\033[37m";
+    case color_t::blue:
+      return "\033[34m";
+    }
+
+  assert(false);
+  return "\033[01;35m";
+}
+
 int main(int argc, char* argv[])
 {
   // Jl_signal uses a static allocator for maximum performance
@@ -879,7 +917,7 @@ int main(int argc, char* argv[])
       int i(1);
       for (const auto& entry : row.second)
         {
-          widths[i] = std::max<int>(widths[i], entry.second.size());
+          widths[i] = std::max<int>(widths[i], entry.second.text.size());
           ++i;
         }
     }
@@ -907,8 +945,9 @@ int main(int argc, char* argv[])
       i = 1;
       for (const auto& entry : row.second)
         {
-          output_centered(std::cout, entry.second, widths[i]);
-          std::cout << '|';
+          std::cout << color_to_term(entry.second.color);
+          output_centered(std::cout, entry.second.text, widths[i]);
+          std::cout << "\033[39;49m|";
           ++i;
         }
 
