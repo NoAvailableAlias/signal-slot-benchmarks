@@ -24,7 +24,7 @@
 #include "tests/hpp/signal_traits_jls.hpp"
 #include "tests/hpp/signal_traits_jos.hpp"
 #include "tests/hpp/signal_traits_ksc.hpp"
-//#include "tests/hpp/signal_traits_lfs.hpp"
+#include "tests/hpp/signal_traits_lfs.hpp"
 //#include "tests/hpp/signal_traits_lss.hpp"
 //#include "tests/hpp/signal_traits_mws.hpp"
 //#include "tests/hpp/signal_traits_nes.hpp"
@@ -153,7 +153,8 @@ using all_traits =
     signal_traits_ics,
     signal_traits_jls,
     signal_traits_jos,
-    signal_traits_ksc
+    signal_traits_ksc,
+    signal_traits_lfs
   >;
 
 TYPED_TEST_CASE(signal_test, all_traits);
@@ -909,6 +910,9 @@ int main(int argc, char* argv[])
   testing::InitGoogleTest(&argc, argv);
   const int result(RUN_ALL_TESTS());
 
+  if (g_results.empty())
+    return result;
+  
   const auto& first_row(*g_results.begin());
   std::vector<int> widths;
   widths.reserve(first_row.second.size() + 1);
