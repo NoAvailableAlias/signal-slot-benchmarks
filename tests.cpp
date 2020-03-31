@@ -8,6 +8,7 @@
   - swap is not supported.
 
   dob: connection operator bool() is not const.
+  jos: connection's type depends on signals's type.
  */
 
 #include "tests/hpp/signal_traits_aco.hpp"
@@ -21,7 +22,7 @@
 #include "tests/hpp/signal_traits_evl.hpp"
 #include "tests/hpp/signal_traits_ics.hpp"
 #include "tests/hpp/signal_traits_jls.hpp"
-//#include "tests/hpp/signal_traits_jos.hpp"
+#include "tests/hpp/signal_traits_jos.hpp"
 //#include "tests/hpp/signal_traits_ksc.hpp"
 //#include "tests/hpp/signal_traits_lfs.hpp"
 //#include "tests/hpp/signal_traits_lss.hpp"
@@ -150,7 +151,8 @@ using all_traits =
     signal_traits_dob,
     signal_traits_evl,
     signal_traits_ics,
-    signal_traits_jls
+    signal_traits_jls,
+    signal_traits_jos
   >;
 
 TYPED_TEST_CASE(signal_test, all_traits);
