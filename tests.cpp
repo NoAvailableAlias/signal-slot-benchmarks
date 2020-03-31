@@ -23,7 +23,7 @@
 #include "tests/hpp/signal_traits_ics.hpp"
 #include "tests/hpp/signal_traits_jls.hpp"
 #include "tests/hpp/signal_traits_jos.hpp"
-//#include "tests/hpp/signal_traits_ksc.hpp"
+#include "tests/hpp/signal_traits_ksc.hpp"
 //#include "tests/hpp/signal_traits_lfs.hpp"
 //#include "tests/hpp/signal_traits_lss.hpp"
 //#include "tests/hpp/signal_traits_mws.hpp"
@@ -152,7 +152,8 @@ using all_traits =
     signal_traits_evl,
     signal_traits_ics,
     signal_traits_jls,
-    signal_traits_jos
+    signal_traits_jos,
+    signal_traits_ksc
   >;
 
 TYPED_TEST_CASE(signal_test, all_traits);
