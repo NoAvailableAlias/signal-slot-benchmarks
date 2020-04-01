@@ -6,9 +6,14 @@
   - intrusive connection management.
   - clear() is not implemented.
   - swap is not supported.
+  - disconnecting as a member function of the signal (requires to still have
+    access to the signal).
 
   dob: connection operator bool() is not const.
   jos: connection's type depends on signals's type.
+
+  Tests to add:
+  - connection that outlives the signal.
  */
 
 #include "tests/hpp/signal_traits_aco.hpp"
@@ -784,6 +789,45 @@ SAFE_TYPED_TEST(signal_test, argument,
 
   traits::trigger(signal, 24);
   EXPECT_EQ(24, arg);
+})
+
+SAFE_TYPED_TEST(signal_test, argument_no_copies,
+{
+  struct copy_counter
+  {
+    explicit copy_counter(int* c)
+      : count(c)
+    {}
+
+    copy_counter(const copy_counter& that)
+      : count(that.count)
+    {
+      ++*count;
+    }
+    
+    int* count;
+  };
+
+  static_assert(std::is_move_constructible_v<copy_counter>);
+  static_assert(std::is_move_assignable_v<copy_counter>);
+  
+  using traits = TypeParam;
+  typename traits::template signal<void(const copy_counter&)> signal;
+
+  int count_in_callback(~0);
+  
+  const typename traits::connection connection
+    (traits::connect
+     (signal,
+      [ &count_in_callback ](const copy_counter& c) -> void
+      {
+        count_in_callback = *c.count;
+      }));
+
+  int count(0);
+  traits::trigger(signal, copy_counter(&count));
+  
+  EXPECT_EQ(0, count_in_callback);
 })
 
 SAFE_TYPED_TEST(signal_test, recursive,
