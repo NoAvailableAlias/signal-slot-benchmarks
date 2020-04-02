@@ -11,6 +11,7 @@
 
   dob: connection operator bool() is not const.
   jos: connection's type depends on signals's type.
+  mws: weird namespaces, mw::Signal<> and mw::signals::Connection;
 
   Tests to add:
   - connection that outlives the signal.
@@ -31,7 +32,7 @@
 #include "tests/hpp/signal_traits_ksc.hpp"
 #include "tests/hpp/signal_traits_lfs.hpp"
 #include "tests/hpp/signal_traits_lss.hpp"
-//#include "tests/hpp/signal_traits_mws.hpp"
+#include "tests/hpp/signal_traits_mws.hpp"
 //#include "tests/hpp/signal_traits_nes.hpp"
 //#include "tests/hpp/signal_traits_nls.hpp"
 //#include "tests/hpp/signal_traits_nls_st.hpp"
@@ -160,7 +161,8 @@ using all_traits =
     signal_traits_jos,
     signal_traits_ksc,
     signal_traits_lfs,
-    signal_traits_lss
+    signal_traits_lss,
+    signal_traits_mws
   >;
 
 TYPED_TEST_CASE(signal_test, all_traits);
