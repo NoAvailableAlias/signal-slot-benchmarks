@@ -13,6 +13,7 @@
   jos: connection's type depends on signals's type.
   mws: weird namespaces, mw::Signal<> and mw::signals::Connection;
   nes: painful subscribe syntax. Can't bind lambda? With captures?
+  nls: subscribe return a "handle" which is a private type…
 
   Tests to add:
   - connection that outlives the signal.
@@ -35,7 +36,7 @@
 #include "tests/hpp/signal_traits_lss.hpp"
 #include "tests/hpp/signal_traits_mws.hpp"
 #include "tests/hpp/signal_traits_nes.hpp"
-//#include "tests/hpp/signal_traits_nls.hpp"
+#include "tests/hpp/signal_traits_nls.hpp"
 //#include "tests/hpp/signal_traits_nls_st.hpp"
 //#include "tests/hpp/signal_traits_nod.hpp"
 //#include "tests/hpp/signal_traits_nod_st.hpp"
@@ -164,7 +165,8 @@ using all_traits =
     signal_traits_lfs,
     signal_traits_lss,
     signal_traits_mws,
-    signal_traits_nes
+    signal_traits_nes,
+    signal_traits_nls
   >;
 
 TYPED_TEST_CASE(signal_test, all_traits);
