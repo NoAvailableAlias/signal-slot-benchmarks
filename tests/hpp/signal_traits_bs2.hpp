@@ -14,6 +14,9 @@ struct signal_traits_bs2
   using signal = boost::signals2::signal<Signature>;
 
   using connection = boost::signals2::connection;
+
+  static void initialize() {}
+  static void terminate() {}
   
   template<typename Signal>
   static bool empty(Signal& s)

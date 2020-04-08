@@ -15,6 +15,9 @@ struct signal_traits_ics
   using signal = iscool::signals::signal<Signature>;
 
   using connection = iscool::signals::connection;
+
+  static void initialize() {}
+  static void terminate() {}
   
   template<typename Signal>
   static bool empty(Signal& s)

@@ -15,6 +15,9 @@ struct signal_traits_lfs
   using signal = is::signals::signal<Signature>;
 
   using connection = is::signals::connection;
+
+  static void initialize() {}
+  static void terminate() {}
   
   template<typename Signal>
   static bool empty(Signal& s)

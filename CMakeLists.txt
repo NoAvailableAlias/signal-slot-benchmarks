@@ -80,7 +80,12 @@ target_link_libraries(bench
 # Tests
 
 find_package(GTest REQUIRED)
-add_executable(tests tests.cpp)
+
+add_executable(tests
+  tests.cpp
+  tests/cpp/signal_traits_jls.cpp
+  )
+
 target_include_directories(tests
   PRIVATE ${CMAKE_CURRENT_SOURCE_DIR} benchmark/lib/)
 target_compile_options(tests PRIVATE  "-fdiagnostics-color=always")

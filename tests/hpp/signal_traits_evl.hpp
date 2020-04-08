@@ -17,6 +17,9 @@ struct signal_traits_evl
 
   using connection = obs::Registration;
 
+  static void initialize() {}
+  static void terminate() {}
+
   template<typename Signal, typename F>
   static connection connect(Signal& s, F&& f)
   {

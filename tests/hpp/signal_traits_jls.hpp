@@ -1,6 +1,7 @@
 #pragma once
 
 #include "jeffomatic/jl_signal/src/Signal.h"
+#include "jeffomatic/jl_signal/src/StaticSignalConnectionAllocators.h"
 
 #include <algorithm>
 #include <memory>
@@ -17,6 +18,36 @@ struct signal_traits_jls
   using signal = jl::Signal<Signature>;
 
   using connection = std::shared_ptr<jl::SignalObserver>;
+
+private:
+  static std::unique_ptr<jl::StaticSignalConnectionAllocator<16>>
+  m_signal_con_allocator;
+
+  static std::unique_ptr<jl::StaticObserverConnectionAllocator<16>>
+  m_observer_con_allocator;
+
+public:
+  static void initialize()
+  {
+    printf("yep\n");
+    m_signal_con_allocator =
+      std::make_unique<decltype(m_signal_con_allocator)::element_type>();
+    m_observer_con_allocator =
+      std::make_unique<decltype(m_observer_con_allocator)::element_type>();
+
+    jl::SignalBase::SetCommonConnectionAllocator(m_signal_con_allocator.get());
+    jl::SignalObserver::SetCommonConnectionAllocator
+      (m_observer_con_allocator.get());
+  }
+  
+  static void terminate()
+  {
+    jl::SignalBase::SetCommonConnectionAllocator(nullptr);
+    jl::SignalObserver::SetCommonConnectionAllocator(nullptr);
+
+    m_signal_con_allocator.reset();
+    m_observer_con_allocator.reset();
+  }
   
   template<typename Signal>
   static bool empty(Signal& s)

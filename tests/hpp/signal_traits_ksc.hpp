@@ -16,6 +16,9 @@ struct signal_traits_ksc
   using signal = sigs::signal<Signature>;
 
   using connection = sigs::connection;
+
+  static void initialize() {}
+  static void terminate() {}
   
   template<typename Signal, typename F>
   static connection connect(Signal& s, F&& f)

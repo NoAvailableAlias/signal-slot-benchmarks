@@ -50,6 +50,9 @@ struct signal_traits_aco
   };
 
   using connection = std::shared_ptr<connection_base>;
+
+  static void initialize() {}
+  static void terminate() {}
   
   template<typename F, typename... Args>
   static connection connect(observe::subject<Args...>& s, F&& f)

@@ -25,6 +25,9 @@ struct signal_traits_mws
   using signal = typename resolve_signal<Signature>::type;
   
   using connection = mw::signals::Connection;
+
+  static void initialize() {}
+  static void terminate() {}
   
   template<typename Signal>
   static bool empty(Signal& s)

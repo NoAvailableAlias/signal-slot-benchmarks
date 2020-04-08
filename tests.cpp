@@ -52,10 +52,6 @@
 //#include "tests/hpp/signal_traits_yas.hpp"
 //#include "tests/hpp/signal_traits_vdk.hpp"
 
-// These are required in Main to initialize the jlsignal allocator
-#include "jeffomatic/jl_signal/src/Signal.h"
-#include "jeffomatic/jl_signal/src/StaticSignalConnectionAllocators.h"
-
 #include <typeinfo>
 
 #include <gtest/gtest.h>
@@ -102,6 +98,17 @@ template<typename Traits>
 class signal_test:
   public testing::Test
 {
+public:
+  void SetUp() override
+  {
+    Traits::initialize();
+  }
+
+  void TearDown() override
+  {
+    Traits::terminate();
+  }
+  
 protected:
   void store_test_result_success()
   {
@@ -128,7 +135,7 @@ protected:
     store_test_result(color_t::yellow, "?");
   }
   
-private:
+private:  
   void store_test_result(color_t color, const std::string& result)
   {
     std::map<std::string, result_label>& test_results
@@ -951,13 +958,6 @@ static const char* color_to_term(color_t color)
 
 int main(int argc, char* argv[])
 {
-  // Jl_signal uses a static allocator for maximum performance
-  constexpr const std::size_t C_JLSIGNAL_MAX = 256;
-  jl::StaticSignalConnectionAllocator<C_JLSIGNAL_MAX> signal_con_allocator;
-  jl::StaticObserverConnectionAllocator<C_JLSIGNAL_MAX> observer_con_allocator;
-  jl::SignalBase::SetCommonConnectionAllocator(&signal_con_allocator);
-  jl::SignalObserver::SetCommonConnectionAllocator(&observer_con_allocator);
-
   testing::InitGoogleTest(&argc, argv);
   const int result(RUN_ALL_TESTS());
 

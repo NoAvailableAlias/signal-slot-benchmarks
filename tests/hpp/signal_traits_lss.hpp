@@ -14,6 +14,9 @@ struct signal_traits_lss
   using signal = Simple::Signal<Signature>;
 
   using connection = std::size_t;
+
+  static void initialize() {}
+  static void terminate() {}
   
   template<typename Signal>
   static bool empty(Signal& s)

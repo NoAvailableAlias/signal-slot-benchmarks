@@ -37,6 +37,9 @@ struct signal_traits_css
   using signal = typename resolve_signal<Signature>::type;
 
   using connection = std::shared_ptr<CsSignal::SlotBase>;
+
+  static void initialize() {}
+  static void terminate() {}
   
   template<typename F, typename... Args>
   static connection connect(signal_impl<Args...>& s, F&& f)

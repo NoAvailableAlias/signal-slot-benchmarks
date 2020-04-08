@@ -15,6 +15,9 @@ struct signal_traits_dob
   using signal = obs::signal<Signature>;
 
   using connection = obs::connection;
+
+  static void initialize() {}
+  static void terminate() {}
   
   template<typename Signal, typename F>
   static connection connect(Signal& s, F&& f)

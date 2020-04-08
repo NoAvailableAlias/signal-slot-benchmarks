@@ -15,6 +15,9 @@ struct signal_traits_cls
   using signal = lsignal::signal<Signature>;
 
   using connection = lsignal::slot;
+
+  static void initialize() {}
+  static void terminate() {}
   
   template<typename Signal, typename F>
   static connection connect(Signal& s, F&& f)

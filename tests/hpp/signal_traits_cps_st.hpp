@@ -21,6 +21,9 @@ public:
   using signal = cppsignal::signal<Signature>;
 
   using connection = std::shared_ptr<cppsignal::slot_tracker>;
+
+  static void initialize() {}
+  static void terminate() {}
   
   template<typename F, typename... Args>
   static connection connect(signal<void(Args...)>& s, F&& f)

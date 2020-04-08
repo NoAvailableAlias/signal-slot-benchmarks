@@ -17,6 +17,9 @@ struct signal_traits_nes
   using signal = Nuclex::Support::Events::Event<Signature>;
 
   using connection = std::function<void()>;
+
+  static void initialize() {}
+  static void terminate() {}
   
   template<typename Signal>
   static bool empty(Signal& s)

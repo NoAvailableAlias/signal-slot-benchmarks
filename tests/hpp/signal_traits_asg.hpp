@@ -14,6 +14,9 @@ struct signal_traits_asg
   using signal = Signal11::Signal<Signature>;
 
   using connection = Signal11::ConnectionRef;
+
+  static void initialize() {}
+  static void terminate() {}
   
   template<typename Signal, typename F>
   static connection connect(Signal& s, F&& f)

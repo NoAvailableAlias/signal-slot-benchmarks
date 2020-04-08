@@ -49,6 +49,13 @@ struct signal_traits_nls
   };
 
   using connection = std::shared_ptr<connection_base>;
+
+  static void initialize()
+  {
+    neolib::event_system::set_multi_threaded();
+  }
+  
+  static void terminate() {}
   
   template<typename F, typename... Args>
   static connection connect(neolib::event<Args...>& s, F&& f)

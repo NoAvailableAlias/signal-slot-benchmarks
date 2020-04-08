@@ -50,6 +50,9 @@ struct signal_traits_jos
   };
 
   using connection = std::shared_ptr<connection_base>;
+
+  static void initialize() {}
+  static void terminate() {}
   
   template<typename F, typename... Args>
   static connection connect(signal11<Args...>& s, F&& f)
