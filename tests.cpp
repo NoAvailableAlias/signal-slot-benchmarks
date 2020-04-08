@@ -37,7 +37,7 @@
 #include "tests/hpp/signal_traits_mws.hpp"
 #include "tests/hpp/signal_traits_nes.hpp"
 #include "tests/hpp/signal_traits_nls.hpp"
-//#include "tests/hpp/signal_traits_nls_st.hpp"
+#include "tests/hpp/signal_traits_nls_st.hpp"
 //#include "tests/hpp/signal_traits_nod.hpp"
 //#include "tests/hpp/signal_traits_nod_st.hpp"
 //#include "tests/hpp/signal_traits_nss_st.hpp"
@@ -173,7 +173,8 @@ using all_traits =
     signal_traits_lss,
     signal_traits_mws,
     signal_traits_nes,
-    signal_traits_nls
+    signal_traits_nls,
+    signal_traits_nls_st
   >;
 
 TYPED_TEST_CASE(signal_test, all_traits);
