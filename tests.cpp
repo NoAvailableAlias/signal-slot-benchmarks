@@ -786,14 +786,13 @@ SAFE_TYPED_TEST
   using traits = TypeParam;
   typename traits::template signal<void()> signal;
 
-  if constexpr (traits::will_deadlock_if_recursively_modified)
+  if constexpr (!traits::has_swap)
+      this->store_test_result_not_available();
+  else if constexpr (traits::will_deadlock_if_recursively_modified)
     {
       this->store_test_result_other_failure();
       FAIL() << "This signal can't be accessed while triggered.";
     }
-
-  if constexpr (!traits::has_swap)
-    this->store_test_result_not_available();
   else
     {
       int calls_1(0);
