@@ -100,7 +100,9 @@ struct
                                                                         \
     EXPECT_EXIT(test_runner(); exit(0), testing::ExitedWithCode(0), ""); \
                                                                         \
-    if (!this->HasFailure())                                            \
+    if (this->HasFailure())                                             \
+      this->store_test_result_other_failure();                          \
+    else                                                                \
       test_runner();                                                    \
                                                                         \
     if (this->HasFailure())                                             \
