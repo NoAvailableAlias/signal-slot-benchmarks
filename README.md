@@ -20,14 +20,14 @@ Tested Environments
 <div style="text-align:center; margin-bottom:1em;">click to view results</div>
 <div style="text-align:center; display:flex;">
 	<div style="flex:1;">
-    	<a href="/results_msvc/README.md">
+    	<a href="/results/benchmarks_msvc/README.md">
         	<button type="button" style="padding:2em; cursor:pointer;  font-size:2em; width:90%;">
             	MSVC (Windows)
             </button>
         </a>
 	</div>
 	<div style="flex:1;">
-        <a href="/results_gcc/README.md">
+        <a href="/results/benchmarks_gcc/README.md">
             <button type="button" style="padding:2em; cursor:pointer; font-size:2em; width:90%;">
             	GCC (Linux)
             </button>
