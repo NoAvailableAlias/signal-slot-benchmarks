@@ -236,6 +236,7 @@ using all_traits =
     signal_traits_nls_st,
     signal_traits_nod,
     signal_traits_nod_st,
+    signal_traits_nss_st,
     signal_traits_nss_sts,
     signal_traits_nss_ts,
     signal_traits_nss_tss
