@@ -139,11 +139,6 @@ public:
     store_test_result(color_t::magenta, "X");
   }
 
-  void store_test_result_cant_tell()
-  {
-    store_test_result(color_t::yellow, "?");
-  }
-
   void store_library_tag(std::string tag)
   {
     m_library_tag = std::move(tag);
@@ -262,7 +257,7 @@ SAFE_TYPED_TEST
   if constexpr (traits::has_signal_empty_test)
     EXPECT_TRUE(traits::empty(signal));
   else
-    this->store_test_result_cant_tell();
+    this->store_test_result_not_available();
 })
 
 SAFE_TYPED_TEST
@@ -279,7 +274,7 @@ SAFE_TYPED_TEST
   if constexpr (traits::has_signal_empty_test)
     EXPECT_FALSE(traits::empty(signal));
   else
-    this->store_test_result_cant_tell();
+    this->store_test_result_not_available();
 })
 
 SAFE_TYPED_TEST
