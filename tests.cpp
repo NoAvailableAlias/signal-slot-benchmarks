@@ -14,9 +14,12 @@
   mws: weird namespaces, mw::Signal<> and mw::signals::Connection;
   nes: painful subscribe syntax. Can't bind lambda? With captures?
   nls: subscribe return a "handle" which is a private type…
+  nss: needs to implement an observer.
+  psg: signal0, signal1…
 
   Tests to add:
   - connection that outlives the signal.
+  - any way to have a signal returning a value?
 
   Stuff to add in the summary:
   - a legend,
@@ -48,7 +51,7 @@
 #include "tests/hpp/signal_traits_nss_sts.hpp"
 #include "tests/hpp/signal_traits_nss_ts.hpp"
 #include "tests/hpp/signal_traits_nss_tss.hpp"
-//#include "tests/hpp/signal_traits_psg.hpp"
+#include "tests/hpp/signal_traits_psg.hpp"
 //#include "tests/hpp/signal_traits_pss.hpp"
 //#include "tests/hpp/signal_traits_pss_st.hpp"
 //#include "tests/hpp/signal_traits_sss.hpp"
@@ -239,7 +242,8 @@ using all_traits =
     signal_traits_nss_st,
     signal_traits_nss_sts,
     signal_traits_nss_ts,
-    signal_traits_nss_tss
+    signal_traits_nss_tss,
+    signal_traits_psg
   >;
 
 TYPED_TEST_CASE(signal_test, all_traits);
