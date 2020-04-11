@@ -59,9 +59,9 @@
 #include "tests/hpp/signal_traits_pss.hpp"
 #include "tests/hpp/signal_traits_pss_st.hpp"
 #include "tests/hpp/signal_traits_sss.hpp"
+#include "tests/hpp/signal_traits_vdk.hpp"
 #include "tests/hpp/signal_traits_wnk.hpp"
 #include "tests/hpp/signal_traits_yas.hpp"
-//#include "tests/hpp/signal_traits_vdk.hpp"
 
 #include <typeinfo>
 
@@ -246,6 +246,7 @@ using all_traits =
     signal_traits_pss,
     signal_traits_pss_st,
     signal_traits_sss,
+    signal_traits_vdk,
     signal_traits_wnk,
     signal_traits_yas
   >;
