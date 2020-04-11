@@ -1162,6 +1162,8 @@ static void output_test_results(const test_results& results)
 int main(int argc, char* argv[])
 {
   testing::InitGoogleTest(&argc, argv);
+  testing::GTEST_FLAG(death_test_style) = "threadsafe";
+  
   const int result(RUN_ALL_TESTS());
 
   if (g_results.category_to_results.empty())
