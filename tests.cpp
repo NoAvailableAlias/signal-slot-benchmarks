@@ -26,6 +26,8 @@
   - list the libraries that validate all the tests.
 
   List the pitch and last update of each library.
+
+  Ensure --gtest_death_test_style=threadsafe
  */
 
 #include "tests/hpp/signal_traits_aco.hpp"
@@ -56,7 +58,7 @@
 #include "tests/hpp/signal_traits_psg.hpp"
 #include "tests/hpp/signal_traits_pss.hpp"
 #include "tests/hpp/signal_traits_pss_st.hpp"
-//#include "tests/hpp/signal_traits_sss.hpp"
+#include "tests/hpp/signal_traits_sss.hpp"
 //#include "tests/hpp/signal_traits_wnk.hpp"
 //#include "tests/hpp/signal_traits_yas.hpp"
 //#include "tests/hpp/signal_traits_vdk.hpp"
@@ -242,7 +244,8 @@ using all_traits =
     signal_traits_nss_tss,
     signal_traits_psg,
     signal_traits_pss,
-    signal_traits_pss_st
+    signal_traits_pss_st,
+    signal_traits_sss
   >;
 
 TYPED_TEST_CASE(signal_test, all_traits);
