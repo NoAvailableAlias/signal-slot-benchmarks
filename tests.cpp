@@ -26,13 +26,12 @@
   - list the libraries that validate all the tests.
 
   List the pitch and last update of each library.
-
-  Ensure --gtest_death_test_style=threadsafe
  */
 
 #include "tests/hpp/signal_traits_aco.hpp"
 #include "tests/hpp/signal_traits_asg.hpp"
 #include "tests/hpp/signal_traits_bs2.hpp"
+#include "tests/hpp/signal_traits_bs2_st.hpp"
 #include "tests/hpp/signal_traits_cls.hpp"
 #include "tests/hpp/signal_traits_cps.hpp"
 #include "tests/hpp/signal_traits_cps_st.hpp"
@@ -220,6 +219,7 @@ using all_traits =
     signal_traits_aco,
     signal_traits_asg,
     signal_traits_bs2,
+    signal_traits_bs2_st,
     signal_traits_cls,
     signal_traits_cps,
     signal_traits_cps_st,
