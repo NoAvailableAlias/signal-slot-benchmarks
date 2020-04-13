@@ -5,6 +5,7 @@
 #include "benchmark/hpp/benchmark_aco.hpp"
 #include "benchmark/hpp/benchmark_asg.hpp"
 #include "benchmark/hpp/benchmark_bs2.hpp"
+#include "benchmark/hpp/benchmark_bs2_st.hpp"
 #include "benchmark/hpp/benchmark_cls.hpp"
 #include "benchmark/hpp/benchmark_cps.hpp"
 #include "benchmark/hpp/benchmark_cps_st.hpp"
@@ -142,6 +143,7 @@ void run_all_benchmarks()
         RUN_BENCHMARK_CLASS(Aco);
         RUN_BENCHMARK_CLASS(Asg);
         RUN_BENCHMARK_CLASS(Bs2);
+        RUN_BENCHMARK_CLASS(Bs2_st);
         RUN_BENCHMARK_CLASS(Cls); // Must make sure Subject lives longer than Foo
         RUN_BENCHMARK_CLASS(Cps);
         RUN_BENCHMARK_CLASS(Cps_st);
@@ -184,14 +186,15 @@ void run_all_validation_tests()
 
     Aco::validate_assert(N);
     Asg::validate_assert(N);
-    Bs2::validate_assert(N); // Boost::signals2 is not passing validation fsr
+    Bs2::validate_assert(N);
+    Bs2_st::validate_assert(N);
     Cls::validate_assert(N);
     Cps::validate_assert(N);
     Cps_st::validate_assert(N);
     Css::validate_assert(N);
     Dob::validate_assert(N);
     Evl::validate_assert(N);
-    Ics::validate_assert(N); // iscool::signals is not passing validation fsr
+    Ics::validate_assert(N);
     Jls::validate_assert(N);
     Jos::validate_assert(N);
     Ksc::validate_assert(N);
@@ -265,6 +268,7 @@ void output_metrics_report(T& ost)
     output_metrics_report_row<Aco>(ost);
     output_metrics_report_row<Asg>(ost);
     output_metrics_report_row<Bs2>(ost);
+    output_metrics_report_row<Bs2_st>(ost);
     output_metrics_report_row<Cls>(ost);
     output_metrics_report_row<Cps>(ost);
     output_metrics_report_row<Cps_st>(ost);
