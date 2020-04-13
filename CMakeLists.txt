@@ -83,7 +83,10 @@ find_package(GTest REQUIRED)
 
 add_executable(tests
   tests.cpp
+  tests/cpp/exited_with_code_stored.cpp
   tests/cpp/signal_traits_jls.cpp
+  tests/cpp/test_non_template_base.cpp
+  tests/cpp/test_results.cpp
   )
 
 target_include_directories(tests

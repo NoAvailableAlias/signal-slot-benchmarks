@@ -62,137 +62,17 @@
 #include "tests/hpp/signal_traits_wnk.hpp"
 #include "tests/hpp/signal_traits_yas.hpp"
 
+#include "tests/hpp/fenced_typed_test.hpp"
+#include "tests/hpp/test_non_template_base.hpp"
+#include "tests/hpp/test_results.hpp"
+
 #include <typeinfo>
 
-#include <gtest/gtest.h>
-
-enum class color_t
-  {
-   red,
-   magenta,
-   green,
-   blue,
-   yellow,
-   gray
-  };
-  
-struct result_label
-{
-  color_t color;
-  std::string text;
-};
-
-struct test_results
-{
-  std::vector<std::string> descriptions;
-  std::map<std::string, std::vector<result_label>> result_labels;
-};
-  
-struct
-{
-  std::map<std::string, test_results> category_to_results;
-} g_results;
-
-#define SAFE_TYPED_TEST(test_suite, test_name, category, description, body) \
-  TYPED_TEST(test_suite, test_name)                                     \
-  {                                                                     \
-    this->test_description(category, description);                      \
-                                                                        \
-    const auto test_runner                                              \
-      ([this]() -> void                                                 \
-       {                                                                \
-         body                                                           \
-       });                                                              \
-                                                                        \
-    EXPECT_EXIT(test_runner(); exit(0), testing::ExitedWithCode(0), ""); \
-                                                                        \
-    if (this->HasFailure())                                             \
-      this->store_test_result_other_failure();                          \
-    else                                                                \
-      test_runner();                                                    \
-                                                                        \
-    if (this->HasFailure())                                             \
-      this->store_test_result_failure();                                \
-    else                                                                \
-      this->store_test_result_success();                                \
-  }
-
-class test_result_logger
-{
-public:
-  void store_test_result_success()
-  {
-    store_test_result(color_t::green, "**yes**");
-  }
-
-  void store_test_result_failure()
-  {
-    store_test_result(color_t::red, "no");
-  }
-
-  void store_test_result_not_available()
-  {
-    store_test_result(color_t::gray, "n/a");
-  }
-
-  void store_test_result_other_failure()
-  {
-    store_test_result(color_t::magenta, "X");
-  }
-
-  void store_library_tag(std::string tag)
-  {
-    m_library_tag = std::move(tag);
-  }
-  
-  void test_description(std::string category, std::string description)
-  {
-    m_current_category = std::move(category);
-    m_current_description = std::move(description);
-  }
-
-  void clear_test_result()
-  {
-    m_current_result_label.text.clear();
-  }
-
-  void commit_test_result()
-  {
-    test_results& test_results
-      (g_results.category_to_results[m_current_category]);
-
-    {
-      const auto end(test_results.descriptions.end());
-      const auto it
-        (std::find
-         (test_results.descriptions.begin(), end, m_current_description));
-
-      if (it == end)
-        test_results.descriptions.push_back(m_current_description);
-    }
-
-    test_results.result_labels[m_library_tag].emplace_back
-      (m_current_result_label);
-  }
-  
-private:  
-  void store_test_result(color_t color, const std::string& result)
-  {
-    if (m_current_result_label.text.empty())
-      m_current_result_label = result_label{color, result};
-  }
-
-private:
-  std::string m_library_tag;
-  std::string m_current_category;
-  std::string m_current_description;
-  result_label m_current_result_label;
-};
+results_per_category g_results;
 
 template<typename Traits>
 class signal_test:
-  public testing::Test,
-  public test_result_logger
+  public test_non_template_base
 {
 public:
   void SetUp() override
@@ -209,7 +89,7 @@ public:
   void TearDown() override
   {
     Traits::terminate();
-    commit_test_result();
+    commit_test_result(g_results);
   }
 };
 
@@ -253,7 +133,7 @@ using all_traits =
 
 TYPED_TEST_CASE(signal_test, all_traits);
 
-SAFE_TYPED_TEST
+FENCED_TYPED_TEST
 (signal_test, initially_empty,
  "Connection management", "Is the signal empty when constructed?",
 {
@@ -266,7 +146,7 @@ SAFE_TYPED_TEST
     this->store_test_result_not_available();
 })
 
-SAFE_TYPED_TEST
+FENCED_TYPED_TEST
 (signal_test, not_empty_when_connected,
  "Connection management",
  "Is the signal not empty when a callback is registered?",
@@ -283,7 +163,7 @@ SAFE_TYPED_TEST
     this->store_test_result_not_available();
 })
 
-SAFE_TYPED_TEST
+FENCED_TYPED_TEST
 (signal_test, trigger_connection_kept,
  "Activation", "Will the callback be called if the signal is triggered?",
 {
@@ -306,7 +186,7 @@ SAFE_TYPED_TEST
   EXPECT_TRUE(called);
 })
 
-SAFE_TYPED_TEST
+FENCED_TYPED_TEST
 (signal_test, trigger_connection_discarded,
  "Connection management",
  "Will the callback be called if the signal is triggered even if the connection"
@@ -330,7 +210,7 @@ SAFE_TYPED_TEST
   EXPECT_TRUE(called);
 })
 
-SAFE_TYPED_TEST
+FENCED_TYPED_TEST
 (signal_test, disconnect,
  "Connection management",
  "Will the callback not be called if the signal is triggered once the"
@@ -354,7 +234,7 @@ SAFE_TYPED_TEST
   EXPECT_FALSE(called);
 })
 
-SAFE_TYPED_TEST
+FENCED_TYPED_TEST
 (signal_test, disconnect_all_slots,
  "Connection management",
  "Will the callback not be called if the signal is cleared?",
@@ -383,7 +263,7 @@ SAFE_TYPED_TEST
     this->store_test_result_not_available();
 })
 
-SAFE_TYPED_TEST
+FENCED_TYPED_TEST
 (signal_test, call_order,
  "Activation",
  "Are the callbacks called in the order they are registered?",
@@ -398,14 +278,18 @@ SAFE_TYPED_TEST
   typename traits::connection connections[connection_count];
 
   for (int i(0); i!=connection_count; ++i)
-    connections[i] =
-      traits::connect
-      (signal,
-       [ &calls, &call_order, i ]() -> void
-       {
-         ++calls;
-         call_order[i] = calls;
-       });
+    {
+      call_order[i] = -1;
+      
+      connections[i] =
+        traits::connect
+        (signal,
+         [ &calls, &call_order, i ]() -> void
+         {
+           ++calls;
+           call_order[i] = calls;
+         });
+    }
 
   traits::trigger(signal);
   
@@ -421,7 +305,7 @@ SAFE_TYPED_TEST
   EXPECT_EQ(10, call_order[9]);
 })
 
-SAFE_TYPED_TEST
+FENCED_TYPED_TEST
 (signal_test, connect_while_triggered_does_not_trigger,
  "Activation",
  "Will the signal not execute a callback registered while the signal is"
@@ -460,7 +344,7 @@ SAFE_TYPED_TEST
   EXPECT_TRUE(called);
 })
 
-SAFE_TYPED_TEST
+FENCED_TYPED_TEST
 (signal_test, disconnect_while_triggered_does_not_trigger,
  "Activation",
  "Will the signal not execute a callback unregistered while the signal is"
@@ -503,7 +387,7 @@ SAFE_TYPED_TEST
   EXPECT_FALSE(called_2);
 })
 
-SAFE_TYPED_TEST
+FENCED_TYPED_TEST
 (signal_test, swap_0_0,
  "Swap", "Can an empty signal be swapped with another empty signal?",
 {
@@ -528,7 +412,7 @@ SAFE_TYPED_TEST
     }
 })
 
-SAFE_TYPED_TEST
+FENCED_TYPED_TEST
 (signal_test, swap_0_1,
  "Swap", "Can an empty signal be swapped with a signal with one callback?",
 {
@@ -559,7 +443,7 @@ SAFE_TYPED_TEST
     }
 })
 
-SAFE_TYPED_TEST
+FENCED_TYPED_TEST
 (signal_test, swap_0_n,
  "Swap", "Can an empty signal be swapped with a signal with two callbacks?",
 {
@@ -603,7 +487,7 @@ SAFE_TYPED_TEST
     }
 })
 
-SAFE_TYPED_TEST
+FENCED_TYPED_TEST
 (signal_test, swap_1_1,
  "Swap",
  "Can a signal with one callback be swapped with another signal with one"
@@ -652,7 +536,7 @@ SAFE_TYPED_TEST
     }
 })
 
-SAFE_TYPED_TEST
+FENCED_TYPED_TEST
 (signal_test, swap_1_n,
  "Swap",
  "Can a signal with one callback be swapped with another signal with two"
@@ -714,7 +598,7 @@ SAFE_TYPED_TEST
     }
 })
 
-SAFE_TYPED_TEST
+FENCED_TYPED_TEST
 (signal_test, swap_n_n,
  "Swap",
  "Can a signal with two callbacks be swapped with another signal with two"
@@ -788,7 +672,7 @@ SAFE_TYPED_TEST
     }
 })
 
-SAFE_TYPED_TEST
+FENCED_TYPED_TEST
 (signal_test, swap_while_triggered,
  "Swap", "Can a signal be swapped with another signal while it is triggered?",
 {
@@ -856,7 +740,7 @@ SAFE_TYPED_TEST
     }
 })
 
-SAFE_TYPED_TEST
+FENCED_TYPED_TEST
 (signal_test, connections_of_swapped_signals,
  "Swap", "When swapping two signals, will the connections be swapped too?",
 {
@@ -910,7 +794,7 @@ SAFE_TYPED_TEST
     }
 })
 
-SAFE_TYPED_TEST
+FENCED_TYPED_TEST
 (signal_test, argument,
  "Activation with argument", "Can the callbacks have an argument?",
 {
@@ -931,7 +815,7 @@ SAFE_TYPED_TEST
   EXPECT_EQ(24, arg);
 })
 
-SAFE_TYPED_TEST
+FENCED_TYPED_TEST
 (signal_test, argument_no_copies,
  "Activation with argument",
  "Will triggering the signal not make unecessary copies of its argument?",
@@ -973,7 +857,7 @@ SAFE_TYPED_TEST
   EXPECT_EQ(0, count_in_callback);
 })
 
-SAFE_TYPED_TEST
+FENCED_TYPED_TEST
 (signal_test, recursive,
  "Activation", "Can a signal be triggered while it is triggered?",
 {
@@ -1003,7 +887,7 @@ SAFE_TYPED_TEST
   EXPECT_EQ(4, calls);
 })
 
-SAFE_TYPED_TEST
+FENCED_TYPED_TEST
 (signal_test, same_function_connected_twice,
  "Activation",
  "Will the registration of the same callback twice will cause the callback to"
@@ -1033,135 +917,6 @@ SAFE_TYPED_TEST
   EXPECT_EQ(3, calls);
 })
 
-static void output_padded
-(std::ostream& output, const std::string& label, int left, int right,
- char padding = ' ')
-{
-  for (int i(0); i <= left; ++i)
-    output << padding;
-
-  output << label;
-
-  for (int i(0); i <= right; ++i)
-    output << padding;
-}
-
-static void output_centered
-(std::ostream& output, const std::string& label, int width, char padding = ' ')
-{
-  const int label_size(label.size());
-  assert(width >= label.size());
-
-  const int left((width - label_size) / 2);
-  const int right(width - label_size - left);
-
-  output_padded(output, label, left, right, padding);
-}
-
-static void output_left
-(std::ostream& output, const std::string& label, int width, char padding = ' ')
-{
-  const int label_size(label.size());
-  assert(width >= label.size());
-
-  const int left(0);
-  const int right(width - label_size);
-
-  output_padded(output, label, left, right, padding);
-}
-
-static const char* color_to_term(color_t color)
-{
-  switch (color)
-    {
-    case color_t::red:
-      return "\033[31m";
-    case color_t::magenta:
-      return "\033[35m";
-    case color_t::green:
-      return "\033[32m";
-    case color_t::yellow:
-      return "\033[33m";
-    case color_t::gray:
-      return "\033[37m";
-    case color_t::blue:
-      return "\033[34m";
-    }
-
-  assert(false);
-  return "\033[01;35m";
-}
-
-static void output_test_results(const test_results& results)
-{
-  const int test_count(results.descriptions.size());
-
-  for (int i(0); i != test_count; ++i)
-    std::cout << (i+1) << ". " << results.descriptions[i] << '\n';
-
-  std::cout << "\n";
-
-  const std::string first_header("Library");
-  
-  std::vector<int> widths(test_count + 1, 0);
-
-  widths[0] = first_header.size();
-  
-  for (int i(0); i != test_count; ++i)
-    widths[i+1] = std::to_string(i+1).size();
-  
-  for (const auto& tag_and_result_labels : results.result_labels)
-    {
-      widths[0] =
-        std::max<int>(widths[0], tag_and_result_labels.first.size());
-
-      for (int i(0); i != test_count; ++i)
-        widths[i+1] =
-          std::max<int>
-          (widths[i+1], tag_and_result_labels.second[i].text.size());
-    }
-
-  // headers
-  output_left(std::cout, first_header, widths[0]);
-
-  for (int i(0); i != test_count; ++i)
-    {
-      std::cout << '|';
-      output_centered(std::cout, std::to_string(i+1), widths[i+1]);
-    }
-
-  std::cout << '\n';
-
-  // header separator (dashes)
-  output_left(std::cout, "", widths[0], '-');
-
-  for (int i(0); i != test_count; ++i)
-    {
-      std::cout << '|';
-      output_left(std::cout, "", widths[i+1], '-');
-    }
-
-  std::cout << '\n';
-  
-
-  // rows
-  for (const auto& tag_and_result_labels : results.result_labels)
-    {
-      output_left(std::cout, tag_and_result_labels.first, widths[0]);
-
-      for (int i(0); i != test_count; ++i)
-        {
-          std::cout << '|'
-                    << color_to_term(tag_and_result_labels.second[i].color);
-          output_centered
-            (std::cout, tag_and_result_labels.second[i].text, widths[i+1]);
-          std::cout << "\033[39;49m";
-        }
-
-      std::cout << '\n';
-    }
-}
-
 int main(int argc, char* argv[])
 {
   testing::InitGoogleTest(&argc, argv);
@@ -1169,15 +924,7 @@ int main(int argc, char* argv[])
   
   const int result(RUN_ALL_TESTS());
 
-  if (g_results.category_to_results.empty())
-    return result;
-
-  for (const auto& category_results : g_results.category_to_results)
-    {
-      std::cout << "# " <<  category_results.first << "\n\n";
-      output_test_results(category_results.second);
-      std::cout << "\n";
-    }
+  output_results(std::cout, g_results);
   
   return result;
 }
