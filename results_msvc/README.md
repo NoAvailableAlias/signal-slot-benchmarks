@@ -42,6 +42,7 @@
 | nano-signal-slot sts | 48477 | 27921 | 11331 | 19930 | 18062 | 89583 | 8595 | 0 | 147500 |
 | iscool::signals | 40332 | 46436 | 9352 | 39834 | 9737 | 40651 | 360 | 0 | 99932 |
 | EvilTwin Observer | 3982 | 4260 | 4601 | 8503 | 5549 | 62978 | 2992 | 0 | 84623 |
+| Boost Signals2 st | 296 | 567 | 3813 | 9749 | 3225 | 43392 | 2320 | 0 | 62498 |
 | copperspice cs_signal | 7411 | 2122 | 2699 | 3090 | 2966 | 13366 | 1333 | 0 | 23453 |
 | neolib event | 16851 | 606 | 2304 | 4619 | 2776 | 6002 | 1289 | 0 | 16989 |
 
@@ -88,6 +89,7 @@ _Size results are the size of object files from x64 release build with Visual St
 | [amc522 Signal11](https://github.com/amc522/Signal11) | 351 kb | 16 b | X | std::vector | - |
 | [iscool::signals](https://github.com/IsCoolEntertainment/iscool-core/) | 460 kb | 64 b | - | std::vector | - |
 | [copperspice cs_signal](https://github.com/copperspice/cs_signal) | 463 kb | 128 b | - | **RCU List | DIY |
+| [Boost Signals2 st](http://www.boost.org/doc/libs/1_58_0/doc/html/signals2.html) | 1594 kb | 32 b | - | ? | - |
 | [neolib event](https://github.com/i42output/neolib) | 2084 kb | 136 b | - | **std::unordered_map | - |
 
 | * | ** | [] |

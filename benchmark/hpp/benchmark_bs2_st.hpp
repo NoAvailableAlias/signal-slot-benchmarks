@@ -51,7 +51,7 @@ class Bs2_st
     static double threaded(std::size_t, std::size_t);
 
     // The following is used for report outputs
-    static constexpr const char* C_LIB_NAME = "* Boost Signals2 st";
+    static constexpr const char* C_LIB_NAME = "Boost Signals2 st";
     static constexpr const char* C_LIB_SOURCE_URL = "http://www.boost.org/doc/libs/1_58_0/doc/html/signals2.html";
     static constexpr const char* C_LIB_FILE = "benchmark_bs2_st";
     static constexpr const char* C_LIB_IS_HEADER_ONLY = "-";

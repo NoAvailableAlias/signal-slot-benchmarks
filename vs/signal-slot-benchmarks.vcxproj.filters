@@ -512,6 +512,9 @@
     <ClInclude Include="..\benchmark\lib\iscool\include\iscool\signals\implement_signal.h">
       <Filter>Header Files\lib\iscool</Filter>
     </ClInclude>
+    <ClInclude Include="..\benchmark\hpp\benchmark_bs2_st.hpp">
+      <Filter>Header Files\benchmark</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\benchmark\cpp\benchmark_asg.cpp">
@@ -714,6 +717,9 @@
     </ClCompile>
     <ClCompile Include="..\benchmark\lib\jeffomatic\jl_signal\src\SignalBase.cpp">
       <Filter>Source Files\lib\jeffomatic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\benchmark\cpp\benchmark_bs2_st.cpp">
+      <Filter>Source Files\benchmark</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
