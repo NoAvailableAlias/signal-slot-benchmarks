@@ -16,6 +16,7 @@ public:
   static constexpr bool has_disconnect_all = true;
   static constexpr bool has_swap = true;
   static constexpr bool will_deadlock_if_recursively_modified = true;
+  static constexpr bool is_intrusive = true;
   
   template<typename Signature>
   using signal = cppsignal::signal<Signature>;

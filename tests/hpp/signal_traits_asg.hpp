@@ -9,6 +9,7 @@ struct signal_traits_asg
   static constexpr bool has_disconnect_all = true;
   static constexpr bool has_swap = true;
   static constexpr bool will_deadlock_if_recursively_modified = false;
+  static constexpr bool is_intrusive = false;
   
   template<typename Signature>
   using signal = Signal11::Signal<Signature>;

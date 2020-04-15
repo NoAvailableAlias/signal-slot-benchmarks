@@ -9,6 +9,7 @@ struct signal_traits_lss
   static constexpr bool has_disconnect_all = false;
   static constexpr bool has_swap = false;
   static constexpr bool will_deadlock_if_recursively_modified = false;
+  static constexpr bool is_intrusive = false;
   
   template<typename Signature>
   using signal = Simple::Signal<Signature>;

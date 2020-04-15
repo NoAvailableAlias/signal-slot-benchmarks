@@ -896,25 +896,32 @@ FENCED_TYPED_TEST
   using traits = TypeParam;
   typename traits::template signal<void()> signal;
 
-  int calls(0);
+  if constexpr (traits::is_intrusive)
+    this->store_test_result_not_available();
+  else
+    {
+      int calls(0);
 
-  const auto callback
-    ([ &calls ]() -> void
-     {
-       ++calls;
-     });
+      const auto callback
+        ([ &calls ]() -> void
+         {
+           ++calls;
+         });
 
-  typename traits::connection connection_1(traits::connect(signal, callback));
-  typename traits::connection connection_2(traits::connect(signal, callback));
+      typename traits::connection connection_1
+        (traits::connect(signal, callback));
+      typename traits::connection connection_2
+        (traits::connect(signal, callback));
   
-  traits::trigger(signal);
+      traits::trigger(signal);
 
-  EXPECT_EQ(2, calls);
+      EXPECT_EQ(2, calls);
 
-  traits::disconnect(signal, connection_1);
+      traits::disconnect(signal, connection_1);
 
-  traits::trigger(signal);
-  EXPECT_EQ(3, calls);
+      traits::trigger(signal);
+      EXPECT_EQ(3, calls);
+    }
 })
 
 int main(int argc, char* argv[])
