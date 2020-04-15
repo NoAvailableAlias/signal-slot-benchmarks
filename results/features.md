@@ -26,39 +26,39 @@ On the tests that could be run (i.e. tests for which the required API is availab
 
  Library |    1    |    2    |    3    |    4    |    5    |    6    
 ---------|---------|---------|---------|---------|---------|---------
- aco     | **yes** | **yes** |    X    |   no    | **yes** | **yes** 
+ aco     | **yes** | **yes** |    X    |   no    | **yes** |   n/a   
  asg     | **yes** | **yes** |   no    | **yes** | **yes** | **yes** 
  bs2     | **yes** | **yes** | **yes** | **yes** | **yes** | **yes** 
  bs2_st  | **yes** | **yes** | **yes** | **yes** | **yes** | **yes** 
  cls     | **yes** |   no    |    X    |    X    |    X    | **yes** 
- cps     | **yes** |   no    |    X    |    X    |    X    | **yes** 
- cps_st  | **yes** |   no    | **yes** |   no    | **yes** | **yes** 
- css     | **yes** | **yes** |   no    | **yes** | **yes** | **yes** 
+ cps     | **yes** |   no    |    X    |    X    |    X    |   n/a   
+ cps_st  | **yes** |   no    | **yes** |   no    | **yes** |   n/a   
+ css     | **yes** | **yes** |   no    | **yes** | **yes** |   n/a   
  dob     | **yes** | **yes** | **yes** | **yes** | **yes** | **yes** 
  evl     | **yes** | **yes** |    X    | **yes** | **yes** | **yes** 
  ics     | **yes** | **yes** | **yes** | **yes** | **yes** | **yes** 
- jls     | **yes** | **yes** |   no    | **yes** | **yes** | **yes** 
+ jls     | **yes** | **yes** |   no    | **yes** | **yes** |   n/a   
  jos     | **yes** | **yes** |   no    | **yes** | **yes** | **yes** 
  ksc     | **yes** | **yes** | **yes** | **yes** | **yes** | **yes** 
  lfs     | **yes** | **yes** |   no    | **yes** | **yes** | **yes** 
  lss     | **yes** | **yes** |   no    | **yes** | **yes** | **yes** 
  mws     | **yes** | **yes** |   no    | **yes** | **yes** | **yes** 
- nes     | **yes** | **yes** |    X    | **yes** | **yes** | **yes** 
+ nes     | **yes** | **yes** |    X    | **yes** | **yes** |   n/a   
  nls     | **yes** | **yes** | **yes** | **yes** | **yes** | **yes** 
  nls_st  | **yes** | **yes** | **yes** | **yes** | **yes** | **yes** 
  nod     | **yes** | **yes** | **yes** |   no    | **yes** | **yes** 
  nod_st  | **yes** | **yes** | **yes** |   no    | **yes** | **yes** 
- nss_st  | **yes** | **yes** | **yes** |   no    | **yes** | **yes** 
- nss_sts | **yes** | **yes** | **yes** |   no    | **yes** | **yes** 
- nss_ts  | **yes** |   no    |    X    |    X    |    X    | **yes** 
- nss_tss | **yes** | **yes** |   no    |   no    | **yes** | **yes** 
- psg     | **yes** | **yes** | **yes** |   no    | **yes** | **yes** 
+ nss_st  | **yes** | **yes** | **yes** |   no    | **yes** |   n/a   
+ nss_sts | **yes** | **yes** | **yes** |   no    | **yes** |   n/a   
+ nss_ts  | **yes** |   no    |    X    |    X    |    X    |   n/a   
+ nss_tss | **yes** | **yes** |   no    |   no    | **yes** |   n/a   
+ psg     | **yes** | **yes** | **yes** |   no    | **yes** |   n/a   
  pss     | **yes** | **yes** | **yes** | **yes** | **yes** | **yes** 
  pss_st  | **yes** | **yes** |    X    | **yes** | **yes** | **yes** 
- sss     | **yes** | **yes** |   no    | **yes** | **yes** | **yes** 
- vdk     | **yes** | **yes** |   no    | **yes** | **yes** | **yes** 
- wnk     | **yes** | **yes** |    X    | **yes** | **yes** | **yes** 
- yas     | **yes** | **yes** |    X    |    X    | **yes** | **yes** 
+ sss     | **yes** | **yes** |   no    | **yes** | **yes** |   n/a   
+ vdk     | **yes** | **yes** |   no    | **yes** | **yes** |   n/a   
+ wnk     | **yes** | **yes** |    X    | **yes** | **yes** |   n/a   
+ yas     | **yes** | **yes** |    X    |    X    | **yes** |   n/a   
 
 ## Activation with argument
 
