@@ -19,10 +19,7 @@ bool exited_with_code_stored::operator()(int exit_status)
 
 #else
   if (!WIFEXITED(exit_status))
-    {
-      printf("!exited %d\n", exit_status);
-      return false;
-    }
+    return false;
 
   const int exit_code(WEXITSTATUS(exit_status));
   *m_actual_exit_code = exit_code;

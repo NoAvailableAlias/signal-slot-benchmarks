@@ -29,7 +29,6 @@ private:
 public:
   static void initialize()
   {
-    printf("yep\n");
     m_signal_con_allocator =
       std::make_unique<decltype(m_signal_con_allocator)::element_type>();
     m_observer_con_allocator =
