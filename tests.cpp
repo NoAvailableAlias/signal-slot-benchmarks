@@ -777,10 +777,10 @@ FENCED_TYPED_TEST
       traits::disconnect_all_slots(signal_1);
 
       if constexpr (traits::has_connection_connected_test)
-                     {
-                       EXPECT_TRUE(traits::connected(connection_1));
-                       EXPECT_FALSE(traits::connected(connection_2));
-                     }
+        {
+          EXPECT_TRUE(traits::connected(connection_1));
+          EXPECT_FALSE(traits::connected(connection_2));
+        }
   
       traits::trigger(signal_1);
   
