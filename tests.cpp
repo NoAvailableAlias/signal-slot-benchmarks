@@ -1,31 +1,7 @@
 /*
-  API issues:
-  - empty() is not implemented.
-  - connection.connect() is not implemented.
-  - recursive access (e.g. connection management during signal execution) hangs.
-  - intrusive connection management.
-  - clear() is not implemented.
-  - swap is not supported.
-  - disconnecting as a member function of the signal (requires to still have
-    access to the signal).
-
-  dob: connection operator bool() is not const.
-  jos: connection's type depends on signals's type.
-  mws: weird namespaces, mw::Signal<> and mw::signals::Connection;
-  nes: painful subscribe syntax. Can't bind lambda? With captures?
-  nls: subscribe return a "handle" which is a private type…
-  nss: needs to implement an observer.
-  psg: signal0, signal1…
-
   Tests to add:
   - connection that outlives the signal.
   - any way to have a signal returning a value?
-
-  Stuff to add in the summary:
-  - a legend,
-  - list the libraries that validate all the tests.
-
-  List the pitch and last update of each library.
  */
 
 #include "tests/hpp/signal_traits_aco.hpp"
