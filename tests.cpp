@@ -1,31 +1,7 @@
 /*
-  API issues:
-  - empty() is not implemented.
-  - connection.connect() is not implemented.
-  - recursive access (e.g. connection management during signal execution) hangs.
-  - intrusive connection management.
-  - clear() is not implemented.
-  - swap is not supported.
-  - disconnecting as a member function of the signal (requires to still have
-    access to the signal).
-
-  dob: connection operator bool() is not const.
-  jos: connection's type depends on signals's type.
-  mws: weird namespaces, mw::Signal<> and mw::signals::Connection;
-  nes: painful subscribe syntax. Can't bind lambda? With captures?
-  nls: subscribe return a "handle" which is a private type…
-  nss: needs to implement an observer.
-  psg: signal0, signal1…
-
   Tests to add:
   - connection that outlives the signal.
   - any way to have a signal returning a value?
-
-  Stuff to add in the summary:
-  - a legend,
-  - list the libraries that validate all the tests.
-
-  List the pitch and last update of each library.
  */
 
 #include "tests/hpp/signal_traits_aco.hpp"
@@ -96,7 +72,7 @@ public:
 using all_traits =
   testing::Types
   <
-    signal_traits_aco,
+  signal_traits_aco,
     signal_traits_asg,
     signal_traits_bs2,
     signal_traits_bs2_st,
@@ -816,9 +792,10 @@ FENCED_TYPED_TEST
 })
 
 FENCED_TYPED_TEST
-(signal_test, argument_no_copies,
+(signal_test, argument_by_reference_no_copies,
  "Activation with argument",
- "Will triggering the signal not make unecessary copies of its argument?",
+ "Will triggering the signal with an argument by reference not make unecessary"
+ " copies of its argument?",
 {
   struct copy_counter
   {
@@ -856,6 +833,49 @@ FENCED_TYPED_TEST
   
   EXPECT_EQ(0, count_in_callback);
 })
+
+FENCED_TYPED_TEST
+(signal_test, argument_by_value_minimal_copies,
+ "Activation with argument",
+ "Will triggering the signal with an argument by value not make unecessary"
+ " copies of its argument?",
+{
+  struct copy_counter
+  {
+    explicit copy_counter(int* c)
+      : count(c)
+    {}
+
+    copy_counter(const copy_counter& that)
+      : count(that.count)
+    {
+      ++*count;
+    }
+    
+    int* count;
+  };
+
+  static_assert(std::is_move_constructible_v<copy_counter>);
+  static_assert(std::is_move_assignable_v<copy_counter>);
+  
+  using traits = TypeParam;
+  typename traits::template signal<void(copy_counter)> signal;
+
+  int count_in_callback(~0);
+  
+  const typename traits::connection connection
+    (traits::connect
+     (signal,
+      [ &count_in_callback ](copy_counter c) -> void
+      {
+        count_in_callback = *c.count;
+      }));
+
+  int count(0);
+  traits::trigger(signal, copy_counter(&count));
+
+  EXPECT_GE(1, count_in_callback);
+ })
 
 FENCED_TYPED_TEST
 (signal_test, recursive,

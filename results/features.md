@@ -9,9 +9,9 @@ This page displays the results of several tests on the features of the signal li
 
 The tests check the behaviour of the library when the signal is activated in various ways, how the connections are handled and what happens when signals are swapped.
 
-The following libraries pass all the tests: bs2, bs2_st, ics.
+None of the tested libraries passes all the tests.
 
-On the tests that could be run (i.e. tests for which the required API is available in the tested library), the following libraries pass all the tests: bs2, bs2_st, ics, ksc, pss.
+On the tests that could be run (i.e. tests for which the required API is available in the tested library), none of the tested libraries passes all the tests.
 
 # Detailed Test results
 
@@ -63,43 +63,44 @@ On the tests that could be run (i.e. tests for which the required API is availab
 ## Activation with argument
 
 1. Can the callbacks have an argument?
-2. Will triggering the signal not make unecessary copies of its argument?
+2. Will triggering the signal with an argument by reference not make unecessary copies of its argument?
+3. Will triggering the signal with an argument by value not make unecessary copies of its argument?
 
- Library |    1    |    2    
----------|---------|---------
- aco     | **yes** | **yes** 
- asg     | **yes** | **yes** 
- bs2     | **yes** | **yes** 
- bs2_st  | **yes** | **yes** 
- cls     | **yes** | **yes** 
- cps     | **yes** | **yes** 
- cps_st  | **yes** | **yes** 
- css     | **yes** | **yes** 
- dob     | **yes** | **yes** 
- evl     | **yes** | **yes** 
- ics     | **yes** | **yes** 
- jls     | **yes** | **yes** 
- jos     | **yes** | **yes** 
- ksc     | **yes** | **yes** 
- lfs     | **yes** | **yes** 
- lss     | **yes** | **yes** 
- mws     | **yes** | **yes** 
- nes     | **yes** | **yes** 
- nls     | **yes** | **yes** 
- nls_st  | **yes** | **yes** 
- nod     | **yes** | **yes** 
- nod_st  | **yes** | **yes** 
- nss_st  | **yes** | **yes** 
- nss_sts | **yes** | **yes** 
- nss_ts  | **yes** | **yes** 
- nss_tss | **yes** | **yes** 
- psg     | **yes** | **yes** 
- pss     | **yes** | **yes** 
- pss_st  | **yes** | **yes** 
- sss     | **yes** | **yes** 
- vdk     | **yes** | **yes** 
- wnk     | **yes** | **yes** 
- yas     | **yes** | **yes** 
+ Library |    1    |    2    |    3    
+---------|---------|---------|---------
+ aco     | **yes** | **yes** |   no    
+ asg     | **yes** | **yes** |   no    
+ bs2     | **yes** | **yes** |   no    
+ bs2_st  | **yes** | **yes** |   no    
+ cls     | **yes** | **yes** |   no    
+ cps     | **yes** | **yes** |   no    
+ cps_st  | **yes** | **yes** |   no    
+ css     | **yes** | **yes** |   no    
+ dob     | **yes** | **yes** |   no    
+ evl     | **yes** | **yes** |   no    
+ ics     | **yes** | **yes** |   no    
+ jls     | **yes** | **yes** |   no    
+ jos     | **yes** | **yes** |   no    
+ ksc     | **yes** | **yes** |   no    
+ lfs     | **yes** | **yes** | **yes** 
+ lss     | **yes** | **yes** |   no    
+ mws     | **yes** | **yes** |   no    
+ nes     | **yes** | **yes** |   no    
+ nls     | **yes** | **yes** |   no    
+ nls_st  | **yes** | **yes** |   no    
+ nod     | **yes** | **yes** |   no    
+ nod_st  | **yes** | **yes** |   no    
+ nss_st  | **yes** | **yes** |   no    
+ nss_sts | **yes** | **yes** |   no    
+ nss_ts  | **yes** | **yes** |   no    
+ nss_tss | **yes** | **yes** |   no    
+ psg     | **yes** | **yes** |   no    
+ pss     | **yes** | **yes** |   no    
+ pss_st  | **yes** | **yes** |   no    
+ sss     | **yes** | **yes** |   no    
+ vdk     | **yes** | **yes** |   no    
+ wnk     | **yes** | **yes** |   no    
+ yas     | **yes** | **yes** |   no    
 
 ## Connection management
 
