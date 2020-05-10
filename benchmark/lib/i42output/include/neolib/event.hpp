@@ -28,7 +28,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include <mutex>
 #include <atomic>
 
-#include <neolib/allocator.hpp>
 #include <neolib/scoped.hpp>
 #include <neolib/lifetime.hpp>
 #include <neolib/jar.hpp>
