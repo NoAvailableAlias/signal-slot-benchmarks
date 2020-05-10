@@ -140,24 +140,24 @@ void run_all_benchmarks()
     // Double the test size N for every iteration
     for (auto N = s_start_test_size; N <= s_ending_test_size; N *= 2)
     {
-        //RUN_BENCHMARK_CLASS(Aco);
-        //RUN_BENCHMARK_CLASS(Asg);
-        //RUN_BENCHMARK_CLASS(Bs2);
-        //RUN_BENCHMARK_CLASS(Bs2_st);
-        //RUN_BENCHMARK_CLASS(Cls); // Must make sure Subject lives longer than Foo
-        //RUN_BENCHMARK_CLASS(Cps);
-        //RUN_BENCHMARK_CLASS(Cps_st);
-        //RUN_BENCHMARK_CLASS(Css);
-        //RUN_BENCHMARK_CLASS(Dob); // Must make sure Subject lives longer than Foo
-        //RUN_BENCHMARK_CLASS(Evl);
-        //RUN_BENCHMARK_CLASS(Ics);
-        //RUN_BENCHMARK_CLASS(Jls);
-        //RUN_BENCHMARK_CLASS(Jos); // Must make sure Subject lives longer than Foo
-        //RUN_BENCHMARK_CLASS(Ksc);
-        //RUN_BENCHMARK_CLASS(Lfs);
-        //RUN_BENCHMARK_CLASS(Lss); // Must make sure Subject lives longer than Foo
-        //RUN_BENCHMARK_CLASS(Mws);
-        //RUN_BENCHMARK_CLASS(Nes);
+        RUN_BENCHMARK_CLASS(Aco);
+        RUN_BENCHMARK_CLASS(Asg);
+        RUN_BENCHMARK_CLASS(Bs2);
+        RUN_BENCHMARK_CLASS(Bs2_st);
+        RUN_BENCHMARK_CLASS(Cls); // Must make sure Subject lives longer than Foo
+        RUN_BENCHMARK_CLASS(Cps);
+        RUN_BENCHMARK_CLASS(Cps_st);
+        RUN_BENCHMARK_CLASS(Css);
+        RUN_BENCHMARK_CLASS(Dob); // Must make sure Subject lives longer than Foo
+        RUN_BENCHMARK_CLASS(Evl);
+        RUN_BENCHMARK_CLASS(Ics);
+        RUN_BENCHMARK_CLASS(Jls);
+        RUN_BENCHMARK_CLASS(Jos); // Must make sure Subject lives longer than Foo
+        RUN_BENCHMARK_CLASS(Ksc);
+        RUN_BENCHMARK_CLASS(Lfs);
+        RUN_BENCHMARK_CLASS(Lss); // Must make sure Subject lives longer than Foo
+        RUN_BENCHMARK_CLASS(Mws);
+        RUN_BENCHMARK_CLASS(Nes);
         RUN_BENCHMARK_CLASS(Nls);
         //RUN_BENCHMARK_CLASS(Nls_st);
         //RUN_BENCHMARK_CLASS(Nod);
