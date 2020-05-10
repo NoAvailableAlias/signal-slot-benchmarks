@@ -317,7 +317,7 @@ namespace neolib
                 handleInSameThreadAsEmitter{ handleInSameThreadAsEmitter }
             {}
         };
-        typedef neolib::jar<std::unique_ptr<handler>> handler_list_t;
+        typedef neolib::jar<handler> handler_list_t;
         struct context
         {
             bool accepted;
@@ -383,7 +383,7 @@ namespace neolib
         void handle_in_same_thread_as_emitter(cookie aHandleId) override
         {
             std::scoped_lock<switchable_mutex> lock{ event_mutex() };
-            instance().handlers[aHandleId]->handleInSameThreadAsEmitter = true;
+            instance().handlers[aHandleId].handleInSameThreadAsEmitter = true;
         }
     public:
         void push_context() const override
@@ -462,13 +462,13 @@ namespace neolib
                 instance().triggering = true;
                 instance().triggerId = 0ull;
                 for (auto& handler : instance().handlers)
-                    handler->triggerId = 0ull;
+                    handler.triggerId = 0ull;
             }
             auto triggerId = ++instance().triggerId;
             optional_async_transaction transaction;
             for (std::size_t handlerIndex = {}; handlerIndex < instance().handlers.size();)
             {
-                auto& handler = *instance().handlers.at_index(handlerIndex++);
+                auto& handler = instance().handlers.at_index(handlerIndex++);
                 if (handler.triggerId < triggerId)
                     handler.triggerId = triggerId;
                 else if (handler.triggerId == triggerId)
@@ -513,13 +513,13 @@ namespace neolib
                 instance().triggering = true;
                 instance().triggerId = 0ull;
                 for (auto& handler : instance().handlers)
-                    handler->triggerId = 0ull;
+                    handler.triggerId = 0ull;
             }
             auto triggerId = ++instance().triggerId;
             optional_async_transaction transaction;
             for (std::size_t handlerIndex = {}; handlerIndex < instance().handlers.size();)
             {
-                auto& handler = *instance().handlers.at_index(handlerIndex++);
+                auto& handler = instance().handlers.at_index(handlerIndex++);
                 if (handler.triggerId < triggerId)
                     handler.triggerId = triggerId;
                 else if (handler.triggerId == triggerId)
@@ -605,7 +605,7 @@ namespace neolib
             std::scoped_lock<switchable_mutex> lock{ event_mutex() };
             invalidate_handler_list();
             for (auto h = instance().handlers.begin(); h != instance().handlers.end();)
-                if ((**h).clientId == aClientId)
+                if ((*h).clientId == aClientId)
                     h = instance().handlers.erase(h);
                 else
                     ++h;
@@ -624,18 +624,18 @@ namespace neolib
         void add_ref(cookie aCookie) override
         {
             std::scoped_lock<switchable_mutex> lock{ event_mutex() };
-            ++instance().handlers[aCookie]->referenceCount;
+            ++instance().handlers[aCookie].referenceCount;
         }
         void release(cookie aCookie) override
         {
             std::scoped_lock<switchable_mutex> lock{ event_mutex() };
-            if (--instance().handlers[aCookie]->referenceCount == 0u)
+            if (--instance().handlers[aCookie].referenceCount == 0u)
                 instance().handlers.remove(aCookie);
         }
         long use_count(cookie aCookie) const override
         {
             std::scoped_lock<switchable_mutex> lock{ event_mutex() };
-            return instance().handlers[aCookie]->referenceCount;
+            return instance().handlers[aCookie].referenceCount;
         }
     private:
         void invalidate_handler_list() const
@@ -671,8 +671,8 @@ namespace neolib
             std::scoped_lock<switchable_mutex> lock{ event_mutex() };
             std::unordered_set<async_event_queue*> queues;
             for (auto const& h : instance().handlers)
-                if (!h->queueDestroyed)
-                    queues.insert(h->queue);
+                if (!h.queueDestroyed)
+                    queues.insert(h.queue);
             for (auto const& q : queues)
                 q->unqueue(*this);
         }
@@ -680,8 +680,8 @@ namespace neolib
         {
             std::scoped_lock<switchable_mutex> lock{ event_mutex() };
             for (auto& h : instance().handlers)
-                if (!h->queueDestroyed)
-                    h->queue->remove(*this);
+                if (!h.queueDestroyed)
+                    h.queue->remove(*this);
             iInstanceDataPtr = nullptr;
             iInstanceData = std::nullopt;
         }

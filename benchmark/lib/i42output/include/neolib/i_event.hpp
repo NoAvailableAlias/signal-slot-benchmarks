@@ -45,7 +45,7 @@ namespace neolib
 
         inline void set_multi_threaded()
         {
-            event_mutex().set_multi_threaded();
+            event_mutex().set_multi_threaded_spinlock();
         }
     }
 
