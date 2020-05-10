@@ -21,6 +21,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #include <neolib/neolib.hpp>
 #include <vector>
+#include <deque>
 #include <unordered_map>
 #include <unordered_set>
 #include <optional>
