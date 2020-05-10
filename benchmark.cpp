@@ -159,20 +159,20 @@ void run_all_benchmarks()
         RUN_BENCHMARK_CLASS(Mws);
         RUN_BENCHMARK_CLASS(Nes);
         RUN_BENCHMARK_CLASS(Nls);
-        //RUN_BENCHMARK_CLASS(Nls_st);
-        //RUN_BENCHMARK_CLASS(Nod);
-        //RUN_BENCHMARK_CLASS(Nod_st);
-        //RUN_BENCHMARK_CLASS(Nss_st);
-        //RUN_BENCHMARK_CLASS(Nss_sts);
-        //RUN_BENCHMARK_CLASS(Nss_ts);
-        //RUN_BENCHMARK_CLASS(Nss_tss);
-        //RUN_BENCHMARK_CLASS(Psg);
-        //RUN_BENCHMARK_CLASS(Pss);
-        //RUN_BENCHMARK_CLASS(Pss_st);
-        //RUN_BENCHMARK_CLASS(Sss);
-        //RUN_BENCHMARK_CLASS(Wnk); // Must make sure Subject lives longer than Foo
-        //RUN_BENCHMARK_CLASS(Yas);
-        //RUN_BENCHMARK_CLASS(Vdk);
+        RUN_BENCHMARK_CLASS(Nls_st);
+        RUN_BENCHMARK_CLASS(Nod);
+        RUN_BENCHMARK_CLASS(Nod_st);
+        RUN_BENCHMARK_CLASS(Nss_st);
+        RUN_BENCHMARK_CLASS(Nss_sts);
+        RUN_BENCHMARK_CLASS(Nss_ts);
+        RUN_BENCHMARK_CLASS(Nss_tss);
+        RUN_BENCHMARK_CLASS(Psg);
+        RUN_BENCHMARK_CLASS(Pss);
+        RUN_BENCHMARK_CLASS(Pss_st);
+        RUN_BENCHMARK_CLASS(Sss);
+        RUN_BENCHMARK_CLASS(Wnk); // Must make sure Subject lives longer than Foo
+        RUN_BENCHMARK_CLASS(Yas);
+        RUN_BENCHMARK_CLASS(Vdk);
     }
 
 #undef RUN_BENCHMARK_CLASS
