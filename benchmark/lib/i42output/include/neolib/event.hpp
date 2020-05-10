@@ -28,7 +28,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include <mutex>
 #include <atomic>
 
-#include <neolib/allocator.hpp>
 #include <neolib/scoped.hpp>
 #include <neolib/lifetime.hpp>
 #include <neolib/jar.hpp>
@@ -319,7 +318,7 @@ namespace neolib
                 handleInSameThreadAsEmitter{ handleInSameThreadAsEmitter }
             {}
         };
-        typedef std::unordered_map<cookie, handler, std::hash<cookie>, std::equal_to<cookie>, fast_pool_allocator<std::pair<const cookie, handler>>> handler_list_t;
+        typedef std::unordered_map<cookie, handler> handler_list_t;
         struct context
         {
             bool accepted;
