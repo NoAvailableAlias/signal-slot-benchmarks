@@ -332,7 +332,7 @@ namespace neolib
 
     uint64_t thread::program_elapsed_ns()
     {
-        return std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::steady_clock::time_point(std::chrono::high_resolution_clock::now()).time_since_epoch()).count() - sProgramStartTime_ns;
+        return std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::high_resolution_clock::time_point(std::chrono::high_resolution_clock::now()).time_since_epoch()).count() - sProgramStartTime_ns;
     }
 
     bool thread::waitable_ready() const
