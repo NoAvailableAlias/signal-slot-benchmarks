@@ -79,13 +79,11 @@ struct signal_traits_nls
   template<typename Signal>
   static void disconnect_all_slots(Signal& s)
   {
-    s = Signal();
   }
   
   template<typename Signal>
   static void swap(Signal& s1, Signal& s2)
   {
-    std::swap(s1, s2);
   }
 };
 
