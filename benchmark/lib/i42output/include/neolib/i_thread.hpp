@@ -35,22 +35,33 @@
 
 #pragma once
 
-#include "neolib.hpp"
+#include <neolib/neolib.hpp>
 
 namespace neolib
 {
-	class i_thread
-	{
-		// construction
-	public:
-		virtual ~i_thread() {}
-		// operations
-	public:
-		virtual const std::string& name() const = 0;
-		virtual bool finished() const = 0;
-		virtual void abort(bool aWait = true) = 0;
-		// implementation
-	protected:
-		virtual void exec() = 0;
-	};
+    enum class yield_type
+    {
+        NoYield,
+        Yield,
+        Sleep
+    };
+
+    class i_thread
+    {
+        // exceptions
+    public:
+        struct nothing_to_do : std::logic_error { nothing_to_do() : std::logic_error{ "neolib::i_thread::nothing_to_do" } {} };
+        // construction
+    public:
+        virtual ~i_thread() = default;
+        // operations
+    public:
+        virtual const std::string& name() const = 0;
+        virtual bool finished() const = 0;
+        virtual void abort(bool aWait = true) = 0;
+        // implementation
+    protected:
+        virtual void exec_preamble() = 0;
+        virtual void exec(yield_type aYieldType = yield_type::NoYield) = 0;
+    };
 }

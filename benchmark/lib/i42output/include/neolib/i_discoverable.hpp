@@ -1,4 +1,4 @@
-// win32_message_queue.hpp
+// i_discoverable.hpp - v1.0
 /*
  *  Copyright (c) 2007 Leigh Johnston.
  *
@@ -36,35 +36,24 @@
 #pragma once
 
 #include <neolib/neolib.hpp>
-#include <deque>
-#include <optional>
-#include "async_task.hpp"
-#include "message_queue.hpp"
-
-#ifdef _WIN32
+#include "uuid.hpp"
+#include "i_reference_counted.hpp"
 
 namespace neolib
 {
-    class win32_message_queue : public message_queue
+    class i_discoverable : public i_reference_counted
     {
     public:
-        win32_message_queue(async_task& aIoTask, std::function<bool()> aIdleFunction, bool aCreateTimer = true);
-        ~win32_message_queue();
-    public:
-        bool have_message() const override;
-        int get_message() const override;
-        void bump() override;
-		bool in_idle() const override;
-        void idle() override;
-    private:
-        static void CALLBACK timer_proc(HWND, UINT, UINT_PTR, DWORD);
-    private:
-        async_task& iIoTask;
-        std::function<bool()> iIdleFunction;
-        static std::map<UINT_PTR, win32_message_queue*> sTimerMap;
-        UINT_PTR iTimer;
-		bool iInIdle;
+        template <typename Interface>
+        bool discover(i_ref_ptr<Interface>& aObject)
+        {
+            void* result = nullptr;
+            if (discover(Interface::iid(), result))
+            {
+                aObject.reset(static_cast<Interface*>(result));
+            }
+            return result != nullptr;
+        }
+        virtual bool discover(const uuid& aId, void*& aObject) = 0;
     };
 }
-
-#endif //_WIN32

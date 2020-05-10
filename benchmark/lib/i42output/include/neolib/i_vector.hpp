@@ -1,6 +1,6 @@
-// win32_message_queue.hpp
+// i_vector.hpp
 /*
- *  Copyright (c) 2007 Leigh Johnston.
+ *  Copyright (c) 2019 Leigh Johnston.
  *
  *  All rights reserved.
  *
@@ -36,35 +36,17 @@
 #pragma once
 
 #include <neolib/neolib.hpp>
-#include <deque>
-#include <optional>
-#include "async_task.hpp"
-#include "message_queue.hpp"
-
-#ifdef _WIN32
+#include <neolib/i_random_access_container.hpp>
 
 namespace neolib
 {
-    class win32_message_queue : public message_queue
+    template <typename T>
+    class i_vector : public i_random_access_container<T, true>
     {
+        typedef i_vector<T> self_type;
     public:
-        win32_message_queue(async_task& aIoTask, std::function<bool()> aIdleFunction, bool aCreateTimer = true);
-        ~win32_message_queue();
+        typedef self_type abstract_type;
     public:
-        bool have_message() const override;
-        int get_message() const override;
-        void bump() override;
-		bool in_idle() const override;
-        void idle() override;
-    private:
-        static void CALLBACK timer_proc(HWND, UINT, UINT_PTR, DWORD);
-    private:
-        async_task& iIoTask;
-        std::function<bool()> iIdleFunction;
-        static std::map<UINT_PTR, win32_message_queue*> sTimerMap;
-        UINT_PTR iTimer;
-		bool iInIdle;
+        // todo abstract push_back et al
     };
 }
-
-#endif //_WIN32

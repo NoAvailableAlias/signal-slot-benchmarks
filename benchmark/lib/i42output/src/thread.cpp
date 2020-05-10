@@ -33,315 +33,352 @@
  *  SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#include "../include/neolib/neolib.hpp"
+#include <neolib/neolib.hpp>
 #include <iostream>
 #include <chrono>
 #include <functional>
 #include <boost/chrono/thread_clock.hpp>
-#include "../include/neolib/singleton.hpp"
-#include "../include/neolib/thread.hpp"
+#include <neolib/singleton.hpp>
+#include <neolib/thread.hpp>
 
 namespace neolib
 {
-	thread::thread(const std::string& aName, bool aAttachToCurrentThread) : 
-		iName(aName), 
-		iUsingExistingThread(aAttachToCurrentThread), 
-		iState(ReadyToStart), 
-		iId{ aAttachToCurrentThread ? std::this_thread::get_id() : std::thread::id{} },
-		iBlockedCount(0)
-	{
-	}
+    thread::thread(const std::string& aName, bool aAttachToCurrentThread) : 
+        iName(aName), 
+        iUsingExistingThread(aAttachToCurrentThread), 
+        iState(ReadyToStart), 
+        iId{ aAttachToCurrentThread ? std::this_thread::get_id() : std::thread::id{} },
+        iBlockedCount(0)
+    {
+    }
 
-	thread::~thread()
-	{
-		if (!finished() && !using_existing_thread())
-			abort();
-		if (has_thread_object() && thread_object().joinable())
-			thread_object().join();
-	}
+    thread::thread(std::function<void()> aExecFunction, const std::string& aName) : 
+        thread{ aName, false }
+    {
+        iExecFunction = aExecFunction;
+    }
 
-	const std::string& thread::name() const
-	{
-		return iName;
-	}
+    thread::~thread()
+    {
+        if (!finished() && !using_existing_thread())
+            abort();
+        if (has_thread_object() && thread_object().joinable())
+            thread_object().join();
+    }
 
-	bool thread::using_existing_thread() const
-	{
-		return iUsingExistingThread;
-	}
+    const std::string& thread::name() const
+    {
+        return iName;
+    }
 
-	void thread::start()
-	{
-		lock();
-		if (started())
-		{
-			unlock();
-			throw thread_already_started();
-		}
-		try
-		{
-			iState = Starting;
-			if (!iUsingExistingThread)
-			{
-				iThreadObject = std::make_unique<std::thread>(std::bind(&thread::entry_point, this));
-				unlock();
-			}
-			else
-			{
-				unlock();
-				entry_point();
-			}
-		}
-		catch(const std::exception& aException)
-		{
-			iState = Error;
-			unlock();
-			std::cerr << std::string("Error starting thread due to exception being thrown (") + aException.what() + ")." << std::endl;
-			throw;
-		}
-		catch(...)
-		{
-			iState = Error;
-			unlock();
-			std::cerr << std::string("Error starting thread due to exception of unknown type being thrown.") << std::endl;
-			throw;
-		}
-	}
+    bool thread::using_existing_thread() const
+    {
+        return iUsingExistingThread;
+    }
 
-	void thread::cancel()
-	{
-		lock();
-		if (finished())
-		{
-			unlock();
-			return;
-		}
-		unlock();
-		if (!in())
-		{
-			abort();
-			return;
-		}
-		bool canCancel = false;
-		lock();
-		if (started())
-		{
-			iState = Cancelled;
-			canCancel = true;
-		}
-		unlock();
-		if (canCancel)
-			throw cancellation();
-	}
+    void thread::start()
+    {
+        std::optional<std::scoped_lock<std::recursive_mutex>> lock{ iMutex };
+        if (started())
+        {
+            throw thread_already_started();
+        }
+        try
+        {
+            iState = Starting;
+            if (!iUsingExistingThread)
+            {
+                iThreadObject = std::make_unique<std::thread>(std::bind(&thread::entry_point, this));
+                lock = std::nullopt;
+            }
+            else
+            {
+                lock = std::nullopt;
+                entry_point();
+            }
+        }
+        catch(const std::exception& aException)
+        {
+            iState = Error;
+            std::cerr << std::string("Error starting thread due to exception being thrown (") + aException.what() + ")." << std::endl;
+            throw;
+        }
+        catch(...)
+        {
+            iState = Error;
+            std::cerr << std::string("Error starting thread due to exception of unknown type being thrown.") << std::endl;
+            throw;
+        }
+    }
 
-	void thread::abort(bool aWait)
-	{
-		lock();
-		if (finished())
-		{
-			unlock();
-			return;
-		}
-		unlock();
-		if (in())
-		{
-			cancel();
-			return;
-		}
-		lock();
-		if (started())
-		{
-			iState = Aborted;
-		}
-		unlock();
-		if (aWait)
-			wait();
-	}
+    void thread::cancel()
+    {
+        std::optional<std::scoped_lock<std::recursive_mutex>> lock{ iMutex };
+        if (finished())
+        {
+            return;
+        }
+        lock = std::nullopt;
+        if (!in())
+        {
+            abort();
+            return;
+        }
+        bool canCancel = false;
+        lock.emplace(iMutex);
+        if (started())
+        {
+            iState = Cancelled;
+            canCancel = true;
+        }
+        if (canCancel)
+            throw cancellation();
+    }
 
-	void thread::wait() const
-	{
-		if (!started())
-			throw thread_not_started();
-		if (in())
-			throw cannot_wait_on_self();
-		if (thread_object().joinable())
-			thread_object().join();
-	}
+    void thread::abort(bool aWait)
+    {
+        std::optional<std::scoped_lock<std::recursive_mutex>> lock{ iMutex };
+        if (finished())
+        {
+            return;
+        }
+        lock = std::nullopt;
+        if (in())
+        {
+            cancel();
+            return;
+        }
+        lock.emplace(iMutex);
+        if (started())
+        {
+            iState = Aborted;
+        }
+        lock = std::nullopt;
+        if (aWait)
+            wait();
+    }
 
-	wait_result thread::wait(const waitable_event_list& aEventList) const
-	{
-		if (!started())
-			throw thread_not_started();
-		if (in())
-			throw cannot_wait_on_self();
-		return aEventList.wait(*this);
-	}
+    void thread::wait() const
+    {
+        if (!started())
+            throw thread_not_started();
+        if (in())
+            throw cannot_wait_on_self();
+        if (thread_object().joinable())
+            thread_object().join();
+    }
 
-	bool thread::msg_wait(const message_queue& aMessageQueue) const
-	{
-		if (!started())
-			throw thread_not_started();
-		if (in())
-			throw cannot_wait_on_self();
-		for(;;)
-		{
-			if (waitable_ready())
-				return true;
-			if (aMessageQueue.have_message())
-				return false;
-			yield();
-		}
-	}
+    wait_result thread::wait(const waitable_event_list& aEventList) const
+    {
+        if (!started())
+            throw thread_not_started();
+        if (in())
+            throw cannot_wait_on_self();
+        return aEventList.wait(*this);
+    }
 
-	wait_result thread::msg_wait(const message_queue& aMessageQueue, const waitable_event_list& aEventList) const
-	{
-		if (!started())
-			throw thread_not_started();
-		if (in())
-			throw cannot_wait_on_self();
-		return aEventList.msg_wait(aMessageQueue, *this);
-	}
+    bool thread::msg_wait(const message_queue& aMessageQueue) const
+    {
+        if (!started())
+            throw thread_not_started();
+        if (in())
+            throw cannot_wait_on_self();
+        for(;;)
+        {
+            if (waitable_ready())
+                return true;
+            if (aMessageQueue.have_message())
+                return false;
+            yield();
+        }
+    }
 
-	void thread::block()
-	{
-		if (!in())
-			throw not_in_thread();
-		lock();
-		++iBlockedCount;
-		bool shouldCancel = aborted();
-		unlock();
-		if (shouldCancel)
-			throw cancellation();
-	}
+    wait_result thread::msg_wait(const message_queue& aMessageQueue, const waitable_event_list& aEventList) const
+    {
+        if (!started())
+            throw thread_not_started();
+        if (in())
+            throw cannot_wait_on_self();
+        return aEventList.msg_wait(aMessageQueue, *this);
+    }
 
-	void thread::unblock()
-	{
-		if (!in())
-			throw not_in_thread();
-		lock();
-		--iBlockedCount;
-		bool shouldCancel = aborted();
-		unlock();
-		if (shouldCancel)
-			throw cancellation();
-	}
+    void thread::block()
+    {
+        if (!in())
+            throw not_in_thread();
+        bool shouldCancel = false;
+        {
+            std::scoped_lock<std::recursive_mutex> lock{ iMutex };
+            ++iBlockedCount;
+            shouldCancel = aborted();
+        }
+        if (shouldCancel)
+            throw cancellation();
+    }
 
-	bool thread::started() const 
-	{ 
-		return iState != ReadyToStart; 
-	}
+    void thread::unblock()
+    {
+        if (!in())
+            throw not_in_thread();
+        bool shouldCancel = false;
+        {
+            std::scoped_lock<std::recursive_mutex> lock{ iMutex };
+            --iBlockedCount;
+            shouldCancel = aborted();
+        }
+        if (shouldCancel)
+            throw cancellation();
+    }
 
-	bool thread::running() const
-	{
-		return iState == Started;
-	}
-	
-	bool thread::finished() const 
-	{ 
-		return iState != ReadyToStart && iState != Starting && iState != Started; 
-	}
-	
-	bool thread::aborted() const 
-	{ 
-		return iState == Aborted; 
-	}
-	
-	bool thread::cancelled() const 
-	{ 
-		return iState == Cancelled; 
-	}
-	
-	bool thread::error() const 
-	{ 
-		return iState == Error; 
-	}
-	
-	thread::id_type thread::id() const 
-	{ 
-		return iId; 
-	}
+    bool thread::started() const 
+    { 
+        return iState != ReadyToStart; 
+    }
 
-	bool thread::in() const 
-	{
-		if (!started() && !using_existing_thread())
-			throw thread_not_started();
-		return std::this_thread::get_id() == iId;
-	}
+    bool thread::running() const
+    {
+        return iState == Started;
+    }
+    
+    bool thread::finished() const 
+    { 
+        return iState != ReadyToStart && iState != Starting && iState != Started; 
+    }
+    
+    bool thread::aborted() const 
+    { 
+        return iState == Aborted; 
+    }
+    
+    bool thread::cancelled() const 
+    { 
+        return iState == Cancelled; 
+    }
+    
+    bool thread::error() const 
+    { 
+        return iState == Error; 
+    }
+    
+    thread::id_type thread::id() const 
+    { 
+        return iId; 
+    }
 
-	bool thread::blocked() const 
-	{ 
-		return iBlockedCount != 0; 
-	}
+    bool thread::in() const 
+    {
+        if (!started() && !using_existing_thread())
+            throw thread_not_started();
+        return std::this_thread::get_id() == iId;
+    }
 
-	bool thread::has_thread_object() const
-	{
-		return iThreadObject != nullptr;
-	}
+    bool thread::blocked() const 
+    { 
+        return iBlockedCount != 0; 
+    }
 
-	thread::thread_object_type& thread::thread_object() const
-	{ 
-		if (!has_thread_object()) 
-			throw no_thread_object(); 
-		return *iThreadObject; 
-	}
+    bool thread::has_thread_object() const
+    {
+        return iThreadObject != nullptr;
+    }
 
-	void thread::sleep(uint32_t aDelayInMilleseconds)
-	{
-		std::this_thread::sleep_for(std::chrono::milliseconds(aDelayInMilleseconds));
-	}
+    thread::thread_object_type& thread::thread_object() const
+    { 
+        if (!has_thread_object()) 
+            throw no_thread_object(); 
+        return *iThreadObject; 
+    }
 
-	void thread::yield()
-	{
-		std::this_thread::yield();
-	}
+    void thread::sleep(uint32_t aDelayInMilleseconds)
+    {
+        std::this_thread::sleep_for(std::chrono::milliseconds(aDelayInMilleseconds));
+    }
 
-	uint64_t thread::elapsed_ms()
-	{
-		using namespace boost::chrono;
-		return duration_cast<milliseconds>(thread_clock::time_point(thread_clock::now()).time_since_epoch()).count();
-	}
+    void thread::yield()
+    {
+        std::this_thread::yield();
+    }
 
-	namespace
-	{
-		uint64_t sProgramStartTime = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::time_point(std::chrono::steady_clock::now()).time_since_epoch()).count();
-	}
+    uint64_t thread::elapsed_ms()
+    {
+        return elapsed_us() / 1000;
+    }
 
-	uint64_t thread::program_elapsed_ms()
-	{
-		return std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::time_point(std::chrono::steady_clock::now()).time_since_epoch()).count() - sProgramStartTime;
-	}
+    uint64_t thread::elapsed_us()
+    {
+        return elapsed_ns() / 1000;
+    }
 
-	bool thread::waitable_ready() const
-	{
-		return thread_object().get_id() == std::thread::id();
-	}
+    uint64_t thread::elapsed_ns()
+    {
+        using namespace boost::chrono;
+        return duration_cast<nanoseconds>(thread_clock::time_point(thread_clock::now()).time_since_epoch()).count();
+    }
 
-	void thread::entry_point()
-	{
-		lock();
-		iState = Started;
-		iId = std::this_thread::get_id();
-		unlock();
-		try
-		{
-			exec();
-			if (!iUsingExistingThread)
-			{
-				lock();
-				if (iState == Started)
-					iState = Finished;
-				unlock();
-			}
-		}
-		catch(const std::exception& aException)
-		{
-			std::cerr << std::string("Thread terminating due to an uncaught exception was being thrown (") + aException.what() + ")." << std::endl;
-			throw;
-		}
-		catch(...)
-		{
-			std::cerr << "Thread terminating due to an uncaught exception of unknown type being thrown." << std::endl;
-			throw;
-		}
-	}
+    uint64_t thread::program_elapsed_ms()
+    {
+        return program_elapsed_us() / 1000;
+    }
+
+    uint64_t thread::program_elapsed_us()
+    {
+        return program_elapsed_ns() / 1000;
+    }
+
+    namespace
+    {
+        uint64_t sProgramStartTime_ns = std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::high_resolution_clock::time_point(std::chrono::high_resolution_clock::now()).time_since_epoch()).count();
+    }
+
+    uint64_t thread::program_elapsed_ns()
+    {
+        return std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::steady_clock::time_point(std::chrono::high_resolution_clock::now()).time_since_epoch()).count() - sProgramStartTime_ns;
+    }
+
+    bool thread::waitable_ready() const
+    {
+        return thread_object().get_id() == std::thread::id();
+    }
+
+    void thread::exec_preamble()
+    {
+    }
+
+    void thread::exec(yield_type)
+    {
+        if (iExecFunction != std::nullopt)
+            (*iExecFunction)();
+        else
+            throw nothing_to_do();
+    }
+
+    void thread::entry_point()
+    {
+        {
+            std::scoped_lock<std::recursive_mutex> lock{ iMutex };
+            iState = Started;
+            iId = std::this_thread::get_id();
+        }
+        try
+        {
+            exec_preamble();
+            exec();
+            if (!iUsingExistingThread)
+            {
+                std::scoped_lock<std::recursive_mutex> lock{ iMutex };
+                if (iState == Started)
+                    iState = Finished;
+            }
+        }
+        catch(const std::exception& aException)
+        {
+            std::cerr << std::string("Thread terminating due to an uncaught exception was being thrown (") + aException.what() + ")." << std::endl;
+            throw;
+        }
+        catch(...)
+        {
+            std::cerr << "Thread terminating due to an uncaught exception of unknown type being thrown." << std::endl;
+            throw;
+        }
+    }
 } // namespace neolib

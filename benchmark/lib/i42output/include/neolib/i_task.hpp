@@ -35,23 +35,25 @@
 
 #pragma once
 
-#include "neolib.hpp"
+#include <neolib/neolib.hpp>
 #include <string>
+#include <neolib/i_thread.hpp>
 
 namespace neolib
 {
-	class i_task
-	{
-		// construction
-	public:
-		virtual ~i_task() {}
-		// operations
-	public:
-		virtual const std::string& name() const = 0;
-		// implementation
-	public:
-		virtual void run() = 0;
-		virtual void cancel() = 0;
-		virtual bool cancelled() const = 0;
-	};
+    class i_task
+    {
+        // construction
+    public:
+        virtual ~i_task() = default;
+        // operations
+    public:
+        virtual const std::string& name() const = 0;
+        // implementation
+    public:
+        virtual void run(yield_type aYieldType = yield_type::NoYield) = 0;
+        virtual void do_work(yield_type aYieldType = yield_type::NoYield) = 0;
+        virtual void cancel() = 0;
+        virtual bool cancelled() const = 0;
+    };
 }

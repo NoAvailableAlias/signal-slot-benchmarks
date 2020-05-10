@@ -35,82 +35,91 @@
 
 #pragma once
 
-#include "neolib.hpp"
+#include <neolib/neolib.hpp>
 #include <stdexcept>
 #include <memory>
 #include <thread>
 #include <atomic>
+#include <functional>
 #include "noncopyable.hpp"
-#include "lockable.hpp"
 #include "waitable.hpp"
 #include "waitable_event.hpp"
 #include "i_thread.hpp"
 
 namespace neolib
 {
-	class thread : public i_thread, public lockable, public waitable, private noncopyable
-	{
-		// types
-	public:
-		typedef std::thread::id id_type;
-		typedef std::thread thread_object_type;
-		// exceptions
-	public:
-		struct thread_not_started : public std::logic_error { thread_not_started() : std::logic_error("neolib::thread::thread_not_started") {} };
-		struct thread_already_started : public std::logic_error { thread_already_started() : std::logic_error("neolib::thread::thread_already_started") {} };
-		struct cannot_wait_on_self : public std::logic_error { cannot_wait_on_self() : std::logic_error("neolib::thread::cannot_wait_on_self") {} };
-		struct no_thread_object : public std::logic_error { no_thread_object() : std::logic_error("neolib::thread::no_thread_object") {} };
-		struct not_in_thread : public std::logic_error { not_in_thread() : std::logic_error("neolib::thread::not_in_thread") {} };
-	private:
-		typedef std::unique_ptr<thread_object_type> thread_object_pointer;
-		enum state_e { ReadyToStart, Starting, Started, Finished, Aborted, Cancelled, Error };
-	protected:
-		struct cancellation {};
-		// construction
-	public:
-		thread(const std::string& aName = "", bool aAttachToCurrentThread = false);
-		virtual ~thread();
-		// operations
-	public:
-		const std::string& name() const override;
-		bool using_existing_thread() const;
-		void start();
-		void cancel();
-		void abort(bool aWait = true);
-		void wait() const;
-		wait_result wait(const waitable_event_list& aEventList) const;
-		bool msg_wait(const message_queue& aMessageQueue) const;
-		wait_result msg_wait(const message_queue& aMessageQueue, const waitable_event_list& aEventList) const;
-		void block();
-		void unblock();
-		bool started() const;
-		bool running() const;
-		bool finished() const override;
-		bool aborted() const;
-		bool cancelled() const;
-		bool error() const;
-		id_type id() const;
-		bool in() const;
-		bool blocked() const;
-		bool has_thread_object() const;
-		thread_object_type& thread_object() const;
-		static void sleep(uint32_t aDelayInMilleseconds);
-		static void yield();
-		static uint64_t elapsed_ms();
-		static uint64_t program_elapsed_ms();
-		// implementation
-	private:
-		// from waitable
-		virtual bool waitable_ready() const;
-		// own
-		void entry_point();
-		// attributes
-	private:
-		const std::string iName;
-		bool iUsingExistingThread;
-		std::atomic<state_e> iState;
-		thread_object_pointer iThreadObject;
-		id_type iId;
-		std::atomic<std::size_t> iBlockedCount;
-	};
+    class thread : public i_thread, public waitable, private noncopyable
+    {
+        // types
+    public:
+        typedef std::thread::id id_type;
+        typedef std::thread thread_object_type;
+        // exceptions
+    public:
+        struct thread_not_started : public std::logic_error { thread_not_started() : std::logic_error("neolib::thread::thread_not_started") {} };
+        struct thread_already_started : public std::logic_error { thread_already_started() : std::logic_error("neolib::thread::thread_already_started") {} };
+        struct cannot_wait_on_self : public std::logic_error { cannot_wait_on_self() : std::logic_error("neolib::thread::cannot_wait_on_self") {} };
+        struct no_thread_object : public std::logic_error { no_thread_object() : std::logic_error("neolib::thread::no_thread_object") {} };
+        struct not_in_thread : public std::logic_error { not_in_thread() : std::logic_error("neolib::thread::not_in_thread") {} };
+    private:
+        typedef std::unique_ptr<thread_object_type> thread_object_pointer;
+        enum state_e { ReadyToStart, Starting, Started, Finished, Aborted, Cancelled, Error };
+    protected:
+        struct cancellation {};
+        // construction
+    public:
+        thread(const std::string& aName = "", bool aAttachToCurrentThread = false);
+        thread(std::function<void()> aExecFunction, const std::string& aName = "");
+        virtual ~thread();
+        // operations
+    public:
+        const std::string& name() const override;
+        bool using_existing_thread() const;
+        void start();
+        void cancel();
+        void abort(bool aWait = true);
+        void wait() const;
+        wait_result wait(const waitable_event_list& aEventList) const;
+        bool msg_wait(const message_queue& aMessageQueue) const;
+        wait_result msg_wait(const message_queue& aMessageQueue, const waitable_event_list& aEventList) const;
+        void block();
+        void unblock();
+        bool started() const;
+        bool running() const;
+        bool finished() const override;
+        bool aborted() const;
+        bool cancelled() const;
+        bool error() const;
+        id_type id() const;
+        bool in() const;
+        bool blocked() const;
+        bool has_thread_object() const;
+        thread_object_type& thread_object() const;
+        static void sleep(uint32_t aDelayInMilleseconds);
+        static void yield();
+        static uint64_t elapsed_ms();
+        static uint64_t elapsed_us();
+        static uint64_t elapsed_ns();
+        static uint64_t program_elapsed_ms();
+        static uint64_t program_elapsed_us();
+        static uint64_t program_elapsed_ns();
+        // implementation
+    private:
+        // from waitable
+        bool waitable_ready() const override;
+        // own
+        void exec_preamble() override;
+        void exec(yield_type aYieldType = yield_type::NoYield) override;
+        void entry_point();
+        // attributes
+    private:
+        mutable std::recursive_mutex iMutex;
+        const std::string iName;
+        bool iUsingExistingThread;
+        std::optional<std::function<void()>> iExecFunction;
+        std::atomic<state_e> iState;
+        thread_object_pointer iThreadObject;
+        id_type iId;
+        std::atomic<std::size_t> iBlockedCount;
+    };
 }

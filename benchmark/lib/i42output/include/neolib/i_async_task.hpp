@@ -1,4 +1,4 @@
-// win32_message_queue.hpp
+// async_task.hpp v1.0
 /*
  *  Copyright (c) 2007 Leigh Johnston.
  *
@@ -31,40 +31,49 @@
  *  LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
  *  NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  *  SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-*/
+ */
 
 #pragma once
 
 #include <neolib/neolib.hpp>
-#include <deque>
-#include <optional>
-#include "async_task.hpp"
-#include "message_queue.hpp"
-
-#ifdef _WIN32
+#include <neolib/i_thread.hpp>
+#include <neolib/i_plugin_event.hpp>
 
 namespace neolib
 {
-    class win32_message_queue : public message_queue
+    class i_io_service
     {
+        // constants
     public:
-        win32_message_queue(async_task& aIoTask, std::function<bool()> aIdleFunction, bool aCreateTimer = true);
-        ~win32_message_queue();
+        static constexpr std::size_t kDefaultPollCount = 256;
+        // construction
     public:
-        bool have_message() const override;
-        int get_message() const override;
-        void bump() override;
-		bool in_idle() const override;
-        void idle() override;
-    private:
-        static void CALLBACK timer_proc(HWND, UINT, UINT_PTR, DWORD);
-    private:
-        async_task& iIoTask;
-        std::function<bool()> iIdleFunction;
-        static std::map<UINT_PTR, win32_message_queue*> sTimerMap;
-        UINT_PTR iTimer;
-		bool iInIdle;
+        virtual ~i_io_service() = default;
+        // operations
+    public:
+        virtual bool do_io(bool aProcessEvents = true, std::size_t aMaximumPollCount = kDefaultPollCount) = 0;
+    };
+
+    class i_async_task : public i_task
+    {
+        // events
+    public:
+        declare_event(destroying)
+        declare_event(destroyed)
+        // exceptions
+    public:
+        struct no_message_queue : std::logic_error { no_message_queue() : std::logic_error("neolib::i_async_task::no_message_queue") {} };
+        // operations
+    public:
+        virtual i_thread& thread() const = 0;
+        virtual bool do_io(yield_type aYieldIfNoWork = yield_type::NoYield) = 0;
+        virtual i_io_service& timer_io_service() = 0;
+        virtual i_io_service& networking_io_service() = 0;
+        virtual bool have_message_queue() const = 0;
+        virtual bool have_messages() const = 0;
+        virtual bool pump_messages() = 0;
+        virtual bool halted() const = 0;
+        virtual void halt() = 0;
+        virtual void idle() = 0;
     };
 }
-
-#endif //_WIN32

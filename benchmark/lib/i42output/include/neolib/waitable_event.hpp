@@ -35,84 +35,84 @@
 
 #pragma once
 
-#include "neolib.hpp"
+#include <neolib/neolib.hpp>
 #include <stdexcept>
 #include <thread>
 #include <mutex>
-#include <vector>
 #include <condition_variable>
+#include <vector>
 #include "message_queue.hpp"
 #include "waitable.hpp"
 #include "variant.hpp"
 
 namespace neolib
 {
-	class waitable_event
-	{
-		// constants
-	public:
-		static const uint32_t ShortTimeout_ms = 20;
-		// types
-	private:
-		enum signal_type
-		{
-			SignalOne,
-			SignalAll
-		};
-		// construction
-	public:
-		waitable_event();
-		// operations
-	public:
-		void signal_one() const;
-		void signal_all() const;
-		void wait() const;
-		bool wait(uint32_t aTimeout_ms) const;
-		bool msg_wait(const message_queue& aMessageQueue) const;
-		bool msg_wait(const message_queue& aMessageQueue, uint32_t aTimeout_ms) const;
-		void reset() const;
-	private:
-		mutable std::mutex iMutex;
-		mutable std::condition_variable iCondVar;
-		mutable bool iReady;
-		mutable std::size_t iTotalWaiting;
-		mutable signal_type iSignalType;
-	};
+    class waitable_event
+    {
+        // constants
+    public:
+        static const uint32_t ShortTimeout_ms = 20;
+        // types
+    private:
+        enum signal_type
+        {
+            SignalOne,
+            SignalAll
+        };
+        // construction
+    public:
+        waitable_event();
+        // operations
+    public:
+        void signal_one() const;
+        void signal_all() const;
+        void wait() const;
+        bool wait(uint32_t aTimeout_ms) const;
+        bool msg_wait(const message_queue& aMessageQueue) const;
+        bool msg_wait(const message_queue& aMessageQueue, uint32_t aTimeout_ms) const;
+        void reset() const;
+    private:
+        mutable std::mutex iMutex;
+        mutable std::condition_variable iCondVar;
+        mutable bool iReady;
+        mutable std::size_t iTotalWaiting;
+        mutable signal_type iSignalType;
+    };
 
-	struct wait_result_event { wait_result_event(const waitable_event& aEvent) : iEvent(aEvent) {} const waitable_event& iEvent; };
-	struct wait_result_message {};
-	struct wait_result_waitable {};
-	typedef variant<wait_result_event, wait_result_message, wait_result_waitable> wait_result;
+    struct wait_result_event { wait_result_event(const waitable_event& aEvent) : iEvent(aEvent) {} const waitable_event& iEvent; };
+    struct wait_result_message {};
+    struct wait_result_waitable {};
+    typedef variant<wait_result_event, wait_result_message, wait_result_waitable> wait_result;
 
-	class waitable_event_list
-	{
-		// types
-	private:
-		typedef const waitable_event* event_pointer;
-		typedef std::vector<event_pointer> list_type;
+    class waitable_event_list
+    {
+        // types
+    private:
+        typedef const waitable_event* event_pointer;
+        typedef std::vector<event_pointer> list_type;
 
-		// construction
-	public:
-		waitable_event_list(const waitable_event& aEvent)
-		{
-			iEvents.push_back(&aEvent);
-		}
-		template <typename InputIterator>
-		waitable_event_list(InputIterator aFirst, InputIterator aLast)
-		{
-			while(aFirst != aLast)
-				iEvents.push_back(&*aFirst++);
-		}
+        // construction
+    public:
+        waitable_event_list(const waitable_event& aEvent)
+        {
+            iEvents.push_back(&aEvent);
+        }
+        template <typename InputIterator>
+        waitable_event_list(InputIterator aFirst, InputIterator aLast)
+        {
+            while(aFirst != aLast)
+                iEvents.push_back(&*aFirst++);
+        }
 
-		// operations
-	public:
-		wait_result wait() const;
-		wait_result wait(const waitable& aWaitable) const;
-		wait_result msg_wait(const message_queue& aMessageQueue) const;
-		wait_result msg_wait(const message_queue& aMessageQueue, const waitable& aWaitable) const;
+        // operations
+    public:
+        wait_result wait() const;
+        wait_result wait(const waitable& aWaitable) const;
+        wait_result msg_wait(const message_queue& aMessageQueue) const;
+        wait_result msg_wait(const message_queue& aMessageQueue, const waitable& aWaitable) const;
 
-		// attributes
-	private:
-		mutable list_type iEvents;
-	};
+        // attributes
+    private:
+        mutable list_type iEvents;
+    };
 }

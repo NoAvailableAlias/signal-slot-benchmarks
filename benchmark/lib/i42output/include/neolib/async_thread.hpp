@@ -1,6 +1,6 @@
 // async_thread.hpp
 /*
- *  Copyright (c) 2007 Leigh Johnston.
+ *  Copyright (c) 2020 Leigh Johnston.
  *
  *  All rights reserved.
  *
@@ -35,19 +35,39 @@
 
 #pragma once
 
-#include "neolib.hpp"
-#include "thread.hpp"
-#include "async_task.hpp"
+#include <neolib/neolib.hpp>
+#include <neolib/thread.hpp>
+#include <neolib/async_task.hpp>
+#include <neolib/event.hpp>
 
 namespace neolib
 {
-	class async_thread : public thread, public async_task
-	{
-		// construction
-	public:
-		async_thread(const std::string& aName = "", bool aAttachToCurrentThread = false);
-		// implemenation
-	protected:
-		void exec() override;
-	};
+    class async_event_queue;
+
+    class async_thread : public thread
+    {
+        // types
+    private:
+        struct queue_ref
+        {
+            async_event_queue& queue;
+            destroyed_flag queueDestroyed;
+
+            queue_ref(async_event_queue& queue) :
+                queue{ queue },
+                queueDestroyed{ queue }
+            {}
+        };
+        // construction
+    public:
+        async_thread(async_task& aTask, const std::string& aName = "", bool aAttachToCurrentThread = false);
+        ~async_thread();
+        // implemenation
+    protected:
+        void exec_preamble() override;
+        void exec(yield_type aYieldType = yield_type::NoYield) override;
+    private:
+        async_task& iTask;
+        std::optional<queue_ref> iEventQueue;
+    };
 }

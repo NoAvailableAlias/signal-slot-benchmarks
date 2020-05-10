@@ -1,6 +1,10 @@
 #pragma once
 
+#define NEOLIB_HOSTED_ENVIRONMENT
+
 #include "../lib/i42output/include/neolib/event.hpp"
+#include "../lib/i42output/include/neolib/async_task.hpp"
+#include "../lib/i42output/include/neolib/async_thread.hpp"
 
 #include "../../benchmark.hpp"
 

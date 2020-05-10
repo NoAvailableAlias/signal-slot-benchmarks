@@ -1,4 +1,4 @@
-// win32_message_queue.hpp
+// i_pair.hpp - v1.0
 /*
  *  Copyright (c) 2007 Leigh Johnston.
  *
@@ -36,35 +36,23 @@
 #pragma once
 
 #include <neolib/neolib.hpp>
-#include <deque>
-#include <optional>
-#include "async_task.hpp"
-#include "message_queue.hpp"
-
-#ifdef _WIN32
 
 namespace neolib
 {
-    class win32_message_queue : public message_queue
+    template <typename T1, typename T2>
+    class i_pair
     {
+        typedef i_pair<T1, T2> self_type;
     public:
-        win32_message_queue(async_task& aIoTask, std::function<bool()> aIdleFunction, bool aCreateTimer = true);
-        ~win32_message_queue();
+        typedef self_type abstract_type;
+        typedef T1 first_type;
+        typedef T2 second_type;
     public:
-        bool have_message() const override;
-        int get_message() const override;
-        void bump() override;
-		bool in_idle() const override;
-        void idle() override;
-    private:
-        static void CALLBACK timer_proc(HWND, UINT, UINT_PTR, DWORD);
-    private:
-        async_task& iIoTask;
-        std::function<bool()> iIdleFunction;
-        static std::map<UINT_PTR, win32_message_queue*> sTimerMap;
-        UINT_PTR iTimer;
-		bool iInIdle;
+        virtual self_type& operator=(const self_type& aOther) = 0;
+    public:
+        virtual const first_type& first() const = 0;
+        virtual first_type& first() = 0;
+        virtual const second_type& second() const = 0;
+        virtual second_type& second() = 0;
     };
 }
-
-#endif //_WIN32

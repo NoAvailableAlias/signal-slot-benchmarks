@@ -1,4 +1,4 @@
-// win32_message_queue.hpp
+// i_sequence_container.hpp - v1.0
 /*
  *  Copyright (c) 2007 Leigh Johnston.
  *
@@ -36,35 +36,35 @@
 #pragma once
 
 #include <neolib/neolib.hpp>
-#include <deque>
-#include <optional>
-#include "async_task.hpp"
-#include "message_queue.hpp"
-
-#ifdef _WIN32
+#include <neolib/i_container.hpp>
 
 namespace neolib
 {
-    class win32_message_queue : public message_queue
+    template <typename T, typename ConstIteratorType, typename IteratorType, bool DefaultComparisonOperators = true>
+    class i_sequence_container : public i_container<T, ConstIteratorType, IteratorType, DefaultComparisonOperators>
     {
+        typedef i_sequence_container<T, ConstIteratorType, IteratorType, DefaultComparisonOperators> self_type;
+        typedef i_container<T, ConstIteratorType, IteratorType, DefaultComparisonOperators> base_type;
     public:
-        win32_message_queue(async_task& aIoTask, std::function<bool()> aIdleFunction, bool aCreateTimer = true);
-        ~win32_message_queue();
+        typedef self_type abstract_type;
     public:
-        bool have_message() const override;
-        int get_message() const override;
-        void bump() override;
-		bool in_idle() const override;
-        void idle() override;
+        using typename base_type::value_type;
+        using typename base_type::size_type;
+        using typename base_type::const_iterator;
+        using typename base_type::iterator;
+        using typename base_type::abstract_const_iterator;
+        using typename base_type::abstract_iterator;
+    public:
+        virtual size_type capacity() const = 0;
+        virtual void reserve(size_type aCapacity) = 0;
+        virtual void resize(size_type aSize, const value_type& aValue = value_type{}) = 0;
+        iterator insert(const abstract_iterator& aPosition, const value_type& aValue) { iterator result; return do_insert(result.storage(), const_iterator(aPosition), aValue); }
+        iterator insert(const abstract_const_iterator& aPosition, const value_type& aValue) { iterator result; return do_insert(result.storage(), aPosition, aValue); }
+        virtual void push_back(const value_type& aValue) = 0;
+        virtual void pop_back() = 0;
+        virtual const value_type& back() const = 0;
+        virtual value_type& back() = 0;
     private:
-        static void CALLBACK timer_proc(HWND, UINT, UINT_PTR, DWORD);
-    private:
-        async_task& iIoTask;
-        std::function<bool()> iIdleFunction;
-        static std::map<UINT_PTR, win32_message_queue*> sTimerMap;
-        UINT_PTR iTimer;
-		bool iInIdle;
+        virtual abstract_iterator* do_insert(void* memory, const abstract_const_iterator& aPosition, const value_type& aValue) = 0;
     };
 }
-
-#endif //_WIN32

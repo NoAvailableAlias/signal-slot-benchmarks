@@ -35,13 +35,13 @@
 
 #pragma once
 
-#include "neolib.hpp"
+#include <neolib/neolib.hpp>
 
 namespace neolib
 {
-	class waitable
-	{
-	public:
-		virtual bool waitable_ready() const = 0;
-	};
+    class waitable
+    {
+    public:
+        virtual bool waitable_ready() const = 0;
+    };
 }

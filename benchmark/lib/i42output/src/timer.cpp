@@ -33,189 +33,224 @@
  *  SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#include "../include/neolib/neolib.hpp"
-#include "../include/neolib/timer.hpp"
+#include <neolib/neolib.hpp>
+#include <neolib/async_task.hpp>
+#include <neolib/timer.hpp>
 
 namespace neolib
 {
-	timer::timer(async_task& aIoTask, uint32_t aDuration_ms, bool aInitialWait) :
-		iIoTask(aIoTask),
-		iHandlerProxy(new handler_proxy(*this)),
-		iTimerObject(aIoTask.timer_io_service().native_object()),
-		iDuration_ms(aDuration_ms), 
-		iEnabled(true),
-		iWaiting(false), 
-		iInReady(false)
-	{
-		if (aInitialWait)
-			again();
-	}
+    timer::timer(async_task& aTask, uint32_t aDuration_ms, bool aInitialWait) :
+        iTask{ aTask },
+        iTaskDestroyed{ aTask },
+        iHandlerProxy{ new handler_proxy{ *this } },
+        iDuration_ms{ aDuration_ms },
+        iEnabled{ true },
+        iWaiting{ false },
+        iInReady{ false }
+    {
+        if (aInitialWait)
+            again();
+    }
 
-	timer::timer(const timer& aOther) :
-		iIoTask(aOther.iIoTask),
-		iHandlerProxy(new handler_proxy(*this)),
-		iTimerObject(aOther.iIoTask.timer_io_service().native_object()),
-		iDuration_ms(aOther.iDuration_ms), 
-		iEnabled(aOther.iEnabled),
-		iWaiting(false), 
-		iInReady(false)
-	{
-		if (aOther.waiting())
-			again();
-	}
-	
-	timer& timer::operator=(const timer& aOther)
-	{
-		if (waiting())
-			cancel();
-		iDuration_ms = aOther.iDuration_ms;
-		iEnabled = aOther.iEnabled;
-		if (aOther.waiting())
-			again();
-		return *this;
-	}
-	
-	timer::~timer()
-	{
-		cancel();
-	}
+    timer::timer(async_task& aTask, const i_lifetime& aContext, uint32_t aDuration_ms, bool aInitialWait) :
+        iTask{ aTask },
+        iTaskDestroyed{ aTask },
+        iContextDestroyed{ aContext },
+        iHandlerProxy{ new handler_proxy{ *this } },
+        iDuration_ms{ aDuration_ms },
+        iEnabled{ true },
+        iWaiting{ false },
+        iInReady{ false }
+    {
+        if (aInitialWait)
+            again();
+    }
 
-	async_task& timer::owner_task() const
-	{
-		return iIoTask;
-	}
+    timer::timer(const timer& aOther) :
+        iTask{ aOther.iTask },
+        iTaskDestroyed{ aOther.iTask },
+        iContextDestroyed{ aOther.iContextDestroyed },
+        iHandlerProxy{ new handler_proxy{ *this } },
+        iDuration_ms{ aOther.iDuration_ms },
+        iEnabled{ aOther.iEnabled },
+        iWaiting{ false },
+        iInReady{ false }
+    {
+        if (aOther.waiting())
+            again();
+    }
+    
+    timer& timer::operator=(const timer& aOther)
+    {
+        if (waiting())
+            cancel();
+        iDuration_ms = aOther.iDuration_ms;
+        iEnabled = aOther.iEnabled;
+        if (aOther.waiting())
+            again();
+        return *this;
+    }
+    
+    timer::~timer()
+    {
+        cancel();
+    }
 
-	void timer::enable(bool aWait)
-	{
-		if (iEnabled)
-			throw already_enabled();
-		iEnabled = true;
-		if (aWait)
-			again();
-	}
+    async_task& timer::owner_task() const
+    {
+        return iTask;
+    }
 
-	void timer::disable()
-	{
-		if (!iEnabled)
-			throw already_disabled();
-		if (waiting())
-			cancel();
-		iEnabled = false;
-	}
+    void timer::enable(bool aWait)
+    {
+        if (iEnabled)
+            throw already_enabled();
+        iEnabled = true;
+        if (aWait)
+            again();
+    }
 
-	bool timer::enabled() const
-	{
-		return iEnabled;
-	}
+    void timer::disable()
+    {
+        if (!iEnabled)
+            throw already_disabled();
+        if (waiting())
+            cancel();
+        iEnabled = false;
+    }
 
-	bool timer::disabled() const
-	{
-		return !iEnabled;
-	}
+    bool timer::enabled() const
+    {
+        return iEnabled;
+    }
 
-	void timer::again()
-	{
-		if (disabled())
-			enable(false);
-		if (waiting())
-			throw already_waiting();
-		iTimerObject.expires_from_now(boost::posix_time::milliseconds(iDuration_ms));
-		iTimerObject.async_wait(boost::bind(&handler_proxy::operator(), iHandlerProxy, boost::asio::placeholders::error));
-		iWaiting = true;
-	}
+    bool timer::disabled() const
+    {
+        return !iEnabled;
+    }
 
-	void timer::again_if()
-	{
-		if (!waiting())
-			again();
-	}
+    void timer::again()
+    {
+        if (iTaskDestroyed)
+            return;
+        if (disabled())
+            enable(false);
+        if (waiting())
+            throw already_waiting();
+        timer_object().expires_from_now(boost::posix_time::milliseconds(iDuration_ms));
+        timer_object().async_wait(boost::bind(&handler_proxy::operator(), iHandlerProxy, boost::asio::placeholders::error));
+        iWaiting = true;
+    }
 
-	void timer::cancel()
-	{
-		if (!waiting())
-			return;
-		iHandlerProxy->orphan();
-		iTimerObject.cancel();
-	}
+    void timer::again_if()
+    {
+        if (!waiting())
+            again();
+    }
 
-	void timer::reset()
-	{
-		cancel();
-		again();
-	}
+    void timer::cancel()
+    {
+        if (!waiting())
+            return;
+        iHandlerProxy->orphan();
+        if (!iTaskDestroyed)
+            timer_object().cancel();
+    }
 
-	bool timer::waiting() const
-	{
-		return iWaiting;
-	}
+    void timer::reset()
+    {
+        cancel();
+        again();
+    }
 
-	uint32_t timer::duration() const
-	{
-		return iDuration_ms;
-	}
+    bool timer::waiting() const
+    {
+        return iWaiting;
+    }
 
-	void timer::set_duration(uint32_t aDuration_ms, bool aEffectiveImmediately)
-	{
-		iDuration_ms = aDuration_ms;
-		if (aEffectiveImmediately && waiting())
-		{
-			neolib::lifetime::destroyed_flag destroyed{ *this };
-			cancel();
-			if (destroyed)
-				return;
-			again();
-		}
-	}
+    uint32_t timer::duration() const
+    {
+        return iDuration_ms;
+    }
 
-	uint32_t timer::duration_ms() const
-	{
-		return iDuration_ms;
-	}
+    void timer::set_duration(uint32_t aDuration_ms, bool aEffectiveImmediately)
+    {
+        iDuration_ms = aDuration_ms;
+        if (aEffectiveImmediately && waiting())
+        {
+            destroyed_flag destroyed{ *this };
+            cancel();
+            if (destroyed)
+                return;
+            again();
+        }
+    }
 
-	void timer::handler(const boost::system::error_code& aError)
-	{
-		bool ok = !aError && enabled();
-		if (ok && iInReady && !waiting())
-		{
-			again();
-			return;
-		}
-		iWaiting = false;
-		if (ok)
-		{
-			try
-			{
-				iInReady = true;
-				neolib::lifetime::destroyed_flag destroyed{ *this };
-				if (std::uncaught_exceptions() == 0)
-					ready();
-				else
-					again();
-				if (destroyed)
-					return;
-				iInReady = false;
-			}
-			catch (...)
-			{
-				iInReady = false;
-				throw;
-			}
-		}
-	}
+    uint32_t timer::duration_ms() const
+    {
+        return iDuration_ms;
+    }
 
-	callback_timer::callback_timer(async_task& aIoTask, std::function<void(callback_timer&)> aCallback, uint32_t aDuration_ms, bool aInitialWait) :
-		timer(aIoTask, aDuration_ms, aInitialWait),
-		iCallback(aCallback)
-	{
-	}
+    boost::asio::deadline_timer& timer::timer_object()
+    {
+        if (iTimerObject == std::nullopt)
+        {
+            iTimerObject.emplace(iTask.timer_io_service().native_object());
+            iSink += iTask.Destroying([this]() { iTimerObject = std::nullopt; });
+        }
+        return *iTimerObject;
+    }
 
-	callback_timer::~callback_timer()
-	{
-		cancel();
-	}
+    void timer::handler(const boost::system::error_code& aError)
+    {
+        bool ok = !aError && enabled() && (iContextDestroyed == std::nullopt || !*iContextDestroyed);
+        if (ok && iInReady && !waiting())
+        {
+            again();
+            return;
+        }
+        iWaiting = false;
+        if (ok)
+        {
+            try
+            {
+                iInReady = true;
+                destroyed_flag destroyed{ *this };
+                if (std::uncaught_exceptions() == 0)
+                    ready();
+                else
+                    again();
+                if (destroyed)
+                    return;
+                iInReady = false;
+            }
+            catch (...)
+            {
+                iInReady = false;
+                throw;
+            }
+        }
+    }
 
-	void callback_timer::ready()
-	{
-		iCallback(*this);
-	}
+    callback_timer::callback_timer(async_task& aTask, std::function<void(callback_timer&)> aCallback, uint32_t aDuration_ms, bool aInitialWait) :
+        timer{ aTask, aDuration_ms, aInitialWait },
+        iCallback{ aCallback }
+    {
+    }
+
+    callback_timer::callback_timer(async_task& aTask, const i_lifetime& aContext, std::function<void(callback_timer&)> aCallback, uint32_t aDuration_ms, bool aInitialWait) :
+        timer{ aTask, aContext, aDuration_ms, aInitialWait },
+        iCallback{ aCallback }
+    {
+    }
+
+    callback_timer::~callback_timer()
+    {
+        cancel();
+    }
+
+    void callback_timer::ready()
+    {
+        iCallback(*this);
+    }
 }

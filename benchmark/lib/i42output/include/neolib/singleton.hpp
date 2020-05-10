@@ -35,18 +35,18 @@
 
 #pragma once
 
-#include "neolib.hpp"
+#include <neolib/neolib.hpp>
 
 namespace neolib
 {
-	template <typename T>
-	class singleton
-	{
-	public:
-		static T& instance()
-		{
-			static T sInstance;
-			return sInstance;
-		}
-	};
+    template <typename T>
+    class singleton
+    {
+    public:
+        static T& instance()
+        {
+            static T sInstance;
+            return sInstance;
+        }
+    };
 }

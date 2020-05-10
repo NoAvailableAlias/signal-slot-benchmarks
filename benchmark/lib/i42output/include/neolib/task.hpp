@@ -35,73 +35,78 @@
 
 #pragma once
 
-#include "neolib.hpp"
+#include <neolib/neolib.hpp>
 #include <future>
 #include <atomic>
-#include "i_task.hpp"
+#include <neolib/lifetime.hpp>
+#include <neolib/i_task.hpp>
 
 namespace neolib
 {
-	class task : public i_task
-	{
-		// construction
-	public:
-		task(const std::string& aName = std::string{}) : iName{ aName }, iCancelled{ false }
-		{
-		}
-		// operations
-	public:
-		const std::string& name() const override
-		{
-			return iName;
-		}
-		// implementation
-	public:
-		void cancel() override
-		{
-			iCancelled = true;
-		}
-		bool cancelled() const override
-		{
-			return iCancelled;
-		}
-		// attributes
-	private:
-		std::string iName;
-		std::atomic<bool> iCancelled;
-	};
+    template <typename Base = i_task>
+    class task : public Base
+    {
+        // construction
+    public:
+        task(const std::string& aName = std::string{}) : iName{ aName }, iCancelled{ false }
+        {
+        }
+        // operations
+    public:
+        const std::string& name() const override
+        {
+            return iName;
+        }
+        // implementation
+    public:
+        void do_work(yield_type aYieldType = yield_type::NoYield) override
+        {
+        }
+        void cancel() override
+        {
+            iCancelled = true;
+        }
+        bool cancelled() const override
+        {
+            return iCancelled;
+        }
+        // attributes
+    private:
+        std::string iName;
+        std::atomic<bool> iCancelled;
+    };
 
-	template <typename T>
-	class function_task : public task
-	{
-	public:
-		function_task(std::function<T()> aFunction) : task{}, iFunction{ aFunction }
-		{
-		}
-	public:
-		std::future<T> get_future()
-		{
-			return iPromise.get_future();
-		}
-	public:
-		const std::string& name() const override
-		{
-			static std::string sName = "neogfx::function_task";
-			return sName;
-		}
-		void run() override
-		{
-			iPromise.set_value(iFunction());
-		}
-	private:
-		std::function<T()> iFunction;
-		std::promise<T> iPromise;
-	};
+    template <typename T>
+    class function_task : public task<>
+    {
+    public:
+        function_task(std::function<T()> aFunction) : task{}, iFunction{ aFunction }
+        {
+        }
+    public:
+        std::future<T> get_future()
+        {
+            return iPromise.get_future();
+        }
+    public:
+        const std::string& name() const override
+        {
+            static std::string sName = "neogfx::function_task";
+            return sName;
+        }
+        void run(yield_type) override
+        {
+            iPromise.set_value(iFunction());
+        }
+    private:
+        std::function<T()> iFunction;
+        std::promise<T> iPromise;
+    };
 
-	template <>
-	inline void function_task<void>::run()
-	{
-		iFunction();
-		iPromise.set_value();
-	}
+    template <>
+    inline void function_task<void>::run(yield_type)
+    {
+        iFunction();
+        iPromise.set_value();
+    }
 }

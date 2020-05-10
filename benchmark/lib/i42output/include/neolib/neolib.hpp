@@ -36,7 +36,103 @@
 
 #pragma once
 
+#include <type_traits>
 #include <cstdint>
+#include <utility>
+#include <variant>
+
+#ifdef NDEBUG
+constexpr bool ndebug = true;
+#else
+constexpr bool ndebug = false;
+#endif
+
+#define rvalue_cast static_cast
+
+namespace neolib
+{
+    struct sfinae {};
+
+    template <typename T>
+    using to_const_reference_t = const std::remove_reference_t<T>&;
+    template <typename T>
+    inline to_const_reference_t<T> to_const(T&& object)
+    {
+        return const_cast<to_const_reference_t<T>>(object);
+    }
+
+    template <typename T1, typename T2>
+    class pair;
+
+    namespace detail
+    {
+        template <typename T>
+        struct is_pair { static constexpr bool value = false; };
+        template <typename T1, typename T2>
+        struct is_pair<std::pair<T1, T2>> { static constexpr bool value = true; };
+        template <typename T1, typename T2>
+        struct is_pair<const std::pair<T1, T2>> { static constexpr bool value = true; };
+        template <typename T>
+        constexpr bool is_pair_v = is_pair<T>::value;
+
+        template <typename T>
+        constexpr bool abstract_class_possible_v = std::is_class_v<T> && !is_pair_v<T>;
+
+        template <typename T, typename AT, typename = sfinae>
+        struct correct_const;
+        template <typename T, typename AT>
+        struct correct_const<T, AT, typename std::enable_if<!std::is_const_v<T>, sfinae>::type> { typedef AT type; };
+        template <typename T, typename AT>
+        struct correct_const<T, AT, typename std::enable_if<std::is_const_v<T>, sfinae>::type> { typedef const AT type; };
+
+        template <typename T, typename AT>
+        using correct_const_t = typename correct_const<T, AT>::type;
+
+        template <typename, typename = sfinae>
+        struct abstract_type : std::false_type {};
+        template <typename T>
+        struct abstract_type<T, typename std::enable_if<abstract_class_possible_v<T>, sfinae>::type> : std::true_type { typedef correct_const_t<T, typename T::abstract_type> type; };
+        template <typename T>
+        struct abstract_type<T, typename std::enable_if<std::is_arithmetic_v<T>, sfinae>::type> : std::true_type { typedef correct_const_t<T, T> type; };
+        template <typename T>
+        struct abstract_type<T, typename std::enable_if<std::is_enum_v<T>, sfinae>::type> : std::true_type { typedef correct_const_t<T, T> type; };
+        template <typename T>
+        struct abstract_type<T, typename std::enable_if<std::is_pointer_v<T>, sfinae>::type> : std::true_type { typedef correct_const_t<T, T> type; };
+        template <typename T1, typename T2>
+        struct abstract_type<std::pair<T1, pair<T1, T2>>> : std::false_type { typedef typename abstract_type<pair<T1, T2>>::type type; };
+        template <typename T1, typename T2>
+        struct abstract_type<const std::pair<T1, pair<T1, T2>>> : std::false_type { typedef typename abstract_type<const pair<T1, T2>>::type type; };
+        template <>
+        struct abstract_type<std::monostate> : std::true_type { typedef std::monostate type; };
+    }
+
+    template <typename T>
+    using abstract_t = typename detail::abstract_type<T>::type;
+
+    template <typename T, typename = std::enable_if_t<detail::abstract_type<T>::value, sfinae>>
+    inline const abstract_t<T>& to_abstract(const T& aArgument)
+    {
+        return static_cast<const abstract_t<T>&>(aArgument);
+    }
+
+    template <typename T, typename = std::enable_if_t<detail::abstract_type<T>::value, sfinae>>
+    inline abstract_t<T>& to_abstract(T& aArgument)
+    {
+        return static_cast<abstract_t<T>&>(aArgument);
+    }
+
+    template <typename T1, typename T2>
+    inline const abstract_t<pair<T1, T2>>& to_abstract(const std::pair<T1, pair<T1, T2>>& aArgument)
+    {
+        return static_cast<const abstract_t<pair<T1, T2>>&>(aArgument.second);
+    }
+
+    template <typename T1, typename T2>
+    inline abstract_t<neolib::pair<T1, T2>>& to_abstract(std::pair<T1, pair<T1, T2>>& aArgument)
+    {
+        return static_cast<abstract_t<pair<T1, T2>>&>(aArgument.second);
+    }
+}
 
 #ifdef NEOLIB_HOSTED_ENVIRONMENT
 
@@ -46,6 +142,13 @@
 
 #ifdef _WIN32
 #include "win32.hpp"
+#endif
+
+#ifdef USING_BOOST
+#ifndef API
+#include <boost/dll.hpp>
+#define API extern "C" BOOST_SYMBOL_EXPORT
+#endif
 #endif
 
 #endif // NEOLIB_HOSTED_ENVIRONMENT
