@@ -21,7 +21,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #include <neolib/neolib.hpp>
 #include <vector>
-#include <deque>
 #include <unordered_map>
 #include <unordered_set>
 #include <optional>
@@ -318,7 +317,7 @@ namespace neolib
                 handleInSameThreadAsEmitter{ handleInSameThreadAsEmitter }
             {}
         };
-        typedef std::unordered_map<cookie, handler> handler_list_t;
+        typedef std::vector<std::pair<cookie, handler>> handler_list_t;
         struct context
         {
             bool accepted;
@@ -570,7 +569,7 @@ namespace neolib
             std::scoped_lock<switchable_mutex> lock{ event_mutex() };
             invalidate_handler_list();
             auto id = next_cookie();
-            instance().handlers.emplace(id, handler{ async_event_queue::instance(), aUniqueId, make_ref<callback_callable>(aCallable) });
+            instance().handlers.emplace_back(id, handler{ async_event_queue::instance(), aUniqueId, make_ref<callback_callable>(aCallable) });
             return event_handle{ control(), id };
         }
         event_handle operator()(const concrete_callable& aCallable, const void* aUniqueId = nullptr) const
@@ -601,7 +600,7 @@ namespace neolib
         {
             std::scoped_lock<switchable_mutex> lock{ event_mutex() };
             invalidate_handler_list();
-            instance().handlers.erase(instance().handlers.find(aHandle.id()));
+            instance().handlers.erase(find_handler(aHandle.id()));
         }
         void unsubscribe(const void* aClientId) const
         {
@@ -637,7 +636,7 @@ namespace neolib
         {
             std::scoped_lock<switchable_mutex> lock{ event_mutex() };
             if (--get_handler(aCookie).referenceCount == 0u)
-                instance().handlers.erase(instance().handlers.find(aCookie));
+                instance().handlers.erase(find_handler(aCookie));
         }
         long use_count(cookie aCookie) const override
         {
@@ -719,9 +718,13 @@ namespace neolib
             iInstanceDataPtr = &*iInstanceData;
             return *iInstanceDataPtr;
         }
+        typename handler_list_t::iterator find_handler(cookie aHandleId) const
+        {
+            return std::find_if(instance().handlers.begin(), instance().handlers.end(), [aHandleId](auto const& h) { return h.first == aHandleId; });
+        }
         handler& get_handler(cookie aHandleId) const
         {
-            auto existing = instance().handlers.find(aHandleId);
+            auto existing = find_handler(aHandleId);
             if (existing != instance().handlers.end())
                 return existing->second;
             throw event_handler_not_found();
