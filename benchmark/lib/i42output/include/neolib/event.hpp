@@ -22,11 +22,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include <neolib/neolib.hpp>
 #include <vector>
 #include <deque>
+#include <unordered_map>
 #include <unordered_set>
 #include <optional>
 #include <mutex>
 #include <atomic>
 
+#include <neolib/allocator.hpp>
 #include <neolib/scoped.hpp>
 #include <neolib/lifetime.hpp>
 #include <neolib/jar.hpp>
@@ -317,7 +319,7 @@ namespace neolib
                 handleInSameThreadAsEmitter{ handleInSameThreadAsEmitter }
             {}
         };
-        typedef neolib::jar<handler> handler_list_t;
+        typedef std::unordered_map<cookie, handler> handler_list_t;
         struct context
         {
             bool accepted;
@@ -383,7 +385,7 @@ namespace neolib
         void handle_in_same_thread_as_emitter(cookie aHandleId) override
         {
             std::scoped_lock<switchable_mutex> lock{ event_mutex() };
-            instance().handlers[aHandleId].handleInSameThreadAsEmitter = true;
+            get_handler(aHandleId).handleInSameThreadAsEmitter = true;
         }
     public:
         void push_context() const override
@@ -462,13 +464,13 @@ namespace neolib
                 instance().triggering = true;
                 instance().triggerId = 0ull;
                 for (auto& handler : instance().handlers)
-                    handler.triggerId = 0ull;
+                    handler.second.triggerId = 0ull;
             }
             auto triggerId = ++instance().triggerId;
             optional_async_transaction transaction;
             for (std::size_t handlerIndex = {}; handlerIndex < instance().handlers.size();)
             {
-                auto& handler = instance().handlers.at_index(handlerIndex++);
+                auto& handler = std::next(instance().handlers.begin(), handlerIndex++)->second;
                 if (handler.triggerId < triggerId)
                     handler.triggerId = triggerId;
                 else if (handler.triggerId == triggerId)
@@ -513,13 +515,13 @@ namespace neolib
                 instance().triggering = true;
                 instance().triggerId = 0ull;
                 for (auto& handler : instance().handlers)
-                    handler.triggerId = 0ull;
+                    handler.second.triggerId = 0ull;
             }
             auto triggerId = ++instance().triggerId;
             optional_async_transaction transaction;
             for (std::size_t handlerIndex = {}; handlerIndex < instance().handlers.size();)
             {
-                auto& handler = instance().handlers.at_index(handlerIndex++);
+                auto& handler = std::next(instance().handlers.begin(), handlerIndex++)->second;
                 if (handler.triggerId < triggerId)
                     handler.triggerId = triggerId;
                 else if (handler.triggerId == triggerId)
@@ -568,7 +570,9 @@ namespace neolib
         {
             std::scoped_lock<switchable_mutex> lock{ event_mutex() };
             invalidate_handler_list();
-            return event_handle{ control(), instance().handlers.emplace(async_event_queue::instance(), aUniqueId, make_ref<callback_callable>(aCallable)) };
+            auto id = next_cookie();
+            instance().handlers.emplace(id, handler{ async_event_queue::instance(), aUniqueId, make_ref<callback_callable>(aCallable) });
+            return event_handle{ control(), id };
         }
         event_handle operator()(const concrete_callable& aCallable, const void* aUniqueId = nullptr) const
         {
@@ -598,14 +602,14 @@ namespace neolib
         {
             std::scoped_lock<switchable_mutex> lock{ event_mutex() };
             invalidate_handler_list();
-            instance().handlers.remove(aHandle.id());
+            instance().handlers.erase(instance().handlers.find(aHandle.id()));
         }
         void unsubscribe(const void* aClientId) const
         {
             std::scoped_lock<switchable_mutex> lock{ event_mutex() };
             invalidate_handler_list();
             for (auto h = instance().handlers.begin(); h != instance().handlers.end();)
-                if ((*h).clientId == aClientId)
+                if ((*h).second.clientId == aClientId)
                     h = instance().handlers.erase(h);
                 else
                     ++h;
@@ -621,21 +625,25 @@ namespace neolib
             return unsubscribe(static_cast<const void*>(&aClientId));
         }
     private:
+        cookie next_cookie() const 
+        {
+            return ++iNextCookie;
+        }
         void add_ref(cookie aCookie) override
         {
             std::scoped_lock<switchable_mutex> lock{ event_mutex() };
-            ++instance().handlers[aCookie].referenceCount;
+            ++get_handler(aCookie).referenceCount;
         }
         void release(cookie aCookie) override
         {
             std::scoped_lock<switchable_mutex> lock{ event_mutex() };
-            if (--instance().handlers[aCookie].referenceCount == 0u)
-                instance().handlers.remove(aCookie);
+            if (--get_handler(aCookie).referenceCount == 0u)
+                instance().handlers.erase(instance().handlers.find(aCookie));
         }
         long use_count(cookie aCookie) const override
         {
             std::scoped_lock<switchable_mutex> lock{ event_mutex() };
-            return instance().handlers[aCookie].referenceCount;
+            return get_handler(aCookie).referenceCount;
         }
     private:
         void invalidate_handler_list() const
@@ -671,8 +679,8 @@ namespace neolib
             std::scoped_lock<switchable_mutex> lock{ event_mutex() };
             std::unordered_set<async_event_queue*> queues;
             for (auto const& h : instance().handlers)
-                if (!h.queueDestroyed)
-                    queues.insert(h.queue);
+                if (!h.second.queueDestroyed)
+                    queues.insert(h.second.queue);
             for (auto const& q : queues)
                 q->unqueue(*this);
         }
@@ -680,8 +688,8 @@ namespace neolib
         {
             std::scoped_lock<switchable_mutex> lock{ event_mutex() };
             for (auto& h : instance().handlers)
-                if (!h.queueDestroyed)
-                    h.queue->remove(*this);
+                if (!h.second.queueDestroyed)
+                    h.second.queue->remove(*this);
             iInstanceDataPtr = nullptr;
             iInstanceData = std::nullopt;
         }
@@ -712,11 +720,19 @@ namespace neolib
             iInstanceDataPtr = &*iInstanceData;
             return *iInstanceDataPtr;
         }
+        handler& get_handler(cookie aHandleId) const
+        {
+            auto existing = instance().handlers.find(aHandleId);
+            if (existing != instance().handlers.end())
+                return existing->second;
+            throw event_handler_not_found();
+        }
     private:
         self_type& iAlias; // bit of a hack: most event operations are logically const as we want to be able to trigger events from const methods of the containing object
         mutable std::atomic<i_event_control*> iControl;
         mutable std::optional<instance_data> iInstanceData;
         mutable std::atomic<instance_data*> iInstanceDataPtr;
+        mutable std::atomic<cookie> iNextCookie{ 0 };
     };
 
     class sink

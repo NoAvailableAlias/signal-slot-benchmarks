@@ -29,6 +29,7 @@ namespace neolib
 {
     struct event_destroyed : std::logic_error { event_destroyed() : std::logic_error{ "neolib::event_destroyed" } {} };
     struct event_queue_destroyed : std::logic_error { event_queue_destroyed() : std::logic_error{ "neolib::event_queue_destroyed" } {} };
+    struct event_handler_not_found : std::logic_error { event_handler_not_found() : std::logic_error{ "neolib::event_handler_not_found" } {} };
 
     inline switchable_mutex& event_mutex()
     {
