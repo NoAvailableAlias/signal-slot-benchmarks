@@ -299,8 +299,8 @@ namespace neolib
                 reverse_indices().insert(reverse_indices().end(), (aCookie + 1) - reverse_indices().size(), INVALID_REVERSE_INDEX);
             if (reverse_indices()[aCookie] != INVALID_REVERSE_INDEX)
                 throw cookie_already_added();
-            iterator result;
-            if constexpr (!detail::is_smart_ptr_v<value_type>)
+            std::optional<iterator> result;
+            if constexpr (!detail::is_smart_ptr_v<value_type> || std::is_abstract_v<typename value_type::element_type>)
                 result = items().emplace(items().end(), std::forward<Args>(aArgs)...);
             else
                 result = items().insert(items().end(), value_type{ new typename value_type::element_type{std::forward<Args>(aArgs)...} });
@@ -314,7 +314,7 @@ namespace neolib
                 throw;
             }
             reverse_indices()[aCookie] = items().size() - 1;
-            return result;
+            return *result;
         }
         iterator remove(const value_type& aItem)
         {
