@@ -1,6 +1,6 @@
 // i_reference_counted.hpp
 /*
- *  Copyright (c) 2019 Leigh Johnston.
+ *  Copyright (c) 2019, 2020 Leigh Johnston.
  *
  *  All rights reserved.
  *
@@ -83,9 +83,12 @@ namespace neolib
     public:
         typedef self_type abstract_type;
     public:
+        virtual ~i_ref_ptr() = default;
+    public:
         virtual bool reference_counted() const = 0;
         virtual void reset(Interface* aObject = 0, bool aReferenceCounted = true) = 0;
         virtual Interface* release() = 0;
+        virtual Interface* detach() = 0;
         virtual bool valid() const = 0;
         virtual Interface* ptr() const = 0;
         virtual Interface* operator->() const = 0;

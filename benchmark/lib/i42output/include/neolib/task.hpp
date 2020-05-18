@@ -59,8 +59,9 @@ namespace neolib
         }
         // implementation
     public:
-        void do_work(yield_type aYieldType = yield_type::NoYield) override
+        bool do_work(yield_type aYieldType = yield_type::NoYield) override
         {
+            return false;
         }
         void cancel() override
         {

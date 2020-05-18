@@ -80,8 +80,8 @@ namespace neolib
         void abort(bool aWait = true);
         void wait() const;
         wait_result wait(const waitable_event_list& aEventList) const;
-        bool msg_wait(const message_queue& aMessageQueue) const;
-        wait_result msg_wait(const message_queue& aMessageQueue, const waitable_event_list& aEventList) const;
+        bool msg_wait(const i_message_queue& aMessageQueue) const;
+        wait_result msg_wait(const i_message_queue& aMessageQueue, const waitable_event_list& aEventList) const;
         void block();
         void unblock();
         bool started() const;

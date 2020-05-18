@@ -41,9 +41,9 @@
 #include <mutex>
 #include <condition_variable>
 #include <vector>
-#include "message_queue.hpp"
-#include "waitable.hpp"
-#include "variant.hpp"
+#include <neolib/i_message_queue.hpp>
+#include <neolib/waitable.hpp>
+#include <neolib/variant.hpp>
 
 namespace neolib
 {
@@ -68,8 +68,8 @@ namespace neolib
         void signal_all() const;
         void wait() const;
         bool wait(uint32_t aTimeout_ms) const;
-        bool msg_wait(const message_queue& aMessageQueue) const;
-        bool msg_wait(const message_queue& aMessageQueue, uint32_t aTimeout_ms) const;
+        bool msg_wait(const i_message_queue& aMessageQueue) const;
+        bool msg_wait(const i_message_queue& aMessageQueue, uint32_t aTimeout_ms) const;
         void reset() const;
     private:
         mutable std::mutex iMutex;
@@ -108,8 +108,8 @@ namespace neolib
     public:
         wait_result wait() const;
         wait_result wait(const waitable& aWaitable) const;
-        wait_result msg_wait(const message_queue& aMessageQueue) const;
-        wait_result msg_wait(const message_queue& aMessageQueue, const waitable& aWaitable) const;
+        wait_result msg_wait(const i_message_queue& aMessageQueue) const;
+        wait_result msg_wait(const i_message_queue& aMessageQueue, const waitable& aWaitable) const;
 
         // attributes
     private:

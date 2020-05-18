@@ -1,7 +1,7 @@
 // event.cpp
 /*
-  Transplanted from neogfx C++ GUI Library
-  Copyright (c) 2015-2018 Leigh Johnston.  All Rights Reserved.
+  Transplanted from neogfx C++ App/Game Engine
+  Copyright (c) 2015, 2018, 2020 Leigh Johnston.  All Rights Reserved.
   
   This program is free software: you can redistribute it and / or modify
   it under the terms of the GNU General Public License as published by
@@ -83,6 +83,18 @@ namespace neolib
     bool async_event_queue::exec()
     {
         return publish_events();
+    }
+
+    async_event_queue::transaction async_event_queue::enqueue(callback_ptr aCallback, bool aStatelessHandler, const optional_transaction& aTransaction)
+    {
+        if (aStatelessHandler)
+        {
+            std::scoped_lock<switchable_mutex> lock{ event_mutex() };
+            for (auto& e : iEvents)
+                if (&e.callback->event() == &aCallback->event() && e.callback->identity() == aCallback->identity())
+                    return {};
+        }
+        return add(std::move(aCallback), aTransaction);
     }
 
     void async_event_queue::terminate()

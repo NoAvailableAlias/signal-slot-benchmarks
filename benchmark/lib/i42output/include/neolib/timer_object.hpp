@@ -1,6 +1,6 @@
-// i_task.hpp
+// timer_object.hpp
 /*
- *  Copyright (c) 2007, 2020 Leigh Johnston.
+ *  Copyright (c) 2020 Leigh Johnston.
  *
  *  All rights reserved.
  *
@@ -36,24 +36,31 @@
 #pragma once
 
 #include <neolib/neolib.hpp>
-#include <string>
-#include <neolib/i_thread.hpp>
+#include <optional>
+#include <set>
+#include <chrono>
+#include <neolib/i_async_task.hpp>
+#include <neolib/i_timer_object.hpp>
+#include <neolib/dirty_list.hpp>
 
 namespace neolib
 {
-    class i_task
+    class timer_object : public reference_counted<i_timer_object>
     {
-        // construction
     public:
-        virtual ~i_task() = default;
-        // operations
+        timer_object(i_timer_service& aService);
+        ~timer_object();
     public:
-        virtual const std::string& name() const = 0;
-        // implementation
+        void expires_at(const std::chrono::steady_clock::time_point& aDeadline) override;
+        void async_wait(i_timer_subscriber& aSubscriber) override;
+        void unsubscribe(i_timer_subscriber& aSubscriber) override;
+        void cancel() override;
     public:
-        virtual void run(yield_type aYieldType = yield_type::NoYield) = 0;
-        virtual bool do_work(yield_type aYieldType = yield_type::NoYield) = 0;
-        virtual void cancel() = 0;
-        virtual bool cancelled() const = 0;
+        bool poll() override;
+    private:
+        i_timer_service& iService;
+        std::optional<std::chrono::steady_clock::time_point> iExpiryTime;
+        std::set<ref_ptr<i_timer_subscriber>> iSubscribers;
+        dirty_list iDirtySubscriberList;
     };
 }

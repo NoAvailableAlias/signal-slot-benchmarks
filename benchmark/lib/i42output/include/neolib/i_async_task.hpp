@@ -1,6 +1,6 @@
-// async_task.hpp v1.0
+// async_task.hpp
 /*
- *  Copyright (c) 2007 Leigh Johnston.
+ *  Copyright (c) 2007, 2020 Leigh Johnston.
  *
  *  All rights reserved.
  *
@@ -38,20 +38,38 @@
 #include <neolib/neolib.hpp>
 #include <neolib/i_thread.hpp>
 #include <neolib/i_plugin_event.hpp>
+#include <neolib/i_message_queue.hpp>
+#include <neolib/i_task.hpp>
 
 namespace neolib
 {
-    class i_io_service
+    class i_timer_object;
+
+    class i_async_service
     {
+        // types
+    public:
+        typedef i_async_service abstract_type;
         // constants
     public:
         static constexpr std::size_t kDefaultPollCount = 256;
         // construction
     public:
-        virtual ~i_io_service() = default;
+        virtual ~i_async_service() = default;
         // operations
     public:
-        virtual bool do_io(bool aProcessEvents = true, std::size_t aMaximumPollCount = kDefaultPollCount) = 0;
+        virtual bool poll(bool aProcessEvents = true, std::size_t aMaximumPollCount = kDefaultPollCount) = 0;
+    };
+
+    class i_timer_service : public i_async_service
+    {
+        // types
+    public:
+        typedef i_timer_service abstract_type;
+        // operations
+    public:
+        virtual i_timer_object& create_timer_object() = 0;
+        virtual void remove_timer_object(i_timer_object& aObject) = 0;
     };
 
     class i_async_task : public i_task
@@ -66,14 +84,20 @@ namespace neolib
         // operations
     public:
         virtual i_thread& thread() const = 0;
-        virtual bool do_io(yield_type aYieldIfNoWork = yield_type::NoYield) = 0;
-        virtual i_io_service& timer_io_service() = 0;
-        virtual i_io_service& networking_io_service() = 0;
+        virtual bool joined() const = 0;
+        virtual void join(i_thread& aThread) = 0;
+        virtual void detach() = 0;
+        virtual i_timer_service& timer_service() = 0;
+        virtual i_async_service& io_service() = 0;
         virtual bool have_message_queue() const = 0;
         virtual bool have_messages() const = 0;
+        virtual i_message_queue& create_message_queue(std::function<bool()> aIdleFunction = std::function<bool()>()) = 0;
+        virtual const i_message_queue& message_queue() const = 0;
+        virtual i_message_queue& message_queue() = 0;
         virtual bool pump_messages() = 0;
         virtual bool halted() const = 0;
         virtual void halt() = 0;
+    public:
         virtual void idle() = 0;
     };
 }

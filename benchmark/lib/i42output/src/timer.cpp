@@ -1,6 +1,6 @@
 // timer.cpp
 /*
- *  Copyright (c) 2007 Leigh Johnston.
+ *  Copyright (c) 2007, 2020 Leigh Johnston.
  *
  *  All rights reserved.
  *
@@ -34,15 +34,13 @@
 */
 
 #include <neolib/neolib.hpp>
-#include <neolib/async_task.hpp>
 #include <neolib/timer.hpp>
 
 namespace neolib
 {
-    timer::timer(async_task& aTask, uint32_t aDuration_ms, bool aInitialWait) :
+    timer::timer(i_async_task& aTask, uint32_t aDuration_ms, bool aInitialWait) :
         iTask{ aTask },
         iTaskDestroyed{ aTask },
-        iHandlerProxy{ new handler_proxy{ *this } },
         iDuration_ms{ aDuration_ms },
         iEnabled{ true },
         iWaiting{ false },
@@ -52,11 +50,10 @@ namespace neolib
             again();
     }
 
-    timer::timer(async_task& aTask, const i_lifetime& aContext, uint32_t aDuration_ms, bool aInitialWait) :
+    timer::timer(i_async_task& aTask, const i_lifetime& aContext, uint32_t aDuration_ms, bool aInitialWait) :
         iTask{ aTask },
         iTaskDestroyed{ aTask },
         iContextDestroyed{ aContext },
-        iHandlerProxy{ new handler_proxy{ *this } },
         iDuration_ms{ aDuration_ms },
         iEnabled{ true },
         iWaiting{ false },
@@ -70,7 +67,6 @@ namespace neolib
         iTask{ aOther.iTask },
         iTaskDestroyed{ aOther.iTask },
         iContextDestroyed{ aOther.iContextDestroyed },
-        iHandlerProxy{ new handler_proxy{ *this } },
         iDuration_ms{ aOther.iDuration_ms },
         iEnabled{ aOther.iEnabled },
         iWaiting{ false },
@@ -94,9 +90,11 @@ namespace neolib
     timer::~timer()
     {
         cancel();
+        if (iTimerObject && iTimerSubcriber)
+            timer_object().unsubscribe(*iTimerSubcriber);
     }
 
-    async_task& timer::owner_task() const
+    i_async_task& timer::owner_task() const
     {
         return iTask;
     }
@@ -137,8 +135,11 @@ namespace neolib
             enable(false);
         if (waiting())
             throw already_waiting();
-        timer_object().expires_from_now(boost::posix_time::milliseconds(iDuration_ms));
-        timer_object().async_wait(boost::bind(&handler_proxy::operator(), iHandlerProxy, boost::asio::placeholders::error));
+        timer_object().expires_from_now(std::chrono::milliseconds(iDuration_ms));
+        if (iTimerSubcriber)
+            timer_object().async_wait(*iTimerSubcriber);
+        else
+            iTimerSubcriber = timer_object().async_wait([this]() { handler(); });
         iWaiting = true;
     }
 
@@ -152,7 +153,6 @@ namespace neolib
     {
         if (!waiting())
             return;
-        iHandlerProxy->orphan();
         if (!iTaskDestroyed)
             timer_object().cancel();
     }
@@ -191,19 +191,19 @@ namespace neolib
         return iDuration_ms;
     }
 
-    boost::asio::deadline_timer& timer::timer_object()
+    i_timer_object& timer::timer_object()
     {
-        if (iTimerObject == std::nullopt)
+        if (iTimerObject == nullptr)
         {
-            iTimerObject.emplace(iTask.timer_io_service().native_object());
-            iSink += iTask.Destroying([this]() { iTimerObject = std::nullopt; });
+            iTimerObject = iTask.timer_service().create_timer_object();
+            iSink += iTask.destroying([this]() { iTimerObject = nullptr; });
         }
         return *iTimerObject;
     }
 
-    void timer::handler(const boost::system::error_code& aError)
+    void timer::handler()
     {
-        bool ok = !aError && enabled() && (iContextDestroyed == std::nullopt || !*iContextDestroyed);
+        bool ok = enabled() && (iContextDestroyed == std::nullopt || !*iContextDestroyed);
         if (ok && iInReady && !waiting())
         {
             again();
@@ -232,13 +232,13 @@ namespace neolib
         }
     }
 
-    callback_timer::callback_timer(async_task& aTask, std::function<void(callback_timer&)> aCallback, uint32_t aDuration_ms, bool aInitialWait) :
+    callback_timer::callback_timer(i_async_task& aTask, std::function<void(callback_timer&)> aCallback, uint32_t aDuration_ms, bool aInitialWait) :
         timer{ aTask, aDuration_ms, aInitialWait },
         iCallback{ aCallback }
     {
     }
 
-    callback_timer::callback_timer(async_task& aTask, const i_lifetime& aContext, std::function<void(callback_timer&)> aCallback, uint32_t aDuration_ms, bool aInitialWait) :
+    callback_timer::callback_timer(i_async_task& aTask, const i_lifetime& aContext, std::function<void(callback_timer&)> aCallback, uint32_t aDuration_ms, bool aInitialWait) :
         timer{ aTask, aContext, aDuration_ms, aInitialWait },
         iCallback{ aCallback }
     {

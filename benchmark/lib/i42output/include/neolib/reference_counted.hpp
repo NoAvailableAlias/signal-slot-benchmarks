@@ -202,6 +202,10 @@ namespace neolib
             if (valid() && iReferenceCounted)
                 iObject->add_ref();
         }
+        ref_ptr(ref_ptr&& aOther) :
+            iObject{ aOther.detach() }, iReferenceCounted{ aOther.reference_counted() }
+        {
+        }
         ref_ptr(const abstract_type& aOther) :
             iObject{ nullptr }, iReferenceCounted{ true }
         {
@@ -221,6 +225,11 @@ namespace neolib
                 iObject->add_ref();
         }
         template <typename Interface2, typename = std::enable_if_t<std::is_base_of_v<Interface, Interface2>, sfinae>>
+        ref_ptr(ref_ptr<Interface2>&& aOther) :
+            iObject{ aOther.detach() }, iReferenceCounted{ aOther.reference_counted() }
+        {
+        }
+        template <typename Interface2, typename = std::enable_if_t<std::is_base_of_v<Interface, Interface2>, sfinae>>
         ref_ptr(const i_ref_ptr<Interface2>& aOther) :
             iObject{ aOther.ptr() }, iReferenceCounted{ aOther.reference_counted() }
         {
@@ -230,11 +239,25 @@ namespace neolib
         ~ref_ptr()
         {
             if (valid() && iReferenceCounted)
-                iObject->release();
+            {
+                auto releasingObject = iObject;
+                iObject = nullptr;
+                releasingObject->release();
+            }
         }
         ref_ptr& operator=(const ref_ptr& aOther)
         {
+            if (&aOther == this)
+                return *this;
             reset(aOther.ptr(), aOther.reference_counted());
+            return *this;
+        }
+        ref_ptr& operator=(ref_ptr&& aOther)
+        {
+            if (&aOther == this)
+                return *this;
+            iObject = aOther.detach();
+            iReferenceCounted = aOther.reference_counted();
             return *this;
         }
         ref_ptr& operator=(const abstract_type& aOther)
@@ -250,6 +273,15 @@ namespace neolib
             if (&aOther == this)
                 return *this;
             reset(aOther.ptr(), aOther.reference_counted());
+            return *this;
+        }
+        template <typename Interface2, typename = std::enable_if_t<std::is_base_of_v<Interface, Interface2>, sfinae>>
+        ref_ptr& operator=(ref_ptr<Interface2>&& aOther)
+        {
+            if (&aOther == this)
+                return *this;
+            iObject = aOther.detach();
+            iReferenceCounted = aOther.reference_counted();
             return *this;
         }
         template <typename Interface2, typename = std::enable_if_t<std::is_base_of_v<Interface, Interface2>, sfinae>>
@@ -291,6 +323,12 @@ namespace neolib
             iObject = nullptr;
             return releasedObject;
         }
+        Interface* detach() override
+        {
+            auto detached = iObject;
+            iObject = nullptr;
+            return detached;
+        }
         bool valid() const override
         {
             return iObject != nullptr;
@@ -315,9 +353,15 @@ namespace neolib
         template <typename Interface2 = Interface, typename = std::enable_if_t<std::is_base_of_v<Interface, Interface2>, sfinae>>
         void reset(Interface2* aObject = nullptr, bool aReferenceCounted = true)
         {
+            if (iObject == aObject)
+                return;
             ref_ptr copy(*this);
             if (valid() && iReferenceCounted)
-                iObject->release();
+            {
+                auto releasingObject = iObject;
+                iObject = nullptr;
+                releasingObject->release();
+            }
             iObject = aObject;
             iReferenceCounted = aReferenceCounted;
             if (valid() && iReferenceCounted)

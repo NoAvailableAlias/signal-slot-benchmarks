@@ -84,7 +84,7 @@ namespace neolib
         return result;
     }
 
-    bool waitable_event::msg_wait(const message_queue& aMessageQueue) const
+    bool waitable_event::msg_wait(const i_message_queue& aMessageQueue) const
     {
         for(;;)
         {
@@ -96,7 +96,7 @@ namespace neolib
         }
     }
 
-    bool waitable_event::msg_wait(const message_queue& aMessageQueue, uint32_t aTimeout_ms) const
+    bool waitable_event::msg_wait(const i_message_queue& aMessageQueue, uint32_t aTimeout_ms) const
     {
         auto startTime = std::chrono::steady_clock::now();
         for(;;)
@@ -141,7 +141,7 @@ namespace neolib
         }
     }
 
-    wait_result waitable_event_list::msg_wait(const message_queue& aMessageQueue) const
+    wait_result waitable_event_list::msg_wait(const i_message_queue& aMessageQueue) const
     {
         for(;;)
         {
@@ -154,7 +154,7 @@ namespace neolib
         }
     }
 
-    wait_result waitable_event_list::msg_wait(const message_queue& aMessageQueue, const waitable& aWaitable) const
+    wait_result waitable_event_list::msg_wait(const i_message_queue& aMessageQueue, const waitable& aWaitable) const
     {
         for(;;)
         {

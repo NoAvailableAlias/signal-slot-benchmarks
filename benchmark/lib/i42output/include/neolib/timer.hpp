@@ -1,6 +1,6 @@
 // timer.hpp
 /*
- *  Copyright (c) 2007 Leigh Johnston.
+ *  Copyright (c) 2007, 2020 Leigh Johnston.
  *
  *  All rights reserved.
  *
@@ -42,11 +42,11 @@
 #include <neolib/noncopyable.hpp>
 #include <neolib/lifetime.hpp>
 #include <neolib/event.hpp>
+#include <neolib/i_timer_object.hpp>
+#include <neolib/i_async_task.hpp>
 
 namespace neolib
 {
-    class async_task;
-
     class timer : private noncopyable, public lifetime
     {
         // types
@@ -54,41 +54,16 @@ namespace neolib
         struct already_waiting : std::logic_error { already_waiting() : std::logic_error("neolib::timer::already_waiting") {} };
         struct already_enabled : std::logic_error { already_enabled() : std::logic_error("neolib::timer::already_enabled") {} };
         struct already_disabled : std::logic_error { already_disabled() : std::logic_error("neolib::timer::already_disabled") {} };
-    private:
-        class handler_proxy
-        {
-        public:
-            handler_proxy(timer& aParent) : iParent(aParent), iOrphaned(false)
-            {
-            }
-        public:
-            void operator()(const boost::system::error_code& aError)
-            {
-                if (!iOrphaned)
-                    iParent.handler(aError);
-            }
-            void orphan(bool aCreateNewHandlerProxy = true)
-            {
-                iOrphaned = true;
-                if (aCreateNewHandlerProxy)
-                    iParent.iHandlerProxy = std::make_shared<handler_proxy>(iParent);
-                else
-                    iParent.iHandlerProxy.reset();
-            }
-        private:
-            timer& iParent;
-            bool iOrphaned;
-        };
         // construction
     public:
-        timer(async_task& aTask, uint32_t aDuration_ms, bool aInitialWait = true);
-        timer(async_task& aTask, const i_lifetime& aContext, uint32_t aDuration_ms, bool aInitialWait = true);
+        timer(i_async_task& aTask, uint32_t aDuration_ms, bool aInitialWait = true);
+        timer(i_async_task& aTask, const i_lifetime& aContext, uint32_t aDuration_ms, bool aInitialWait = true);
         timer(const timer& aOther);
         timer& operator=(const timer& aOther);
         virtual ~timer();
         // operations
     public:
-        async_task& owner_task() const;
+        i_async_task& owner_task() const;
         void enable(bool aWait = true);
         void disable();
         bool enabled() const;
@@ -103,17 +78,17 @@ namespace neolib
         uint32_t duration_ms() const;
         // implementation
     private:
-        boost::asio::deadline_timer& timer_object();
-        void handler(const boost::system::error_code& aError);
+        i_timer_object& timer_object();
+        void handler();
         virtual void ready() = 0;
         // attributes
     private:
-        async_task& iTask;
+        i_async_task& iTask;
         destroyed_flag iTaskDestroyed;
         optional_destroyed_flag iContextDestroyed;
         sink iSink;
-        std::shared_ptr<handler_proxy> iHandlerProxy;
-        std::optional<boost::asio::deadline_timer> iTimerObject;
+        ref_ptr<i_timer_object> iTimerObject;
+        ref_ptr<i_timer_subscriber> iTimerSubcriber;
         uint32_t iDuration_ms;
         bool iEnabled;
         bool iWaiting;
@@ -123,10 +98,10 @@ namespace neolib
     class callback_timer : public timer
     {
     public:
-        callback_timer(async_task& aTask, std::function<void(callback_timer&)> aCallback, uint32_t aDuration_ms, bool aInitialWait = true);
-        callback_timer(async_task& aTask, const i_lifetime& aContext, std::function<void(callback_timer&)> aCallback, uint32_t aDuration_ms, bool aInitialWait = true);
+        callback_timer(i_async_task& aTask, std::function<void(callback_timer&)> aCallback, uint32_t aDuration_ms, bool aInitialWait = true);
+        callback_timer(i_async_task& aTask, const i_lifetime& aContext, std::function<void(callback_timer&)> aCallback, uint32_t aDuration_ms, bool aInitialWait = true);
         template <typename Context>
-        callback_timer(async_task& aTask, const Context& aContext, std::function<void(callback_timer&)> aCallback, uint32_t aDuration_ms, bool aInitialWait = true) : 
+        callback_timer(i_async_task& aTask, const Context& aContext, std::function<void(callback_timer&)> aCallback, uint32_t aDuration_ms, bool aInitialWait = true) :
             callback_timer{ aTask, dynamic_cast<const i_lifetime&>(aContext), aCallback, aDuration_ms, aInitialWait } {}
         ~callback_timer();
     private:

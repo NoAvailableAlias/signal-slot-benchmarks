@@ -1,6 +1,6 @@
-// i_task.hpp
+// timer_object.hpp
 /*
- *  Copyright (c) 2007, 2020 Leigh Johnston.
+ *  Copyright (c) 2020 Leigh Johnston.
  *
  *  All rights reserved.
  *
@@ -33,27 +33,65 @@
  *  SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#pragma once
-
 #include <neolib/neolib.hpp>
-#include <string>
-#include <neolib/i_thread.hpp>
+#include <neolib/timer_object.hpp>
 
 namespace neolib
 {
-    class i_task
+    timer_object::timer_object(i_timer_service& aService) : 
+        iService{ aService }
     {
-        // construction
-    public:
-        virtual ~i_task() = default;
-        // operations
-    public:
-        virtual const std::string& name() const = 0;
-        // implementation
-    public:
-        virtual void run(yield_type aYieldType = yield_type::NoYield) = 0;
-        virtual bool do_work(yield_type aYieldType = yield_type::NoYield) = 0;
-        virtual void cancel() = 0;
-        virtual bool cancelled() const = 0;
-    };
+    }
+
+    timer_object::~timer_object()
+    {
+        iService.remove_timer_object(*this);
+    }
+
+    void timer_object::expires_at(const std::chrono::steady_clock::time_point& aDeadline)
+    {
+        iExpiryTime = aDeadline;
+    }
+
+    void timer_object::async_wait(i_timer_subscriber& aSubscriber)
+    {
+        bool inserted = iSubscribers.insert(aSubscriber).second;
+        if (inserted)
+            iDirtySubscriberList.dirty();
+    }
+
+    void timer_object::unsubscribe(i_timer_subscriber& aSubscriber)
+    {
+        auto existing = iSubscribers.find(aSubscriber);
+        if (existing == iSubscribers.end())
+            throw subscriber_not_found();
+        iSubscribers.erase(existing);
+        iDirtySubscriberList.dirty();
+    }
+
+    void timer_object::cancel()
+    {
+        iExpiryTime = std::nullopt;
+    }
+
+    bool timer_object::poll()
+    {
+        if (!iExpiryTime || std::chrono::steady_clock::now() < *iExpiryTime)
+            return false;
+        iExpiryTime = std::nullopt;
+        scoped_dirty sd{ iDirtySubscriberList };
+        for (auto s = iSubscribers.begin(); s != iSubscribers.end();)
+        {
+            auto& subscriber = **s;
+            subscriber.timer_expired(*this);
+            if (iDirtySubscriberList.is_dirty())
+            {
+                iDirtySubscriberList.clean();
+                s = iSubscribers.begin();
+            }
+            else
+                ++s;
+        }
+        return true;
+    }
 }

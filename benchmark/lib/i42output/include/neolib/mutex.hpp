@@ -67,21 +67,22 @@
 #include <mutex>
 #include <boost/lockfree/detail/prefix.hpp>
 #include <boost/fiber/detail/spinlock.hpp>
+#include <neolib/i_mutex.hpp>
 
 namespace neolib
 {
-    struct null_mutex
+    struct null_mutex : public i_lockable
     {
-        void lock() noexcept {}
-        void unlock() noexcept {}
-        bool try_lock() noexcept { return true; }
+        void lock() noexcept override {}
+        void unlock() noexcept override {}
+        bool try_lock() noexcept override { return true; }
     };
 
     using boost::fibers::detail::spinlock_status;
 
     using spinlock = boost::fibers::detail::spinlock;
 
-    class alignas(BOOST_LOCKFREE_CACHELINE_BYTES) recursive_spinlock
+    class alignas(BOOST_LOCKFREE_CACHELINE_BYTES) recursive_spinlock : public i_lockable
     {
     public:
         recursive_spinlock() :
@@ -95,7 +96,7 @@ namespace neolib
             assert(iState.load(std::memory_order_acquire) == spinlock_status::unlocked);
         }
     public:
-        void lock() noexcept
+        void lock() noexcept override
         {
             static thread_local std::minstd_rand generator{ std::random_device{}() };
             if (iState.load(std::memory_order_acquire) == spinlock_status::locked && iLockingThread.load(std::memory_order_acquire) == std::this_thread::get_id())
@@ -145,7 +146,7 @@ namespace neolib
                 }
             }
         }
-        void unlock() noexcept
+        void unlock() noexcept override
         {
             if (--iLockCount == 0u)
             {
@@ -153,7 +154,7 @@ namespace neolib
                 iState.store(spinlock_status::unlocked, std::memory_order_release);
             }
         }
-        bool try_lock() noexcept 
+        bool try_lock() noexcept override
         {
             bool locked = (spinlock_status::unlocked == iState.exchange(spinlock_status::locked, std::memory_order_acquire));
             if (locked)
@@ -169,7 +170,7 @@ namespace neolib
         std::atomic<uint32_t> iLockCount;
     };
 
-    class alignas(BOOST_LOCKFREE_CACHELINE_BYTES) switchable_mutex
+    class alignas(BOOST_LOCKFREE_CACHELINE_BYTES) switchable_mutex : public i_lockable
     {
     public:
         switchable_mutex()
@@ -190,7 +191,7 @@ namespace neolib
             iActiveMutex.emplace<neolib::recursive_spinlock>();
         }
     public:
-        void lock()
+        void lock() noexcept override
         {
             if (std::holds_alternative<std::recursive_mutex>(iActiveMutex))
                 std::get<std::recursive_mutex>(iActiveMutex).lock();
@@ -199,7 +200,7 @@ namespace neolib
             else
                 std::get<neolib::null_mutex>(iActiveMutex).lock();
         }
-        void unlock() noexcept
+        void unlock() noexcept override
         {
             if (std::holds_alternative<std::recursive_mutex>(iActiveMutex))
                 std::get<std::recursive_mutex>(iActiveMutex).unlock();
@@ -208,7 +209,7 @@ namespace neolib
             else
                 std::get<neolib::null_mutex>(iActiveMutex).unlock();
         }
-        bool try_lock() noexcept
+        bool try_lock() noexcept override
         {
             if (std::holds_alternative<std::recursive_mutex>(iActiveMutex))
                 return std::get<std::recursive_mutex>(iActiveMutex).try_lock();

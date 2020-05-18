@@ -1,7 +1,7 @@
 // event.hpp
 /*
-Transplanted from neogfx C++ GUI Library
-Copyright (c) 2015-2018 Leigh Johnston.  All Rights Reserved.
+Transplanted from neogfx C++ App/Game Engine
+Copyright (c) 2015, 2018, 2020 Leigh Johnston.  All Rights Reserved.
 
 This program is free software: you can redistribute it and / or modify
 it under the terms of the GNU General Public License as published by
@@ -36,7 +36,7 @@ namespace neolib
         static switchable_mutex sMutex;
         return sMutex;
     }
-    
+
     namespace event_system
     {
         inline void set_single_threaded()
@@ -57,6 +57,7 @@ namespace neolib
     public:
         virtual void release_control() = 0;
         virtual void handle_in_same_thread_as_emitter(cookie aHandleId) = 0;
+        virtual void handler_is_stateless(cookie aHandleId) = 0;
     public:
         virtual void pre_trigger() const = 0;
     public:
@@ -94,6 +95,7 @@ namespace neolib
         virtual ~i_event_callback() = default;
     public:
         virtual const i_event& event() const = 0;
+        virtual const void* identity() const = 0;
         virtual void call() const = 0;
     };
 

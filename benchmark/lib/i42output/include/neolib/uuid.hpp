@@ -44,7 +44,6 @@
 #include <iostream>
 #include <sstream>
 #include <iomanip>
-#include <boost/functional/hash.hpp>
 
 namespace neolib
 {
@@ -129,8 +128,32 @@ namespace std
         typedef std::size_t result_type;
         result_type operator()(argument_type const& aUuid) const
         {
-            auto const& t = std::tie(aUuid.part1, aUuid.part2, aUuid.part3, aUuid.part4, aUuid.part5);
-            return boost::hash<decltype(t)>{}(t);
+            if constexpr (sizeof(std::size_t) == sizeof(uint64_t))
+            {
+                // type punning is serious business...
+                struct badf00d
+                {
+                    uint64_t bat;
+                    uint64_t pangolin;
+                };
+                badf00d covid19;
+                std::memcpy(&covid19, &aUuid, sizeof(covid19));
+                return covid19.bat ^ covid19.pangolin;
+            }
+            else
+            {
+                // type punning is serious business...
+                struct badf00d
+                {
+                    uint32_t bat1;
+                    uint32_t bat2;
+                    uint32_t pangolin1;
+                    uint32_t pangolin2;
+                };
+                badf00d covid19;
+                std::memcpy(&covid19, &aUuid, sizeof(covid19));
+                return covid19.bat1 ^ covid19.bat2 ^ covid19.pangolin1 ^ covid19.pangolin2;
+            }
         }
     };
 }

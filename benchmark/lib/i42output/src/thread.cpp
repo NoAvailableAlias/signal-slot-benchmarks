@@ -154,8 +154,9 @@ namespace neolib
             iState = Aborted;
         }
         lock = std::nullopt;
-        if (aWait)
+        if (aWait && aborted())
             wait();
+        iState = Finished;
     }
 
     void thread::wait() const
@@ -177,7 +178,7 @@ namespace neolib
         return aEventList.wait(*this);
     }
 
-    bool thread::msg_wait(const message_queue& aMessageQueue) const
+    bool thread::msg_wait(const i_message_queue& aMessageQueue) const
     {
         if (!started())
             throw thread_not_started();
@@ -193,7 +194,7 @@ namespace neolib
         }
     }
 
-    wait_result thread::msg_wait(const message_queue& aMessageQueue, const waitable_event_list& aEventList) const
+    wait_result thread::msg_wait(const i_message_queue& aMessageQueue, const waitable_event_list& aEventList) const
     {
         if (!started())
             throw thread_not_started();
@@ -356,6 +357,8 @@ namespace neolib
     {
         {
             std::scoped_lock<std::recursive_mutex> lock{ iMutex };
+            if (iState != Starting)
+                return;
             iState = Started;
             iId = std::this_thread::get_id();
         }

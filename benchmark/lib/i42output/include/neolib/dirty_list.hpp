@@ -1,6 +1,6 @@
-// message_queue.hpp
+// dirty_list.hpp
 /*
- *  Copyright (c) 2007 Leigh Johnston.
+ *  Copyright (c) 2020 Leigh Johnston.
  *
  *  All rights reserved.
  *
@@ -31,23 +31,60 @@
  *  LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
  *  NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  *  SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-*/
+ */
 
 #pragma once
 
 #include <neolib/neolib.hpp>
-
+#include <vector>
+#
 namespace neolib
 {
-    class message_queue
+    /**
+     * @brief Dirty list used to represent a collection of flags to represent changes
+     * to state in re-entrant functions (see timer_object::poll and timer_service::poll).
+     */
+    class dirty_list
     {
     public:
-        virtual ~message_queue() = default;
+        void enter_scope()
+        {
+            iDirtyFlags.emplace_back();
+        }
+        void leave_scope()
+        {
+            iDirtyFlags.pop_back();
+        }
+        bool is_dirty() const
+        {
+            return !iDirtyFlags.empty() && iDirtyFlags.back();
+        }
+        void dirty()
+        {
+            std::fill(iDirtyFlags.begin(), iDirtyFlags.end(), true);
+        }
+        void clean()
+        {
+            if (!iDirtyFlags.empty())
+                iDirtyFlags.back() = false;
+        }
+    private:
+        std::vector<bool> iDirtyFlags;
+    };
+
+    class scoped_dirty
+    {
     public:
-        virtual bool have_message() const = 0;
-        virtual int get_message() const = 0;
-        virtual void bump() = 0;
-		virtual bool in_idle() const = 0;
-        virtual void idle() = 0;
+        scoped_dirty(dirty_list& aList) :
+            iList{ aList }
+        {
+            iList.enter_scope();
+        }
+        ~scoped_dirty()
+        {
+            iList.leave_scope();
+        }
+    private:
+        dirty_list& iList;
     };
 }

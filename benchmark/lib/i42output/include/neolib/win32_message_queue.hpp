@@ -39,13 +39,13 @@
 #include <deque>
 #include <optional>
 #include "async_task.hpp"
-#include "message_queue.hpp"
+#include "i_message_queue.hpp"
 
 #ifdef _WIN32
 
 namespace neolib
 {
-    class win32_message_queue : public message_queue
+    class win32_message_queue : public i_message_queue
     {
     public:
         win32_message_queue(async_task& aIoTask, std::function<bool()> aIdleFunction, bool aCreateTimer = true);

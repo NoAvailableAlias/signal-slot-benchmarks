@@ -1,6 +1,6 @@
 // jar.hpp
 /*
- *  Copyright (c) 2018 Leigh Johnston.
+ *  Copyright (c) 2018, 2020 Leigh Johnston.
  *
  *  All rights reserved.
  *
@@ -36,6 +36,7 @@
 #pragma once
 
 #include <neolib/neolib.hpp>
+#include <optional>
 #include <vector>
 #include <set>
 #include <mutex>

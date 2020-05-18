@@ -1,6 +1,6 @@
-// i_task.hpp
+// i_message_queue.hpp
 /*
- *  Copyright (c) 2007, 2020 Leigh Johnston.
+ *  Copyright (c) 2007,2020 Leigh Johnston.
  *
  *  All rights reserved.
  *
@@ -31,29 +31,23 @@
  *  LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
  *  NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  *  SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- */
+*/
 
 #pragma once
 
 #include <neolib/neolib.hpp>
-#include <string>
-#include <neolib/i_thread.hpp>
 
 namespace neolib
 {
-    class i_task
+    class i_message_queue
     {
-        // construction
     public:
-        virtual ~i_task() = default;
-        // operations
+        virtual ~i_message_queue() = default;
     public:
-        virtual const std::string& name() const = 0;
-        // implementation
-    public:
-        virtual void run(yield_type aYieldType = yield_type::NoYield) = 0;
-        virtual bool do_work(yield_type aYieldType = yield_type::NoYield) = 0;
-        virtual void cancel() = 0;
-        virtual bool cancelled() const = 0;
+        virtual bool have_message() const = 0;
+        virtual int get_message() const = 0;
+        virtual void bump() = 0;
+		virtual bool in_idle() const = 0;
+        virtual void idle() = 0;
     };
 }

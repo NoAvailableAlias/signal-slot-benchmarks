@@ -1,7 +1,7 @@
 // event.hpp
 /*
-Transplanted from neogfx C++ GUI Library
-Copyright (c) 2015-2018 Leigh Johnston.  All Rights Reserved.
+Transplanted from neogfx C++ App/Game Engine
+Copyright (c) 2015, 2018, 2020 Leigh Johnston.  All Rights Reserved.
 
 This program is free software: you can redistribute it and / or modify
 it under the terms of the GNU General Public License as published by
@@ -109,6 +109,12 @@ namespace neolib
                 control().get().handle_in_same_thread_as_emitter(id());
             return *this;
         }
+        event_handle& operator!()
+        {
+            if (control().valid())
+                control().get().handler_is_stateless(id());
+            return *this;
+        }
     private:
         i_event_control* iControl;
         cookie_ref_ptr iRef;
@@ -204,6 +210,10 @@ namespace neolib
         {
             return *iEvent;
         }
+        const void* identity() const override
+        {
+            return &*iCallable;
+        }
         void call() const override
         {
             std::apply(*iCallable, iArguments);
@@ -250,10 +260,7 @@ namespace neolib
         static async_event_queue& get_instance(async_task* aTask);
     public:
         bool exec();
-        transaction enqueue(callback_ptr aCallback, const optional_transaction& aTransaction = {})
-        {
-            return add(std::move(aCallback), aTransaction);
-        }
+        transaction enqueue(callback_ptr aCallback, bool aStatelessHandler, const optional_transaction& aTransaction = {});
         void unqueue(const i_event& aEvent);
         void terminate();
     public:
@@ -303,13 +310,15 @@ namespace neolib
             const void* clientId;
             ref_ptr<callback_callable> callable;
             bool handleInSameThreadAsEmitter;
+            bool handlerIsStateless;
             uint64_t triggerId = 0ull;
 
             handler(
                 async_event_queue& queue, 
                 const void* clientId, 
                 const ref_ptr<callback_callable>& callable,
-                bool handleInSameThreadAsEmitter = false) : 
+                bool handleInSameThreadAsEmitter = false,
+                bool handlerIsStateless = false) :
                 queue{ &queue },
                 queueDestroyed{ queue },
                 referenceCount{ 0u },
@@ -352,6 +361,7 @@ namespace neolib
             std::atomic<bool> handlersChanged = false;
             std::atomic<uint32_t> filterCount;
         };
+        typedef std::optional<std::scoped_lock<switchable_mutex>> optional_lock;
     public:
         event() : iAlias{ *this }, iControl{ nullptr }, iInstanceDataPtr{ nullptr }
         {
@@ -385,6 +395,11 @@ namespace neolib
         {
             std::scoped_lock<switchable_mutex> lock{ event_mutex() };
             get_handler(aHandleId).handleInSameThreadAsEmitter = true;
+        }
+        void handler_is_stateless(cookie aHandleId) override
+        {
+            std::scoped_lock<switchable_mutex> lock{ event_mutex() };
+            get_handler(aHandleId).handlerIsStateless = true;
         }
     public:
         void push_context() const override
@@ -439,7 +454,7 @@ namespace neolib
                 return true;
             if (trigger_type() == event_trigger_type::SynchronousDontQueue)
                 unqueue();
-            std::scoped_lock<switchable_mutex> lock{ event_mutex() };
+            optional_lock lock{ event_mutex() };
             if (instance().handlers.empty() && !filtered())
                 return true;
             destroyed_flag destroyed{ *this };
@@ -476,7 +491,7 @@ namespace neolib
                     continue;
                 try
                 {
-                    transaction = enqueue(handler, false, transaction, aArguments...);
+                    transaction = enqueue(lock, handler, false, transaction, aArguments...);
                     if (destroyed)
                         return true;
                 }
@@ -504,7 +519,7 @@ namespace neolib
                 return;
             if (trigger_type() == event_trigger_type::AsynchronousDontQueue)
                 unqueue();
-            std::scoped_lock<switchable_mutex> lock{ event_mutex() };
+            optional_lock lock{ event_mutex() };
             if (instance().handlers.empty())
                 return;
             destroyed_flag destroyed{ *this };
@@ -525,7 +540,7 @@ namespace neolib
                     handler.triggerId = triggerId;
                 else if (handler.triggerId == triggerId)
                     continue;
-                transaction = enqueue(handler, true, transaction, aArguments...);
+                transaction = enqueue(lock, handler, true, transaction, aArguments...);
                 if (destroyed)
                     return;
                 if (instance().handlersChanged.exchange(false))
@@ -652,21 +667,28 @@ namespace neolib
             for (auto& context : instance().contexts)
                 context.handlersChanged = true;
         }
-        optional_async_transaction enqueue(handler& aHandler, bool aAsync, const optional_async_transaction& aAsyncTransaction, Args... aArguments) const
+        optional_async_transaction enqueue(optional_lock& aLock, handler& aHandler, bool aAsync, const optional_async_transaction& aAsyncTransaction, Args... aArguments) const
         {
             optional_async_transaction transaction;
             auto& emitterQueue = async_event_queue::instance();
-            if (!aAsync && !aHandler.queueDestroyed && aHandler.queue == &emitterQueue)
-                (*aHandler.callable)(aArguments...);
+            if (!aAsync && (aHandler.handleInSameThreadAsEmitter || (!aHandler.queueDestroyed && aHandler.queue == &emitterQueue)))
+            {
+                auto callable = aHandler.callable;
+                bool wasLocked = !!aLock;
+                aLock.reset();
+                (*callable)(aArguments...);
+                if (wasLocked)
+                    aLock.emplace(event_mutex());
+            }
             else
             {
                 auto ecb = make_ref<callback>(*this, aHandler.callable, aArguments...);
                 if (aHandler.handleInSameThreadAsEmitter)
-                    transaction = emitterQueue.enqueue(ecb, aAsyncTransaction);
+                    transaction = emitterQueue.enqueue(ecb, aHandler.handlerIsStateless, aAsyncTransaction);
                 else
                 {
                     if (!aHandler.queueDestroyed)
-                        transaction = aHandler.queue->enqueue(ecb, aAsyncTransaction);
+                        transaction = aHandler.queue->enqueue(ecb, aHandler.handlerIsStateless, aAsyncTransaction);
                     else if (!instance().ignoreErrors)
                         throw event_queue_destroyed();
                 }
