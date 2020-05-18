@@ -1,0 +1,6 @@
+cmake_minimum_required(VERSION 3.2)
+file(GLOB_RECURSE SOURCE_FILES *.cpp)
+add_definitions(-DNEOLIB_HOSTED_ENVIRONMENT)
+add_library(i42output STATIC ${SOURCE_FILES})
+target_include_directories(i42output PUBLIC include)
+set_property(TARGET i42output PROPERTY CXX_STANDARD 17)

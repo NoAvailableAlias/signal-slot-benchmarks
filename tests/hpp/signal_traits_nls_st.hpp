@@ -35,7 +35,7 @@ struct signal_traits_nls_st
   template<typename... Args>
   struct connection_impl: public connection_base
   {
-    explicit connection_impl(neolib::event_handle<Args...> handle)
+    explicit connection_impl(neolib::event_handle handle)
       : handle(handle)
     {
 
@@ -46,7 +46,7 @@ struct signal_traits_nls_st
       reinterpret_cast<signal<void(Args...)>*>(s)->unsubscribe(handle);
     }
     
-    neolib::event_handle<Args...> handle;
+    neolib::event_handle handle;
   };
 
   using connection = std::shared_ptr<connection_base>;
@@ -79,13 +79,11 @@ struct signal_traits_nls_st
   template<typename Signal>
   static void disconnect_all_slots(Signal& s)
   {
-    s = Signal();
   }
   
   template<typename Signal>
   static void swap(Signal& s1, Signal& s2)
   {
-    std::swap(s1, s2);
   }
 };
 

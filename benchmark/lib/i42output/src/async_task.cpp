@@ -1,6 +1,6 @@
-// async_task.cpp - v3.1
+// async_task.cpp
 /*
- *  Copyright (c) 2007 Leigh Johnston.
+ *  Copyright (c) 2007, 2020 Leigh Johnston.
  *
  *  All rights reserved.
  *
@@ -33,137 +33,273 @@
  *  SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#include "../include/neolib/neolib.hpp"
-#include "../include/neolib/thread.hpp"
-#ifdef _WIN32
-#include "../include/neolib/win32_message_queue.hpp"
-#endif
-#include "../include/neolib/async_task.hpp"
+#include <neolib/neolib.hpp>
+#include <neolib/thread.hpp>
+#include <neolib/async_task.hpp>
+#include <neolib/timer_object.hpp>
 
-#include <iostream>
+#ifdef _WIN32
+#include <neolib/win32_message_queue.hpp>
+#endif
 
 namespace neolib
 {
-	namespace
-	{
-		const std::size_t kMaxiumPollIterations = 256;
-	}
+    timer_service::timer_service(async_task& aTask, bool aMultiThreaded) :
+        iTask{ aTask }
+    {
+    }
 
-	bool io_service::do_io(bool aProcessEvents)
-	{
-		std::size_t iterationsLeft = kMaxiumPollIterations;
-		bool didSome = false;
-		while (iterationsLeft-- > 0)
-		{
-			if (iTask.halted())
-				return didSome;
-			bool didSomeThisIteration = false;
-			if (aProcessEvents)
-				didSomeThisIteration = (iTask.pump_messages() || didSomeThisIteration);
-			didSomeThisIteration = (iNativeIoService.poll_one() != 0 || didSomeThisIteration);
-			if (!didSomeThisIteration)
-				break;
-			didSome = true;
-		}
-		return didSome;
-	}
+    bool timer_service::poll(bool aProcessEvents, std::size_t aMaximumPollCount)
+    {
+        std::size_t iterationsLeft = aMaximumPollCount;
+        bool didSome = false;
+        scoped_dirty sd{ iDirtyObjectList };
+        do
+        {
+            if (iTask.halted())
+                return didSome;
+            bool didSomeThisIteration = false;
+            if (aProcessEvents)
+                didSomeThisIteration = (iTask.pump_messages() || didSomeThisIteration);
+            for (auto o = iObjects.begin(); o != iObjects.end();)
+            {
+                if (!*o)
+                {
+                    o = iObjects.erase(o);
+                    continue;
+                }
+                auto& object = **o;
+                if (object.poll())
+                {
+                    didSomeThisIteration = true;
+                    if (aMaximumPollCount != 0 && --iterationsLeft == 0)
+                        break;
+                }
+                if (!iDirtyObjectList.is_dirty())
+                    ++o;
+                else
+                {
+                    o = iObjects.begin();
+                    iDirtyObjectList.clean();
+                }
+            }
+            if (!didSomeThisIteration)
+                break;
+            didSome = true;
+        } while (aMaximumPollCount != 0 && iterationsLeft > 0);
+        return didSome;
+    }
 
-	async_task::async_task(i_thread& aThread, const std::string& aName) :
-		task{ aName }, iThread{ aThread }, iTimerIoService{ *this }, iNetworkingIoService{ *this }, iHalted{ false }
-	{
-	}
+    i_timer_object& timer_service::create_timer_object()
+    {
+        iObjects.push_back(make_ref<timer_object>(*this));
+        iDirtyObjectList.dirty();
+        return *iObjects.back();
+    }
 
-	async_task::~async_task()
-	{
-		thread().abort();
-	}
+    void timer_service::remove_timer_object(i_timer_object& aObject)
+    {
+        auto existing = std::find_if(iObjects.begin(), iObjects.end(), [&aObject](auto&& o) { return o == &aObject; });
+        if (existing != iObjects.end())
+        {
+            auto existingRef = std::move(*existing);
+            iObjects.erase(existing);
+            iDirtyObjectList.dirty();
+        }
+    }
 
-	i_thread& async_task::thread() const
-	{
-		return iThread;
-	}
+    io_service::io_service(async_task& aTask, bool aMultiThreaded) :
+        iTask{ aTask },
+        iNativeIoService{ aMultiThreaded ? BOOST_ASIO_CONCURRENCY_HINT_DEFAULT : BOOST_ASIO_CONCURRENCY_HINT_1 }
+    {
+    }
 
-	bool async_task::do_io(yield_type aYieldIfNoWork)
-	{
-		if (iHalted)
-			return false;
-		bool didSome = false;
-		didSome = (iTimerIoService.do_io(false) || didSome);
-		didSome = (iNetworkingIoService.do_io(false) || didSome);
-		didSome = (pump_messages() || didSome);
-		if (!didSome && aYieldIfNoWork != yield_type::NoYield)
-		{
-			if (aYieldIfNoWork == yield_type::Yield)
-				thread::yield();
-			else if (aYieldIfNoWork == yield_type::Sleep)
-				thread::sleep(1);
-		}
-		return didSome;
-	}
+    bool io_service::poll(bool aProcessEvents, std::size_t aMaximumPollCount)
+    {
+        std::size_t iterationsLeft = aMaximumPollCount;
+        bool didSome = false;
+        iNativeIoService.restart();
+        do
+        {
+            if (iTask.halted())
+                return didSome;
+            bool didSomeThisIteration = false;
+            if (aProcessEvents)
+                didSomeThisIteration = (iTask.pump_messages() || didSomeThisIteration);
+            didSomeThisIteration = ((aMaximumPollCount == 0 ? iNativeIoService.poll() : iNativeIoService.poll_one()) != 0 || didSomeThisIteration);
+            if (!didSomeThisIteration)
+                break;
+            didSome = true;
+        } while (aMaximumPollCount != 0 && --iterationsLeft > 0);
+        return didSome;
+    }
 
-	bool async_task::have_message_queue() const
-	{
-		return iMessageQueue != nullptr;
-	}
+    async_task::async_task(const std::string& aName) :
+        task{ aName }, iThread{ nullptr }, iHalted{ false }
+    {
+        Destroying.ignore_errors();
+    }
 
-	bool async_task::have_messages() const
-	{
-		return have_message_queue() && message_queue().have_message();
-	}
+    async_task::async_task(i_thread& aThread, const std::string& aName) :
+        task{ aName }, iThread{ &aThread }, iHalted{ false }
+    {
+        Destroying.ignore_errors();
+    }
 
-	neolib::message_queue& async_task::create_message_queue(std::function<bool()> aIdleFunction)
-	{
-		#ifdef _WIN32
-		iMessageQueue = std::make_unique<win32_message_queue>(*this, aIdleFunction);
-		#endif
-		return message_queue();
-	}
+    async_task::~async_task()
+    {
+        set_destroying();
+        if (joined())
+            thread().abort();
+    }
 
-	const neolib::message_queue& async_task::message_queue() const
-	{
-		if (iMessageQueue == nullptr)
-			throw no_message_queue();
-		return *iMessageQueue;
-	}
+    i_thread& async_task::thread() const
+    {
+        if (iThread != nullptr)
+            return *iThread;
+        throw no_thread();
+    }
 
-	neolib::message_queue& async_task::message_queue()
-	{
-		if (iMessageQueue == nullptr)
-			throw no_message_queue();
-		return *iMessageQueue;
-	}
+    bool async_task::joined() const
+    {
+        return iThread != nullptr;
+    }
 
-	bool async_task::pump_messages()
-	{
-		bool didWork = false;
-		while (have_messages())
-		{
-			if (halted())
-				return didWork;
-			if (have_message_queue())
-			{
-				message_queue().get_message();
-				message_queue().idle();
-			}
-			didWork = true;
-		}
-		return didWork;
-	}
+    void async_task::join(i_thread& aThread)
+    {
+        iThread = &aThread;
+    }
 
-	bool async_task::halted() const
-	{
-		return iHalted;
-	}
+    void async_task::detach()
+    {
+        iThread = nullptr;
+    }
 
-	void async_task::halt()
-	{
-		iHalted = true;
-	}
+    timer_service& async_task::timer_service()
+    {
+        if (!iTimerService)
+            iTimerService.emplace(*this);
+        return *iTimerService;
+    }
 
-	void async_task::run()
-	{
-		while(!iThread.finished())
-			do_io(yield_type::Sleep);
-	}
+    io_service& async_task::io_service()
+    {
+        if (!iIoService)
+            iIoService.emplace(*this);
+        return *iIoService;
+    }
 
+    bool async_task::do_work(yield_type aYieldIfNoWork)
+    {
+        if (iHalted)
+            return false;
+        bool didSome = false;
+        didSome = (pump_messages() || didSome);
+        if (iTimerService)
+            didSome = (iTimerService->poll() || didSome);
+        if (iIoService)
+            didSome = (iIoService->poll() || didSome);
+        if (!didSome && aYieldIfNoWork != yield_type::NoYield)
+        {
+            if (aYieldIfNoWork == yield_type::Yield)
+                thread::yield();
+            else if (aYieldIfNoWork == yield_type::Sleep)
+                thread::sleep(1);
+        }
+        return didSome;
+    }
+
+    bool async_task::have_message_queue() const
+    {
+        return iMessageQueue != nullptr;
+    }
+
+    bool async_task::have_messages() const
+    {
+        return have_message_queue() && message_queue().have_message();
+    }
+
+    i_message_queue& async_task::create_message_queue(std::function<bool()> aIdleFunction)
+    {
+        #ifdef _WIN32
+        iMessageQueue = std::make_unique<win32_message_queue>(*this, aIdleFunction);
+        #endif
+        return message_queue();
+    }
+
+    const i_message_queue& async_task::message_queue() const
+    {
+        if (iMessageQueue == nullptr)
+            throw no_message_queue();
+        return *iMessageQueue;
+    }
+
+    i_message_queue& async_task::message_queue()
+    {
+        if (iMessageQueue == nullptr)
+            throw no_message_queue();
+        return *iMessageQueue;
+    }
+
+    bool async_task::pump_messages()
+    {
+        bool didWork = false;
+        while (have_messages())
+        {
+            if (halted())
+                return didWork;
+            if (have_message_queue())
+                message_queue().get_message();
+            idle();
+            didWork = true;
+        }
+        idle();
+        return didWork;
+    }
+
+    bool async_task::halted() const
+    {
+        return iHalted;
+    }
+
+    void async_task::halt()
+    {
+        iHalted = true;
+    }
+
+    void async_task::set_destroying()
+    {
+        if (is_alive())
+        {
+            try
+            {
+                Destroying.trigger();
+            }
+            catch (event_queue_destroyed)
+            {
+            }
+            lifetime::set_destroying();
+        }
+    }
+
+    void async_task::set_destroyed()
+    {
+        if (!is_destroyed())
+        {
+            Destroyed.trigger();
+            lifetime::set_destroyed();
+        }
+    }
+
+    void async_task::run(yield_type aYieldType)
+    {
+        while (!thread().finished())
+            do_work(aYieldType);
+    }
+
+    void async_task::idle()
+    {
+        if (have_message_queue())
+            message_queue().idle();
+    }
 } // namespace neolib

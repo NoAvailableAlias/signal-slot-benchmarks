@@ -15,12 +15,6 @@ add_library(signal_libraries
   benchmark/lib/jeffomatic/jl_signal/src/ObjectPool.cpp
   benchmark/lib/mwthinker/Signal/src/mw/signals/connection.cpp
   benchmark/lib/dacap/obs/dacap_connection.cpp
-  benchmark/lib/i42output/src/async_task.cpp
-  benchmark/lib/i42output/src/async_thread.cpp
-  benchmark/lib/i42output/src/event.cpp
-  benchmark/lib/i42output/src/thread.cpp
-  benchmark/lib/i42output/src/timer.cpp
-  benchmark/lib/i42output/src/waitable_event.cpp
   benchmark/lib/CppFakeIt/libfastsignals/src/lfs_connection.cpp
   benchmark/lib/CppFakeIt/libfastsignals/src/function_detail.cpp
   benchmark/lib/CppFakeIt/libfastsignals/src/signal_impl.cpp
@@ -28,7 +22,7 @@ add_library(signal_libraries
   benchmark/lib/copperspice/cs_signal/src/cs_slot.cpp
   )
 
-target_link_libraries(signal_libraries iscool_signals)
+target_link_libraries(signal_libraries iscool_signals i42output)
 
 # project definition
 add_executable(bench
@@ -69,6 +63,7 @@ add_executable(bench
 )
 
 add_subdirectory(benchmark/lib/iscool)
+add_subdirectory(benchmark/lib/i42output)
 
 set_target_properties(bench PROPERTIES CXX_EXTENSIONS NO)
 target_include_directories(bench PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})

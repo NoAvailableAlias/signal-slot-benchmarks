@@ -35,33 +35,36 @@
 
 #pragma once
 
-#include "neolib.hpp"
+#include <neolib/neolib.hpp>
 #include <deque>
 #include <optional>
 #include "async_task.hpp"
-#include "message_queue.hpp"
+#include "i_message_queue.hpp"
+
+#ifdef _WIN32
 
 namespace neolib
 {
-	class win32_message_queue : public message_queue
-	{
-	public:
-		win32_message_queue(async_task& aIoTask, std::function<bool()> aIdleFunction, bool aCreateTimer = true);
-		~win32_message_queue();
-	public:
-		virtual void push_context();
-		virtual void pop_context();
-		virtual bool have_message() const;
-		virtual int get_message() const;
-		virtual void bump();
-		virtual void idle();
-	private:
-		static void CALLBACK timer_proc(HWND, UINT, UINT_PTR, DWORD);
-	private:
-		async_task& iIoTask;
-		std::function<bool()> iIdleFunction;
-		static std::map<UINT_PTR, win32_message_queue*> sTimerMap;
-		UINT_PTR iTimer;
-		std::deque<bool> iInIdle;
-	};
+    class win32_message_queue : public i_message_queue
+    {
+    public:
+        win32_message_queue(async_task& aIoTask, std::function<bool()> aIdleFunction, bool aCreateTimer = true);
+        ~win32_message_queue();
+    public:
+        bool have_message() const override;
+        int get_message() const override;
+        void bump() override;
+		bool in_idle() const override;
+        void idle() override;
+    private:
+        static void CALLBACK timer_proc(HWND, UINT, UINT_PTR, DWORD);
+    private:
+        async_task& iIoTask;
+        std::function<bool()> iIdleFunction;
+        static std::map<UINT_PTR, win32_message_queue*> sTimerMap;
+        UINT_PTR iTimer;
+		bool iInIdle;
+    };
 }
+
+#endif //_WIN32

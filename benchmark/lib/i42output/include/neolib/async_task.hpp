@@ -1,6 +1,6 @@
-// async_task.hpp v1.0
+// async_task.hpp
 /*
- *  Copyright (c) 2007 Leigh Johnston.
+ *  Copyright (c) 2007, 2020 Leigh Johnston.
  *
  *  All rights reserved.
  *
@@ -35,75 +35,106 @@
 
 #pragma once
 
-#include "neolib.hpp"
+#include <neolib/neolib.hpp>
 #include <boost/asio.hpp>
-#include "i_thread.hpp"
-#include "task.hpp"
-#include "message_queue.hpp"
+#include <neolib/lifetime.hpp>
+#include <neolib/i_thread.hpp>
+#include <neolib/task.hpp>
+#include <neolib/i_async_task.hpp>
+#include <neolib/i_timer_object.hpp>
+#include <neolib/dirty_list.hpp>
+#include <neolib/plugin_event.hpp>
 
 namespace neolib
 {
-	class async_task;
+    class async_task;
 
-	class io_service
-	{
-		// types
-	public:
-		typedef boost::asio::io_service native_io_service_type;
-	public:
-		io_service(async_task& aTask) : iTask(aTask) {}
-		// operations
-	public:
-		bool do_io(bool aProcessEvents = true);
-		native_io_service_type& native_object() { return iNativeIoService; }
-		// attributes
-	private:
-		async_task& iTask;
-		native_io_service_type iNativeIoService;
-	};
+    class timer_service : public i_timer_service
+    {
+        // types
+    public:
+        // construction
+    public:
+        timer_service(async_task& aTask, bool aMultiThreaded = false);
+        // operations
+    public:
+        bool poll(bool aProcessEvents = true, std::size_t aMaximumPollCount = kDefaultPollCount) override;
+        i_timer_object& create_timer_object() override;
+        void remove_timer_object(i_timer_object& aObject) override;
+        // attributes
+    private:
+        async_task& iTask;
+        std::vector<ref_ptr<i_timer_object>> iObjects;
+        dirty_list iDirtyObjectList;
+    };
 
-	enum class yield_type
-	{
-		NoYield,
-		Yield,
-		Sleep
-	};
+    class io_service : public i_async_service
+    {
+        // types
+    public:
+        typedef boost::asio::io_service native_io_service_type;
+        // construction
+    public:
+        io_service(async_task& aTask, bool aMultiThreaded = false);
+        // operations
+    public:
+        bool poll(bool aProcessEvents = true, std::size_t aMaximumPollCount = kDefaultPollCount) override;
+        native_io_service_type& native_object() { return iNativeIoService; }
+        // attributes
+    private:
+        async_task& iTask;
+        native_io_service_type iNativeIoService;
+    };
 
-	class async_task : public task
-	{
-		// types
-	private:
-		typedef std::unique_ptr<neolib::message_queue> message_queue_pointer;
-		// exceptions
-	public:
-		struct no_message_queue : std::logic_error { no_message_queue() : std::logic_error("neolib::async_task::no_message_queue") {} };
-		// construction
-	public:
-		async_task(i_thread& aThread, const std::string& aName = std::string{});
-		~async_task();
-		// operations
-	public:
-		i_thread& thread() const;
-		bool do_io(yield_type aYieldIfNoWork = yield_type::NoYield);
-		io_service& timer_io_service() { return iTimerIoService; }
-		io_service& networking_io_service() { return iNetworkingIoService; }
-		bool have_message_queue() const;
-		bool have_messages() const;
-		neolib::message_queue& create_message_queue(std::function<bool()> aIdleFunction = std::function<bool()>());
-		const neolib::message_queue& message_queue() const;
-		neolib::message_queue& message_queue();
-		bool pump_messages();
-		bool halted() const;
-		void halt();
-		// implementation
-	public:
-		void run() override;
-		// attributes
-	private:
-		i_thread& iThread;
-		io_service iTimerIoService;
-		io_service iNetworkingIoService;
-		message_queue_pointer iMessageQueue;
-		bool iHalted;
-	};
+    class async_task : public task<i_async_task>, public lifetime
+    {
+        friend class async_thread;
+        // events
+    public:
+        define_declared_event(Destroying, destroying)
+        define_declared_event(Destroyed, destroyed)
+        // exceptions
+    public:
+        struct no_thread : std::logic_error { no_thread() : std::logic_error{ "neolib::async_task::no_thread" } {} };
+        // types
+    private:
+        typedef std::unique_ptr<i_message_queue> message_queue_pointer;
+        // construction
+    public:
+        async_task(const std::string& aName = std::string{});
+        async_task(i_thread& aThread, const std::string& aName = std::string{});
+        ~async_task();
+        // operations
+    public:
+        i_thread& thread() const override;
+        bool joined() const override;
+        void join(i_thread& aThread) override;
+        void detach() override;
+        neolib::timer_service& timer_service() override;
+        neolib::io_service& io_service() override;
+        bool have_message_queue() const override;
+        bool have_messages() const override;
+        i_message_queue& create_message_queue(std::function<bool()> aIdleFunction = std::function<bool()>()) override;
+        const i_message_queue& message_queue() const override;
+        i_message_queue& message_queue() override;
+        bool pump_messages() override;
+        bool halted() const override;
+        void halt() override;
+        // implementation
+    protected:
+        // i_lifetime
+        void set_destroying() override;
+        void set_destroyed() override;
+        // task
+        void run(yield_type aYieldType = yield_type::NoYield) override;
+        bool do_work(yield_type aYieldType = yield_type::NoYield) override;
+        void idle() override;
+        // attributes
+    private:
+        i_thread* iThread;
+        std::optional<neolib::timer_service> iTimerService;
+        std::optional<neolib::io_service> iIoService;
+        message_queue_pointer iMessageQueue;
+        bool iHalted;
+    };
 }

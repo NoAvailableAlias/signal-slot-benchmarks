@@ -1,6 +1,6 @@
-// raii.hpp
+// i_mutex.hpp
 /*
- *  Copyright (c) 2007 Leigh Johnston.
+ *  Copyright (c) 2020 Leigh Johnston.
  *
  *  All rights reserved.
  *
@@ -35,48 +35,14 @@
 
 #pragma once
 
-#include "neolib.hpp"
+#include <neolib/neolib.hpp>
 
 namespace neolib
 {
-	struct scoped_flag
-	{
-		bool& iFlag;
-		bool iSaved;
-		bool iIgnore;
-		scoped_flag(bool& aFlag, bool aValue = true) : iFlag{ aFlag }, iSaved{ aFlag }, iIgnore{ false } { iFlag = aValue; }
-		~scoped_flag() { if (!iIgnore) iFlag = iSaved; }
-		void ignore() { iIgnore = true; }
-	};
-
-	struct scoped_atomic_flag
-	{
-		std::atomic<bool>& iFlag;
-		bool iSaved;
-		bool iIgnore;
-		scoped_atomic_flag(std::atomic<bool>& aFlag, bool aValue = true) : iFlag{ aFlag }, iSaved{ aFlag }, iIgnore{ false } { iFlag = aValue; }
-		~scoped_atomic_flag() { if (!iIgnore) iFlag = iSaved; }
-		void ignore() { iIgnore = true; }
-	};
-
-	struct scoped_counter
-	{
-		uint32_t& iCounter;
-		bool iIgnore;
-		scoped_counter(uint32_t& aCounter) : iCounter(aCounter), iIgnore{ false } { ++iCounter; }
-		~scoped_counter() { if (!iIgnore) --iCounter; }
-		void ignore() { iIgnore = true; }
-	};
-
-	template <typename T>
-	struct scoped_pointer
-	{
-		T*& iPointer;
-		T* iSaved;
-		bool iIgnore;
-		scoped_pointer(T*& aPointer, T* aValue) : iPointer{ aPointer }, iSaved{ aPointer }, iIgnore{ false } { iPointer = aValue; }
-		~scoped_pointer() { if (!iIgnore) iPointer = iSaved; }
-		void ignore() { iIgnore = true; }
-	};
-
+    struct i_lockable
+    {
+        virtual void lock() noexcept = 0;
+        virtual void unlock() noexcept = 0;
+        virtual bool try_lock() noexcept = 0;
+    };
 }

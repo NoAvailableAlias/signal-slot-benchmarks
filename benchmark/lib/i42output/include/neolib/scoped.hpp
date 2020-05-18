@@ -1,4 +1,4 @@
-// detail_memory.hpp
+// scoped.hpp
 /*
  *  Copyright (c) 2007 Leigh Johnston.
  *
@@ -35,40 +35,50 @@
 
 #pragma once
 
-#include "neolib.hpp"
-#include <cstring>
-#include <type_traits>
+#include <neolib/neolib.hpp>
+#include <atomic>
 
-namespace neolib 
+namespace neolib
 {
-	namespace detail
-	{
-		template <typename T> inline
-		void construct(void* mem, const T& object)
-		{
-			new (mem) T(object);
-		}
+    struct scoped_flag
+    {
+        bool& iFlag;
+        bool iSaved;
+        bool iIgnore;
+        scoped_flag(bool& aFlag, bool aValue = true) : iFlag{ aFlag }, iSaved{ aFlag }, iIgnore{ false } { iFlag = aValue; }
+        ~scoped_flag() { if (!iIgnore) iFlag = iSaved; }
+        void ignore() { iIgnore = true; }
+    };
 
-		template <typename InIter, typename OutIter> inline
-		OutIter uninitialized_copy_dispatch(InIter first, InIter last, OutIter result, std::false_type)
-		{
-			while (first != last)
-				detail::construct(static_cast<void*>(&*result++), *first++);
-			return result;
-		}
+    struct scoped_atomic_flag
+    {
+        std::atomic<bool>& iFlag;
+        bool iSaved;
+        bool iIgnore;
+        scoped_atomic_flag(std::atomic<bool>& aFlag, bool aValue = true) : iFlag{ aFlag }, iSaved{ aFlag }, iIgnore{ false } { iFlag = aValue; }
+        ~scoped_atomic_flag() { if (!iIgnore) iFlag = iSaved; }
+        void ignore() { iIgnore = true; }
+    };
 
-		template <typename T> inline
-		T* uninitialized_copy_dispatch(const T* first, const T* last, T* result, std::true_type)
-		{
-			memcpy(result, first, (last-first) * sizeof(T));
-			result += (last-first);
-			return result;
-		}
+    template <typename T>
+    struct scoped_counter
+    {
+        T& iCounter;
+        bool iIgnore;
+        scoped_counter(T& aCounter) : iCounter(aCounter), iIgnore{ false } { ++iCounter; }
+        ~scoped_counter() { if (!iIgnore) --iCounter; }
+        void ignore() { iIgnore = true; }
+    };
 
-		template <typename InIter, typename OutIter, typename T> inline
-		OutIter uninitialized_copy(InIter first, InIter last, OutIter result, const T&)
-		{
-			return uninitialized_copy_dispatch(first, last, result, std::is_scalar<T>::type());
-		}
-	}
+    template <typename T>
+    struct scoped_pointer
+    {
+        T*& iPointer;
+        T* iSaved;
+        bool iIgnore;
+        scoped_pointer(T*& aPointer, T* aValue) : iPointer{ aPointer }, iSaved{ aPointer }, iIgnore{ false } { iPointer = aValue; }
+        ~scoped_pointer() { if (!iIgnore) iPointer = iSaved; }
+        void ignore() { iIgnore = true; }
+    };
+
 }

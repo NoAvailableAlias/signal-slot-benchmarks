@@ -35,14 +35,14 @@
 
 #pragma once
 
-#include "neolib.hpp"
+#include <neolib/neolib.hpp>
 #include "event.hpp"
 
 namespace neolib
 {
-	// deprecated; use new event system directly
-	template <typename T = void>
-	struct has_slots : sink
-	{
-	};
+    // deprecated; use new event system directly
+    template <typename T = void>
+    struct has_slots : sink
+    {
+    };
 }
