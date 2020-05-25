@@ -878,6 +878,39 @@ FENCED_TYPED_TEST
  })
 
 FENCED_TYPED_TEST
+(signal_test, temporary_is_passed_to_each_callback,
+ "Activation with argument",
+ "Will triggering the signal with a temporary will pass it to every callback?",
+{
+  using traits = TypeParam;
+  typename traits::template signal<void(std::string)> signal;
+
+  std::string value_in_1;
+
+  const typename traits::connection connection_1
+    (traits::connect
+     (signal,
+      [&value_in_1](std::string c) -> void
+      {
+        value_in_1 = c;
+      }));
+
+  std::string value_in_2;
+    
+  const typename traits::connection connection_2
+    (traits::connect
+     (signal,
+      [&value_in_2](std::string c) -> void
+      {
+        value_in_2 = c;
+      }));
+
+  traits::trigger(signal, std::string("aaa"));
+  EXPECT_EQ("aaa", value_in_1);
+  EXPECT_EQ("aaa", value_in_2);
+})
+
+FENCED_TYPED_TEST
 (signal_test, recursive,
  "Activation", "Can a signal be triggered while it is triggered?",
 {
