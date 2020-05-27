@@ -35,7 +35,7 @@ On the tests that could be run (i.e. tests for which the required API is availab
  cps_st  | **yes** |   no    | **yes** |   no    | **yes** |   n/a   
  css     | **yes** | **yes** |   no    | **yes** | **yes** |   n/a   
  dob     | **yes** | **yes** | **yes** | **yes** | **yes** | **yes** 
- evl     | **yes** | **yes** |    X    | **yes** | **yes** | **yes** 
+ evl     | **yes** | **yes** |    X    |    X    | **yes** | **yes** 
  ics     | **yes** | **yes** | **yes** | **yes** | **yes** | **yes** 
  jls     | **yes** | **yes** |   no    | **yes** | **yes** |   n/a   
  jos     | **yes** | **yes** |   no    | **yes** | **yes** | **yes** 
@@ -51,7 +51,7 @@ On the tests that could be run (i.e. tests for which the required API is availab
  nss_st  | **yes** | **yes** | **yes** |   no    | **yes** |   n/a   
  nss_sts | **yes** | **yes** | **yes** |   no    | **yes** |   n/a   
  nss_ts  | **yes** |   no    |    X    |    X    |    X    |   n/a   
- nss_tss | **yes** | **yes** |   no    |   no    | **yes** |   n/a   
+ nss_tss | **yes** | **yes** | **yes** |   no    | **yes** |   n/a   
  psg     | **yes** | **yes** | **yes** |   no    | **yes** |   n/a   
  pss     | **yes** | **yes** | **yes** | **yes** | **yes** | **yes** 
  pss_st  | **yes** | **yes** |    X    | **yes** | **yes** | **yes** 
@@ -65,42 +65,43 @@ On the tests that could be run (i.e. tests for which the required API is availab
 1. Can the callbacks have an argument?
 2. Will triggering the signal with an argument by reference not make unecessary copies of its argument?
 3. Will triggering the signal with an argument by value not make unecessary copies of its argument?
+4. Will triggering the signal with a temporary will pass it to every callback?
 
- Library |    1    |    2    |    3    
----------|---------|---------|---------
- aco     | **yes** | **yes** |   no    
- asg     | **yes** | **yes** |   no    
- bs2     | **yes** | **yes** |   no    
- bs2_st  | **yes** | **yes** |   no    
- cls     | **yes** | **yes** |   no    
- cps     | **yes** | **yes** |   no    
- cps_st  | **yes** | **yes** |   no    
- css     | **yes** | **yes** |   no    
- dob     | **yes** | **yes** |   no    
- evl     | **yes** | **yes** |   no    
- ics     | **yes** | **yes** |   no    
- jls     | **yes** | **yes** |   no    
- jos     | **yes** | **yes** |   no    
- ksc     | **yes** | **yes** |   no    
- lfs     | **yes** | **yes** | **yes** 
- lss     | **yes** | **yes** |   no    
- mws     | **yes** | **yes** |   no    
- nes     | **yes** | **yes** |   no    
- nls     | **yes** | **yes** |   no    
- nls_st  | **yes** | **yes** |   no    
- nod     | **yes** | **yes** |   no    
- nod_st  | **yes** | **yes** |   no    
- nss_st  | **yes** | **yes** |   no    
- nss_sts | **yes** | **yes** |   no    
- nss_ts  | **yes** | **yes** |   no    
- nss_tss | **yes** | **yes** |   no    
- psg     | **yes** | **yes** |   no    
- pss     | **yes** | **yes** |   no    
- pss_st  | **yes** | **yes** |   no    
- sss     | **yes** | **yes** |   no    
- vdk     | **yes** | **yes** |   no    
- wnk     | **yes** | **yes** |   no    
- yas     | **yes** | **yes** |   no    
+ Library |    1    |    2    |    3    |    4    
+---------|---------|---------|---------|---------
+ aco     | **yes** | **yes** |   no    | **yes** 
+ asg     | **yes** | **yes** |   no    | **yes** 
+ bs2     | **yes** | **yes** |   no    | **yes** 
+ bs2_st  | **yes** | **yes** |   no    | **yes** 
+ cls     | **yes** | **yes** |   no    |   no    
+ cps     | **yes** | **yes** |   no    |   no    
+ cps_st  | **yes** | **yes** |   no    |   no    
+ css     | **yes** | **yes** |   no    | **yes** 
+ dob     | **yes** | **yes** |   no    |   no    
+ evl     | **yes** | **yes** |   no    | **yes** 
+ ics     | **yes** | **yes** |   no    |   no    
+ jls     | **yes** | **yes** |   no    | **yes** 
+ jos     | **yes** | **yes** |   no    | **yes** 
+ ksc     | **yes** | **yes** |   no    |   no    
+ lfs     | **yes** | **yes** | **yes** | **yes** 
+ lss     | **yes** | **yes** |   no    | **yes** 
+ mws     | **yes** | **yes** |   no    | **yes** 
+ nes     | **yes** | **yes** |   no    |   no    
+ nls     | **yes** | **yes** |   no    |   no    
+ nls_st  | **yes** | **yes** |   no    |   no    
+ nod     | **yes** | **yes** |   no    | **yes** 
+ nod_st  | **yes** | **yes** |   no    | **yes** 
+ nss_st  | **yes** | **yes** |   no    |   no    
+ nss_sts | **yes** | **yes** |   no    |   no    
+ nss_ts  | **yes** | **yes** |   no    |   no    
+ nss_tss | **yes** | **yes** |   no    |   no    
+ psg     | **yes** | **yes** |   no    | **yes** 
+ pss     | **yes** | **yes** |   no    | **yes** 
+ pss_st  | **yes** | **yes** |   no    | **yes** 
+ sss     | **yes** | **yes** |   no    | **yes** 
+ vdk     | **yes** | **yes** |   no    | **yes** 
+ wnk     | **yes** | **yes** |   no    |   no    
+ yas     | **yes** | **yes** |   no    |   no    
 
 ## Connection management
 
@@ -163,7 +164,7 @@ On the tests that could be run (i.e. tests for which the required API is availab
  asg     | **yes** | **yes** | **yes** | **yes** | **yes** | **yes** |   no    | **yes** 
  bs2     | **yes** | **yes** | **yes** | **yes** | **yes** | **yes** | **yes** | **yes** 
  bs2_st  | **yes** | **yes** | **yes** | **yes** | **yes** | **yes** | **yes** | **yes** 
- cls     |    X    |    X    |    X    |   no    |   no    |   no    |    X    |   no    
+ cls     |    X    |    X    |    X    |    X    |    X    |    X    |    X    |    X    
  cps     | **yes** |   no    |   no    |   no    |   no    |   no    |    X    |   no    
  cps_st  | **yes** |   no    |   no    |   no    |   no    |   no    |   no    |   no    
  css     |   n/a   |   n/a   |   n/a   |   n/a   |   n/a   |   n/a   |   n/a   |   n/a   
@@ -192,4 +193,3 @@ On the tests that could be run (i.e. tests for which the required API is availab
  vdk     |   n/a   |   n/a   |   n/a   |   n/a   |   n/a   |   n/a   |   n/a   |   n/a   
  wnk     | **yes** | **yes** | **yes** | **yes** | **yes** | **yes** |    X    | **yes** 
  yas     | **yes** | **yes** | **yes** | **yes** | **yes** | **yes** | **yes** | **yes** 
-
