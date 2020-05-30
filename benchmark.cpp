@@ -16,6 +16,7 @@
 #include "benchmark/hpp/benchmark_jls.hpp"
 #include "benchmark/hpp/benchmark_jos.hpp"
 #include "benchmark/hpp/benchmark_ksc.hpp"
+#include "benchmark/hpp/benchmark_ktn.hpp"
 #include "benchmark/hpp/benchmark_lcp.hpp"
 #include "benchmark/hpp/benchmark_lfs.hpp"
 #include "benchmark/hpp/benchmark_lss.hpp"
@@ -156,6 +157,7 @@ void run_all_benchmarks()
         RUN_BENCHMARK_CLASS(Jls);
         RUN_BENCHMARK_CLASS(Jos); // Must make sure Subject lives longer than Foo
         RUN_BENCHMARK_CLASS(Ksc);
+        RUN_BENCHMARK_CLASS(Ktnss);
         RUN_BENCHMARK_CLASS(Lcp);
         RUN_BENCHMARK_CLASS(Lfs);
         RUN_BENCHMARK_CLASS(Lss); // Must make sure Subject lives longer than Foo
@@ -202,6 +204,7 @@ void run_all_validation_tests()
     Jls::validate_assert(N);
     Jos::validate_assert(N);
     Ksc::validate_assert(N);
+    Ktnss::validate_assert(N);
     Lcp::validate_assert(N);
     Lfs::validate_assert(N);
     Lss::validate_assert(N);
@@ -285,6 +288,7 @@ void output_metrics_report(T& ost)
     output_metrics_report_row<Jls>(ost);
     output_metrics_report_row<Jos>(ost);
     output_metrics_report_row<Ksc>(ost);
+    output_metrics_report_row<Ktnss>(ost);
     output_metrics_report_row<Lcp>(ost);
     output_metrics_report_row<Lfs>(ost);
     output_metrics_report_row<Lss>(ost);
