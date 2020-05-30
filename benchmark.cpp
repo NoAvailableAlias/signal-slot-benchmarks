@@ -36,6 +36,7 @@
 #include "benchmark/hpp/benchmark_wnk.hpp"
 #include "benchmark/hpp/benchmark_yas.hpp"
 #include "benchmark/hpp/benchmark_vdk.hpp"
+#include "benchmark/hpp/benchmark_vdk_st.hpp"
 
 // These are required in Main to initialize the jlsignal allocator
 #include "benchmark/lib/jeffomatic/jl_signal/src/Signal.h"
@@ -174,7 +175,8 @@ void run_all_benchmarks()
         RUN_BENCHMARK_CLASS(Sss);
         RUN_BENCHMARK_CLASS(Wnk); // Must make sure Subject lives longer than Foo
         RUN_BENCHMARK_CLASS(Yas);
-        RUN_BENCHMARK_CLASS(Vdk);
+        //RUN_BENCHMARK_CLASS(Vdk); // msvc compilation error
+        RUN_BENCHMARK_CLASS(Vdk_st);
     }
 
 #undef RUN_BENCHMARK_CLASS
@@ -219,7 +221,8 @@ void run_all_validation_tests()
     Sss::validate_assert(N);
     Wnk::validate_assert(N);
     Yas::validate_assert(N);
-    Vdk::validate_assert(N);
+    //Vdk::validate_assert(N); // msvc compilation error
+    Vdk_st::validate_assert(N);
 }
 
 //------------------------------------------------------------------------------
@@ -301,7 +304,8 @@ void output_metrics_report(T& ost)
     output_metrics_report_row<Sss>(ost);
     output_metrics_report_row<Wnk>(ost);
     output_metrics_report_row<Yas>(ost);
-    output_metrics_report_row<Vdk>(ost);
+    //output_metrics_report_row<Vdk>(ost); // msvc compilation error
+    output_metrics_report_row<Vdk_st>(ost);
 }
 
 //------------------------------------------------------------------------------
@@ -448,6 +452,10 @@ int main(int argc, char* argv[])
 
     // Validate that all implementations are functioning correctly
     run_all_validation_tests();
+
+    // Display any validation failures before screen clearing
+    std::cout << "Validation complete: [paused]" << std::endl;
+    std::cin.get();
 
     // There has got to be a better way...
     auto a1 = std::async(std::launch::async, []

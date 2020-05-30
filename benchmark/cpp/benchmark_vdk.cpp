@@ -38,6 +38,5 @@ NOINLINE(double Vdk::combined(std::size_t N, std::size_t limit))
 }
 NOINLINE(double Vdk::threaded(std::size_t N, std::size_t limit))
 {
-    // NOT IMPLEMENTED FOR THIS LIB
-    return 0.0;
+    return Benchmark<Signal, Vdk>::threaded(N, limit);
 }

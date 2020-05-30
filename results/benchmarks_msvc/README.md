@@ -24,6 +24,7 @@
 | Library | [constr] | [destr] | conn | disconn | reconn | emit | all | threaded | score |
 |---------|----------|---------|------|---------|--------|------|----------|----------|-------|
 | jeffomatic jl_signal | 29144 | 19613 | 108343 | 39417 | 107186 | 141612 | 23657 | 0 | 420215 |
+| vdksoft signals st | 4706 | 6327 | 9645 | 143376 | 5973 | 121774 | 4319 | 0 | 285088 |
 | Wink-Signals | 48418 | 51159 | 14583 | 23672 | 28813 | 141754 | 12470 | 0 | 221292 |
 | Nuclex Events | 58255 | 44933 | 21625 | 21735 | 21196 | 138949 | 10217 | 0 | 213722 |
 | Ansoulom cpp-observe | 48310 | 34152 | 9969 | 22903 | 14509 | 141534 | 8510 | 0 | 197424 |
@@ -71,6 +72,7 @@ _Size results are the size of object files from x64 release build with Visual St
 | Library | Build Size | Signal Size | Header Only | Data Structure | Thread Safe |
 | ------- |:----------:|:-----------:|:-----------:| -------------- |:-----------:|
 | [jeffomatic jl_signal](https://github.com/jeffomatic/jl_signal) | 199 kb | 40 b | - | doubly linked list | - |
+| [vdksoft signals st](https://github.com/vdksoft/signals) | 223 kb | 8 b | - | doubly linked list | - |
 | [Montellese cpp-signal](https://github.com/Montellese/cpp-signal) | 226 kb | 16 b | X | std::forward_list | - |
 | [nano-signal-slot st](https://github.com/NoAvailableAlias/nano-signal-slot) | 230 kb | 24 b | X | std::vector | - |
 | [Wink-Signals](https://github.com/miguelmartin75/Wink-Signals) | 245 kb | 24 b | X | std::vector | - |

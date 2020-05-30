@@ -132,6 +132,9 @@
     <Filter Include="Text Files\results\benchmarks_msvc">
       <UniqueIdentifier>{f86edcda-6142-48b4-9d23-bc7b09f6f1be}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\lib\vdksoft">
+      <UniqueIdentifier>{1e992804-1271-41cd-9c66-80fdc381486d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\benchmark\hpp\benchmark_asg.hpp">
@@ -268,9 +271,6 @@
     </ClInclude>
     <ClInclude Include="..\benchmark\lib\supergrover\sigslot\src\signal.h">
       <Filter>Header Files\lib\supergrover</Filter>
-    </ClInclude>
-    <ClInclude Include="..\benchmark\lib\vdksoft\signals\include\signals.h">
-      <Filter>Header Files\lib\vdksoft</Filter>
     </ClInclude>
     <ClInclude Include="..\benchmark\lib\yassi\yassi.h">
       <Filter>Header Files\lib\yassi</Filter>
@@ -521,6 +521,12 @@
     <ClInclude Include="..\benchmark\hpp\benchmark_lcp.hpp">
       <Filter>Header Files\benchmark</Filter>
     </ClInclude>
+    <ClInclude Include="..\benchmark\lib\vdksoft\signals\src\signals.h">
+      <Filter>Header Files\lib\vdksoft</Filter>
+    </ClInclude>
+    <ClInclude Include="..\benchmark\hpp\benchmark_vdk_st.hpp">
+      <Filter>Header Files\benchmark</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\benchmark\cpp\benchmark_asg.cpp">
@@ -728,6 +734,12 @@
       <Filter>Source Files\benchmark</Filter>
     </ClCompile>
     <ClCompile Include="..\benchmark\cpp\benchmark_lcp.cpp">
+      <Filter>Source Files\benchmark</Filter>
+    </ClCompile>
+    <ClCompile Include="..\benchmark\lib\vdksoft\signals\src\signals.cpp">
+      <Filter>Source Files\lib\vdksoft</Filter>
+    </ClCompile>
+    <ClCompile Include="..\benchmark\cpp\benchmark_vdk_st.cpp">
       <Filter>Source Files\benchmark</Filter>
     </ClCompile>
   </ItemGroup>

@@ -1,18 +1,15 @@
 #pragma once
 
-#define VDK_SIGNALS_LITE
-#include "../lib/vdksoft/signals/include/signals.h"
+#include "../lib/vdksoft/signals/src/signals.h"
 
 #include "../../benchmark.hpp"
 
-class Vdk
+class Vdk : public vdk::context
 {
     NOINLINE(void handler(Rng& rng))
     {
         volatile std::size_t a = rng(); (void)a;
     }
-
-    SlotScope reg;
 
     public:
 
@@ -21,8 +18,9 @@ class Vdk
     template <typename Subject, typename Foo>
     static void connect_method(Subject& subject, Foo& foo)
     {
-        subject.connect(&foo, &Foo::handler);
-        foo.reg = make_slot_scope([&subject, &foo](void*){subject.disconnect(&foo, &Foo::handler);});
+        // msvc generates "Error C2039 'generate': is not a member of 'std::tuple<Rng &>'
+        // some sort of issue with the threadsafe command / target codepath
+        //subject.connect(&foo, &Foo::handler);
     }
     template <typename Subject>
     static void emit_method(Subject& subject, Rng& rng)
@@ -45,12 +43,12 @@ class Vdk
     // NOT IMPLEMENTED FOR THIS LIB
     static double threaded(std::size_t, std::size_t);
 
-    static constexpr const char* C_LIB_NAME = "vdksoft signals";
+    static constexpr const char* C_LIB_NAME = "* vdksoft signals";
     static constexpr const char* C_LIB_SOURCE_URL = "https://github.com/vdksoft/signals";
     static constexpr const char* C_LIB_FILE = "benchmark_vdk";
     static constexpr const char* C_LIB_IS_HEADER_ONLY = "-";
-    static constexpr const char* C_LIB_DATA_STRUCTURE = "singly linked list";
-    static constexpr const char* C_LIB_IS_THREAD_SAFE = "*";
+    static constexpr const char* C_LIB_DATA_STRUCTURE = "doubly linked list";
+    static constexpr const char* C_LIB_IS_THREAD_SAFE = "X";
 
     static constexpr const std::size_t C_LIB_SIZEOF_SIGNAL = sizeof(Signal);
 };

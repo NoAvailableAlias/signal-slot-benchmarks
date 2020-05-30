@@ -260,6 +260,7 @@
     <ClInclude Include="..\benchmark\hpp\benchmark_pss_st.hpp" />
     <ClInclude Include="..\benchmark\hpp\benchmark_sss.hpp" />
     <ClInclude Include="..\benchmark\hpp\benchmark_vdk.hpp" />
+    <ClInclude Include="..\benchmark\hpp\benchmark_vdk_st.hpp" />
     <ClInclude Include="..\benchmark\hpp\benchmark_wnk.hpp" />
     <ClInclude Include="..\benchmark\hpp\benchmark_yas.hpp" />
     <ClInclude Include="..\benchmark\lib\amc522\signal11\Signal.h" />
@@ -353,7 +354,7 @@
     <ClInclude Include="..\benchmark\lib\pbhogan\Signals\Delegate.h" />
     <ClInclude Include="..\benchmark\lib\pbhogan\Signals\Signal.h" />
     <ClInclude Include="..\benchmark\lib\supergrover\sigslot\src\signal.h" />
-    <ClInclude Include="..\benchmark\lib\vdksoft\signals\include\signals.h" />
+    <ClInclude Include="..\benchmark\lib\vdksoft\signals\src\signals.h" />
     <ClInclude Include="..\benchmark\lib\yassi\yassi.h" />
     <ClInclude Include="..\benchmark_utility.hpp" />
   </ItemGroup>
@@ -391,6 +392,7 @@
     <ClCompile Include="..\benchmark\cpp\benchmark_pss_st.cpp" />
     <ClCompile Include="..\benchmark\cpp\benchmark_sss.cpp" />
     <ClCompile Include="..\benchmark\cpp\benchmark_vdk.cpp" />
+    <ClCompile Include="..\benchmark\cpp\benchmark_vdk_st.cpp" />
     <ClCompile Include="..\benchmark\cpp\benchmark_wnk.cpp" />
     <ClCompile Include="..\benchmark\cpp\benchmark_yas.cpp" />
     <ClCompile Include="..\benchmark\lib\copperspice\cs_signal\src\cs_signal.cpp" />
@@ -427,6 +429,7 @@
     <ClCompile Include="..\benchmark\lib\jeffomatic\jl_signal\src\SignalBase.cpp" />
     <ClCompile Include="..\benchmark\lib\mwthinker\Signal\src\mw\signals\connection.cpp" />
     <ClCompile Include="..\benchmark\lib\supergrover\sigslot\src\signal.cpp" />
+    <ClCompile Include="..\benchmark\lib\vdksoft\signals\src\signals.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="..\CMakeLists.txt" />
