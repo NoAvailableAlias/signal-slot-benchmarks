@@ -12,7 +12,6 @@ These benchmarks do not accurately depict real world usage patterns seen in the 
 <br/>
 However, these benchmarks were designed to provide impartial results regardless of implementation.
 <br/>
-It is my goal to take what I've learned from these results and apply this knowledge into making nano-signal-slot better.
 
 Tested Environments
 -------------------
@@ -22,14 +21,14 @@ Tested Environments
 	<div style="flex:1;">
     	<a href="/results/benchmarks_msvc/README.md">
         	<button type="button" style="padding:2em; cursor:pointer;  font-size:2em; width:90%;">
-            	MSVC (Windows)
+            	MSVC (Windows) [RECENTLY UPDATED]
             </button>
         </a>
 	</div>
 	<div style="flex:1;">
         <a href="/results/benchmarks_gcc/README.md">
             <button type="button" style="padding:2em; cursor:pointer; font-size:2em; width:90%;">
-            	GCC (Linux)
+            	GCC (Linux) [HELP WANTED]
             </button>
         </a>
 	</div>

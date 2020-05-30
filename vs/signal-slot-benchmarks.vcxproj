@@ -132,7 +132,7 @@
       <EnableModules>false</EnableModules>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <OmitFramePointers>false</OmitFramePointers>
-      <AdditionalIncludeDirectories>C:\boost_1_71_0;C:\Projects\signal-slot-benchmarks\benchmark\lib\iscool\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\boost_1_71_0;C:\Projects\signal-slot-benchmarks\benchmark\lib\iscool\include;C:\Projects\signal-slot-benchmarks\benchmark\lib\libsigcplusplus;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>-D_SCL_SECURE_NO_WARNINGS -D_CRT_SECURE_NO_WARNINGS %(AdditionalOptions)</AdditionalOptions>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <BasicRuntimeChecks>Default</BasicRuntimeChecks>
@@ -145,7 +145,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>C:\boost_1_71_0\stage\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
@@ -204,7 +204,7 @@
       <EnableModules>false</EnableModules>
       <OmitFramePointers>true</OmitFramePointers>
       <WholeProgramOptimization>false</WholeProgramOptimization>
-      <AdditionalIncludeDirectories>C:\boost_1_71_0;C:\Projects\signal-slot-benchmarks\benchmark\lib\iscool\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\boost_1_71_0;C:\Projects\signal-slot-benchmarks\benchmark\lib\iscool\include;C:\Projects\signal-slot-benchmarks\benchmark\lib\libsigcplusplus;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>-D_SCL_SECURE_NO_WARNINGS -D_CRT_SECURE_NO_WARNINGS /TP /fp:fast /Ox %(AdditionalOptions)</AdditionalOptions>
       <FloatingPointModel>Fast</FloatingPointModel>
       <EnableEnhancedInstructionSet>NoExtensions</EnableEnhancedInstructionSet>
@@ -220,7 +220,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>false</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>C:\boost_1_71_0\stage\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
       <LinkErrorReporting>NoErrorReport</LinkErrorReporting>
       <DataExecutionPrevention>false</DataExecutionPrevention>
@@ -242,6 +242,7 @@
     <ClInclude Include="..\benchmark\hpp\benchmark_jls.hpp" />
     <ClInclude Include="..\benchmark\hpp\benchmark_jos.hpp" />
     <ClInclude Include="..\benchmark\hpp\benchmark_ksc.hpp" />
+    <ClInclude Include="..\benchmark\hpp\benchmark_lcp.hpp" />
     <ClInclude Include="..\benchmark\hpp\benchmark_lfs.hpp" />
     <ClInclude Include="..\benchmark\hpp\benchmark_lss.hpp" />
     <ClInclude Include="..\benchmark\hpp\benchmark_mws.hpp" />
@@ -372,6 +373,7 @@
     <ClCompile Include="..\benchmark\cpp\benchmark_jls.cpp" />
     <ClCompile Include="..\benchmark\cpp\benchmark_jos.cpp" />
     <ClCompile Include="..\benchmark\cpp\benchmark_ksc.cpp" />
+    <ClCompile Include="..\benchmark\cpp\benchmark_lcp.cpp" />
     <ClCompile Include="..\benchmark\cpp\benchmark_lfs.cpp" />
     <ClCompile Include="..\benchmark\cpp\benchmark_lss.cpp" />
     <ClCompile Include="..\benchmark\cpp\benchmark_mws.cpp" />
@@ -431,8 +433,14 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="..\README.md" />
-    <None Include="..\results_gcc\README.md" />
-    <None Include="..\results_msvc\README.md" />
+    <None Include="..\results\benchmarks_gcc\README.md" />
+    <None Include="..\results\benchmarks_msvc\README.md" />
+    <None Include="..\results\features.md" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\benchmark\lib\libsigcplusplus\libsigcplusplus\libsigcplusplus.vcxproj">
+      <Project>{5ed42a80-af20-46f6-b962-8d03e4a4beec}</Project>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -42,6 +42,7 @@
 | nano-signal-slot sts | 48477 | 27921 | 11331 | 19930 | 18062 | 89583 | 8595 | 0 | 147500 |
 | iscool::signals | 40332 | 46436 | 9352 | 39834 | 9737 | 40651 | 360 | 0 | 99932 |
 | EvilTwin Observer | 3982 | 4260 | 4601 | 8503 | 5549 | 62978 | 2992 | 0 | 84623 |
+| libsigcplusplus | 38155 | 36136 | 1772 | 3004 | 1817 | 56919 | 1094 | 0 | 64606 |
 | Boost Signals2 st | 296 | 567 | 3813 | 9749 | 3225 | 43392 | 2320 | 0 | 62498 |
 | copperspice cs_signal | 7411 | 2122 | 2699 | 3090 | 2966 | 13366 | 1333 | 0 | 23453 |
 | neolib event | 16851 | 606 | 2304 | 4619 | 2776 | 6002 | 1289 | 0 | 16989 |
@@ -80,6 +81,7 @@ _Size results are the size of object files from x64 release build with Visual St
 | [mwthinker Signal](https://github.com/mwthinker/Signal) | 280 kb | 32 b | - | std::list | - |
 | [pbhogan Signals](https://github.com/pbhogan/Signals) | 288 kb | 16 b | X | std::set | - |
 | [palacaze sigslot](https://github.com/palacaze/sigslot) | 292 kb | 48 b | X | std::vector | - |
+| [libsigcplusplus](https://github.com/libsigcplusplus/libsigcplusplus) | 295 kb | 16 b | - | std::list | - |
 | [joanrieu signal11](https://github.com/joanrieu/signal11) | 304 kb | 32 b | X | std::list | - |
 | [Ansoulom cpp-observe](https://github.com/Ansoulom/cpp-observe) | 307 kb | 24 b | X | std::vector | - |
 | [Yassi](http://www.codeproject.com/Articles/867044/Yassi-Yet-Another-Signal-Slot-Implementation) | 312 kb | 24 b | X | std::vector | - |

@@ -81,12 +81,6 @@
     <Filter Include="Header Files\lib\Montellese">
       <UniqueIdentifier>{50351168-ba4c-48c2-b6be-1b53534d6a6e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Text Files\results_gcc">
-      <UniqueIdentifier>{92dfdadb-0d96-4a4b-a513-049886b195b5}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Text Files\results_msvc">
-      <UniqueIdentifier>{138d3b75-58f0-4ede-bd98-5d198606b587}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\lib\i42output">
       <UniqueIdentifier>{69581605-a8ae-41b1-af56-78cb5fe64a6e}</UniqueIdentifier>
     </Filter>
@@ -128,6 +122,15 @@
     </Filter>
     <Filter Include="Source Files\lib\iscool">
       <UniqueIdentifier>{a702aa14-871c-4238-a103-954d727f54df}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Text Files\results">
+      <UniqueIdentifier>{158a70ce-3ec5-4bbf-b9fb-7cc90689da09}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Text Files\results\benchmarks_gcc">
+      <UniqueIdentifier>{d9390da0-94a8-4ece-8a52-469053c80ce9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Text Files\results\benchmarks_msvc">
+      <UniqueIdentifier>{f86edcda-6142-48b4-9d23-bc7b09f6f1be}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -515,6 +518,9 @@
     <ClInclude Include="..\benchmark\hpp\benchmark_bs2_st.hpp">
       <Filter>Header Files\benchmark</Filter>
     </ClInclude>
+    <ClInclude Include="..\benchmark\hpp\benchmark_lcp.hpp">
+      <Filter>Header Files\benchmark</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\benchmark\cpp\benchmark_asg.cpp">
@@ -721,6 +727,9 @@
     <ClCompile Include="..\benchmark\cpp\benchmark_bs2_st.cpp">
       <Filter>Source Files\benchmark</Filter>
     </ClCompile>
+    <ClCompile Include="..\benchmark\cpp\benchmark_lcp.cpp">
+      <Filter>Source Files\benchmark</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Text Include="..\CMakeLists.txt">
@@ -731,11 +740,14 @@
     <None Include="..\README.md">
       <Filter>Text Files</Filter>
     </None>
-    <None Include="..\results_msvc\README.md">
-      <Filter>Text Files\results_msvc</Filter>
+    <None Include="..\results\features.md">
+      <Filter>Text Files\results</Filter>
     </None>
-    <None Include="..\results_gcc\README.md">
-      <Filter>Text Files\results_gcc</Filter>
+    <None Include="..\results\benchmarks_gcc\README.md">
+      <Filter>Text Files\results\benchmarks_gcc</Filter>
+    </None>
+    <None Include="..\results\benchmarks_msvc\README.md">
+      <Filter>Text Files\results\benchmarks_msvc</Filter>
     </None>
   </ItemGroup>
 </Project>
