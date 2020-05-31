@@ -135,6 +135,9 @@
     <Filter Include="Source Files\lib\vdksoft">
       <UniqueIdentifier>{1e992804-1271-41cd-9c66-80fdc381486d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\lib\ktnSignalSlot">
+      <UniqueIdentifier>{3e8d3c2c-3253-4fa0-8c1b-25c3c3f0892c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\benchmark\hpp\benchmark_asg.hpp">
@@ -527,6 +530,12 @@
     <ClInclude Include="..\benchmark\hpp\benchmark_vdk_st.hpp">
       <Filter>Header Files\benchmark</Filter>
     </ClInclude>
+    <ClInclude Include="..\benchmark\lib\KtnFramework\KtnSignalSlot\include\ktnSignalSlot\ktnSignalSlot.hpp">
+      <Filter>Header Files\lib\ktnSignalSlot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\benchmark\hpp\benchmark_ktn.hpp">
+      <Filter>Header Files\benchmark</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\benchmark\cpp\benchmark_asg.cpp">
@@ -740,6 +749,9 @@
       <Filter>Source Files\lib\vdksoft</Filter>
     </ClCompile>
     <ClCompile Include="..\benchmark\cpp\benchmark_vdk_st.cpp">
+      <Filter>Source Files\benchmark</Filter>
+    </ClCompile>
+    <ClCompile Include="..\benchmark\cpp\benchmark_ktn.cpp">
       <Filter>Source Files\benchmark</Filter>
     </ClCompile>
   </ItemGroup>

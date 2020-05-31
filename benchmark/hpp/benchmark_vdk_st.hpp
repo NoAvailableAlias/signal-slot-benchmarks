@@ -18,7 +18,6 @@ class Vdk_st : public vdk::lite::context
     template <typename Subject, typename Foo>
     static void connect_method(Subject& subject, Foo& foo)
     {
-        
         subject.connect(&foo, &Foo::handler);
     }
     template <typename Subject>

@@ -7,49 +7,49 @@
 
 | Library | [constr] | [destr] | conn | disconn | reconn | emit | all | threaded | score |
 |---------|----------|---------|------|---------|--------|------|----------|----------|-------|
-| * nano-signal-slot ts | 36517 | 12664 | 10350 | 17276 | 13779 | 134282 | 7995 | 575 | 184257 |
-| * palacaze sigslot | 3942 | 2929 | 9762 | 12415 | 14554 | 113508 | 6389 | 499 | 157127 |
-| * Montellese cpp-signal | 17298 | 5237 | 9736 | 9762 | 9691 | 121895 | 4565 | 488 | 156138 |
-| * cpp11nullptr lsignal | 2017 | 2314 | 4491 | 7966 | 4440 | 119715 | 2790 | 380 | 139783 |
-| * fr00b0 nod | 16840 | 13955 | 10996 | 20589 | 25688 | 53478 | 9496 | 219 | 120466 |
-| * CppFakeIt FastSignals | 3307 | 4200 | 7467 | 16102 | 17234 | 44998 | 6968 | 115 | 92884 |
-| * Kosta signals-cpp | 18152 | 5581 | 3553 | 43849 | 3016 | 36380 | 2568 | 297 | 89662 |
-| * nano-signal-slot tss | 3522 | 2764 | 8842 | 7390 | 12951 | 23562 | 3545 | 345 | 56635 |
-| * Boost Signals2 | 316 | 567 | 3586 | 26174 | 2772 | 21597 | 90 | 9 | 54228 |
-| * dacap observable | 12873 | 1295 | 9764 | 9063 | 10957 | 16166 | 3852 | 11 | 49814 |
-| * neolib event | 16732 | 598 | 2244 | 4089 | 2598 | 5885 | 1197 | 89 | 16102 |
+| * nano-signal-slot ts | 39557 | 14125 | 10594 | 17476 | 16822 | 129100 | 8274 | 642 | 182908 |
+| * palacaze sigslot | 4196 | 3153 | 9367 | 12258 | 14673 | 107786 | 6208 | 535 | 150826 |
+| * Montellese cpp-signal | 18760 | 5905 | 8737 | 10005 | 9056 | 115558 | 4610 | 516 | 148483 |
+| * cpp11nullptr lsignal | 2135 | 2668 | 4357 | 7860 | 4275 | 112647 | 2808 | 399 | 132344 |
+| * fr00b0 nod | 17703 | 17011 | 12324 | 22018 | 26667 | 54304 | 10161 | 396 | 125871 |
+| * KtnSignalSlot | 6070 | 4856 | 2095 | 9097 | 2546 | 104033 | 1760 | 85 | 119616 |
+| * CppFakeIt FastSignals | 4540 | 4545 | 7666 | 17374 | 17561 | 46393 | 7289 | 140 | 96425 |
+| * Kosta signals-cpp | 19775 | 6384 | 3841 | 43041 | 3261 | 36403 | 2686 | 322 | 89554 |
+| * nano-signal-slot tss | 4464 | 3013 | 8727 | 7416 | 13815 | 23167 | 3580 | 373 | 57079 |
+| * dacap observable | 14061 | 1432 | 11004 | 9531 | 10932 | 15833 | 3880 | 40 | 51219 |
+| * Boost Signals2 | 316 | 598 | 3439 | 7064 | 2900 | 28426 | 1878 | 160 | 43866 |
+| * neolib event | 17817 | 649 | 2291 | 4268 | 2708 | 5854 | 1258 | 91 | 16470 |
 
 ### Performance of Thread Unsafe Libraries
 
 | Library | [constr] | [destr] | conn | disconn | reconn | emit | all | threaded | score |
 |---------|----------|---------|------|---------|--------|------|----------|----------|-------|
-| jeffomatic jl_signal | 29144 | 19613 | 108343 | 39417 | 107186 | 141612 | 23657 | 0 | 420215 |
-| vdksoft signals st | 4706 | 6327 | 9645 | 143376 | 5973 | 121774 | 4319 | 0 | 285088 |
-| Wink-Signals | 48418 | 51159 | 14583 | 23672 | 28813 | 141754 | 12470 | 0 | 221292 |
-| Nuclex Events | 58255 | 44933 | 21625 | 21735 | 21196 | 138949 | 10217 | 0 | 213722 |
-| Ansoulom cpp-observe | 48310 | 34152 | 9969 | 22903 | 14509 | 141534 | 8510 | 0 | 197424 |
-| nano-signal-slot st | 48374 | 27898 | 11334 | 19902 | 18032 | 137019 | 9196 | 0 | 195482 |
-| palacaze sigslot | 35430 | 19137 | 11055 | 15466 | 20265 | 140358 | 7994 | 0 | 195139 |
-| Yassi | 48019 | 34464 | 10549 | 13635 | 20998 | 141297 | 8139 | 0 | 194617 |
-| Montellese cpp-signal | 58313 | 17895 | 13600 | 15222 | 13904 | 140828 | 6910 | 0 | 190464 |
-| vdksoft signals | 3509 | 5900 | 13637 | 19121 | 14277 | 134205 | 7609 | 0 | 188850 |
-| mwthinker Signal | 4496 | 6065 | 10041 | 12274 | 9708 | 138232 | 5399 | 0 | 175654 |
-| pbhogan Signals | 2930 | 5571 | 10435 | 10748 | 7988 | 141883 | 4299 | 0 | 175353 |
-| fr00b0 nod | 27096 | 19281 | 15995 | 32863 | 48079 | 60938 | 15544 | 0 | 173418 |
-| SimpleSignal | 3840 | 6139 | 8641 | 9218 | 8556 | 141654 | 4170 | 0 | 172239 |
-| amc522 Signal11 | 20992 | 32419 | 8681 | 14266 | 9123 | 130925 | 5656 | 0 | 168651 |
-| joanrieu signal11 | 1649 | 2925 | 11353 | 16915 | 11296 | 116547 | 6558 | 0 | 162669 |
-| supergrover sigslot | 2102 | 3207 | 4118 | 4998 | 4109 | 142148 | 2067 | 0 | 157440 |
-| nano-signal-slot sts | 48477 | 27921 | 11331 | 19930 | 18062 | 89583 | 8595 | 0 | 147500 |
-| iscool::signals | 40332 | 46436 | 9352 | 39834 | 9737 | 40651 | 360 | 0 | 99932 |
-| EvilTwin Observer | 3982 | 4260 | 4601 | 8503 | 5549 | 62978 | 2992 | 0 | 84623 |
-| libsigcplusplus | 38155 | 36136 | 1772 | 3004 | 1817 | 56919 | 1094 | 0 | 64606 |
-| Boost Signals2 st | 296 | 567 | 3813 | 9749 | 3225 | 43392 | 2320 | 0 | 62498 |
-| copperspice cs_signal | 7411 | 2122 | 2699 | 3090 | 2966 | 13366 | 1333 | 0 | 23453 |
-| neolib event | 16851 | 606 | 2304 | 4619 | 2776 | 6002 | 1289 | 0 | 16989 |
+| jeffomatic jl_signal | 31498 | 24112 | 106333 | 42418 | 105078 | 136499 | 24950 | 0 | 415278 |
+| vdksoft signals st | 3751 | 5419 | 10467 | 162614 | 6152 | 125584 | 4758 | 0 | 309575 |
+| Nuclex Events | 67049 | 63226 | 23401 | 22885 | 22320 | 135934 | 11067 | 0 | 215607 |
+| Wink-Signals | 51907 | 64460 | 14565 | 24157 | 27097 | 136024 | 12145 | 0 | 213988 |
+| nano-signal-slot st | 51845 | 29221 | 11604 | 20100 | 19311 | 135631 | 9766 | 0 | 196413 |
+| Yassi | 52005 | 39981 | 10653 | 15775 | 23361 | 135338 | 9154 | 0 | 194281 |
+| palacaze sigslot | 38989 | 19400 | 12778 | 16132 | 21009 | 134924 | 8994 | 0 | 193838 |
+| Ansoulom cpp-observe | 51788 | 37464 | 9674 | 23671 | 14719 | 135312 | 8473 | 0 | 191849 |
+| Montellese cpp-signal | 62018 | 23367 | 13639 | 16372 | 13829 | 135478 | 7617 | 0 | 186934 |
+| fr00b0 nod | 30259 | 22519 | 16246 | 35819 | 50960 | 58418 | 16242 | 0 | 177685 |
+| mwthinker Signal | 5069 | 6781 | 10556 | 13158 | 10128 | 137227 | 5639 | 0 | 176708 |
+| pbhogan Signals | 4364 | 6876 | 12674 | 12002 | 12490 | 133215 | 5987 | 0 | 176367 |
+| amc522 Signal11 | 27037 | 33226 | 9820 | 15072 | 10277 | 130864 | 5741 | 0 | 171775 |
+| SimpleSignal | 4897 | 6766 | 9994 | 9745 | 9020 | 137345 | 4619 | 0 | 170724 |
+| joanrieu signal11 | 2678 | 3837 | 13051 | 17369 | 13122 | 107489 | 6980 | 0 | 158011 |
+| supergrover sigslot | 2623 | 3664 | 4458 | 5027 | 4210 | 134384 | 2106 | 0 | 150185 |
+| nano-signal-slot sts | 51810 | 30695 | 11852 | 20611 | 19506 | 83177 | 8785 | 0 | 143932 |
+| iscool::signals | 41598 | 47904 | 9460 | 42772 | 9668 | 43760 | 346 | 0 | 106007 |
+| EvilTwin Observer | 4444 | 4692 | 4319 | 8106 | 5196 | 66553 | 3197 | 0 | 87371 |
+| libsigcplusplus | 39133 | 37808 | 1931 | 3174 | 2005 | 72139 | 1201 | 0 | 80450 |
+| Boost Signals2 st | 286 | 592 | 3655 | 9734 | 3097 | 44228 | 2265 | 0 | 62979 |
+| copperspice cs_signal | 8071 | 2266 | 2985 | 3018 | 3021 | 13124 | 1347 | 0 | 23495 |
+| neolib event | 18640 | 664 | 2488 | 4842 | 2908 | 5974 | 1344 | 0 | 17556 |
 
 ___
-_Size results are the size of object files from x64 release build with Visual Studio 17._
+_Size results are the size of object files from x64 release build using Visual Studio 19._
 
 ### Metrics of Thread Safe Libraries
 
@@ -64,6 +64,7 @@ _Size results are the size of object files from x64 release build with Visual St
 | [* fr00b0 nod](https://github.com/fr00b0/nod) | 924 kb | 144 b | X | std::vector | X |
 | [* Kosta signals-cpp](https://github.com/Kosta-Github/signals-cpp) | 931 kb | 96 b | X | std::vector | X |
 | [* cpp11nullptr lsignal](https://github.com/cpp11nullptr/lsignal) | 1011 kb | 128 b | X | **std::list | X |
+| [* KtnSignalSlot](https://gitlab.com/KtnFramework/Libraries/KtnSignalSlot.git) | 1071 kb | 304 b | X | std::vector | X |
 | [* Boost Signals2](http://www.boost.org/doc/libs/1_58_0/doc/html/signals2.html) | 2179 kb | 32 b | - | ? | X |
 | [* neolib event](https://github.com/i42output/neolib) | 2638 kb | 136 b | - | **std::unordered_map | X |
 
@@ -78,7 +79,6 @@ _Size results are the size of object files from x64 release build with Visual St
 | [Wink-Signals](https://github.com/miguelmartin75/Wink-Signals) | 245 kb | 24 b | X | std::vector | - |
 | [nano-signal-slot sts](https://github.com/NoAvailableAlias/nano-signal-slot) | 247 kb | 24 b | X | std::vector | - |
 | [Nuclex Events](http://blog.nuclex-games.com/2019/10/nuclex-signal-slot-benchmarks/) | 251 kb | 40 b | X | dynamic array | - |
-| [vdksoft signals](https://github.com/vdksoft/signals) | 257 kb | 16 b | - | singly linked list | * |
 | [supergrover sigslot](https://github.com/supergrover/sigslot) | 266 kb | 40 b | - | std::list | - |
 | [mwthinker Signal](https://github.com/mwthinker/Signal) | 280 kb | 32 b | - | std::list | - |
 | [pbhogan Signals](https://github.com/pbhogan/Signals) | 288 kb | 16 b | X | std::set | - |

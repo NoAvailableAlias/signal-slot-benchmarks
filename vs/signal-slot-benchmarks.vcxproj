@@ -242,6 +242,7 @@
     <ClInclude Include="..\benchmark\hpp\benchmark_jls.hpp" />
     <ClInclude Include="..\benchmark\hpp\benchmark_jos.hpp" />
     <ClInclude Include="..\benchmark\hpp\benchmark_ksc.hpp" />
+    <ClInclude Include="..\benchmark\hpp\benchmark_ktn.hpp" />
     <ClInclude Include="..\benchmark\hpp\benchmark_lcp.hpp" />
     <ClInclude Include="..\benchmark\hpp\benchmark_lfs.hpp" />
     <ClInclude Include="..\benchmark\hpp\benchmark_lss.hpp" />
@@ -335,6 +336,7 @@
     <ClInclude Include="..\benchmark\lib\Kosta-Github\signals-cpp\signals-cpp\connections.hpp" />
     <ClInclude Include="..\benchmark\lib\Kosta-Github\signals-cpp\signals-cpp\signal.hpp" />
     <ClInclude Include="..\benchmark\lib\Kosta-Github\signals-cpp\signals-cpp\signals.hpp" />
+    <ClInclude Include="..\benchmark\lib\KtnFramework\KtnSignalSlot\include\ktnSignalSlot\ktnSignalSlot.hpp" />
     <ClInclude Include="..\benchmark\lib\larspensjo\SimpleSignal\SimpleSignal.h" />
     <ClInclude Include="..\benchmark\lib\miguelmartin\Wink-Signals\wink\event_queue.hpp" />
     <ClInclude Include="..\benchmark\lib\miguelmartin\Wink-Signals\wink\signal.hpp" />
@@ -374,6 +376,7 @@
     <ClCompile Include="..\benchmark\cpp\benchmark_jls.cpp" />
     <ClCompile Include="..\benchmark\cpp\benchmark_jos.cpp" />
     <ClCompile Include="..\benchmark\cpp\benchmark_ksc.cpp" />
+    <ClCompile Include="..\benchmark\cpp\benchmark_ktn.cpp" />
     <ClCompile Include="..\benchmark\cpp\benchmark_lcp.cpp" />
     <ClCompile Include="..\benchmark\cpp\benchmark_lfs.cpp" />
     <ClCompile Include="..\benchmark\cpp\benchmark_lss.cpp" />

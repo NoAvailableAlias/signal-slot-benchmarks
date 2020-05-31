@@ -12,7 +12,8 @@ class Ktnss : public ktn::SignalSlot::ktnSignalReceiverBase
         (void)a;
     }
 
-public:
+    public:
+
     using Signal = ktn::SignalSlot::ktnSignal<Rng&>;
     template <typename Subject, typename Foo>
     static void connect_method(Subject& subject, Foo& foo)

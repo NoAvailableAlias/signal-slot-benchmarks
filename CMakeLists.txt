@@ -47,6 +47,7 @@ add_executable(bench
     benchmark/cpp/benchmark_jls.cpp
     benchmark/cpp/benchmark_jos.cpp
     benchmark/cpp/benchmark_ksc.cpp
+    benchmark/cpp/benchmark_ktn.cpp
     benchmark/cpp/benchmark_lfs.cpp
     benchmark/cpp/benchmark_lss.cpp
     benchmark/cpp/benchmark_mws.cpp
@@ -64,6 +65,7 @@ add_executable(bench
     benchmark/cpp/benchmark_pss_st.cpp
     benchmark/cpp/benchmark_sss.cpp
     benchmark/cpp/benchmark_vdk.cpp
+    benchmark/cpp/benchmark_vdk_st.cpp
     benchmark/cpp/benchmark_wnk.cpp
     benchmark/cpp/benchmark_yas.cpp
 )
