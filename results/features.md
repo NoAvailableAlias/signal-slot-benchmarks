@@ -40,6 +40,7 @@ On the tests that could be run (i.e. tests for which the required API is availab
  jls     | **yes** | **yes** |   no    | **yes** | **yes** |   n/a   
  jos     | **yes** | **yes** |   no    | **yes** | **yes** | **yes** 
  ksc     | **yes** | **yes** | **yes** | **yes** | **yes** | **yes** 
+ ktn     | **yes** | **yes** | **yes** | **yes** |   no    |   no    
  lfs     | **yes** | **yes** |   no    | **yes** | **yes** | **yes** 
  lss     | **yes** | **yes** |   no    | **yes** | **yes** | **yes** 
  mws     | **yes** | **yes** |   no    | **yes** | **yes** | **yes** 
@@ -83,6 +84,7 @@ On the tests that could be run (i.e. tests for which the required API is availab
  jls     | **yes** | **yes** |   no    | **yes** 
  jos     | **yes** | **yes** |   no    | **yes** 
  ksc     | **yes** | **yes** |   no    |   no    
+ ktn     | **yes** | **yes** |   no    |   no    
  lfs     | **yes** | **yes** | **yes** | **yes** 
  lss     | **yes** | **yes** |   no    | **yes** 
  mws     | **yes** | **yes** |   no    | **yes** 
@@ -127,6 +129,7 @@ On the tests that could be run (i.e. tests for which the required API is availab
  jls     | **yes** | **yes** |   no    | **yes** | **yes** 
  jos     |   n/a   |   n/a   | **yes** | **yes** | **yes** 
  ksc     |   n/a   |   n/a   | **yes** | **yes** | **yes** 
+ ktn     | **yes** | **yes** | **yes** | **yes** | **yes** 
  lfs     | **yes** | **yes** | **yes** | **yes** | **yes** 
  lss     | **yes** | **yes** | **yes** | **yes** |   n/a   
  mws     | **yes** | **yes** | **yes** | **yes** |   no    
@@ -174,6 +177,7 @@ On the tests that could be run (i.e. tests for which the required API is availab
  jls     | **yes** | **yes** | **yes** |    X    |    X    |    X    |   no    |    X    
  jos     | **yes** | **yes** | **yes** | **yes** | **yes** | **yes** |    X    | **yes** 
  ksc     | **yes** | **yes** | **yes** | **yes** | **yes** | **yes** | **yes** | **yes** 
+ ktn     |   n/a   |   n/a   |   n/a   |   n/a   |   n/a   |   n/a   |   n/a   |   n/a   
  lfs     | **yes** | **yes** | **yes** | **yes** | **yes** | **yes** | **yes** |   no    
  lss     |   n/a   |   n/a   |   n/a   |   n/a   |   n/a   |   n/a   |   n/a   |   n/a   
  mws     |   n/a   |   n/a   |   n/a   |   n/a   |   n/a   |   n/a   |   n/a   |   n/a   
