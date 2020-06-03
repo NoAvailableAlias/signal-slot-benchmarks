@@ -177,7 +177,7 @@ void run_all_benchmarks()
         RUN_BENCHMARK_CLASS(Pss);
         RUN_BENCHMARK_CLASS(Pss_st);
         RUN_BENCHMARK_CLASS(Sss);
-        //RUN_BENCHMARK_CLASS(Tsr); // msvc compilation error
+        RUN_BENCHMARK_CLASS(Tsr); // msvc compilation error
         RUN_BENCHMARK_CLASS(Tsr_st);
         RUN_BENCHMARK_CLASS(Wnk); // Must make sure Subject lives longer than Foo
         RUN_BENCHMARK_CLASS(Yas);
@@ -226,7 +226,7 @@ void run_all_validation_tests()
     Pss::validate_assert(N);
     Pss_st::validate_assert(N);
     Sss::validate_assert(N);
-    //Tsr::validate_assert(N); // msvc compilation error
+    Tsr::validate_assert(N); // msvc compilation error
     Tsr_st::validate_assert(N);
     Wnk::validate_assert(N);
     Yas::validate_assert(N);
@@ -312,7 +312,7 @@ void output_metrics_report(T& ost)
     output_metrics_report_row<Pss>(ost);
     output_metrics_report_row<Pss_st>(ost);
     output_metrics_report_row<Sss>(ost);
-    //output_metrics_report_row<Tsr>(ost); // msvc compilation error
+    output_metrics_report_row<Tsr>(ost); // msvc compilation error
     output_metrics_report_row<Tsr_st>(ost);
     output_metrics_report_row<Wnk>(ost);
     output_metrics_report_row<Yas>(ost);

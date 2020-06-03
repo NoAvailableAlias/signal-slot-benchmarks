@@ -4,7 +4,7 @@
 
 #include "../../benchmark.hpp"
 
-class Tsr : rocket::trackable
+class Tsr : public rocket::trackable
 {
     NOINLINE(void handler(Rng& rng))
     {
@@ -23,10 +23,7 @@ class Tsr : rocket::trackable
     template <typename Subject>
     static void emit_method(Subject& subject, Rng& rng)
     {
-        // msvc compilation error code C664
-        // _Ret std::_Func_class<_Ret,Rng &>::operator ()(Rng &) const': cannot convert argument 1 from 'const Rng' to 'Rng &'
-        // rocket.hpp line 3452
-        //subject(rng);
+        subject(rng);
     }
 
     // Used for switching policies at runtime
@@ -42,7 +39,7 @@ class Tsr : rocket::trackable
     static double combined(std::size_t, std::size_t);
     static double threaded(std::size_t, std::size_t);
 
-    static constexpr const char* C_LIB_NAME = "* rocket";
+    static constexpr const char* C_LIB_NAME = "* tripleslash rocket";
     static constexpr const char* C_LIB_SOURCE_URL = "https://github.com/tripleslash/rocket";
     static constexpr const char* C_LIB_FILE = "benchmark_tsr";
     static constexpr const char* C_LIB_IS_HEADER_ONLY = "X";

@@ -39,7 +39,7 @@ class Tsr_st : public rocket::trackable
     static double combined(std::size_t, std::size_t);
     static double threaded(std::size_t, std::size_t);
 
-    static constexpr const char* C_LIB_NAME = "rocket st";
+    static constexpr const char* C_LIB_NAME = "tripleslash rocket st";
     static constexpr const char* C_LIB_SOURCE_URL = "https://github.com/tripleslash/rocket";
     static constexpr const char* C_LIB_FILE = "benchmark_tsr_st";
     static constexpr const char* C_LIB_IS_HEADER_ONLY = "X";

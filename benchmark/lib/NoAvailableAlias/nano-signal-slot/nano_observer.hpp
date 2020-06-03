@@ -10,7 +10,7 @@ namespace Nano
 {
 
 template <typename MT_Policy = ST_Policy>
-class Observer : public MT_Policy
+class Observer : private MT_Policy
 {
     // Only Nano::Signal is allowed private access
     template <typename, typename> friend class Signal;
@@ -77,7 +77,7 @@ class Observer : public MT_Policy
         {
             if (auto observer = MT_Policy::observed(slot.observer))
             {
-                Function::bind(slot.delegate)(std::forward<Uref>(args)...);
+                Function::bind(slot.delegate)(args...);
             }
         }
     }
@@ -91,7 +91,7 @@ class Observer : public MT_Policy
         {
             if (auto observer = MT_Policy::observed(slot.observer))
             {
-                accumulate(Function::bind(slot.delegate)(std::forward<Uref>(args)...));
+                accumulate(Function::bind(slot.delegate)(args...));
             }
         }
     }
@@ -108,7 +108,7 @@ class Observer : public MT_Policy
         {
             if (auto observer = MT_Policy::visiting(slot.observer))
             {
-                MT_Policy::template static_pointer_cast<Observer>(observer)->remove(slot.delegate);
+                static_cast<Observer*>(MT_Policy::unmask(observer))->remove(slot.delegate);
             }
         }
         connections.clear();
