@@ -260,6 +260,8 @@
     <ClInclude Include="..\benchmark\hpp\benchmark_pss.hpp" />
     <ClInclude Include="..\benchmark\hpp\benchmark_pss_st.hpp" />
     <ClInclude Include="..\benchmark\hpp\benchmark_sss.hpp" />
+    <ClInclude Include="..\benchmark\hpp\benchmark_tsr.hpp" />
+    <ClInclude Include="..\benchmark\hpp\benchmark_tsr_st.hpp" />
     <ClInclude Include="..\benchmark\hpp\benchmark_vdk.hpp" />
     <ClInclude Include="..\benchmark\hpp\benchmark_vdk_st.hpp" />
     <ClInclude Include="..\benchmark\hpp\benchmark_wnk.hpp" />
@@ -356,6 +358,7 @@
     <ClInclude Include="..\benchmark\lib\pbhogan\Signals\Delegate.h" />
     <ClInclude Include="..\benchmark\lib\pbhogan\Signals\Signal.h" />
     <ClInclude Include="..\benchmark\lib\supergrover\sigslot\src\signal.h" />
+    <ClInclude Include="..\benchmark\lib\tripleslash\rocket\rocket.hpp" />
     <ClInclude Include="..\benchmark\lib\vdksoft\signals\src\signals.h" />
     <ClInclude Include="..\benchmark\lib\yassi\yassi.h" />
     <ClInclude Include="..\benchmark_utility.hpp" />
@@ -394,6 +397,8 @@
     <ClCompile Include="..\benchmark\cpp\benchmark_pss.cpp" />
     <ClCompile Include="..\benchmark\cpp\benchmark_pss_st.cpp" />
     <ClCompile Include="..\benchmark\cpp\benchmark_sss.cpp" />
+    <ClCompile Include="..\benchmark\cpp\benchmark_tsr.cpp" />
+    <ClCompile Include="..\benchmark\cpp\benchmark_tsr_st.cpp" />
     <ClCompile Include="..\benchmark\cpp\benchmark_vdk.cpp" />
     <ClCompile Include="..\benchmark\cpp\benchmark_vdk_st.cpp" />
     <ClCompile Include="..\benchmark\cpp\benchmark_wnk.cpp" />

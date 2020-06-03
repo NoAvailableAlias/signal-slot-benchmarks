@@ -138,6 +138,12 @@
     <Filter Include="Header Files\lib\ktnSignalSlot">
       <UniqueIdentifier>{3e8d3c2c-3253-4fa0-8c1b-25c3c3f0892c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\lib\tripleslash">
+      <UniqueIdentifier>{832fe42b-f100-4619-b9d3-de972de31646}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\lib\tripleslash\rocket">
+      <UniqueIdentifier>{c4342b94-a088-43bd-8dd6-1a3e1eb4b220}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\benchmark\hpp\benchmark_asg.hpp">
@@ -536,6 +542,15 @@
     <ClInclude Include="..\benchmark\hpp\benchmark_ktn.hpp">
       <Filter>Header Files\benchmark</Filter>
     </ClInclude>
+    <ClInclude Include="..\benchmark\hpp\benchmark_tsr.hpp">
+      <Filter>Header Files\benchmark</Filter>
+    </ClInclude>
+    <ClInclude Include="..\benchmark\hpp\benchmark_tsr_st.hpp">
+      <Filter>Header Files\benchmark</Filter>
+    </ClInclude>
+    <ClInclude Include="..\benchmark\lib\tripleslash\rocket\rocket.hpp">
+      <Filter>Header Files\lib\tripleslash\rocket</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\benchmark\cpp\benchmark_asg.cpp">
@@ -752,6 +767,12 @@
       <Filter>Source Files\benchmark</Filter>
     </ClCompile>
     <ClCompile Include="..\benchmark\cpp\benchmark_ktn.cpp">
+      <Filter>Source Files\benchmark</Filter>
+    </ClCompile>
+    <ClCompile Include="..\benchmark\cpp\benchmark_tsr.cpp">
+      <Filter>Source Files\benchmark</Filter>
+    </ClCompile>
+    <ClCompile Include="..\benchmark\cpp\benchmark_tsr_st.cpp">
       <Filter>Source Files\benchmark</Filter>
     </ClCompile>
   </ItemGroup>

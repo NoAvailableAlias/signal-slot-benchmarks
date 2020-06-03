@@ -38,6 +38,7 @@
 | pbhogan Signals | 4364 | 6876 | 12674 | 12002 | 12490 | 133215 | 5987 | 0 | 176367 |
 | amc522 Signal11 | 27037 | 33226 | 9820 | 15072 | 10277 | 130864 | 5741 | 0 | 171775 |
 | SimpleSignal | 4897 | 6766 | 9994 | 9745 | 9020 | 137345 | 4619 | 0 | 170724 |
+| rocket st | 2765 | 3593 | 11800 | 17822 | 11373 | 115564 | 6592 | 0 | 163152 |
 | joanrieu signal11 | 2678 | 3837 | 13051 | 17369 | 13122 | 107489 | 6980 | 0 | 158011 |
 | supergrover sigslot | 2623 | 3664 | 4458 | 5027 | 4210 | 134384 | 2106 | 0 | 150185 |
 | nano-signal-slot sts | 51810 | 30695 | 11852 | 20611 | 19506 | 83177 | 8785 | 0 | 143932 |
@@ -91,6 +92,7 @@ _Size results are the size of object files from x64 release build using Visual S
 | [EvilTwin Observer](http://eviltwingames.com/blog/the-observer-pattern-revisited/) | 327 kb | 40 b | X | std::vector | - |
 | [fr00b0 nod](https://github.com/fr00b0/nod) | 342 kb | 72 b | X | std::vector | - |
 | [amc522 Signal11](https://github.com/amc522/Signal11) | 351 kb | 16 b | X | std::vector | - |
+| [rocket st](https://github.com/tripleslash/rocket) | 372 kb | 24 b | X | intrusive list | - |
 | [iscool::signals](https://github.com/IsCoolEntertainment/iscool-core/) | 460 kb | 64 b | - | std::vector | - |
 | [copperspice cs_signal](https://github.com/copperspice/cs_signal) | 463 kb | 128 b | - | **RCU List | DIY |
 | [Boost Signals2 st](http://www.boost.org/doc/libs/1_58_0/doc/html/signals2.html) | 1594 kb | 32 b | - | ? | - |
