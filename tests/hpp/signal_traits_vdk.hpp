@@ -8,7 +8,7 @@
 struct signal_traits_vdk
 {
   static constexpr bool has_signal_empty_test = true;
-  static constexpr bool has_connection_connected_test = true;
+  static constexpr bool has_connection_connected_test = false;
   static constexpr bool has_disconnect_all = true;
   static constexpr bool has_swap = false;
   static constexpr bool will_deadlock_if_recursively_modified = false;
@@ -52,10 +52,11 @@ struct signal_traits_vdk
         m_f(std::forward<Args>(args)...);
       }
 
-      bool connected() override
-      {
-        return m_signal.connected(this, &result_type::call);
-      }
+      // This was removed in the latest vdk version
+      //bool connected() override
+      //{
+      //  return m_signal.connected(this, &result_type::call);
+      //}
       
       void disconnect() override
       {
@@ -80,10 +81,11 @@ struct signal_traits_vdk
     s.emit(std::forward<Args>(args)...);
   }
 
-  static bool connected(const connection& c)
-  {
-    return c->connected();
-  }
+  // This was removed in the latest vdk version
+  //static bool connected(const connection& c)
+  //{
+  //  return c->connected();
+  //}
   
   template<typename Signal>
   static void disconnect(Signal& s, connection& c)

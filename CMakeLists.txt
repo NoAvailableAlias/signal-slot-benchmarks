@@ -65,8 +65,8 @@ add_executable(bench
     benchmark/cpp/benchmark_pss.cpp
     benchmark/cpp/benchmark_pss_st.cpp
     benchmark/cpp/benchmark_sss.cpp
-    benchmark/cpp/benchmark_trs.cpp
-    benchmark/cpp/benchmark_trs_st.cpp
+    benchmark/cpp/benchmark_tsr.cpp
+    benchmark/cpp/benchmark_tsr_st.cpp
     benchmark/cpp/benchmark_vdk.cpp
     benchmark/cpp/benchmark_vdk_st.cpp
     benchmark/cpp/benchmark_wnk.cpp
