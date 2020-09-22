@@ -10,23 +10,33 @@ find_package(Boost COMPONENTS system chrono thread REQUIRED)
 find_package(Threads)
 
 add_library(signal_libraries
-  benchmark/lib/supergrover/sigslot/src/signal.cpp
-  benchmark/lib/jeffomatic/jl_signal/src/SignalBase.cpp
-  benchmark/lib/jeffomatic/jl_signal/src/ObjectPool.cpp
-  benchmark/lib/mwthinker/Signal/src/mw/signals/connection.cpp
-  benchmark/lib/dacap/obs/dacap_connection.cpp
-  benchmark/lib/i42output/src/async_task.cpp
-  benchmark/lib/i42output/src/async_thread.cpp
-  benchmark/lib/i42output/src/event.cpp
-  benchmark/lib/i42output/src/thread.cpp
-  benchmark/lib/i42output/src/timer.cpp
-  benchmark/lib/i42output/src/waitable_event.cpp
-  benchmark/lib/CppFakeIt/libfastsignals/src/lfs_connection.cpp
-  benchmark/lib/CppFakeIt/libfastsignals/src/function_detail.cpp
-  benchmark/lib/CppFakeIt/libfastsignals/src/signal_impl.cpp
-  benchmark/lib/copperspice/cs_signal/src/cs_signal.cpp
-  benchmark/lib/copperspice/cs_signal/src/cs_slot.cpp
-  )
+    benchmark/lib/copperspice/cs_signal/src/cs_signal.cpp
+    benchmark/lib/copperspice/cs_signal/src/cs_slot.cpp
+    benchmark/lib/CppFakeIt/libfastsignals/src/function_detail.cpp
+    benchmark/lib/CppFakeIt/libfastsignals/src/lfs_connection.cpp
+    benchmark/lib/CppFakeIt/libfastsignals/src/signal_impl.cpp
+    benchmark/lib/dacap/obs/dacap_connection.cpp
+    benchmark/lib/i42output/src/async_task.cpp
+    benchmark/lib/i42output/src/async_thread.cpp
+    benchmark/lib/i42output/src/event.cpp
+    benchmark/lib/i42output/src/thread.cpp
+    benchmark/lib/i42output/src/timer.cpp
+    benchmark/lib/i42output/src/waitable_event.cpp
+    benchmark/lib/jeffomatic/jl_signal/src/SignalBase.cpp
+    benchmark/lib/jeffomatic/jl_signal/src/ObjectPool.cpp
+    benchmark/lib/libsigcplusplus/sigc++/connection.cc
+    benchmark/lib/libsigcplusplus/sigc++/functors/slot_base.cc
+    benchmark/lib/libsigcplusplus/sigc++/signal_base.cc
+    benchmark/lib/libsigcplusplus/sigc++/trackable.cc
+    benchmark/lib/mwthinker/Signal/src/mw/signals/connection.cpp
+    benchmark/lib/supergrover/sigslot/src/signal.cpp
+    benchmark/lib/vdksoft/signals/src/signals.cpp
+)
+
+target_include_directories (signal_libraries
+    PUBLIC
+    benchmark/lib/libsigcplusplus
+)
 
 target_link_libraries(signal_libraries iscool_signals)
 
