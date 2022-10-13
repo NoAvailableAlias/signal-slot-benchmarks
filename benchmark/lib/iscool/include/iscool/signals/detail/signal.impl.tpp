@@ -103,7 +103,7 @@ iscool::signals::detail::signal< Signature >::operator()( Arg&&... arg ) const
 
         for( const auto& s : slots )
             if ( s->connected() )
-                s->callback( std::forward< Arg >( arg )... );
+                s->callback( arg... );
     }
 }
 
