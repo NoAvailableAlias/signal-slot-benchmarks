@@ -458,6 +458,7 @@ int main() {
 #include <deque>
 #include <chrono>
 #include <tuple>
+#include <thread>
 
 #ifndef ROCKET_NO_STD_OPTIONAL
 #   include <optional>
@@ -472,13 +473,13 @@ int main() {
 #if __has_cpp_attribute(unlikely)
 #   define ROCKET_UNLIKELY [[unlikely]]
 #else
-#   define ROCKET_UNLIKELY 
+#   define ROCKET_UNLIKELY
 #endif
 
 #if __has_cpp_attribute(no_unique_address)
 #   define ROCKET_NO_UNIQUE_ADDRESS [[no_unique_address]]
 #else
-#   define ROCKET_NO_UNIQUE_ADDRESS 
+#   define ROCKET_NO_UNIQUE_ADDRESS
 #endif
 
 namespace rocket
@@ -3332,7 +3333,7 @@ namespace rocket
             std::thread::id tid{};
 
             bool first = (flags & connect_as_first_slot) != 0;
-            
+
             if constexpr (std::is_same_v<ThreadingPolicy, thread_safe_policy>) {
                 if ((flags & queued_connection) != 0) ROCKET_UNLIKELY {
                     tid = std::this_thread::get_id();
