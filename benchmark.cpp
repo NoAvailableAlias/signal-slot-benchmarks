@@ -40,6 +40,7 @@
 #include "benchmark/hpp/benchmark_yas.hpp"
 #include "benchmark/hpp/benchmark_vdk.hpp"
 #include "benchmark/hpp/benchmark_vdk_st.hpp"
+#include "benchmark/hpp/benchmark_kdbindings.hpp"
 
 // These are required in Main to initialize the jlsignal allocator
 #include "benchmark/lib/jeffomatic/jl_signal/src/Signal.h"
@@ -183,6 +184,7 @@ void run_all_benchmarks()
         RUN_BENCHMARK_CLASS(Yas);
         //RUN_BENCHMARK_CLASS(Vdk); // msvc compilation error
         RUN_BENCHMARK_CLASS(Vdk_st);
+        RUN_BENCHMARK_CLASS(benchmark_kdbindings);
     }
 
 #undef RUN_BENCHMARK_CLASS
@@ -232,6 +234,7 @@ void run_all_validation_tests()
     Yas::validate_assert(N);
     //Vdk::validate_assert(N); // msvc compilation error
     Vdk_st::validate_assert(N);
+    benchmark_kdbindings::validate_assert(N);
 }
 
 //------------------------------------------------------------------------------
@@ -318,6 +321,7 @@ void output_metrics_report(T& ost)
     output_metrics_report_row<Yas>(ost);
     //output_metrics_report_row<Vdk>(ost); // msvc compilation error
     output_metrics_report_row<Vdk_st>(ost);
+    output_metrics_report_row<benchmark_kdbindings>(ost);
 }
 
 //------------------------------------------------------------------------------

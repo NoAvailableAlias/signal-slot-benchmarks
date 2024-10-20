@@ -9,6 +9,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED YES)
 find_package(Boost COMPONENTS system chrono thread REQUIRED)
 find_package(Threads)
 
+
 add_library(signal_libraries
     benchmark/lib/copperspice/cs_signal/src/cs_signal.cpp
     benchmark/lib/copperspice/cs_signal/src/cs_slot.cpp
@@ -39,6 +40,14 @@ target_include_directories (signal_libraries
 )
 
 target_link_libraries(signal_libraries iscool_signals)
+
+
+add_subdirectory(benchmark/lib/KDBindings)
+
+# add_library(KDBindings INTERFACE)
+# target_include_directories(signal_libraries INTERFACE ${CMAKE_SOURCE_DIR}/benchmark/lib/KDBindings/src)
+
+# target_link_libraries(signal_libraries KDBindings)
 
 # project definition
 add_executable(bench
@@ -81,7 +90,11 @@ add_executable(bench
     benchmark/cpp/benchmark_vdk_st.cpp
     benchmark/cpp/benchmark_wnk.cpp
     benchmark/cpp/benchmark_yas.cpp
+    benchmark/cpp/benchmark_kdbindings.cpp
 )
+
+target_link_libraries(bench KDBindings)
+
 
 add_subdirectory(benchmark/lib/iscool)
 
