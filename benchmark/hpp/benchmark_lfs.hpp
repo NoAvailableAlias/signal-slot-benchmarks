@@ -4,6 +4,7 @@
 #include "../lib/CppFakeIt/libfastsignals/include/signal.h"
 
 #include "../../benchmark.hpp"
+#include <functional>
 
 class Lfs
 {

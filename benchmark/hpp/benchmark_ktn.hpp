@@ -18,7 +18,7 @@ class Ktnss : public ktn::SignalSlot::ktnSignalReceiverBase
     template <typename Subject, typename Foo>
     static void connect_method(Subject& subject, Foo& foo)
     {
-        subject.Connect(&foo, &Foo::handler);
+        (void)subject.Connect(&foo, &Foo::handler);
     }
 
     template <typename Subject>

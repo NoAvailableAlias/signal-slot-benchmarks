@@ -32,6 +32,7 @@ SOFTWARE.
 #include <memory>
 #include <mutex>
 #include <vector>
+#include <algorithm>
 
 namespace lsignal
 {

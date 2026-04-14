@@ -44,9 +44,7 @@ CsSignal::SlotBase::~SlotBase()
       }
 
    } catch (...) {
-      if (! std::uncaught_exception()) {
-         throw;
-      }
+      // suppress: throwing from a destructor calls terminate
    }
 }
 

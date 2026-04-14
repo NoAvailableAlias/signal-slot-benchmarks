@@ -1,6 +1,7 @@
 #include "tests/hpp/test_non_template_base.hpp"
 
 #include "tests/hpp/test_results.hpp"
+#include <algorithm>
 
 const constexpr int test_non_template_base::m_exit_code_guard;
 

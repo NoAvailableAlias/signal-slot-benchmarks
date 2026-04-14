@@ -71,7 +71,7 @@ namespace observe
 
 	template<typename... Args>
 	observer<Args...>::observer(std::function<void(Args ...)> function)
-		: function_{move(function)} { }
+		: function_{std::move(function)} { }
 
 
 	// Remove observer from all subjects when it gets destroyed
@@ -112,7 +112,7 @@ namespace observe
 	template<typename ... Args>
 	observer<Args...>& observer<Args...>::operator=(observer&& other) noexcept
 	{
-		function_ = move(other.function_);
+		function_ = std::move(other.function_);
 
 		clear();
 		for(auto subject : other.subjects_)

@@ -45,11 +45,11 @@ struct signal_traits_ktn
     inline static std::vector<std::shared_ptr<ReceiverCommon>> Receivers;
     static void initialize()
     {
-        Receivers.size(); // triggers creation
+        (void)Receivers.size(); // triggers creation
     }
     static void terminate()
     {
-        Receivers.clear();
+        (void)Receivers.clear();
     }
 
     template <typename Signal>

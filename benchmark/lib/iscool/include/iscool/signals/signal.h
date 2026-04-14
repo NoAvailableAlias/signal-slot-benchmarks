@@ -19,6 +19,7 @@
 #include "iscool/signals/detail/signal.h"
 
 #include <string>
+#include <cstdint>
 
 namespace iscool
 {

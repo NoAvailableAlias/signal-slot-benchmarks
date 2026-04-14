@@ -2072,7 +2072,10 @@ namespace rocket
                     // To mark a connection as disconnected, just set its prev-link to null but
                     // leave the next link alive so we can still traverse through the connections
                     // if the slot gets disconnected during signal emit.
-                    static_cast<intrusive_ptr<connection_base> volatile&>(prev) = nullptr;
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wvolatile"
+                    reinterpret_cast<intrusive_ptr<connection_base> volatile&>(prev) = nullptr;
+#pragma GCC diagnostic pop
                 }
             }
 

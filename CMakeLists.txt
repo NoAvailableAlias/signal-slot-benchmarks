@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.6)
+cmake_minimum_required(VERSION 3.30)
 project(signal-slot-benchmarks VERSION 0.0.1 LANGUAGES CXX)
 
 # compiler support
@@ -37,6 +37,8 @@ target_include_directories (signal_libraries
     PUBLIC
     benchmark/lib/libsigcplusplus
 )
+
+target_compile_definitions(signal_libraries PRIVATE BOOST_BIND_GLOBAL_PLACEHOLDERS)
 
 target_link_libraries(signal_libraries iscool_signals)
 
@@ -87,6 +89,7 @@ add_subdirectory(benchmark/lib/iscool)
 
 set_target_properties(bench PROPERTIES CXX_EXTENSIONS NO)
 target_include_directories(bench PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
+target_compile_definitions(bench PRIVATE BOOST_BIND_GLOBAL_PLACEHOLDERS)
 target_compile_options(bench PRIVATE  "-fdiagnostics-color=always")
 target_link_libraries(bench
   signal_libraries Boost::system Boost::chrono Threads::Threads)
@@ -106,6 +109,7 @@ add_executable(tests
 
 target_include_directories(tests
   PRIVATE ${CMAKE_CURRENT_SOURCE_DIR} benchmark/lib/)
+target_compile_definitions(tests PRIVATE BOOST_BIND_GLOBAL_PLACEHOLDERS)
 target_compile_options(tests PRIVATE  "-fdiagnostics-color=always")
 target_link_libraries(tests
   signal_libraries Boost::system Boost::chrono Threads::Threads GTest::GTest)

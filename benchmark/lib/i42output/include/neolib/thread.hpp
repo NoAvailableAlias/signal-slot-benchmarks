@@ -76,7 +76,7 @@ namespace neolib
 		bool using_existing_thread() const;
 		void start();
 		void cancel();
-		void abort(bool aWait = true);
+		void abort(bool aWait = true) override;
 		void wait() const;
 		wait_result wait(const waitable_event_list& aEventList) const;
 		bool msg_wait(const message_queue& aMessageQueue) const;
@@ -101,7 +101,7 @@ namespace neolib
 		// implementation
 	private:
 		// from waitable
-		virtual bool waitable_ready() const;
+		bool waitable_ready() const override;
 		// own
 		void entry_point();
 		// attributes

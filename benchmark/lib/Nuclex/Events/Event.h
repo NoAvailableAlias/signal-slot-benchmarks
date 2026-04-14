@@ -27,6 +27,7 @@ License along with this library
 #include <functional>
 #include <algorithm>
 #include <vector>
+#include <cstdint>
 
 namespace Nuclex { namespace Support { namespace Events {
 

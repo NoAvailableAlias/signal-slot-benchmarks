@@ -31,6 +31,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include "async_task.hpp"
 #include "timer.hpp"
 #include "raii.hpp"
+#include <map>
 
 namespace neolib
 {

@@ -23,6 +23,7 @@
 #include <mutex>
 #include <set>
 #include <vector>
+#include <cstdio>
 
 namespace ktn::SignalSlot {
 class ktnSignalReceiverBase;
@@ -172,7 +173,7 @@ public:
      * @param eReceiver is the receiver to which all connections are to be removed.
      */
     inline void CleanUp(ktnSignalReceiverBase *eReceiver) final {
-        DisconnectReceiver(eReceiver);
+        (void)DisconnectReceiver(eReceiver);
     }
 
     /**

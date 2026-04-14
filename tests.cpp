@@ -109,7 +109,7 @@ using all_traits =
     signal_traits_yas
   >;
 
-TYPED_TEST_CASE(signal_test, all_traits);
+TYPED_TEST_SUITE(signal_test, all_traits);
 
 FENCED_TYPED_TEST
 (signal_test, initially_empty,

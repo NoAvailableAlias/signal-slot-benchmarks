@@ -320,7 +320,7 @@ namespace neolib
 			void* allocate()
 			{
 				if (iHead == nullptr)
-					throw std::bad_alloc("neolib::reserve_allocator::allocate() when full");
+					throw std::bad_alloc();
 				link* p = iHead;
 				iHead = p->iNext;
 				return p;

@@ -476,9 +476,9 @@ namespace Signal11 {
 						return true;
 					}
 
-					SignalLink *link = this->next ? this->next : this;
+					SignalLink *link = this->_next ? this->_next : this;
 
-					for(; link != this; link = link->next) {
+					for(; link != this; link = link->_next) {
 						if (callback == link->_callbackFunc) {
 							link->unlink();     // deactivate and unlink sibling
 							return true;
