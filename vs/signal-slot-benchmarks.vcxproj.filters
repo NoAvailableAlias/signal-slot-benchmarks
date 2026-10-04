@@ -293,23 +293,77 @@
     <ClInclude Include="..\benchmark\hpp\benchmark_cps.hpp">
       <Filter>Header Files\benchmark</Filter>
     </ClInclude>
-    <ClInclude Include="..\benchmark\lib\i42output\include\neolib\signal.hpp">
+    <ClInclude Include="..\benchmark\lib\i42output\include\neolib\app\module.hpp">
       <Filter>Header Files\lib\i42output</Filter>
     </ClInclude>
-    <ClInclude Include="..\benchmark\hpp\benchmark_nls.hpp">
-      <Filter>Header Files\benchmark</Filter>
+    <ClInclude Include="..\benchmark\lib\i42output\include\neolib\core\i_discoverable.hpp">
+      <Filter>Header Files\lib\i42output</Filter>
+    </ClInclude>
+    <ClInclude Include="..\benchmark\lib\i42output\include\neolib\core\i_lifetime.hpp">
+      <Filter>Header Files\lib\i42output</Filter>
+    </ClInclude>
+    <ClInclude Include="..\benchmark\lib\i42output\include\neolib\core\i_mutex.hpp">
+      <Filter>Header Files\lib\i42output</Filter>
+    </ClInclude>
+    <ClInclude Include="..\benchmark\lib\i42output\include\neolib\core\i_optional.hpp">
+      <Filter>Header Files\lib\i42output</Filter>
+    </ClInclude>
+    <ClInclude Include="..\benchmark\lib\i42output\include\neolib\core\i_reference_counted.hpp">
+      <Filter>Header Files\lib\i42output</Filter>
+    </ClInclude>
+    <ClInclude Include="..\benchmark\lib\i42output\include\neolib\core\i_service.hpp">
+      <Filter>Header Files\lib\i42output</Filter>
+    </ClInclude>
+    <ClInclude Include="..\benchmark\lib\i42output\include\neolib\core\lifetime.hpp">
+      <Filter>Header Files\lib\i42output</Filter>
+    </ClInclude>
+    <ClInclude Include="..\benchmark\lib\i42output\include\neolib\core\mutex.hpp">
+      <Filter>Header Files\lib\i42output</Filter>
+    </ClInclude>
+    <ClInclude Include="..\benchmark\lib\i42output\include\neolib\core\optional.hpp">
+      <Filter>Header Files\lib\i42output</Filter>
+    </ClInclude>
+    <ClInclude Include="..\benchmark\lib\i42output\include\neolib\core\reference_counted.hpp">
+      <Filter>Header Files\lib\i42output</Filter>
+    </ClInclude>
+    <ClInclude Include="..\benchmark\lib\i42output\include\neolib\core\scoped.hpp">
+      <Filter>Header Files\lib\i42output</Filter>
+    </ClInclude>
+    <ClInclude Include="..\benchmark\lib\i42output\include\neolib\core\service.hpp">
+      <Filter>Header Files\lib\i42output</Filter>
+    </ClInclude>
+    <ClInclude Include="..\benchmark\lib\i42output\include\neolib\core\uuid.hpp">
+      <Filter>Header Files\lib\i42output</Filter>
+    </ClInclude>
+    <ClInclude Include="..\benchmark\lib\i42output\include\neolib\core\win32\win32.hpp">
+      <Filter>Header Files\lib\i42output</Filter>
     </ClInclude>
     <ClInclude Include="..\benchmark\lib\i42output\include\neolib\neolib.hpp">
       <Filter>Header Files\lib\i42output</Filter>
     </ClInclude>
-    <ClInclude Include="..\benchmark\lib\i42output\include\neolib\slot.hpp">
+    <ClInclude Include="..\benchmark\lib\i42output\include\neolib\neolib_export.hpp">
       <Filter>Header Files\lib\i42output</Filter>
     </ClInclude>
-    <ClInclude Include="..\benchmark\lib\i42output\include\neolib\locking_policy.hpp">
+    <ClInclude Include="..\benchmark\lib\i42output\include\neolib\task\event.hpp">
       <Filter>Header Files\lib\i42output</Filter>
     </ClInclude>
-    <ClInclude Include="..\benchmark\lib\i42output\include\neolib\mutex.hpp">
+    <ClInclude Include="..\benchmark\lib\i42output\include\neolib\task\i_async_task.hpp">
       <Filter>Header Files\lib\i42output</Filter>
+    </ClInclude>
+    <ClInclude Include="..\benchmark\lib\i42output\include\neolib\task\i_event.hpp">
+      <Filter>Header Files\lib\i42output</Filter>
+    </ClInclude>
+    <ClInclude Include="..\benchmark\lib\i42output\include\neolib\task\i_message_queue.hpp">
+      <Filter>Header Files\lib\i42output</Filter>
+    </ClInclude>
+    <ClInclude Include="..\benchmark\lib\i42output\include\neolib\task\i_task.hpp">
+      <Filter>Header Files\lib\i42output</Filter>
+    </ClInclude>
+    <ClInclude Include="..\benchmark\lib\i42output\include\neolib\task\i_thread.hpp">
+      <Filter>Header Files\lib\i42output</Filter>
+    </ClInclude>
+    <ClInclude Include="..\benchmark\hpp\benchmark_nls.hpp">
+      <Filter>Header Files\benchmark</Filter>
     </ClInclude>
     <ClInclude Include="..\benchmark\hpp\benchmark_nls_st.hpp">
       <Filter>Header Files\benchmark</Filter>
@@ -350,69 +404,6 @@
     <ClInclude Include="..\benchmark\lib\Ansoulom\cpp-observe\cpp_observe.hpp">
       <Filter>Header Files\lib\Ansoulom</Filter>
     </ClInclude>
-    <ClInclude Include="..\benchmark\lib\i42output\include\neolib\lifetime.hpp">
-      <Filter>Header Files\lib\i42output</Filter>
-    </ClInclude>
-    <ClInclude Include="..\benchmark\lib\i42output\include\neolib\allocator.hpp">
-      <Filter>Header Files\lib\i42output</Filter>
-    </ClInclude>
-    <ClInclude Include="..\benchmark\lib\i42output\include\neolib\i_lifetime.hpp">
-      <Filter>Header Files\lib\i42output</Filter>
-    </ClInclude>
-    <ClInclude Include="..\benchmark\lib\i42output\include\neolib\memory.hpp">
-      <Filter>Header Files\lib\i42output</Filter>
-    </ClInclude>
-    <ClInclude Include="..\benchmark\lib\i42output\include\neolib\detail_memory.hpp">
-      <Filter>Header Files\lib\i42output</Filter>
-    </ClInclude>
-    <ClInclude Include="..\benchmark\lib\i42output\include\neolib\event.hpp">
-      <Filter>Header Files\lib\i42output</Filter>
-    </ClInclude>
-    <ClInclude Include="..\benchmark\lib\i42output\include\neolib\async_task.hpp">
-      <Filter>Header Files\lib\i42output</Filter>
-    </ClInclude>
-    <ClInclude Include="..\benchmark\lib\i42output\include\neolib\timer.hpp">
-      <Filter>Header Files\lib\i42output</Filter>
-    </ClInclude>
-    <ClInclude Include="..\benchmark\lib\i42output\include\neolib\i_thread.hpp">
-      <Filter>Header Files\lib\i42output</Filter>
-    </ClInclude>
-    <ClInclude Include="..\benchmark\lib\i42output\include\neolib\message_queue.hpp">
-      <Filter>Header Files\lib\i42output</Filter>
-    </ClInclude>
-    <ClInclude Include="..\benchmark\lib\i42output\include\neolib\task.hpp">
-      <Filter>Header Files\lib\i42output</Filter>
-    </ClInclude>
-    <ClInclude Include="..\benchmark\lib\i42output\include\neolib\i_task.hpp">
-      <Filter>Header Files\lib\i42output</Filter>
-    </ClInclude>
-    <ClInclude Include="..\benchmark\lib\i42output\include\neolib\noncopyable.hpp">
-      <Filter>Header Files\lib\i42output</Filter>
-    </ClInclude>
-    <ClInclude Include="..\benchmark\lib\i42output\include\neolib\thread.hpp">
-      <Filter>Header Files\lib\i42output</Filter>
-    </ClInclude>
-    <ClInclude Include="..\benchmark\lib\i42output\include\neolib\win32_message_queue.hpp">
-      <Filter>Header Files\lib\i42output</Filter>
-    </ClInclude>
-    <ClInclude Include="..\benchmark\lib\i42output\include\neolib\lockable.hpp">
-      <Filter>Header Files\lib\i42output</Filter>
-    </ClInclude>
-    <ClInclude Include="..\benchmark\lib\i42output\include\neolib\waitable.hpp">
-      <Filter>Header Files\lib\i42output</Filter>
-    </ClInclude>
-    <ClInclude Include="..\benchmark\lib\i42output\include\neolib\waitable_event.hpp">
-      <Filter>Header Files\lib\i42output</Filter>
-    </ClInclude>
-    <ClInclude Include="..\benchmark\lib\i42output\include\neolib\variant.hpp">
-      <Filter>Header Files\lib\i42output</Filter>
-    </ClInclude>
-    <ClInclude Include="..\benchmark\lib\i42output\include\neolib\async_thread.hpp">
-      <Filter>Header Files\lib\i42output</Filter>
-    </ClInclude>
-    <ClInclude Include="..\benchmark\lib\i42output\include\neolib\singleton.hpp">
-      <Filter>Header Files\lib\i42output</Filter>
-    </ClInclude>
     <ClInclude Include="..\benchmark\hpp\benchmark_nod_st.hpp">
       <Filter>Header Files\benchmark</Filter>
     </ClInclude>
@@ -445,9 +436,6 @@
     </ClInclude>
     <ClInclude Include="..\benchmark\lib\CppFakeIt\libfastsignals\include\lfs_connection.h">
       <Filter>Header Files\lib\CppFakeIt</Filter>
-    </ClInclude>
-    <ClInclude Include="..\benchmark\lib\i42output\include\neolib\raii.hpp">
-      <Filter>Header Files\lib\i42output</Filter>
     </ClInclude>
     <ClInclude Include="..\benchmark\lib\copperspice\cs_signal\src\cs_internal.h">
       <Filter>Header Files\lib\copperspice</Filter>
@@ -637,25 +625,19 @@
     <ClCompile Include="..\benchmark\cpp\benchmark_aco.cpp">
       <Filter>Source Files\benchmark</Filter>
     </ClCompile>
-    <ClCompile Include="..\benchmark\lib\i42output\src\async_task.cpp">
+    <ClCompile Include="..\benchmark\lib\i42output\src\core\lifetime.cpp">
       <Filter>Source Files\lib\i42output</Filter>
     </ClCompile>
-    <ClCompile Include="..\benchmark\lib\i42output\src\event.cpp">
+    <ClCompile Include="..\benchmark\lib\i42output\src\core\mutex.cpp">
       <Filter>Source Files\lib\i42output</Filter>
     </ClCompile>
-    <ClCompile Include="..\benchmark\lib\i42output\src\timer.cpp">
+    <ClCompile Include="..\benchmark\lib\i42output\src\core\reference_counted.cpp">
       <Filter>Source Files\lib\i42output</Filter>
     </ClCompile>
-    <ClCompile Include="..\benchmark\lib\i42output\src\thread.cpp">
+    <ClCompile Include="..\benchmark\lib\i42output\src\core\service.cpp">
       <Filter>Source Files\lib\i42output</Filter>
     </ClCompile>
-    <ClCompile Include="..\benchmark\lib\i42output\src\win32_message_queue.cpp">
-      <Filter>Source Files\lib\i42output</Filter>
-    </ClCompile>
-    <ClCompile Include="..\benchmark\lib\i42output\src\async_thread.cpp">
-      <Filter>Source Files\lib\i42output</Filter>
-    </ClCompile>
-    <ClCompile Include="..\benchmark\lib\i42output\src\waitable_event.cpp">
+    <ClCompile Include="..\benchmark\lib\i42output\src\task\event.cpp">
       <Filter>Source Files\lib\i42output</Filter>
     </ClCompile>
     <ClCompile Include="..\benchmark\cpp\benchmark_nod_st.cpp">

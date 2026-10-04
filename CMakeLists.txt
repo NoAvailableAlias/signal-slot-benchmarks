@@ -2,11 +2,11 @@ cmake_minimum_required(VERSION 3.6)
 project(signal-slot-benchmarks VERSION 0.0.1 LANGUAGES CXX)
 
 # compiler support
-set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED YES)
 
 # dependencies
-find_package(Boost COMPONENTS system chrono thread REQUIRED)
+find_package(Boost 1.81 COMPONENTS system chrono thread REQUIRED)
 find_package(Threads)
 
 add_library(signal_libraries
@@ -16,12 +16,11 @@ add_library(signal_libraries
     benchmark/lib/CppFakeIt/libfastsignals/src/lfs_connection.cpp
     benchmark/lib/CppFakeIt/libfastsignals/src/signal_impl.cpp
     benchmark/lib/dacap/obs/dacap_connection.cpp
-    benchmark/lib/i42output/src/async_task.cpp
-    benchmark/lib/i42output/src/async_thread.cpp
-    benchmark/lib/i42output/src/event.cpp
-    benchmark/lib/i42output/src/thread.cpp
-    benchmark/lib/i42output/src/timer.cpp
-    benchmark/lib/i42output/src/waitable_event.cpp
+    benchmark/lib/i42output/src/core/lifetime.cpp
+    benchmark/lib/i42output/src/core/mutex.cpp
+    benchmark/lib/i42output/src/core/reference_counted.cpp
+    benchmark/lib/i42output/src/core/service.cpp
+    benchmark/lib/i42output/src/task/event.cpp
     benchmark/lib/jeffomatic/jl_signal/src/SignalBase.cpp
     benchmark/lib/jeffomatic/jl_signal/src/ObjectPool.cpp
     benchmark/lib/libsigcplusplus/sigc++/connection.cc
@@ -36,6 +35,7 @@ add_library(signal_libraries
 target_include_directories (signal_libraries
     PUBLIC
     benchmark/lib/libsigcplusplus
+    benchmark/lib/i42output/include
 )
 
 target_link_libraries(signal_libraries iscool_signals)

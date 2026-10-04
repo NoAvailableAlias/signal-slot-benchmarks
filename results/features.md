@@ -45,8 +45,8 @@ On the tests that could be run (i.e. tests for which the required API is availab
  lss     | **yes** | **yes** |   no    | **yes** | **yes** | **yes** 
  mws     | **yes** | **yes** |   no    | **yes** | **yes** | **yes** 
  nes     | **yes** | **yes** |    X    | **yes** | **yes** |   n/a   
- nls     | **yes** | **yes** | **yes** | **yes** | **yes** | **yes** 
- nls_st  | **yes** | **yes** | **yes** | **yes** | **yes** | **yes** 
+ nls     | **yes** | **yes** | **yes** |   no    | **yes** | **yes** 
+ nls_st  | **yes** | **yes** | **yes** |   no    | **yes** | **yes** 
  nod     | **yes** | **yes** | **yes** |   no    | **yes** | **yes** 
  nod_st  | **yes** | **yes** | **yes** |   no    | **yes** | **yes** 
  nss_st  | **yes** | **yes** | **yes** |   no    | **yes** |   n/a   
@@ -89,8 +89,8 @@ On the tests that could be run (i.e. tests for which the required API is availab
  lss     | **yes** | **yes** |   no    | **yes** 
  mws     | **yes** | **yes** |   no    | **yes** 
  nes     | **yes** | **yes** |   no    |   no    
- nls     | **yes** | **yes** |   no    |   no    
- nls_st  | **yes** | **yes** |   no    |   no    
+ nls     | **yes** | **yes** |   no    | **yes** 
+ nls_st  | **yes** | **yes** |   no    | **yes** 
  nod     | **yes** | **yes** |   no    | **yes** 
  nod_st  | **yes** | **yes** |   no    | **yes** 
  nss_st  | **yes** | **yes** |   no    |   no    
@@ -134,8 +134,8 @@ On the tests that could be run (i.e. tests for which the required API is availab
  lss     | **yes** | **yes** | **yes** | **yes** |   n/a   
  mws     | **yes** | **yes** | **yes** | **yes** |   no    
  nes     | **yes** | **yes** | **yes** | **yes** | **yes** 
- nls     |   n/a   |   n/a   | **yes** | **yes** | **yes** 
- nls_st  |   n/a   |   n/a   | **yes** | **yes** | **yes** 
+ nls     | **yes** | **yes** | **yes** | **yes** | **yes** 
+ nls_st  | **yes** | **yes** | **yes** | **yes** | **yes** 
  nod     | **yes** | **yes** | **yes** | **yes** | **yes** 
  nod_st  | **yes** | **yes** | **yes** | **yes** | **yes** 
  nss_st  | **yes** | **yes** |   no    | **yes** | **yes** 
@@ -182,8 +182,8 @@ On the tests that could be run (i.e. tests for which the required API is availab
  lss     |   n/a   |   n/a   |   n/a   |   n/a   |   n/a   |   n/a   |   n/a   |   n/a   
  mws     |   n/a   |   n/a   |   n/a   |   n/a   |   n/a   |   n/a   |   n/a   |   n/a   
  nes     | **yes** | **yes** | **yes** | **yes** | **yes** | **yes** |   no    | **yes** 
- nls     | **yes** |   no    |   no    |   no    |   no    |   no    |   no    |   no    
- nls_st  | **yes** |   no    |   no    |   no    |   no    |   no    |   no    |   no    
+ nls     |   n/a   |   n/a   |   n/a   |   n/a   |   n/a   |   n/a   |   n/a   |   n/a   
+ nls_st  |   n/a   |   n/a   |   n/a   |   n/a   |   n/a   |   n/a   |   n/a   |   n/a   
  nod     |   n/a   |   n/a   |   n/a   |   n/a   |   n/a   |   n/a   |   n/a   |   n/a   
  nod_st  |   n/a   |   n/a   |   n/a   |   n/a   |   n/a   |   n/a   |   n/a   |   n/a   
  nss_st  |   n/a   |   n/a   |   n/a   |   n/a   |   n/a   |   n/a   |   n/a   |   n/a   

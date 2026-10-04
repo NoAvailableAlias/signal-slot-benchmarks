@@ -2,10 +2,13 @@
 
 NOINLINE(void Nls::initialize())
 {
-    neolib::event_system::set_multi_threaded();
+    if (!neolib::services::service_provider_allocated())
+        neolib::services::allocate_service_provider();
+    neolib::services::service<neolib::i_event_system>().set_locking_strategy(neolib::event_system_locking_strategy::MultiThreaded);
 }
 NOINLINE(void Nls::validate_assert(std::size_t N))
 {
+    initialize();
     return Benchmark<Signal, Nls>::validation_assert(N);
 }
 NOINLINE(double Nls::construction(std::size_t N, std::size_t limit))

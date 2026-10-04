@@ -1,21 +1,21 @@
 #pragma once
 
-#include <i42output/include/neolib/event.hpp>
+#include <i42output/include/neolib/task/event.hpp>
 
-#include <memory>
+#include <functional>
 
 struct signal_traits_nls_st
 {
-  static constexpr bool has_signal_empty_test = false;
+  static constexpr bool has_signal_empty_test = true;
   static constexpr bool has_connection_connected_test = false;
   static constexpr bool has_disconnect_all = true;
-  static constexpr bool has_swap = true;
+  static constexpr bool has_swap = false;
   static constexpr bool will_deadlock_if_recursively_modified = false;
   static constexpr bool is_intrusive = false;
-  
+
   template<typename Signature>
   struct resolve_signal;
-  
+
   template<typename... Args>
   struct resolve_signal<void(Args...)>
   {
@@ -24,44 +24,29 @@ struct signal_traits_nls_st
 
   template<typename Signature>
   using signal = typename resolve_signal<Signature>::type;
-  
-  struct connection_base
-  {
-    virtual ~connection_base() {}
 
-    virtual void disconnect(void* s) = 0;
-  };
-
-  template<typename... Args>
-  struct connection_impl: public connection_base
-  {
-    explicit connection_impl(neolib::event_handle<Args...> handle)
-      : handle(handle)
-    {
-
-    }
-
-    void disconnect(void* s) override
-    {
-      reinterpret_cast<signal<void(Args...)>*>(s)->unsubscribe(handle);
-    }
-    
-    neolib::event_handle<Args...> handle;
-  };
-
-  using connection = std::shared_ptr<connection_base>;
+  using connection = neolib::ref_ptr<neolib::i_slot_base>;
 
   static void initialize()
   {
-    neolib::event_system::set_single_threaded();
+    if (!neolib::services::service_provider_allocated())
+      neolib::services::allocate_service_provider();
+    neolib::services::service<neolib::i_event_system>().set_locking_strategy
+      (neolib::event_system_locking_strategy::SingleThreaded);
   }
-  
+
   static void terminate() {}
-  
+
+  template<typename Signal>
+  static bool empty(Signal& s)
+  {
+    return !s.has_slots();
+  }
+
   template<typename F, typename... Args>
   static connection connect(neolib::event<Args...>& s, F&& f)
   {
-    return std::make_shared<connection_impl<Args...>>(s.subscribe(f));
+    return (~s(std::function<void(Args...)>{ std::forward<F>(f) })).slot;
   }
 
   template<typename Signal, typename... Args>
@@ -73,19 +58,12 @@ struct signal_traits_nls_st
   template<typename Signal>
   static void disconnect(Signal& s, connection& c)
   {
-    c->disconnect(&s);
+    c->remove();
   }
-  
+
   template<typename Signal>
   static void disconnect_all_slots(Signal& s)
   {
     s = Signal();
   }
-  
-  template<typename Signal>
-  static void swap(Signal& s1, Signal& s2)
-  {
-    std::swap(s1, s2);
-  }
 };
-

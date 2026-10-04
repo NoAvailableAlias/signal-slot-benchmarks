@@ -3,7 +3,7 @@
 
 Comprehensive benchmarks for a majority of GitHub c++ signal slot implementations and others.
 <br/>
-**_Boost, as well as C++17 support, is required to build this project._**
+**_Boost (1.81 or later), as well as C++20 support, is required to build this project._**
 
 Foreword
 --------

@@ -29,13 +29,13 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
@@ -96,11 +96,11 @@
       <EnforceTypeConversionRules>true</EnforceTypeConversionRules>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
       <OpenMPSupport>false</OpenMPSupport>
-      <LanguageStandard>stdcpp17</LanguageStandard>
+      <LanguageStandard>stdcpp20</LanguageStandard>
       <EnableModules>false</EnableModules>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <OmitFramePointers>false</OmitFramePointers>
-      <AdditionalIncludeDirectories>C:\boost_1_67_0;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\benchmark\lib\i42output\include;C:\boost_1_67_0;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>-D_SCL_SECURE_NO_WARNINGS -D_CRT_SECURE_NO_WARNINGS %(AdditionalOptions)</AdditionalOptions>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <BasicRuntimeChecks>Default</BasicRuntimeChecks>
@@ -128,11 +128,11 @@
       <EnforceTypeConversionRules>true</EnforceTypeConversionRules>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
       <OpenMPSupport>false</OpenMPSupport>
-      <LanguageStandard>stdcpp17</LanguageStandard>
+      <LanguageStandard>stdcpp20</LanguageStandard>
       <EnableModules>false</EnableModules>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <OmitFramePointers>false</OmitFramePointers>
-      <AdditionalIncludeDirectories>C:\boost_1_71_0;C:\Projects\signal-slot-benchmarks\benchmark\lib\iscool\include;C:\Projects\signal-slot-benchmarks\benchmark\lib\libsigcplusplus;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\benchmark\lib\i42output\include;C:\boost_1_71_0;C:\Projects\signal-slot-benchmarks\benchmark\lib\iscool\include;C:\Projects\signal-slot-benchmarks\benchmark\lib\libsigcplusplus;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>-D_SCL_SECURE_NO_WARNINGS -D_CRT_SECURE_NO_WARNINGS %(AdditionalOptions)</AdditionalOptions>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <BasicRuntimeChecks>Default</BasicRuntimeChecks>
@@ -164,11 +164,11 @@
       <EnforceTypeConversionRules>true</EnforceTypeConversionRules>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
       <OpenMPSupport>false</OpenMPSupport>
-      <LanguageStandard>stdcpp17</LanguageStandard>
+      <LanguageStandard>stdcpp20</LanguageStandard>
       <EnableModules>false</EnableModules>
       <OmitFramePointers>true</OmitFramePointers>
       <WholeProgramOptimization>false</WholeProgramOptimization>
-      <AdditionalIncludeDirectories>C:\boost_1_67_0;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\benchmark\lib\i42output\include;C:\boost_1_67_0;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>-D_SCL_SECURE_NO_WARNINGS -D_CRT_SECURE_NO_WARNINGS %(AdditionalOptions)</AdditionalOptions>
       <FloatingPointModel>Fast</FloatingPointModel>
       <EnableEnhancedInstructionSet>NoExtensions</EnableEnhancedInstructionSet>
@@ -200,11 +200,11 @@
       <RuntimeTypeInfo>
       </RuntimeTypeInfo>
       <OpenMPSupport>false</OpenMPSupport>
-      <LanguageStandard>stdcpp17</LanguageStandard>
+      <LanguageStandard>stdcpp20</LanguageStandard>
       <EnableModules>false</EnableModules>
       <OmitFramePointers>true</OmitFramePointers>
       <WholeProgramOptimization>false</WholeProgramOptimization>
-      <AdditionalIncludeDirectories>C:\boost_1_71_0;C:\Projects\signal-slot-benchmarks\benchmark\lib\iscool\include;C:\Projects\signal-slot-benchmarks\benchmark\lib\libsigcplusplus;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\benchmark\lib\i42output\include;C:\boost_1_71_0;C:\Projects\signal-slot-benchmarks\benchmark\lib\iscool\include;C:\Projects\signal-slot-benchmarks\benchmark\lib\libsigcplusplus;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>-D_SCL_SECURE_NO_WARNINGS -D_CRT_SECURE_NO_WARNINGS /TP /fp:fast /Ox %(AdditionalOptions)</AdditionalOptions>
       <FloatingPointModel>Fast</FloatingPointModel>
       <EnableEnhancedInstructionSet>NoExtensions</EnableEnhancedInstructionSet>
@@ -293,33 +293,29 @@
     <ClInclude Include="..\benchmark\lib\dacap\obs\slot.h" />
     <ClInclude Include="..\benchmark\lib\eviltwin\observer.hpp" />
     <ClInclude Include="..\benchmark\lib\fr00b0\nod\include\nod\nod.hpp" />
-    <ClInclude Include="..\benchmark\lib\i42output\include\neolib\allocator.hpp" />
-    <ClInclude Include="..\benchmark\lib\i42output\include\neolib\async_task.hpp" />
-    <ClInclude Include="..\benchmark\lib\i42output\include\neolib\async_thread.hpp" />
-    <ClInclude Include="..\benchmark\lib\i42output\include\neolib\detail_memory.hpp" />
-    <ClInclude Include="..\benchmark\lib\i42output\include\neolib\event.hpp" />
-    <ClInclude Include="..\benchmark\lib\i42output\include\neolib\i_lifetime.hpp" />
-    <ClInclude Include="..\benchmark\lib\i42output\include\neolib\i_task.hpp" />
-    <ClInclude Include="..\benchmark\lib\i42output\include\neolib\i_thread.hpp" />
-    <ClInclude Include="..\benchmark\lib\i42output\include\neolib\lifetime.hpp" />
-    <ClInclude Include="..\benchmark\lib\i42output\include\neolib\lockable.hpp" />
-    <ClInclude Include="..\benchmark\lib\i42output\include\neolib\locking_policy.hpp" />
-    <ClInclude Include="..\benchmark\lib\i42output\include\neolib\memory.hpp" />
-    <ClInclude Include="..\benchmark\lib\i42output\include\neolib\message_queue.hpp" />
-    <ClInclude Include="..\benchmark\lib\i42output\include\neolib\mutex.hpp" />
+    <ClInclude Include="..\benchmark\lib\i42output\include\neolib\app\module.hpp" />
+    <ClInclude Include="..\benchmark\lib\i42output\include\neolib\core\i_discoverable.hpp" />
+    <ClInclude Include="..\benchmark\lib\i42output\include\neolib\core\i_lifetime.hpp" />
+    <ClInclude Include="..\benchmark\lib\i42output\include\neolib\core\i_mutex.hpp" />
+    <ClInclude Include="..\benchmark\lib\i42output\include\neolib\core\i_optional.hpp" />
+    <ClInclude Include="..\benchmark\lib\i42output\include\neolib\core\i_reference_counted.hpp" />
+    <ClInclude Include="..\benchmark\lib\i42output\include\neolib\core\i_service.hpp" />
+    <ClInclude Include="..\benchmark\lib\i42output\include\neolib\core\lifetime.hpp" />
+    <ClInclude Include="..\benchmark\lib\i42output\include\neolib\core\mutex.hpp" />
+    <ClInclude Include="..\benchmark\lib\i42output\include\neolib\core\optional.hpp" />
+    <ClInclude Include="..\benchmark\lib\i42output\include\neolib\core\reference_counted.hpp" />
+    <ClInclude Include="..\benchmark\lib\i42output\include\neolib\core\scoped.hpp" />
+    <ClInclude Include="..\benchmark\lib\i42output\include\neolib\core\service.hpp" />
+    <ClInclude Include="..\benchmark\lib\i42output\include\neolib\core\uuid.hpp" />
+    <ClInclude Include="..\benchmark\lib\i42output\include\neolib\core\win32\win32.hpp" />
     <ClInclude Include="..\benchmark\lib\i42output\include\neolib\neolib.hpp" />
-    <ClInclude Include="..\benchmark\lib\i42output\include\neolib\noncopyable.hpp" />
-    <ClInclude Include="..\benchmark\lib\i42output\include\neolib\raii.hpp" />
-    <ClInclude Include="..\benchmark\lib\i42output\include\neolib\signal.hpp" />
-    <ClInclude Include="..\benchmark\lib\i42output\include\neolib\singleton.hpp" />
-    <ClInclude Include="..\benchmark\lib\i42output\include\neolib\slot.hpp" />
-    <ClInclude Include="..\benchmark\lib\i42output\include\neolib\task.hpp" />
-    <ClInclude Include="..\benchmark\lib\i42output\include\neolib\thread.hpp" />
-    <ClInclude Include="..\benchmark\lib\i42output\include\neolib\timer.hpp" />
-    <ClInclude Include="..\benchmark\lib\i42output\include\neolib\variant.hpp" />
-    <ClInclude Include="..\benchmark\lib\i42output\include\neolib\waitable.hpp" />
-    <ClInclude Include="..\benchmark\lib\i42output\include\neolib\waitable_event.hpp" />
-    <ClInclude Include="..\benchmark\lib\i42output\include\neolib\win32_message_queue.hpp" />
+    <ClInclude Include="..\benchmark\lib\i42output\include\neolib\neolib_export.hpp" />
+    <ClInclude Include="..\benchmark\lib\i42output\include\neolib\task\event.hpp" />
+    <ClInclude Include="..\benchmark\lib\i42output\include\neolib\task\i_async_task.hpp" />
+    <ClInclude Include="..\benchmark\lib\i42output\include\neolib\task\i_event.hpp" />
+    <ClInclude Include="..\benchmark\lib\i42output\include\neolib\task\i_message_queue.hpp" />
+    <ClInclude Include="..\benchmark\lib\i42output\include\neolib\task\i_task.hpp" />
+    <ClInclude Include="..\benchmark\lib\i42output\include\neolib\task\i_thread.hpp" />
     <ClInclude Include="..\benchmark\lib\iscool\include\iscool\signals\implement_signal.h" />
     <ClInclude Include="..\benchmark\lib\iscool\include\iscool\signals\signal.h" />
     <ClInclude Include="..\benchmark\lib\jeffomatic\jl_signal\src\DoublyLinkedList.h" />
@@ -409,13 +405,11 @@
     <ClCompile Include="..\benchmark\lib\CppFakeIt\libfastsignals\src\lfs_connection.cpp" />
     <ClCompile Include="..\benchmark\lib\CppFakeIt\libfastsignals\src\signal_impl.cpp" />
     <ClCompile Include="..\benchmark\lib\dacap\obs\dacap_connection.cpp" />
-    <ClCompile Include="..\benchmark\lib\i42output\src\async_task.cpp" />
-    <ClCompile Include="..\benchmark\lib\i42output\src\async_thread.cpp" />
-    <ClCompile Include="..\benchmark\lib\i42output\src\event.cpp" />
-    <ClCompile Include="..\benchmark\lib\i42output\src\thread.cpp" />
-    <ClCompile Include="..\benchmark\lib\i42output\src\timer.cpp" />
-    <ClCompile Include="..\benchmark\lib\i42output\src\waitable_event.cpp" />
-    <ClCompile Include="..\benchmark\lib\i42output\src\win32_message_queue.cpp" />
+    <ClCompile Include="..\benchmark\lib\i42output\src\core\lifetime.cpp" />
+    <ClCompile Include="..\benchmark\lib\i42output\src\core\mutex.cpp" />
+    <ClCompile Include="..\benchmark\lib\i42output\src\core\reference_counted.cpp" />
+    <ClCompile Include="..\benchmark\lib\i42output\src\core\service.cpp" />
+    <ClCompile Include="..\benchmark\lib\i42output\src\task\event.cpp" />
     <ClCompile Include="..\benchmark\lib\iscool\src\iscool\digits.cpp" />
     <ClCompile Include="..\benchmark\lib\iscool\src\iscool\none.cpp" />
     <ClCompile Include="..\benchmark\lib\iscool\src\iscool\optional.cpp" />

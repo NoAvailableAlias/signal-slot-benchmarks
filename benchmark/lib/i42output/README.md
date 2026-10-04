@@ -1,15 +1,8 @@
-# Introduction
-"neolib" is a cross-platform C++ utility library.
+# neolib (subset)
 
-# Dependencies
-* Boost
-* OpenSSL
-* zlib
+The minimal subset of [neolib](https://github.com/i42output/neolib) needed to build `neolib::event`
+(`include/neolib/task/event.hpp`). Files are copied unmodified from neolib, except for
+`include/neolib/neolib_export.hpp`, which neolib's own build generates.
 
-# Features
-* vecarray container, see http://i42.co.uk/stuff/vecarray.htm
-* segmented_array container, see http://i42.co.uk/stuff/segmented_array.htm
-* NoFussXML, see http://i42.co.uk/stuff/NoFussXML.htm
-* neosigslot, see http://i42.co.uk/stuff/neosigslot.htm
-* packet stream network library (based on Boost.Asio)
-* plugin framework; uses interfaces (vtables) similar to Microsoft's COM with support for containers/iterators.
+Requires C++20 and Boost 1.81 or later (header-only parts of Boost.Unordered, Boost.Lockfree,
+Boost.Thread and Boost.Fiber).
